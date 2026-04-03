@@ -1,1 +1,2 @@
-.npy
+# Ignore all npy files
+*.npy
