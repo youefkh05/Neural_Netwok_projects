@@ -55,7 +55,258 @@ def load_images(path):
     
     return images
 
-import matplotlib.pyplot as plt
+# ==============================
+# STEP 2 AUGMENTATION FUNCTIONS
+# ==============================
+
+def rotate_image(img, angle):
+    h, w = img.shape
+    M = cv2.getRotationMatrix2D((w//2, h//2), angle, 1)
+    return cv2.warpAffine(img, M, (w, h))
+
+
+def add_noise(img):
+    noise = np.random.normal(0, 10, img.shape)
+    noisy = img + noise
+    return np.clip(noisy, 0, 255).astype(np.uint8)
+
+
+def shift_image(img, dx, dy):
+    M = np.float32([[1, 0, dx], [0, 1, dy]])
+    return cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
+
+# ==============================
+# STEP 2 — AUGMENT SEED DATA
+# ==============================
+
+def augment_seed(images, matrix):
+    """
+    images: full dataset (10000, H, W)
+    matrix: (10, 30) seed indices
+
+    returns:
+        augmented_images_per_class (10, 120, H, W)
+    """
+
+    all_classes = []
+
+    for digit in range(NUM_CLASSES):
+        class_indices = matrix[digit]
+
+        class_images = []
+
+        for idx in class_indices:
+            img = images[idx]
+
+            # Original
+            class_images.append(img)
+
+            # Augmentations (7 per image)
+            class_images.append(rotate_image(img, 5))
+            class_images.append(rotate_image(img, -5))
+            class_images.append(add_noise(img))
+
+            # left, right, up, down shifts
+            class_images.append(shift_image(img, 2, 0))
+            class_images.append(shift_image(img, -2, 0))
+            class_images.append(shift_image(img, 0, 2))
+            class_images.append(shift_image(img, 0, -2))
+
+
+
+        class_images = np.array(class_images)
+
+        print(f"[INFO] Class {digit}: {class_images.shape}")
+
+        all_classes.append(class_images)
+
+    return np.array(all_classes)
+
+# ==============================
+# BUILD TRAINING SET
+# ==============================
+def build_training_set(augmented_data):
+    X = []
+    y = []
+    weights = []
+
+    for digit in range(NUM_CLASSES):
+        class_data = augmented_data[digit]
+
+        for i, img in enumerate(class_data):
+            X.append(img)
+            y.append(digit)
+
+            # first 30 → original images
+            if i < TARGET_PER_CLASS:
+                weights.append(100)
+            else:
+                weights.append(1)
+
+    X = np.array(X)
+    y = np.array(y)
+    weights = np.array(weights)
+
+    print("[INFO] Training set shape:", X.shape)
+
+    return X, y, weights
+
+# ==============================
+#  Extract HOG Features
+# ==============================
+def extract_hog_features(images):
+    features = []
+    
+    for img in images:
+        # Resize
+        img_resized = cv2.resize(img, IMG_SIZE)
+        
+        # Extract HOG
+        hog_feat = hog(
+            img_resized,
+            pixels_per_cell=(4, 4),
+            cells_per_block=(2, 2),
+            feature_vector=True
+        )
+        
+        features.append(hog_feat)
+    
+    features = np.array(features)
+    
+    print(f"[INFO] HOG feature shape: {features.shape}")
+    
+    return features
+
+# ==============================
+# TRAIN SVM (SVM-1)
+# ==============================
+def train_svm(features, labels, weights):
+    print("[INFO] Training SVM-1...")
+
+    svm = SVC(
+        kernel='rbf',
+        decision_function_shape='ovo'
+    )
+
+    svm.fit(features, labels, sample_weight=weights)
+
+    print("[INFO] SVM training complete.")
+
+    return svm
+
+# ==============================
+# PREDICT FULL DATASET
+# ==============================
+def predict_full_dataset(svm, features):
+    print("[INFO] Predicting full dataset...")
+
+    predicted_labels = svm.predict(features)
+    scores = svm.decision_function(features)
+
+    print("[INFO] Prediction done.")
+
+    return predicted_labels, scores
+
+
+# ==============================
+# HARD SAMPLES Extraction
+# ==============================
+def get_hard_samples(scores, used_indices, n_samples=20):
+    # sort scores per row
+    sorted_scores = np.sort(scores, axis=1)
+
+    # margin = best - second best
+    margin = sorted_scores[:, -1] - sorted_scores[:, -2]
+
+    # exclude already used samples
+    mask = np.ones(len(margin), dtype=bool)
+    mask[list(used_indices)] = False
+
+    filtered_indices = np.where(mask)[0]
+    filtered_margin = margin[filtered_indices]
+
+    # smallest margins
+    sorted_idx = np.argsort(filtered_margin)
+    hard_samples = filtered_indices[sorted_idx[:n_samples]]
+
+    return hard_samples, margin
+
+# ==============================
+# LABEL HARD SAMPLES (SIMULATE HUMAN)
+# ==============================
+def get_true_labels_for_samples(samples):
+    true_labels = []
+
+    for sample in samples:
+        best_label = 0
+        best_acc = 0
+
+        for digit in range(10):
+            temp = np.zeros(N, dtype=int)
+            temp[sample] = digit
+
+            acc, _, _ = check_accuracy(temp)
+
+            if acc > best_acc:
+                best_acc = acc
+                best_label = digit
+
+        true_labels.append(best_label)
+
+    return np.array(true_labels)
+
+
+
+# ==============================
+# STEP 5 — GET CONFIDENT SAMPLES
+# ==============================
+def get_confident_samples(predicted_labels, margin, used_indices):
+    confident_samples = []
+
+    threshold = np.percentile(margin, 75)
+
+    for digit in range(NUM_CLASSES):
+        # indices of this class
+        class_idx = np.where(predicted_labels == digit)[0]
+
+        # filter unused
+        class_idx = [i for i in class_idx if i not in used_indices]
+
+        # filter by margin threshold
+        class_idx = [i for i in class_idx if margin[i] > threshold]
+
+        # sort by confidence (descending margin)
+        class_idx = sorted(class_idx, key=lambda i: margin[i], reverse=True)
+
+        # take top 50
+        confident_samples.extend(class_idx[:50])
+
+    return np.array(confident_samples)
+
+
+# ==============================
+# UPDATE TRAINING SET
+# ==============================
+def update_training_set(
+    X_train, y_train, weights,
+    images, predicted_labels,
+    hard_samples, hard_labels,
+    confident_samples
+):
+    # add hard samples (human labeled)
+    for idx, label in zip(hard_samples, hard_labels):
+        X_train.append(images[idx])
+        y_train.append(label)
+        weights.append(100)
+
+    # add confident samples (pseudo)
+    for idx in confident_samples:
+        X_train.append(images[idx])
+        y_train.append(predicted_labels[idx])
+        weights.append(1)
+
+    return X_train, y_train, weights
+
 
 # ==============================
 # SHOW ONE IMAGE
@@ -102,7 +353,83 @@ def show_class_samples(images, matrix, num_per_class=10):
     plt.suptitle("10 Samples per Class", fontsize=16)
     plt.tight_layout()
     plt.show()
+
+# ==============================
+# SHOW AUGMENTATIONS FOR ONE IMAGE
+# ==============================
+def show_augmentation_variants(augmented_data, class_id, sample_idx=0):
+    """
+    augmented_data: (10, 240, H, W)
+    class_id: 0–9
+    sample_idx: which base image (0–29)
+    """
+
+    SAVE_PATH = os.path.join(OUTPUT_DIR, f"class_{class_id}_sample_{sample_idx}.png")
+
+    # each image has 8 versions (1 original + 7 aug)
+    start = sample_idx * 8
+    end = start + 8
+
+    variants = augmented_data[class_id][start:end]
+
+    plt.figure(figsize=(12, 2))
+
+    titles = [
+        "Original",
+        "+5°",
+        "-5°",
+        "Noise",
+        "Right",
+        "Left",
+        "Down",
+        "Up"
+    ]
+
+    for i in range(8):
+        plt.subplot(1, 8, i+1)
+        plt.imshow(variants[i], cmap='gray')
+        plt.title(titles[i], fontsize=8)
+        plt.axis('off')
+
+    plt.suptitle(f"Class {class_id} — Sample {sample_idx}", fontsize=14)
+    plt.tight_layout()
+
+    # save figure
+    plt.savefig(SAVE_PATH, dpi=300)
+    print(f"[INFO] Saved augmentation figure at: {SAVE_PATH}")
+
+    plt.show()
+
+
+# ==============================
+# SHOW HARD SAMPLES (DEBUG)
+# ==============================
+def show_hard_samples(images, hard_samples, labels, n=10, save=False, iteration=None):
+    plt.figure(figsize=(12, 2))
+
+    for i in range(min(n, len(hard_samples))):
+        idx = hard_samples[i]
+
+        plt.subplot(1, n, i+1)
+        plt.imshow(images[idx], cmap='gray')
+        plt.title(f"{labels[i]}", fontsize=10)
+        plt.axis('off')
+
+    plt.suptitle("Hard Samples (Active Learning)", fontsize=14)
+    plt.tight_layout()
+
+    if save:
+        if iteration is not None:
+            path = os.path.join(OUTPUT_DIR, f"hard_samples_iter_{iteration}.png")
+        else:
+            path = os.path.join(OUTPUT_DIR, "hard_samples.png")
+        plt.savefig(path, dpi=300)
+        print(f"[INFO] Saved hard samples at: {path}")
+
+    plt.show()
     
+    
+   
 # ==============================
 # MAIN
 # ==============================
@@ -136,4 +463,196 @@ if __name__ == "__main__":
     print("[INFO] Showing 10 samples per class...")
     show_class_samples(images, matrix, num_per_class=10)
     
+    # ==============================
+    # Step 2: AUGMENTED DATA
+    # ==============================
+
+    AUGMENTED_PATH = os.path.join(OUTPUT_DIR, "augmented_seed.npy")
+
+    if os.path.exists(AUGMENTED_PATH):
+        print("[INFO] Loading augmented data...")
+        augmented_data = np.load(AUGMENTED_PATH)
+    else:
+        print("[INFO] Generating augmented data...")
+        augmented_data = augment_seed(images, matrix)
+        np.save(AUGMENTED_PATH, augmented_data)
+
+    print("[INFO] Augmented shape:", augmented_data.shape)
     
+    print("[INFO] Showing augmentation example...")
+    show_augmentation_variants(augmented_data, class_id=3, sample_idx=0)
+    
+    # ==============================
+    # STEP 3 — INITIAL SVM TRAINING
+    # ==============================
+
+    # build training set
+    X_train, y_train, weights = build_training_set(augmented_data)
+    
+    X_train = list(X_train)
+    y_train = list(y_train)
+    weights = list(weights)
+
+
+    # ==============================
+    # FEATURES FOR FULL DATASET (CACHE)
+    # ==============================
+    FULL_FEATURES_PATH = os.path.join(OUTPUT_DIR, "full_features.npy")
+
+    if os.path.exists(FULL_FEATURES_PATH):
+        print("[INFO] Loading full features...")
+        full_features = np.load(FULL_FEATURES_PATH)
+    else:
+        print("[INFO] Extracting full dataset features...")
+        full_features = extract_hog_features(images)
+        np.save(FULL_FEATURES_PATH, full_features)
+
+    # initialize current labels
+    current_labels = np.zeros(N, dtype=int)
+
+    # initialize used indices
+    used_indices = set()
+
+    # add seed indices
+    used_indices.update(matrix.flatten())
+
+    
+    # ==============================
+    # ACTIVE LEARNING LOOP (Step 4–7)
+    # ==============================
+
+    # tracking
+    history = []
+    manual_count = 300
+    pseudo_count = 0
+
+    prev_acc = 0
+    max_iter = 20
+
+    for iteration in range(1, max_iter + 1):
+        print(f"\n========== ITERATION {iteration} ==========")
+
+        # convert to numpy
+        X_np = np.array(X_train)
+        y_np = np.array(y_train)
+        w_np = np.array(weights)
+
+        # extract features
+        X_feat = extract_hog_features(X_np)
+
+        # train SVM
+        svm = train_svm(X_feat, y_np, w_np)
+
+        # predict full dataset
+        predicted_labels, scores = predict_full_dataset(svm, full_features)
+
+        # evaluate
+        acc, correct, total = check_accuracy(predicted_labels)
+        print(f"[INFO] Accuracy: {acc*100:.2f}%")
+
+        # ======================
+        # STEP 4 — HARD SAMPLES
+        # ======================
+        hard_samples, margin = get_hard_samples(scores, used_indices)
+        hard_labels = get_true_labels_for_samples(hard_samples)
+
+        # update current_labels with hard labels
+        current_labels[hard_samples] = hard_labels
+
+        print(f"[INFO] Hard samples: {len(hard_samples)}")
+
+        show_hard_samples(images, hard_samples, hard_labels, n=10, save=True, iteration=iteration)
+
+        # ======================
+        # STEP 5 — CONFIDENT SAMPLES
+        # ======================
+        confident_samples = get_confident_samples(
+            predicted_labels, margin, used_indices
+        )
+
+        # update current_labels with pseudo labels
+        current_labels[confident_samples] = predicted_labels[confident_samples]
+
+        print(f"[INFO] Confident samples: {len(confident_samples)}")
+
+        # ======================
+        # UPDATE COUNTS
+        # ======================
+        manual_count += len(hard_samples)
+        pseudo_count += len(confident_samples)
+
+        # ======================
+        # UPDATE USED INDICES
+        # ======================
+        used_indices.update(hard_samples)
+        used_indices.update(confident_samples)
+
+        # ======================
+        # STEP 6 — UPDATE DATASET
+        # ======================
+        X_train, y_train, weights = update_training_set(
+            X_train, y_train, weights,
+            images, predicted_labels,
+            hard_samples, hard_labels,
+            confident_samples
+        )
+
+        # ======================
+        # SAVE HISTORY
+        # ======================
+        history.append([
+            iteration,
+            acc * 100,
+            len(hard_samples),
+            len(confident_samples),
+            manual_count,
+            pseudo_count
+        ])
+
+        # ======================
+        # STEP 7 — STOP CONDITIONS
+        # ======================
+        if acc >= 0.99:
+            print("[INFO] Reached 99% accuracy!")
+            break
+
+        if abs(acc - prev_acc) < 0.001:
+            print("[INFO] Converged (low improvement)")
+            break
+
+        prev_acc = acc
+    
+        
+    # ==============================
+    # SAVE ITERATION RESULTS
+    # ==============================
+    print("\n====== FINAL SUMMARY ======")
+    print(f"Iterations: {iteration}")
+    print(f"Final Accuracy: {acc*100:.2f}%")
+    print(f"Total Manual Labels: {manual_count}")
+    print(f"Total Pseudo Labels: {pseudo_count}")
+
+    # estimated time
+    manual_time_sec = manual_count * 10
+    print(f"Estimated Manual Time: {manual_time_sec/60:.2f} minutes")
+    print("===========================")
+    
+    csv_path = os.path.join(OUTPUT_DIR, "pipeline2_iterations.csv")
+
+    with open(csv_path, "w", newline="") as f:
+        writer = csv.writer(f)
+
+        writer.writerow([
+            "Iteration",
+            "Accuracy (%)",
+            "Hard Samples",
+            "Pseudo Samples",
+            "Total Manual",
+            "Total Pseudo"
+        ])
+
+        writer.writerows(history)
+
+    print(f"[INFO] Results saved to: {csv_path}")
+        
+        
