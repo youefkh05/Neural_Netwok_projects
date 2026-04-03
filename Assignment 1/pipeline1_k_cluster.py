@@ -7,8 +7,6 @@ from sklearn.cluster import KMeans
 from check_accuracy import check_accuracy
 
 
-# pip install numpy opencv-python scikit-image scikit-learn matplotlib
-
 # ==============================
 # CONFIG
 # ==============================
@@ -261,25 +259,75 @@ if __name__ == "__main__":
     
     print("[INFO] Feature extraction complete.")
     
-    # K values for clustering    
+    # ==============================
+    # K-means + Labeling + Evaluation
+    # ==============================
+
+    import os
+    import numpy as np
+
     K_list = [40, 60, 80]
     accuracies = []
+    clusters_dict = {}
 
-    for K in K_list:
-        cluster_ids = run_kmeans(features, K)
-        analyze_clusters(cluster_ids, K)
-        
-        # Label clusters
-        labels = label_clusters(cluster_ids, K)
+    clusters_path = os.path.join(OUTPUT_DIR, "final_clusters.npy")
 
-        # Evaluate
-        acc, correct, total = check_accuracy(labels)
+    # ==============================
+    # CASE 1: Load cached clusters
+    # ==============================
+    if os.path.exists(clusters_path):
+        print("[INFO] Loading saved clusters...")
+        clusters_dict = np.load(clusters_path, allow_pickle=True).item()
 
-        accuracies.append(acc * 100)  # store percentage
+        for K in K_list:
+            print(f"\n[INFO] Using cached clusters for K={K}")
+            cluster_ids = clusters_dict[K]
 
-        print("\n===== Initial Cluster Labeling Result =====")
-        print(f"K = {K}")
-        print(f"Accuracy: {acc*100:.2f}%")
-        print("==========================================")
-    
+            analyze_clusters(cluster_ids, K)
+
+            # Label clusters
+            labels = label_clusters(cluster_ids, K)
+
+            # Evaluate
+            acc, correct, total = check_accuracy(labels)
+            accuracies.append(acc * 100)
+
+            print("\n===== Initial Cluster Labeling Result =====")
+            print(f"K = {K}")
+            print(f"Accuracy: {acc*100:.2f}%")
+            print("==========================================")
+
+    # ==============================
+    # CASE 2: Run K-means and save
+    # ==============================
+    else:
+        print("[INFO] No saved clusters. Running K-means...")
+
+        for K in K_list:
+            cluster_ids = run_kmeans(features, K)
+            analyze_clusters(cluster_ids, K)
+
+            clusters_dict[K] = cluster_ids  # store clusters
+
+            # Label clusters
+            labels = label_clusters(cluster_ids, K)
+
+            # Evaluate
+            acc, correct, total = check_accuracy(labels)
+            accuracies.append(acc * 100)
+
+            print("\n===== Initial Cluster Labeling Result =====")
+            print(f"K = {K}")
+            print(f"Accuracy: {acc*100:.2f}%")
+            print("==========================================")
+
+        # Save clusters AFTER loop
+        os.makedirs(OUTPUT_DIR, exist_ok=True)
+        np.save(clusters_path, clusters_dict)
+
+        print(f"[INFO] Final clusters saved at: {clusters_path}")
+
+    # ==============================
+    # Plot results
+    # ==============================
     plot_k_vs_accuracy(K_list, accuracies)
