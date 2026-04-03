@@ -3,14 +3,25 @@ import cv2
 import numpy as np
 from skimage.feature import hog
 import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from check_accuracy import check_accuracy
 
-# pip install numpy opencv-python scikit-image scikit-learn 
+
+# pip install numpy opencv-python scikit-image scikit-learn matplotlib
 
 # ==============================
 # CONFIG
 # ==============================
-DATA_PATH = "Indian_Digits_Train"   
-IMG_SIZE = (32, 32)                # resize for HOG
+BASE_DIR = os.path.dirname(__file__)
+
+DATA_PATH = os.path.join(BASE_DIR, "Indian_Digits_Train")
+IMG_SIZE = (32, 32)
+
+IMAGES_CACHE = "images.npy"
+FEATURES_CACHE = "features.npy"
+
+# output directory for results 
+OUTPUT_DIR = os.path.join(BASE_DIR, "pipeline1")
 
 # ==============================
 # Show an image (for testing)
@@ -116,16 +127,126 @@ def extract_hog_features(images):
     
     return features
 
+# ==============================
+# STEP 3 — Run K-means Clustering
+# ==============================
+def run_kmeans(features, K):
+    print(f"\n[INFO] Running K-means with K = {K}...")
+    
+    kmeans = KMeans(n_clusters=K, n_init=10, random_state=42)
+    cluster_ids = kmeans.fit_predict(features)
+    
+    print("[INFO] K-means done.")
+    
+    return cluster_ids
 
+# K debugging
+def analyze_clusters(cluster_ids, K):
+    print("\n[INFO] Cluster distribution:")
+    
+    for k in range(K):
+        count = np.sum(cluster_ids == k)
+        print(f"Cluster {k}: {count} samples")
+
+
+# ==============================
+# STEP 4 — Label Clusters
+# ============================== 
+def label_clusters(cluster_ids, K):
+    print("\n[INFO] Labeling clusters using oracle...")
+
+    N = len(cluster_ids)
+    labels = np.zeros(N, dtype=int)
+
+    for k in range(K):
+        idx = np.where(cluster_ids == k)[0]
+
+        best_label = 0
+        best_acc = 0
+
+        # Try all digits (0–9)
+        for digit in range(10):
+            temp_labels = labels.copy()
+            temp_labels[idx] = digit
+
+            acc, _, _ = check_accuracy(temp_labels)
+
+            if acc > best_acc:
+                best_acc = acc
+                best_label = digit
+
+        # Assign best label to cluster
+        labels[idx] = best_label
+
+        print(f"Cluster {k} → Label {best_label} (acc={best_acc:.4f})")
+
+    return labels
+
+# Cache cluster labels
+def get_cluster_path(K):
+    import os
+    return os.path.join(OUTPUT_DIR, f"clusters_K{K}.npy")
+
+# ==============================
+# Show K accuracy plot
+# ============================== 
+def plot_k_vs_accuracy(K_list, accuracies):
+    import matplotlib.pyplot as plt
+    import os
+
+    # Use global path
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    plt.figure(figsize=(6,4))
+    plt.plot(K_list, accuracies, marker='o')
+
+    # Add values on points
+    for i in range(len(K_list)):
+        plt.text(K_list[i], accuracies[i], f"{accuracies[i]:.2f}%", ha='center')
+
+    plt.xlabel("Number of Clusters (K)")
+    plt.ylabel("Accuracy (%)")
+    plt.title("K vs Accuracy (Pipeline 1)")
+    plt.grid()
+
+    # Save figure
+    file_path = os.path.join(OUTPUT_DIR, "k_vs_accuracy.png")
+    plt.savefig(file_path, dpi=300)
+
+    print(f"[INFO] Plot saved at: {file_path}")
+
+    plt.show()
+    
 # ==============================
 # MAIN
 # ==============================
 if __name__ == "__main__":
     
-    # Load images
-    images = load_images(DATA_PATH)
+    # ======================
+    # LOAD / CACHE IMAGES
+    # ======================
+    if os.path.exists(IMAGES_CACHE):
+        print("[INFO] Loading cached images...")
+        images = np.load(IMAGES_CACHE)
+    else:
+        print("[INFO] Loading images from disk...")
+        images = load_images(DATA_PATH)
+        np.save(IMAGES_CACHE, images)
+
+    # ======================
+    # LOAD / CACHE FEATURES
+    # ======================
+    if os.path.exists(FEATURES_CACHE):
+        print("[INFO] Loading cached features...")
+        features = np.load(FEATURES_CACHE)
+    else:
+        print("[INFO] Extracting HOG features...")
+        features = extract_hog_features(images)
+        np.save(FEATURES_CACHE, features)
+
+    print("[INFO] Ready for clustering.")  
     
-    # 🔍 DEBUG VISUALIZATION
+    # DEBUG VISUALIZATION
     print("[INFO] Showing sample images...")
     show_samples(images, 10)
     
@@ -139,3 +260,26 @@ if __name__ == "__main__":
     features = extract_hog_features(images)
     
     print("[INFO] Feature extraction complete.")
+    
+    # K values for clustering    
+    K_list = [40, 60, 80]
+    accuracies = []
+
+    for K in K_list:
+        cluster_ids = run_kmeans(features, K)
+        analyze_clusters(cluster_ids, K)
+        
+        # Label clusters
+        labels = label_clusters(cluster_ids, K)
+
+        # Evaluate
+        acc, correct, total = check_accuracy(labels)
+
+        accuracies.append(acc * 100)  # store percentage
+
+        print("\n===== Initial Cluster Labeling Result =====")
+        print(f"K = {K}")
+        print(f"Accuracy: {acc*100:.2f}%")
+        print("==========================================")
+    
+    plot_k_vs_accuracy(K_list, accuracies)
