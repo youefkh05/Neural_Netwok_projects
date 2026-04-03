@@ -1,0 +1,232 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\graphicspath{{Figures/}}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{amsmath}
+
+\geometry{a4paper, margin=1in}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+
+\begin{document}
+
+% =========================
+% COVER PAGE
+% =========================
+\begin{titlepage}
+\centering
+
+{\large Electronics and Electrical Communications Engineering \\ Department \par}
+\vspace{0.5cm}
+
+{\large Faculty of Engineering \par}
+\vspace{0.5cm}
+
+{\large Cairo University \par}
+
+\vspace{1.5cm}
+
+{\large Submitted to: Dr. Mohsen Rashwan \par}
+
+\vspace{1cm}
+
+{\Large \textbf{Neural Networks} \par}
+
+\vspace{0.5cm}
+
+{\large Assignment 1 \\ Classical Machine Learning Methods \par}
+
+\vspace{1cm}
+
+{\large 4th Year \par}
+{\large 2nd Semester - Academic Year 2025/2026 \par}
+
+\vspace{1cm}
+
+\textbf{Prepared by:}
+
+\vspace{0.5cm}
+
+\begin{tabular}{ccc}
+\textbf{Name} & \textbf{Section} & \textbf{ID} \\
+Yousef Khaled Omar Mahmoud & 4 & 9220984 \\
+Salah & 10 & 100 \\
+Shahd & 10 & 100 \\
+\end{tabular}
+
+\vfill
+
+Submission Date: 4 April 2026
+
+\end{titlepage}
+
+% =========================
+% INTRODUCTION
+% =========================
+\section{Introduction}
+
+This report presents a semi-supervised pipeline for labeling a dataset of 10,000 handwritten digit images. The objective is to achieve high classification accuracy while minimizing manual labeling effort by combining clustering, feature extraction, and active learning.
+
+% =========================
+% PIPELINE OVERVIEW
+% =========================
+\section{Pipeline Overview}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{Pipeline1_Flowchart.png}
+\caption{Pipeline 1: K-Means + SVM + Active Learning}
+\end{figure}
+
+The pipeline consists of the following steps:
+\begin{itemize}
+    \item Load dataset (10,000 BMP images)
+    \item Extract HOG features
+    \item Apply K-Means clustering
+    \item Label clusters (bootstrapping)
+    \item Train SVM classifier
+    \item Apply active learning for refinement
+\end{itemize}
+
+% =========================
+% FEATURE EXTRACTION
+% =========================
+\section{Feature Extraction}
+
+Histogram of Oriented Gradients (HOG) was used to extract features from images.
+
+\begin{itemize}
+    \item Image size: 32 × 32
+    \item Feature vector size: 1764
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{HOG_Feature.png}
+\caption{Example of HOG Feature Representation}
+\end{figure}
+
+% =========================
+% CLUSTERING
+% =========================
+\section{K-Means Clustering}
+
+K-Means clustering was applied with different values of K:
+
+\begin{itemize}
+    \item K = 40
+    \item K = 60
+    \item K = 80
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{k_vs_accuracy.png}
+\caption{K vs Accuracy Before SVM}
+\end{figure}
+
+% =========================
+% SVM AND ACTIVE LEARNING
+% =========================
+\section{SVM and Active Learning}
+
+A multi-class SVM with RBF kernel (One-vs-One strategy) was used.
+
+Active learning was applied as follows:
+\begin{itemize}
+    \item Select 30 least confident samples (lowest margin)
+    \item Relabel manually
+    \item Assign weight = 100
+    \item Retrain SVM
+\end{itemize}
+
+The process stops when:
+\begin{itemize}
+    \item Accuracy $\geq 99\%$
+    \item Improvement $< 0.1\%$
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{svm_bar_chart.png}
+\caption{Accuracy Before vs After SVM}
+\end{figure}
+
+% =========================
+% RESULTS
+% =========================
+\section{Results}
+
+\subsection{Accuracy}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+\toprule
+K & Before SVM (\%) & After SVM (\%) \\
+\midrule
+40 & 98.30 & 98.46 \\
+60 & 98.70 & 98.80 \\
+80 & 99.22 & 99.26 \\
+\bottomrule
+\end{tabular}
+\caption{Accuracy Comparison}
+\end{table}
+
+\subsection{Iterations}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cc}
+\toprule
+K & Iterations \\
+\midrule
+40 & 2 \\
+60 & 2 \\
+80 & 2 \\
+\bottomrule
+\end{tabular}
+\caption{Number of Iterations}
+\end{table}
+
+% =========================
+% MANUAL EFFORT
+% =========================
+\section{Manual Effort}
+
+For K = 80:
+
+\begin{itemize}
+    \item Cluster labeling: 80 × 8 = 640 images
+    \item Active learning: 30 × 2 = 60 images
+\end{itemize}
+
+Total images manually handled:
+\[
+700 \text{ images}
+\]
+
+Total time:
+\begin{itemize}
+    \item Cluster labeling: 1600 seconds
+    \item Active learning: 600 seconds
+\end{itemize}
+
+\[
+\text{Total time} = 2200 \text{ seconds} \approx 36.7 \text{ minutes}
+\]
+
+% =========================
+% CONCLUSION
+% =========================
+\section{Conclusion}
+
+The proposed pipeline significantly reduces manual labeling effort from 27.8 hours to approximately 37 minutes while achieving 99.26\% accuracy.
+
+K-Means clustering provides strong initial labels, while SVM and active learning refine ambiguous samples. The improvement from SVM is more noticeable at lower K values, while higher K values already produce highly pure clusters.
+
+\end{document}
