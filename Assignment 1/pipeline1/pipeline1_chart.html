@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #eef2f3, #dfe9f3);
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        /* Main container */
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* FIXED WIDTH PIPELINE */
+        .pipeline {
+            width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Rows */
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Alignment */
+        .align-left {
+            justify-content: flex-start;
+        }
+
+        .align-right {
+            justify-content: flex-end;
+        }
+
+        /* Reverse row */
+        .row.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .final-shift {
+            margin-left: 400px;
+            /* tweak this value  */
+        }
+
+        /* Boxes */
+        .box {
+            padding: 15px 20px;
+            border-radius: 12px;
+            color: white;
+            min-width: 180px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Colors */
+        .input {
+            background: #3498db;
+        }
+
+        .feature {
+            background: #9b59b6;
+        }
+
+        .cluster {
+            background: #e67e22;
+        }
+
+        .label {
+            background: #2ecc71;
+        }
+
+        .svm {
+            background: #e74c3c;
+        }
+
+        .active {
+            background: #f1c40f;
+            color: black;
+        }
+
+        .output {
+            background: #1abc9c;
+        }
+
+        /* Arrows */
+        .arrow {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        /* Down arrows aligned with pipeline */
+        .down {
+            font-size: 30px;
+            width: 900px;
+        }
+
+        .down.right {
+            padding-left: 220px;
+            /* aligns under last box */
+        }
+
+        .down.left {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Pipeline 1 — K-Means + SVM + Active Learning</h2>
+
+    <div class="container">
+        <div class="pipeline">
+
+            <!-- Row 1 -->
+            <div class="row align-left">
+                <div class="box input">Load Dataset<br>10,000 BMP Images</div>
+                <div class="arrow">→</div>
+                <div class="box feature">Extract HOG Features<br>1764 Dimensions</div>
+                <div class="arrow">→</div>
+                <div class="box cluster">K-Means Clustering<br>K = 40, 60, 80</div>
+            </div>
+
+            <!-- Down Right -->
+            <div class="down right">↓</div>
+
+            <!-- Row 2 (Reversed) -->
+            <div class="row reverse align-right">
+                <div class="box label">Cluster Labeling<br>8 Samples / Cluster</div>
+                <div class="arrow">←</div>
+                <div class="box label">Initial Labels<br>(Bootstrapping)</div>
+                <div class="arrow">←</div>
+                <div class="box svm">Train SVM<br>RBF Kernel (OvO)</div>
+            </div>
+
+            <!-- Down Left -->
+            <div class="down left">↓</div>
+
+            <!-- Row 3 -->
+            <div class="row align-left">
+                <div class="box active">Find Hard Samples<br>Lowest Margin</div>
+                <div class="arrow">→</div>
+                <div class="box active">Manual Relabeling<br>+ High Weight (100)</div>
+                <div class="arrow">→</div>
+                <div class="box svm">Retrain SVM</div>
+            </div>
+
+            <!-- Down Right -->
+            <div class="down right">↓</div>
+
+            <!-- Final Row (Right aligned) -->
+            <div class="row align-left final-shift">
+                <div class="box output">Final Output<br>Accuracy ≥ 99%</div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

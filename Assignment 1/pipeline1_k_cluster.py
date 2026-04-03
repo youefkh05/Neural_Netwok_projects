@@ -326,6 +326,34 @@ def active_learning_loop(features, labels, target_acc=0.99, threshold=0.001, max
     print(f"[INFO] Stopping: max_iter reached ({max_iter})")
     return labels, max_iter
 
+# Time calculation for manual work 
+def calculate_manual_work(K_list, iterations_list):
+    total_images = []
+    total_time = []
+
+    for i in range(len(K_list)):
+        K = K_list[i]
+        iters = iterations_list[i]
+
+        # Images
+        cluster_images = K * 8
+        boundary_images = 30 * iters
+        total = cluster_images + boundary_images
+
+        # Time
+        cluster_time = K * 20
+        boundary_time = 30 * 10 * iters
+        total_t = cluster_time + boundary_time
+
+        total_images.append(total)
+        total_time.append(total_t)
+
+        print(f"\nK = {K}")
+        print(f"Manual images: {total}")
+        print(f"Manual time: {total_t/60:.2f} minutes")
+
+    return total_images, total_time
+
 # Plot SVM bar chart
 def plot_svm_bar_chart(K_list, before_acc, after_acc):
 
@@ -526,6 +554,8 @@ if __name__ == "__main__":
         print(f"{K_list[i]:<10}{iterations_list[i]:<15}")
 
     print("================================")
+    
+    manual_images, manual_time = calculate_manual_work(K_list, iterations_list)
     
     file_path = os.path.join(OUTPUT_DIR, "iterations_summary.csv")
 
