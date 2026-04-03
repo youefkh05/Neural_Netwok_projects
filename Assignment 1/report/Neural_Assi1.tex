@@ -8,6 +8,8 @@
 \usepackage{titlesec}
 \usepackage{amsmath}
 
+\usepackage{hyperref}
+
 \usepackage{xcolor}
 
 \usepackage{pgfplots}
@@ -321,34 +323,25 @@ output/.style={fill=red!15}
 % =========================
 \subsection{Final Results}
 
-\begin{table}[H]
-\centering
-\begin{tabular}{cc}
-\toprule
-Metric & Value \\
-\midrule
-Final Accuracy & 98.87\% \\
-Iterations & 2 \\
-Manual Labels & 340 \\
-Pseudo Labels & 1000 \\
-Estimated Time & 56.67 minutes \\
-\bottomrule
-\end{tabular}
-\caption{Pipeline 2 Performance Summary}
-\end{table}
+The final performance of Pipeline 2 after convergence is summarized as follows:
+
+\begin{itemize}
+    \item Final Accuracy: 99.04\%
+    \item Number of Iterations: 4
+    \item Total Manual Labels: 380
+    \item Total Pseudo Labels: 1898
+    \item Estimated Manual Time: 63.33 minutes
+\end{itemize}
 
 \subsection{Iteration Progress}
 
-Detailed iteration results are stored in the generated CSV file:
+The improvement in model accuracy across iterations is shown in Figure below.
 
-\texttt{pipeline2\_iterations.csv} :contentReference[oaicite:0]{index=0}
-
-Each iteration records:
-\begin{itemize}
-    \item Accuracy improvement
-    \item Number of pseudo-labelled samples
-    \item Number of manually labelled samples
-\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{iteration_accuracy_plot.png}
+\caption{Active Learning: Iteration vs Accuracy}
+\end{figure}
 
 
 
@@ -390,17 +383,17 @@ Manual labeling consists of:
 
 \begin{itemize}
     \item Initial seed: 300 images
-    \item Active learning: $20 \times 2 = 40$ images
+    \item Active learning: $20 \times 4 = 80$ images
 \end{itemize}
 
 Total manual labels:
 \[
-300 + 40 = 340
+300 + 80 = 380
 \]
 
 Estimated time:
 \[
-340 \times 10 = 3400 \text{ seconds} \approx 56.67 \text{ minutes}
+380 \times 10 = 3800 \text{ seconds} \approx 63.33 \text{ minutes}
 \]
 
 % =========================
@@ -414,10 +407,10 @@ Estimated time:
 \toprule
 Metric & Pipeline 1 & Pipeline 2 \\
 \midrule
-Accuracy & 99.26\% & 98.87\% \\
-Manual Images & 700 & 340 \\
-Manual Time & 36.7 min & 56.7 min \\
-Iterations & 2 & 2 \\
+Accuracy & 99.26\% & 99.04\% \\
+Manual Images & 700 & 380 \\
+Manual Time & 36.7 min & 63.3 min \\
+Iterations & 2 & 4 \\
 \bottomrule
 \end{tabular}
 \caption{Pipeline Comparison}
@@ -432,7 +425,7 @@ Pipeline 1 achieves higher accuracy due to clustering-based initialization, whil
 
 Pipeline 2 demonstrates the effectiveness of semi-supervised learning. Starting from a small, high-quality seed set, the model successfully expands its training data using both active learning and self-training.
 
-Although the final accuracy (98.87\%) is slightly below Pipeline 1, the reduction in manual labeling effort is significant. This pipeline better reflects real-world scenarios where labeled data is scarce and expensive.
+Although the final accuracy (99.04\%) is slightly below Pipeline 1, the reduction in manual labeling effort is significant. This pipeline better reflects real-world scenarios where labeled data is scarce and expensive.
 
 The combination of:
 \begin{itemize}
@@ -442,5 +435,12 @@ The combination of:
 \end{itemize}
 
 creates a scalable and efficient labeling strategy.
+
+\section{References}
+
+\begin{itemize}
+    \item Project Repository: \\
+    \url{https://github.com/youefkh05/Neural_Netwok_projects}
+\end{itemize}
 
 \end{document}

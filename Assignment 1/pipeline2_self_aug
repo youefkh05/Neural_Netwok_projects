@@ -427,6 +427,54 @@ def show_hard_samples(images, hard_samples, labels, n=10, save=False, iteration=
         print(f"[INFO] Saved hard samples at: {path}")
 
     plt.show()
+
+
+# ==============================
+# PLOT ITERATION VS ACCURACY
+# ==============================
+def plot_iteration_accuracy(csv_path=None, save=True):
+    """
+    Read the pipeline2 CSV file and plot Iteration vs Accuracy.
+    
+    csv_path: Path to the pipeline2_iterations.csv file.
+              If None, uses the default OUTPUT_DIR path.
+    save: If True, saves the plot to the OUTPUT_DIR.
+    """
+    
+    if csv_path is None:
+        csv_path = os.path.join(OUTPUT_DIR, "pipeline2_iterations.csv")
+    
+    if not os.path.exists(csv_path):
+        print(f"[ERROR] CSV file not found: {csv_path}")
+        return
+    
+    # Read CSV
+    iterations = []
+    accuracies = []
+    
+    with open(csv_path, "r") as f:
+        reader = csv.reader(f)
+        header = next(reader)  # Skip header
+        
+        for row in reader:
+            iterations.append(int(row[0]))
+            accuracies.append(float(row[1]))
+    
+    # Plot
+    plt.figure(figsize=(10, 6))
+    plt.plot(iterations, accuracies, marker='o', linestyle='-', linewidth=2, markersize=6)
+    plt.xlabel('Iteration', fontsize=12)
+    plt.ylabel('Accuracy (%)', fontsize=12)
+    plt.title('Active Learning: Iteration vs Accuracy', fontsize=14)
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
+    
+    if save:
+        save_path = os.path.join(OUTPUT_DIR, "iteration_accuracy_plot.png")
+        plt.savefig(save_path, dpi=300)
+        print(f"[INFO] Plot saved to: {save_path}")
+    
+    plt.show()
     
     
    
@@ -608,16 +656,22 @@ if __name__ == "__main__":
             manual_count,
             pseudo_count
         ])
+        
+        print(f"[INFO] Accuracy: {acc*100:.2f}%")
 
         # ======================
         # STEP 7 — STOP CONDITIONS
         # ======================
-        if acc >= 0.99:
-            print("[INFO] Reached 99% accuracy!")
+        if acc >= 0.993:
+            print("[INFO] Reached 99.3% accuracy!")
             break
 
-        if abs(acc - prev_acc) < 0.001:
+        if abs(acc - prev_acc) < 0.0005:
             print("[INFO] Converged (low improvement)")
+            break
+
+        if len(used_indices) >= N:
+            print("[INFO] All 10000 samples have been used!")
             break
 
         prev_acc = acc
@@ -654,5 +708,8 @@ if __name__ == "__main__":
         writer.writerows(history)
 
     print(f"[INFO] Results saved to: {csv_path}")
+    
+    plot_iteration_accuracy()
+
         
         

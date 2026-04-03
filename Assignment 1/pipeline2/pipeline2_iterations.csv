@@ -1,3 +1,5 @@
 Iteration,Accuracy (%),Hard Samples,Pseudo Samples,Total Manual,Total Pseudo
 1,98.94,20,500,320,500
 2,98.87,20,500,340,1000
+3,99.02,20,477,360,1477
+4,99.03999999999999,20,421,380,1898
