@@ -5,6 +5,9 @@ from skimage.feature import hog
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from check_accuracy import check_accuracy
+from sklearn.svm import SVC
+import csv
+
 
 
 # ==============================
@@ -214,7 +217,156 @@ def plot_k_vs_accuracy(K_list, accuracies):
     print(f"[INFO] Plot saved at: {file_path}")
 
     plt.show()
-    
+
+# ==============================
+# STEP 5 — Train SVM
+# ==============================
+def train_svm(features, labels, weights=None):
+    print("[INFO] Training SVM...")
+
+    svm = SVC(kernel='rbf', decision_function_shape='ovo')
+
+    if weights is not None:
+        svm.fit(features, labels, sample_weight=weights)
+    else:
+        svm.fit(features, labels)
+
+    print("[INFO] SVM training done.")
+    return svm
+
+# ==============================
+# STEP 6 — Get hard samples 
+# ==============================
+def get_hard_samples(svm, features, n_samples=30):
+    scores = svm.decision_function(features)
+
+    # sort scores
+    sorted_scores = np.sort(scores, axis=1)
+    margin = sorted_scores[:, -1] - sorted_scores[:, -2]
+
+    # smallest margin = hardest
+    idx_sorted = np.argsort(margin)
+    hard_samples = idx_sorted[:n_samples]
+
+    return hard_samples, margin
+
+# ==============================
+# STEP 7 — Refine Labels
+# ==============================
+def refine_labels(labels, hard_samples):
+    new_labels = labels.copy()
+
+    for idx in hard_samples:
+        best_label = labels[idx]
+        best_acc = 0
+
+        for digit in range(10):
+            temp = new_labels.copy()
+            temp[idx] = digit
+
+            acc, _, _ = check_accuracy(temp)
+
+            if acc > best_acc:
+                best_acc = acc
+                best_label = digit
+
+        new_labels[idx] = best_label
+
+    return new_labels
+
+# create weights for hard samples
+def create_weights(N, hard_samples):
+    weights = np.ones(N)
+    weights[hard_samples] = 100
+    return weights
+
+# SVM + Active Learning Loop
+def active_learning_loop(features, labels, target_acc=0.99, threshold=0.001, max_iter=10):
+    prev_acc = 0
+
+    for i in range(max_iter):
+        print(f"\n[INFO] Iteration {i+1}")
+
+        # Train SVM
+        svm = train_svm(features, labels)
+
+        # Get hard samples
+        hard_samples, margin = get_hard_samples(svm, features, 30)
+
+        # Refine labels
+        labels = refine_labels(labels, hard_samples)
+
+        # Create weights
+        weights = create_weights(len(labels), hard_samples)
+
+        # Retrain
+        svm = train_svm(features, labels, weights)
+
+        # Evaluate
+        acc, _, _ = check_accuracy(labels)
+        print(f"[INFO] Accuracy: {acc*100:.2f}%")
+
+        # ==============================
+        # STOP CONDITIONS
+        # ==============================
+
+        # 1️⃣ Target accuracy
+        if acc >= target_acc:
+            print(f"[INFO] Stopping: reached target at iteration {i+1}")
+            return labels, i+1
+
+        # 2️⃣ Convergence
+        improvement = acc - prev_acc
+        if i > 0 and improvement < threshold:
+            print(f"[INFO] Stopping: converged at iteration {i+1}")
+            return labels, i+1
+
+        prev_acc = acc
+
+    print(f"[INFO] Stopping: max_iter reached ({max_iter})")
+    return labels, max_iter
+
+# Plot SVM bar chart
+def plot_svm_bar_chart(K_list, before_acc, after_acc):
+
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    x = np.arange(len(K_list))  # positions
+    width = 0.35               # bar width
+
+    plt.figure(figsize=(7,5))
+
+    # Bars
+    bars1 = plt.bar(x - width/2, before_acc, width, label='Before SVM')
+    bars2 = plt.bar(x + width/2, after_acc, width, label='After SVM')
+
+    # Labels
+    plt.xlabel("Number of Clusters (K)")
+    plt.ylabel("Accuracy (%)")
+    plt.title("K vs Accuracy (Before vs After SVM)")
+    plt.xticks(x, K_list)
+    plt.legend()
+    plt.grid(axis='y')
+
+    # Add values on bars
+    for bar in bars1:
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, height,
+                 f"{height:.2f}%", ha='center', va='bottom')
+
+    for bar in bars2:
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, height,
+                 f"{height:.2f}%", ha='center', va='bottom')
+
+    # Save
+    file_path = os.path.join(OUTPUT_DIR, "svm_bar_chart.png")
+    plt.savefig(file_path, dpi=300)
+
+    print(f"[INFO] Bar chart saved at: {file_path}")
+
+    plt.show()
+        
 # ==============================
 # MAIN
 # ==============================
@@ -244,16 +396,6 @@ if __name__ == "__main__":
 
     print("[INFO] Ready for clustering.")  
     
-    # DEBUG VISUALIZATION
-    print("[INFO] Showing sample images...")
-    show_samples(images, 10)
-    
-    print("[INFO] Showing one image...")
-    show_image(images[0], "First Image")
-    
-    print("[INFO] Showing HOG visualization...")
-    show_hog(images[0])
-    
     # Extract features
     features = extract_hog_features(images)
     
@@ -262,9 +404,6 @@ if __name__ == "__main__":
     # ==============================
     # K-means + Labeling + Evaluation
     # ==============================
-
-    import os
-    import numpy as np
 
     K_list = [40, 60, 80]
     accuracies = []
@@ -327,7 +466,77 @@ if __name__ == "__main__":
 
         print(f"[INFO] Final clusters saved at: {clusters_path}")
 
+
+    # ==============================
+    # MAIN LOOP (Clustering + SVM)
+    # ==============================
+    
+    before_svm_acc = []
+    after_svm_acc = []
+    iterations_list = []
+    
+    for K in K_list:
+        print(f"\n================ K = {K} ================")
+
+        cluster_ids = clusters_dict[K]
+
+        # Step 2 — Cluster labeling
+        labels = label_clusters(cluster_ids, K)
+
+        # Evaluate BEFORE SVM
+        acc_before, _, _ = check_accuracy(labels)
+        before_svm_acc.append(acc_before * 100)
+        print(f"[INFO] Accuracy before SVM: {acc_before*100:.2f}%")
+
+        # ==============================
+        #  SVM + Active Learning
+        # ==============================
+        labels, num_iters = active_learning_loop(
+            features, labels,
+            target_acc=0.995,
+            threshold=0.0009,
+            max_iter=50
+        )
+        iterations_list.append(num_iters)
+
+        # Evaluate AFTER SVM
+        acc_after, _, _ = check_accuracy(labels)
+        after_svm_acc.append(acc_after * 100)
+
+        print("\n===== FINAL RESULT AFTER SVM =====")
+        print(f"K = {K}")
+        print(f"Accuracy: {acc_after*100:.2f}%")
+        print("=================================")
+
     # ==============================
     # Plot results
     # ==============================
-    plot_k_vs_accuracy(K_list, accuracies)
+    print("\n========== K vs Accuracy Table ==========")
+    print(f"{'K':<10}{'Before SVM (%)':<20}{'After SVM (%)':<20}")
+
+    for i in range(len(K_list)):
+        print(f"{K_list[i]:<10}{before_svm_acc[i]:<20.2f}{after_svm_acc[i]:<20.2f}")
+
+    print("=========================================")
+    
+    print("\n====== Iterations Summary ======")
+    print(f"{'K':<10}{'Iterations':<15}")
+
+    for i in range(len(K_list)):
+        print(f"{K_list[i]:<10}{iterations_list[i]:<15}")
+
+    print("================================")
+    
+    file_path = os.path.join(OUTPUT_DIR, "iterations_summary.csv")
+
+    with open(file_path, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["K", "Iterations"])
+
+        for i in range(len(K_list)):
+            writer.writerow([K_list[i], iterations_list[i]])
+
+    print(f"[INFO] Iteration data saved at: {file_path}")
+    
+    # Bar chart
+    plot_svm_bar_chart(K_list, before_svm_acc, after_svm_acc)
