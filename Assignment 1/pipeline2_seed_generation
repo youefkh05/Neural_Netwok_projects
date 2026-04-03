@@ -1,0 +1,213 @@
+import os
+import cv2
+import numpy as np
+import random
+from skimage.feature import hog
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from check_accuracy import check_accuracy
+from sklearn.svm import SVC
+import csv
+
+
+# ==============================
+# CONFIG
+# ==============================
+BASE_DIR = os.path.dirname(__file__)
+
+DATA_PATH = os.path.join(BASE_DIR, "Indian_Digits_Train")
+IMG_SIZE = (32, 32)
+
+IMAGES_CACHE = "images.npy"
+FEATURES_CACHE = "features.npy"
+
+# output directory for results 
+OUTPUT_DIR = os.path.join(BASE_DIR, "pipeline1")
+
+TARGET_PER_CLASS = 30
+NUM_CLASSES = 10
+N = 10000
+
+# ==============================
+# STEP 1 — Load Images
+# ==============================
+def load_images(path):
+    files = [f for f in os.listdir(path) if f.endswith(".bmp")]
+    
+    # Sort numerically: 1.bmp → 10000.bmp
+    files = sorted(files, key=lambda x: int(x.split('.')[0]))
+    
+    images = []
+    
+    for f in files:
+        img_path = os.path.join(path, f)
+        
+        img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+        
+        if img is None:
+            raise ValueError(f"Error loading image: {img_path}")
+        
+        images.append(img)
+    
+    images = np.array(images)
+    
+    print(f"[INFO] Loaded {len(images)} images")
+    
+    return images
+
+import matplotlib.pyplot as plt
+
+# ==============================
+# SHOW ONE IMAGE
+# ==============================
+def show_image(img, title="Image"):
+    plt.imshow(img, cmap='gray')
+    plt.title(title)
+    plt.axis('off')
+    plt.show()
+
+# ==============================
+# SHOW RANDOM SAMPLES
+# ==============================
+def show_samples(images, n=10):
+    idx = np.random.choice(len(images), n, replace=False)
+
+    plt.figure(figsize=(10, 2))
+    for i, j in enumerate(idx):
+        plt.subplot(1, n, i+1)
+        plt.imshow(images[j], cmap='gray')
+        plt.axis('off')
+
+    plt.suptitle("Random Samples")
+    plt.show()
+
+
+# ==============================
+# SHOW 10 IMAGES PER CLASS
+# ==============================
+def show_class_samples(images, matrix, num_per_class=10):
+    """
+    matrix: shape (10, 30)
+    """
+
+    plt.figure(figsize=(num_per_class, 10))
+
+    for digit in range(10):
+        indices = matrix[digit][:num_per_class]
+
+        for j, idx in enumerate(indices):
+            plt.subplot(10, num_per_class, digit * num_per_class + j + 1)
+            plt.imshow(images[idx], cmap='gray')
+            plt.axis('off')
+
+            if j == 0:
+                plt.ylabel(f"{digit}", rotation=0, labelpad=20, fontsize=12)
+
+    plt.suptitle("10 Samples per Class", fontsize=16)
+    plt.tight_layout()
+    plt.show()
+# ==============================
+# MAIN
+# ==============================
+if __name__ == "__main__":
+        
+    # ======================
+    # LOAD / CACHE IMAGES
+    # ======================
+    if os.path.exists(IMAGES_CACHE):
+        print("[INFO] Loading cached images...")
+        images = np.load(IMAGES_CACHE)
+    else:
+        print("[INFO] Loading images from disk...")
+        images = load_images(DATA_PATH)
+        np.save(IMAGES_CACHE, images)
+
+
+    # ==============================
+    # STEP 2 — Initialize Labels
+    # ==============================
+    labels = np.random.randint(0, 10, size=N)
+
+    _, base_correct, _ = check_accuracy(labels)
+
+    # ==============================
+    # STEP 3 — Storage for results
+    # ==============================
+    found = {i: [] for i in range(NUM_CLASSES)}   # digit → list of indices
+    used_indices = set()
+
+    # ==============================
+    # STEP 4 — Harvest correct labels
+    # ==============================
+    for i in range(N):
+
+        # Stop when done
+        if all(len(found[d]) >= TARGET_PER_CLASS for d in range(NUM_CLASSES)):
+            print("[INFO] Completed 300 samples!")
+            break
+
+        if i in used_indices:
+            continue
+
+        original = labels[i]
+
+        # Focus on needed digits first
+        needed_digits = [d for d in range(NUM_CLASSES) if len(found[d]) < TARGET_PER_CLASS]
+        digits = needed_digits + [d for d in range(NUM_CLASSES) if d not in needed_digits]
+        random.shuffle(digits)
+
+        for d in digits:
+            labels[i] = d
+
+            _, new_correct, _ = check_accuracy(labels)
+
+            if new_correct > base_correct:
+                # ✅ Correct label found
+                found[d].append(i)
+                used_indices.add(i)
+                base_correct = new_correct
+
+                print(f"[FOUND] Image {i} → Label {d} "
+                    f"({len(found[d])}/{TARGET_PER_CLASS})")
+
+                break
+        else:
+            # restore if not found
+            labels[i] = original
+
+
+    # ==============================
+    # STEP 5 — Convert to 10×30 matrix
+    # ==============================
+    matrix = []
+
+    for d in range(NUM_CLASSES):
+        if len(found[d]) < TARGET_PER_CLASS:
+            print(f"[WARNING] Not enough samples for digit {d}")
+        matrix.append(found[d][:TARGET_PER_CLASS])
+
+    matrix = np.array(matrix)
+
+    print("\nFinal Matrix Shape:", matrix.shape)
+    print(matrix)
+    
+    # ==============================
+    # STEP 6 — Save matrix to CSV
+    # ==============================
+    CSV_PATH = "label_matrix.csv"
+
+    np.savetxt(CSV_PATH, matrix, fmt='%d', delimiter=',')
+
+    print(f"[INFO] Matrix saved to {CSV_PATH}")
+    
+    # ==============================
+    # DEBUG VISUALIZATION
+    # ==============================
+    print("[INFO] Showing random samples...")
+    show_samples(images, 10)
+
+    print("[INFO] Showing one image...")
+    show_image(images[0], "First Image")
+
+    print("[INFO] Showing 10 samples per class...")
+    show_class_samples(images, matrix, num_per_class=10)
