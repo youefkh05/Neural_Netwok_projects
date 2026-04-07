@@ -1,0 +1,268 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ────────────────────────────────────────────────────────────────
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning}
+
+% ── Hyperref setup ───────────────────────────────────────────────────────────
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    citecolor=black
+}
+
+% ── Section formatting (matches PDF style) ───────────────────────────────────
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% ── Header / Footer ──────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small Neural Networks -- Homework 1}
+\lhead{\small Cairo University}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Graphics path ────────────────────────────────────────────────────────────
+\graphicspath{{Figures/}}
+
+% ── Useful macros ────────────────────────────────────────────────────────────
+\newcommand{\yhat}{\hat{y}}
+\newcommand{\bbeta}{\boldsymbol{\beta}}
+
+% ════════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+% ── Title Page ───────────────────────────────────────────────────────────────
+\begin{titlepage}
+\centering
+\vspace*{0.5cm}
+
+
+\vspace{0.5cm}
+{\Large\bfseries Cairo University\\}
+\vspace{0.2cm}
+{\large Faculty of Engineering\\}
+\vspace{0.2cm}
+{\normalsize Electronics and Electrical Communications Engineering\\}
+
+\vspace{1.2cm}
+\rule{0.8\textwidth}{1.5pt}\\[0.4cm]
+{\LARGE\bfseries Homework 1}\\[0.3cm]
+{\large\bfseries ELC 4028 -- Artificial Neural Networks}\\[0.2cm]
+\rule{0.8\textwidth}{1.5pt}
+
+\vspace{1.2cm}
+
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{ID} & \textbf{Section} & \textbf{Name} \\
+\hline
+9220984 & 4 & Yousef Khaled Omar Mahmoud \\
+\hline
+\end{tabular}
+
+\vspace{1.2cm}
+
+\textit{Supervised by:}\\[0.3cm]
+\textit{Dr.\ Mohsen Rashwan}\\
+\textit{Dr.\ Mohamed Motaz}
+
+\vfill
+\end{titlepage}
+
+% ── Table of Contents ────────────────────────────────────────────────────────
+\setcounter{tocdepth}{3}
+\tableofcontents
+\newpage
+
+
+% =========================
+% PERCEPTRON LEARNING RULE
+% =========================
+\section{Perceptron Learning Rule Derivation}
+
+In this section, we derive the perceptron learning rule step by step starting from the model definition.
+
+% =========================
+\subsection{Perceptron Model}
+
+The perceptron computes a linear function of the input:
+
+\[
+a = \mathbf{w}^T \mathbf{x} + b
+\]
+
+The predicted label is:
+
+\[
+\hat{y} = \text{sign}(a)
+\]
+
+\textbf{Where:}
+\begin{itemize}
+    \item $\mathbf{x}$: input feature vector
+    \item $\mathbf{w}$: weight vector
+    \item $b$: bias term
+    \item $a$: activation
+    \item $\hat{y}$: predicted label
+    \item $y \in \{+1, -1\}$: true label
+\end{itemize}
+
+% =========================
+\subsection{Correct vs Incorrect Prediction}
+
+The prediction is correct if:
+
+\[
+y(\mathbf{w}^T \mathbf{x} + b) > 0
+\]
+
+and incorrect if:
+
+\[
+y(\mathbf{w}^T \mathbf{x} + b) \leq 0
+\]
+
+\textbf{Explanation:}
+
+\begin{itemize}
+    \item If $y = +1$, we need $(\mathbf{w}^T \mathbf{x} + b) > 0$
+    \item If $y = -1$, we need $(\mathbf{w}^T \mathbf{x} + b) < 0$
+\end{itemize}
+
+Multiplying by $y$ ensures the expression is positive only when the prediction is correct.
+
+% =========================
+\subsection{Objective}
+
+If a prediction is incorrect, we aim to:
+\begin{itemize}
+    \item Update $\mathbf{w}$ and $b$
+    \item Move the decision boundary toward correct classification
+\end{itemize}
+
+% =========================
+\subsection{Proposed Update Rule}
+
+We propose the following update:
+
+\[
+\mathbf{w}_{new} = \mathbf{w} + \eta y \mathbf{x}
+\]
+
+\[
+b_{new} = b + \eta y
+\]
+
+where $\eta > 0$ is the learning rate.
+
+\textbf{Update condition:}
+
+\[
+y(\mathbf{w}^T \mathbf{x} + b) \leq 0
+\]
+
+% =========================
+\subsection{Why the Update Works}
+
+We analyze the quantity:
+
+\[
+y(\mathbf{w}_{new}^T \mathbf{x} + b_{new})
+\]
+
+Substitute the updated parameters:
+
+\[
+= y \left( (\mathbf{w} + \eta y \mathbf{x})^T \mathbf{x} + (b + \eta y) \right)
+\]
+
+\[
+= y \left( \mathbf{w}^T \mathbf{x} + \eta y \mathbf{x}^T \mathbf{x} + b + \eta y \right)
+\]
+
+\[
+= y(\mathbf{w}^T \mathbf{x} + b) + \eta y^2 (\mathbf{x}^T \mathbf{x} + 1)
+\]
+
+Since:
+
+\[
+y^2 = 1
+\]
+
+we obtain:
+
+\[
+= y(\mathbf{w}^T \mathbf{x} + b) + \eta (\|\mathbf{x}\|^2 + 1)
+\]
+
+\textbf{Observation:}
+
+\begin{itemize}
+    \item $\|\mathbf{x}\|^2 + 1 > 0$
+    \item Therefore, the value strictly increases after the update
+\end{itemize}
+
+\textbf{Conclusion:}
+
+The update improves the classification score and moves the prediction toward the correct class.
+
+% =========================
+\subsection{Final Learning Rule}
+
+\textbf{Weight update:}
+\[
+\mathbf{w} \leftarrow \mathbf{w} + \eta y \mathbf{x}
+\]
+
+\textbf{Bias update:}
+\[
+b \leftarrow b + \eta y
+\]
+
+\textbf{Apply only when:}
+\[
+y(\mathbf{w}^T \mathbf{x} + b) \leq 0
+\]
+
+% =========================
+\subsection{Interpretation}
+
+The perceptron learning rule:
+\begin{itemize}
+    \item Updates parameters only when an error occurs
+    \item Moves the decision boundary in the correct direction
+    \item Reinforces correct classification over time
+\end{itemize}
+
+This rule forms the foundation of linear classifiers and connects directly to margin-based methods such as Support Vector Machines.
+
+\end{document}
