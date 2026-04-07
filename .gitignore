@@ -2,3 +2,8 @@
 *.npy
 .venv*
 .env
+.log
+.lof
+.aux
+.out
+.toc
