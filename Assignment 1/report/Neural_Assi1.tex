@@ -84,6 +84,168 @@ Submission Date: 4 April 2026
 
 \listoffigures
 \newpage
+
+% =========================
+% PERCEPTRON LEARNING RULE
+% =========================
+\section{Perceptron Learning Rule Derivation}
+
+In this section, we derive the perceptron learning rule step by step starting from the model definition.
+
+% =========================
+\subsection{Perceptron Model}
+
+The perceptron computes a linear combination of the input features:
+
+\[
+a = \mathbf{w}^T \mathbf{x} + b
+\]
+
+The predicted label is given by:
+
+\[
+\hat{y} = \text{sign}(a)
+\]
+
+\textbf{Where:}
+\begin{itemize}
+    \item $\mathbf{x}$: Input feature vector
+    \item $\mathbf{w}$: Weight vector
+    \item $b$: Bias term
+    \item $a$: Activation (linear combination)
+    \item $\hat{y}$: Predicted label
+    \item $y$: True label ($y \in \{+1, -1\}$)
+\end{itemize}
+
+% =========================
+\subsection{Correct vs Incorrect Prediction}
+
+A prediction is considered correct if:
+
+\[
+y(\mathbf{w}^T \mathbf{x} + b) > 0
+\]
+
+and incorrect if:
+
+\[
+y(\mathbf{w}^T \mathbf{x} + b) \leq 0
+\]
+
+\textbf{Explanation:}
+
+\begin{itemize}
+    \item If $y = +1$, then we want $(\mathbf{w}^T \mathbf{x} + b) > 0$
+    \item If $y = -1$, then we want $(\mathbf{w}^T \mathbf{x} + b) < 0$
+\end{itemize}
+
+Thus, multiplying by $y$ ensures that a correct classification results in a positive value.
+
+% =========================
+\subsection{Objective}
+
+If the prediction is incorrect, we need to:
+\begin{itemize}
+    \item Update the weights $\mathbf{w}$
+    \item Update the bias $b$
+    \item Move the decision boundary toward the correct classification
+\end{itemize}
+
+% =========================
+\subsection{Proposed Update Rule}
+
+We propose the following update rule:
+
+\[
+\mathbf{w}_{new} = \mathbf{w} + y \mathbf{x}
+\]
+
+\[
+b_{new} = b + y
+\]
+
+\textbf{Condition:} Apply the update only if:
+
+\[
+y(\mathbf{w}^T \mathbf{x} + b) \leq 0
+\]
+
+% =========================
+\subsection{Why Does This Work?}
+
+We analyze how the update affects the classification score:
+
+\[
+y(\mathbf{w}_{new}^T \mathbf{x} + b_{new})
+\]
+
+Substitute the updated values:
+
+\[
+= y \left( (\mathbf{w} + y\mathbf{x})^T \mathbf{x} + (b + y) \right)
+\]
+
+Expand:
+
+\[
+= y \left( \mathbf{w}^T \mathbf{x} + y \mathbf{x}^T \mathbf{x} + b + y \right)
+\]
+
+\[
+= y(\mathbf{w}^T \mathbf{x} + b) + y^2 (\mathbf{x}^T \mathbf{x} + 1)
+\]
+
+Since:
+
+\[
+y^2 = 1
+\]
+
+we get:
+
+\[
+= y(\mathbf{w}^T \mathbf{x} + b) + (\|\mathbf{x}\|^2 + 1)
+\]
+
+\textbf{Conclusion:}
+
+\begin{itemize}
+    \item The term $(\|\mathbf{x}\|^2 + 1)$ is always positive
+    \item Therefore, the value increases after the update
+    \item This moves the prediction toward the correct classification
+\end{itemize}
+
+% =========================
+\subsection{Final Learning Rule}
+
+\textbf{Weight update:}
+\[
+\mathbf{w} \leftarrow \mathbf{w} + y \mathbf{x}
+\]
+
+\textbf{Bias update:}
+\[
+b \leftarrow b + y
+\]
+
+\textbf{Apply update only when:}
+\[
+y(\mathbf{w}^T \mathbf{x} + b) \leq 0
+\]
+
+% =========================
+\subsection{Interpretation}
+
+The perceptron learning rule:
+\begin{itemize}
+    \item Adjusts the decision boundary only when a mistake occurs
+    \item Moves the boundary toward correctly classifying the input
+    \item Reinforces correct classification over iterations
+\end{itemize}
+
+This simple yet effective rule forms the foundation of many modern machine learning algorithms.
+
+\newpage
 % =========================
 % ASSIGNMENT HEADER
 % =========================
