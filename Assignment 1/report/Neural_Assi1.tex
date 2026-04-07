@@ -104,6 +104,7 @@
 \end{titlepage}
 
 % ── Table of Contents ────────────────────────────────────────────────────────
+\setcounter{tocdepth}{3}
 \tableofcontents
 \newpage
 \listoffigures
@@ -114,18 +115,20 @@
 % ════════════════════════════════════════════════════════════════════════════
 \section*{PART 1: Regression Problems}
 \addcontentsline{toc}{section}{PART 1: Regression Problems}
+\renewcommand{\thesubsection}{1.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+\setcounter{subsection}{0}
+\setcounter{subsubsection}{0}
 
 % ── Problem 1 ────────────────────────────────────────────────────────────────
-\subsection*{Problem 1: Insurance Company}
-\addcontentsline{toc}{subsection}{Problem 1: Insurance Company}
+\subsection{Problem 1: Insurance Company}
 
 The numbers of insured persons $y$ with an insurance company for the years 1987 to 1996
 are given. We let $x$ represent the number of years since 1987 ($x=0$ for 1987,
 $x=9$ for 1996).
 
 % ── 1.1 Dataset ──────────────────────────────────────────────────────────────
-\subsubsection*{1.1 Dataset}
-\addcontentsline{toc}{subsubsection}{1.1 Dataset}
+\subsubsection{Dataset}
 
 \begin{table}[H]
 \centering
@@ -151,10 +154,9 @@ $x=9$ for 1996).
 \textit{* Value 1050 at $x=3$ (year 1990) is the outlier --- likely a data entry error or anomaly.}
 
 % ── 1.2 Case A: WITH Outlier ─────────────────────────────────────────────────
-\subsubsection*{1.2 Case A: WITH Outlier}
-\addcontentsline{toc}{subsubsection}{1.2 Case A: WITH Outlier}
+\subsubsection{Case A: WITH Outlier}
 
-\paragraph{1. Scatter Plot \& Outlier Identification}
+\paragraph{Scatter Plot \& Outlier Identification}
 
 A scatter plot of $y$ (number of insured persons) versus $x$ (years since 1987) reveals
 a generally decreasing trend from $\approx 12{,}400$ down to $\approx 7{,}200$.
@@ -175,12 +177,12 @@ likely due to a data entry error (e.g.\ $10{,}500$ instead of $1{,}050$).
 \label{fig:scatter_outlier}
 \end{figure}
 
-\paragraph{2. Regression Models (WITH Outlier)}
+\paragraph{Regression Models (WITH Outlier)}
 
 We apply both OLS and matrix-form methods to compute linear model parameters,
 then use the matrix form for quadratic and cubic models.
 
-\subparagraph{2.1 Linear Model}
+\subparagraph{Linear Model}
 
 \textbf{Hand Analysis (OLS Method)}
 
@@ -303,7 +305,7 @@ R^2_{\text{linear}} = \frac{\text{SS}_{yy} - \text{SSE}}{\text{SS}_{yy}} = \frac
 \label{fig:sim_linear_outlier}
 \end{figure}
 
-\subparagraph{2.2 Quadratic Model}
+\subparagraph{Quadratic Model}
 
 The equation for the quadratic model:
 \begin{equation}
@@ -375,7 +377,7 @@ R^2_{\text{quadratic}} = \frac{82{,}850{,}250 - 61{,}858{,}042}{82{,}850{,}250} 
 \label{fig:sim_quad_outlier}
 \end{figure}
 
-\subparagraph{2.3 Cubic Model}
+\subparagraph{Cubic Model}
 
 The equation for the cubic model:
 \begin{equation}
@@ -451,7 +453,7 @@ R^2_{\text{cubic}} = \frac{82{,}850{,}250 - 51{,}125{,}885}{82{,}850{,}250} = 0.
 \label{fig:sim_cubic_outlier}
 \end{figure}
 
-\paragraph{3. Comparison Between Three Models (WITH Outlier)}
+\paragraph{Comparison Between Three Models (WITH Outlier)}
 
 \begin{table}[H]
 \centering
@@ -478,10 +480,9 @@ Cubic     & $\hat{y}_i = 13113.15 - 4313.93\,x_i + 932.31\,x_i^2 - 58.95\,x_i^3$
 outlier at $x=3$ ($y=1050$). The cubic model yields the highest $R^2$.
 
 % ── 1.3 Case B: WITHOUT Outlier ──────────────────────────────────────────────
-\subsubsection*{1.3 Case B: WITHOUT Outlier}
-\addcontentsline{toc}{subsubsection}{1.3 Case B: WITHOUT Outlier}
+\subsubsection{Case B: WITHOUT Outlier}
 
-\paragraph{1. Outlier Removal and Scatter Plot of Cleaned Data}
+\paragraph{Outlier Removal and Scatter Plot of Cleaned Data}
 
 \begin{figure}[H]
 \centering
@@ -490,12 +491,12 @@ outlier at $x=3$ ($y=1050$). The cubic model yields the highest $R^2$.
 \label{fig:scatter_clean}
 \end{figure}
 
-\paragraph{2. Regression Models (WITHOUT Outlier)}
+\paragraph{Regression Models (WITHOUT Outlier)}
 
 After removing the outlier at $x=3$ ($y=1{,}050$), the cleaned dataset contains 9
 data points. We now repeat the regression analysis using the same methods.
 
-\subparagraph{2.1 Linear Model}
+\subparagraph{Linear Model}
 
 \textbf{Hand Analysis (OLS Method)}
 
@@ -607,7 +608,7 @@ R^2_{\text{linear}} = \frac{23{,}882{,}222 - 1{,}339{,}500}{23{,}882{,}222} = 0.
 \label{fig:sim_linear_clean}
 \end{figure}
 
-\subparagraph{2.2 Quadratic Model}
+\subparagraph{Quadratic Model}
 
 \[
 \hat{y}_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2
@@ -674,7 +675,7 @@ R^2_{\text{quadratic}} = \frac{23{,}882{,}222 - 657{,}116}{23{,}882{,}222} = 0.9
 \label{fig:sim_quad_clean}
 \end{figure}
 
-\subparagraph{2.3 Cubic Model}
+\subparagraph{Cubic Model}
 
 \[
 \hat{y}_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3
@@ -736,7 +737,7 @@ R^2_{\text{cubic}} = \frac{23{,}882{,}222 - 508{,}988}{23{,}882{,}222} = 0.9787
 \label{fig:sim_cubic_clean}
 \end{figure}
 
-\paragraph{1.3 Comparison Between Three Models (Cleaned Data)}
+\paragraph{Comparison Between Three Models (Cleaned Data)}
 
 \begin{table}[H]
 \centering
@@ -764,8 +765,7 @@ outlier, confirming that it was the primary source of distortion. The linear mod
 explains 94.4\% of the variance.
 
 % ── 1.4 Best-Fit Model Selection ─────────────────────────────────────────────
-\subsubsection*{1.4 Best-Fit Model Selection}
-\addcontentsline{toc}{subsubsection}{1.4 Best-Fit Model Selection}
+\subsubsection{Best-Fit Model Selection}
 
 \textbf{R² Comparison}
 
@@ -844,8 +844,7 @@ Cubic     & 4 & $0.3829 \to 0.9787$ & $+0.1295$ & $+0.0062$ \\
 \end{figure}
 
 % ── 1.5 Prediction ───────────────────────────────────────────────────────────
-\subsubsection*{1.5 Prediction of Insured People}
-\addcontentsline{toc}{subsubsection}{1.5 Prediction of Insured People}
+\subsubsection{Prediction of Insured People}
 
 \textbf{At year 1997 ($x = 10$):}
 
@@ -883,15 +882,13 @@ Cubic     & 4 & $0.3829 \to 0.9787$ & $+0.1295$ & $+0.0062$ \\
 % ════════════════════════════════════════════════════════════════════════════
 % Problem 2
 % ════════════════════════════════════════════════════════════════════════════
-\subsection*{Problem 2: Heating Oil}
-\addcontentsline{toc}{subsection}{Problem 2: Heating Oil}
+\subsection{Problem 2: Heating Oil}
 
 We develop a regression model to estimate heating oil usage for a single-family home
 in January, based on two predictors: average temperature (Temp, in °F) and amount of
 insulation (Insulation, in inches).
 
-\subsubsection*{2.1 Dataset}
-\addcontentsline{toc}{subsubsection}{2.1 Dataset}
+\subsubsection{Dataset}
 
 \begin{table}[H]
 \centering
@@ -919,10 +916,9 @@ insulation (Insulation, in inches).
 \end{tabular}
 \end{table}
 
-\subsubsection*{2.2 Case A: WITH Outlier}
-\addcontentsline{toc}{subsubsection}{2.2 Case A: WITH Outlier}
+\subsubsection{Case A: WITH Outlier}
 
-\paragraph{1. Scatter Plot \& Outlier Identification}
+\paragraph{Scatter Plot \& Outlier Identification}
 
 A 3D scatter plot of Oil Usage vs.\ Temperature and Insulation reveals that one data
 point is far outside the cluster: (Temp$=65$°F, Insulation$=40$~in, Oil$=233$~gallons).
@@ -937,9 +933,9 @@ inches is physically unreasonable and is almost certainly a data entry error (e.
 \label{fig:3d_scatter}
 \end{figure}
 
-\paragraph{2. Regression Models}
+\paragraph{Regression Models}
 
-\subparagraph{2.1 Linear Model}
+\subparagraph{Linear Model}
 
 \begin{figure}[H]
 \centering
@@ -973,7 +969,7 @@ where $T = \text{Temp}$, $I = \text{Insulation}$.
 R^2\ (\text{Linear, With Outlier}) = 0.6967
 \]
 
-\subparagraph{2.2 Quadratic Model}
+\subparagraph{Quadratic Model}
 
 \begin{figure}[H]
 \centering
@@ -1006,10 +1002,9 @@ The multivariate quadratic model:
 R^2\ (\text{Quadratic, With Outlier}) = 0.9742
 \]
 
-\subsubsection*{2.3 Case B: WITHOUT Outlier}
-\addcontentsline{toc}{subsubsection}{2.3 Case B: WITHOUT Outlier}
+\subsubsection{Case B: WITHOUT Outlier}
 
-\paragraph{1. Scatter Plot (WITHOUT Outlier)}
+\paragraph{Scatter Plot (WITHOUT Outlier)}
 
 The data point (Temp$=65$, Insulation$=40$, Oil$=233$) is removed. All remaining 14
 points have insulation values between 4 and 10 inches, which is physically reasonable.
@@ -1021,9 +1016,9 @@ points have insulation values between 4 and 10 inches, which is physically reaso
 \label{fig:3d_scatter_clean}
 \end{figure}
 
-\paragraph{2. Regression Models (WITHOUT Outlier)}
+\paragraph{Regression Models (WITHOUT Outlier)}
 
-\subparagraph{2.1 Linear Model}
+\subparagraph{Linear Model}
 
 \begin{figure}[H]
 \centering
@@ -1051,7 +1046,7 @@ points have insulation values between 4 and 10 inches, which is physically reaso
 R^2\ (\text{Linear, Without Outlier}) = 0.9606
 \]
 
-\subparagraph{2.2 Quadratic Model}
+\subparagraph{Quadratic Model}
 
 \begin{figure}[H]
 \centering
@@ -1079,8 +1074,7 @@ R^2\ (\text{Linear, Without Outlier}) = 0.9606
 R^2\ (\text{Quadratic, Without Outlier}) = 0.9769
 \]
 
-\subsubsection*{2.4 Comparison of Models and Best-Fit Selection}
-\addcontentsline{toc}{subsubsection}{2.4 Comparison of Models and Best-Fit Selection}
+\subsubsection{Comparison of Models and Best-Fit Selection}
 
 \begin{table}[H]
 \centering
@@ -1128,8 +1122,7 @@ as specified in Note~4 of the assignment.
 \label{fig:sim_bestfit_oil}
 \end{figure}
 
-\subsubsection*{2.5 Prediction of Oil}
-\addcontentsline{toc}{subsubsection}{2.5 Prediction of Oil}
+\subsubsection{Prediction of Oil}
 
 Given: $\text{Temp} = 15$°F, $\text{Insulation} = 5$~inches.
 
@@ -1213,7 +1206,11 @@ Using the best-fit model from the original data with outlier (Quadratic model):
 \label{fig:pred_oil_orig}
 \end{figure}
 
-\section{Part 2: some classical ML modeling}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+
+\section*{PART 2: Some Classical ML Modeling}
+\addcontentsline{toc}{section}{PART 2: Some Classical ML Modeling}
 
 Part 2 uses the recovered ground-truth labels from \texttt{pipeline3/full\_labels\_vector.csv} and evaluates three feature representations: DCT, PCA, and HOG. Each feature set was tested with K-means per class using 1, 4, 16, and 32 clusters per class, and with SVM using linear and RBF kernels.
 
@@ -1292,12 +1289,17 @@ The results show that HOG features provide the strongest representation for both
 % =========================
 % PART 3
 % =========================
-\section{Part 3: ways to fasten the Labelling Process}
+\section*{PART 3: Ways to Fasten the Labelling Process}
+\addcontentsline{toc}{section}{PART 3: Ways to Fasten the Labelling Process}
+\renewcommand{\thesubsection}{3.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+\setcounter{subsection}{0}
+\setcounter{subsubsection}{0}
 
 % =========================
 % PIPELINE 1
 % =========================
-\section{Pipeline 1: K-Means Bootstrapping with Active SVM Refinement}
+\subsection{Pipeline 1: K-Means Bootstrapping with Active SVM Refinement}
 
 \begin{figure}[H]
 \centering
@@ -1320,7 +1322,7 @@ The pipeline consists of the following steps:
 % =========================
 % STEP 1
 % =========================
-\subsection{Step 1 - Feature Extraction and K-Means Clustering}
+\subsubsection{Step 1 - Feature Extraction and K-Means Clustering}
 
 Histogram of Oriented Gradients (HOG) was used to extract features from images.
 
@@ -1340,7 +1342,7 @@ The HOG visualization illustrates why this feature performs well in our experime
 % =========================
 % STEP 2
 % =========================
-\subsection{Step 2 - Human Labelling of Clusters (Bootstrapping Phase)}
+\subsubsection{Step 2 - Human Labelling of Clusters (Bootstrapping Phase)}
 
 K-Means clustering was applied with different values of K:
 
@@ -1361,7 +1363,7 @@ This plot shows that increasing K improves the initial pseudo-label quality up t
 % =========================
 % STEP 3 AND STEP 4
 % =========================
-\subsection{Step 3 - Initial SVM Training and Step 4 - Active Refinement: Labelling Boundary Images}
+\subsubsection{Step 3 - Initial SVM Training and Step 4 - Active Refinement: Labelling Boundary Images}
 
 A multi-class SVM with RBF kernel (One-vs-One strategy) was used.
 
@@ -1390,9 +1392,9 @@ The bar chart quantifies the gain from SVM refinement over raw cluster labels. T
 % =========================
 % STEP 5
 % =========================
-\subsection{Step 5 - Retrain and Evaluate}
+\subsubsection{Step 5 - Retrain and Evaluate}
 
-\subsection{Accuracy}
+\subsubsection{Accuracy}
 
 \begin{table}[H]
 \centering
@@ -1410,7 +1412,7 @@ K & Before SVM (\%) & After SVM (\%) \\
 
 Table-based comparison confirms that the best operating point in Pipeline 1 is at high K with SVM refinement, reaching the 99\% target threshold.
 
-\subsection{Iterations}
+\subsubsection{Iterations}
 
 \begin{table}[H]
 \centering
@@ -1431,7 +1433,7 @@ The iteration table indicates fast convergence for all tested K values, which is
 % =========================
 % MANUAL TIME METRIC
 % =========================
-\section{Comparing Pipelines: Manual Labelling Time}
+\subsection{Comparing Pipelines: Manual Labelling Time}
 
 For K = 80:
 
@@ -1458,7 +1460,7 @@ Total time:
 % =========================
 % REPORTING
 % =========================
-\section{Reporting Requirements}
+\subsection{Reporting Requirements}
 
 The proposed pipeline significantly reduces manual labeling effort from 27.8 hours to approximately 37 minutes while achieving 99.26\% accuracy.
 
@@ -1467,14 +1469,14 @@ K-Means clustering provides strong initial labels, while SVM and active learning
 % =========================
 % PIPELINE 2
 % =========================
-\section{Pipeline 2: Manual Seed + Augmentation + Self-Training}
+\subsection{Pipeline 2: Manual Seed + Augmentation + Self-Training}
 
 This pipeline adopts a semi-supervised learning approach starting from a small, high-quality human-labelled seed set. The model progressively expands its knowledge using data augmentation, active learning, and self-training.
 
 % =========================
 % FLOWCHART (TIKZ)
 % =========================
-\subsection{Pipeline Diagram}
+\subsubsection{Pipeline Diagram}
 
 \begin{figure}[H]
 \centering
@@ -1540,7 +1542,7 @@ The Pipeline 2 diagram emphasizes a different strategy: begin from a trusted man
 % =========================
 % RESULTS
 % =========================
-\subsection{Final Results}
+\subsubsection{Final Results}
 
 The final performance of Pipeline 2 after convergence is summarized as follows:
 
@@ -1552,7 +1554,7 @@ The final performance of Pipeline 2 after convergence is summarized as follows:
     \item Estimated Manual Time: 63.33 minutes
 \end{itemize}
 
-\subsection{Iteration Progress}
+\subsubsection{Iteration Progress}
 
 The improvement in model accuracy across iterations is shown in Figure below.
 
@@ -1569,7 +1571,7 @@ This curve demonstrates the expected diminishing returns of active learning: acc
 % =========================
 % VISUALIZATION
 % =========================
-\subsection{Visualization}
+\subsubsection{Visualization}
 
 \begin{figure}[H]
 \centering
@@ -1606,7 +1608,7 @@ By Iteration 2, hard samples become more specific and fewer broad ambiguities re
 % =========================
 % MANUAL EFFORT
 % =========================
-\subsection{Manual Effort}
+\subsubsection{Manual Effort}
 
 Manual labeling consists of:
 
@@ -1628,7 +1630,7 @@ Estimated time:
 % =========================
 % COMPARISON
 % =========================
-\subsection{Comparison with Pipeline 1}
+\subsubsection{Comparison with Pipeline 1}
 
 \begin{table}[H]
 \centering
@@ -1652,7 +1654,7 @@ Pipeline 1 achieves higher accuracy due to clustering-based initialization, whil
 % =========================
 % CONCLUSION
 % =========================
-\subsection{Discussion}
+\subsubsection{Discussion}
 
 Pipeline 2 demonstrates the effectiveness of semi-supervised learning. Starting from a small, high-quality seed set, the model successfully expands its training data using both active learning and self-training.
 
@@ -1670,7 +1672,7 @@ creates a scalable and efficient labeling strategy.
 % =========================
 % PIPELINE 3
 % =========================
-\section{Pipeline 3: LLM-Based Automatic Labelling with Agreement Validation}
+\subsection{Pipeline 3: LLM-Based Automatic Labelling with Agreement Validation}
 
 Pipeline 3 was implemented with OpenRouter-based multimodal models and evaluated on the practical 500-image matrix. During experimentation, several runs were completed successfully, while some long/full runs were only partially completed because of API-credit limits (HTTP 402) and provider payload instability on some requests.
 
@@ -1683,7 +1685,7 @@ The implemented setup included:
     \item A labeled reference sheet (digits 0--9) sent as an additional context image.
 \end{itemize}
 
-\subsection{Block Diagram}
+\subsubsection{Block Diagram}
 
 \begin{figure}[H]
 \centering
@@ -1729,7 +1731,7 @@ output/.style={fill=gray!16}
 \caption{Pipeline 3 block diagram based on the assignment workflow and selected practical setup}
 \end{figure}
 
-\subsection{Step 1 Benchmarking Output}
+\subsubsection{Step 1 Benchmarking Output}
 
 \begin{table}[H]
 \centering
@@ -1748,7 +1750,7 @@ Google Gemma 4 31B Instruct (validation run) & 95.00 & Full-prompt + reference-i
 
 \noindent Based on obtained runs, the top practical candidates were \texttt{google/gemini-3-flash-preview} and \texttt{google/gemma-4-31b-it}.
 
-\subsection{Step 4 Agreement and Disagreement Outputs}
+\subsubsection{Step 4 Agreement and Disagreement Outputs}
 
 \begin{table}[H]
 \centering
@@ -1766,7 +1768,7 @@ Manual time for disagreement resolution ($N_{\text{disagree}} \times 10$ s) & To
 \caption{Pipeline 3 Step 4 outputs: selected-model setup and deployment-stage metrics}
 \end{table}
 
-\subsection{Manual Effort and Cost Summary}
+\subsubsection{Manual Effort and Cost Summary}
 
 \begin{table}[H]
 \centering
@@ -1782,7 +1784,7 @@ Estimated computational/API cost for dual-LLM run on 10,000 images & To be final
 \caption{Pipeline 3 manual-effort/cost summary for the completed work}
 \end{table}
 
-\subsection{Comparison Against Pipelines 1 and 2}
+\subsubsection{Comparison Against Pipelines 1 and 2}
 
 \begin{table}[H]
 \centering
@@ -1798,7 +1800,7 @@ Pipeline 3 & 89.47 (best practical benchmark) & 0 min (agreement stage pending) 
 \caption{Comparison table using best obtained Pipeline 3 completed-run metric}
 \end{table}
 
-\subsection{Pipeline 3 Compact Summary Table (Assignment Style)}
+\subsubsection{Pipeline 3 Compact Summary Table (Assignment Style)}
 
 \begin{table}[H]
 \centering
@@ -1814,7 +1816,11 @@ LLM\_1 \& LLM\_2 agreement strategy & Planned for extended deployment stage \\
 \caption{Pipeline 3 compact summary from obtained and pending outputs}
 \end{table}
 
-\section{References}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
 
 \begin{itemize}
     \item Project Repository: \\
