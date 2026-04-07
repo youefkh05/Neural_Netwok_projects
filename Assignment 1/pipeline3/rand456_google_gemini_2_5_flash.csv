@@ -1,0 +1,11 @@
+model,file_number,true_label,pred_label,is_correct,raw_response,error,prompt_tokens,completion_tokens,total_tokens
+google/gemini-2.5-flash,7690,5,0,0,0,,458,1,459
+google/gemini-2.5-flash,5732,4,3,0,3,,458,1,459
+google/gemini-2.5-flash,2547,0,7,0,7,,458,1,459
+google/gemini-2.5-flash,8274,3,4,0,4,,458,1,459
+google/gemini-2.5-flash,2196,6,7,0,7,,458,1,459
+google/gemini-2.5-flash,8880,9,9,1,9,,458,1,459
+google/gemini-2.5-flash,1363,1,1,1,1,,458,1,459
+google/gemini-2.5-flash,73,8,7,0,7,,458,1,459
+google/gemini-2.5-flash,3863,2,8,0,8,,458,1,459
+google/gemini-2.5-flash,5463,7,7,1,7,,458,1,459

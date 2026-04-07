@@ -1,1 +1,7 @@
-pip install numpy opencv-python scikit-image scikit-learn matplotlib
+numpy
+opencv-python
+scikit-image
+scikit-learn
+matplotlib
+requests
+python-dotenv

@@ -1,0 +1,17 @@
+{
+  "train_shape": [
+    8000,
+    28,
+    28
+  ],
+  "test_shape": [
+    2000,
+    28,
+    28
+  ],
+  "has_ground_truth_labels": true,
+  "dct_dims": 225,
+  "pca_dims_for_95": 161,
+  "hog_dims": 1296,
+  "pca_total_variance": 0.9502370357513428
+}

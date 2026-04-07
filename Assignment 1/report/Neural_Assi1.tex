@@ -9,6 +9,7 @@
 \usepackage{amsmath}
 
 \usepackage{hyperref}
+\hypersetup{hidelinks}
 
 \usepackage{xcolor}
 
@@ -21,6 +22,7 @@
 \geometry{a4paper, margin=1in}
 
 \titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\renewcommand{\labelitemi}{$\bullet$}
 
 \begin{document}
 
@@ -83,22 +85,115 @@ Submission Date: 4 April 2026
 \listoffigures
 \newpage
 % =========================
-% INTRODUCTION
+% ASSIGNMENT HEADER
 % =========================
-\section{Introduction}
+\section{Assignment 1: Classical Machine Learning methods}
 
-This report presents a semi-supervised pipeline for labeling a dataset of 10,000 handwritten digit images. The objective is to achieve high classification accuracy while minimizing manual labeling effort by combining clustering, feature extraction, and active learning.
+This report is organized into three parts. Part 1 covers the regressing problems, Part 2 presents the classical machine learning modeling tasks on ReducedMNIST, and Part 3 covers the labelling-process pipelines on Indian\_Digits\_Train.
 
 % =========================
-% PIPELINE OVERVIEW
+% PART 1
 % =========================
-\section{Pipeline Overview}
+\section{Part 1: Regressing Problems}
+
+This section is reserved for the regression problems from the assignment.
+
+% =========================
+% PART 2
+% =========================
+\section{Part 2: some classical ML modeling}
+
+Part 2 uses the recovered ground-truth labels from \texttt{pipeline3/full\_labels\_vector.csv} and evaluates three feature representations: DCT, PCA, and HOG. Each feature set was tested with K-means per class using 1, 4, 16, and 32 clusters per class, and with SVM using linear and RBF kernels.
+
+\begin{itemize}
+    \item \textbf{Best overall classifier:} HOG + RBF SVM with 99.80\% accuracy.
+    \item \textbf{Best K-means classifier:} HOG + 16 clusters per class with 99.40\% accuracy.
+    \item \textbf{PCA dimensionality:} 161 components were required to reach at least 95\% explained variance.
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{llcccccc}
+\toprule
+Classifier & Spec & \multicolumn{2}{c}{DCT\_225} & \multicolumn{2}{c}{PCA\_95} & \multicolumn{2}{c}{HOG} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+ &  & Accuracy (\%) & Time (s) & Accuracy (\%) & Time (s) & Accuracy (\%) & Time (s) \\
+\midrule
+K-means & $K=1$  & 91.55 & 0.22 & 91.65 & 0.12 & 96.90 & 6.68 \\
+K-means & $K=4$  & 95.90 & 0.65 & 95.95 & 0.63 & 98.65 & 14.98 \\
+K-means & $K=16$ & 97.60 & 1.95 & 97.75 & 1.67 & 99.40 & 22.08 \\
+K-means & $K=32$ & 97.90 & 3.47 & 97.75 & 2.53 & 99.35 & 33.54 \\
+SVM & Linear & 98.15 & 0.72 & 97.85 & 0.59 & 99.70 & 4.61 \\
+SVM & RBF & 98.55 & 1.85 & 98.95 & 2.05 & 99.80 & 11.69 \\
+\bottomrule
+\end{tabular}
+\caption{Full Part 2 comparative matrix required by the assignment}
+\end{table}
+
+\noindent The best results are HOG + RBF SVM with 99.80\% accuracy and HOG + K-means with $K=16$ at 99.40\% accuracy.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{reducedmnist_samples_grid.png}
+\caption{Sample images from the labeled dataset used in Part 2}
+\end{figure}
+
+This figure confirms that the dataset includes broad handwriting variability (stroke thickness, slant, and small shifts), which motivates using robust descriptors such as HOG and not relying only on raw pixels.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{pca_cumulative_variance.png}
+\caption{PCA cumulative explained variance curve}
+\end{figure}
+
+The PCA curve validates our component selection rule from the assignment. The retained dimensionality reaches the 95\% variance target while still reducing feature size compared with the original 784-pixel representation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{best_kmeans_confusion_matrix.png}
+\caption{Best K-means confusion matrix for Part 2}
+\end{figure}
+
+The K-means confusion matrix shows that most predictions are concentrated on the diagonal, indicating strong cluster purity in the best configuration. Remaining off-diagonal cells highlight the visually similar digits that remain difficult under centroid-based classification.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{best_svm_confusion_matrix.png}
+\caption{Best SVM confusion matrix for Part 2}
+\end{figure}
+
+Compared with K-means, the best SVM matrix has cleaner diagonal dominance and fewer confusion pockets. This directly supports the measured improvement in final accuracy for discriminative training over prototype matching.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{best_svm_support_vectors_per_class.png}
+\caption{Support vectors per class for the best SVM setup}
+\end{figure}
+
+This figure summarizes model complexity by class. Classes with higher support-vector counts are closer to decision boundaries and require more boundary constraints, while lower-count classes are separated more easily.
+
+The results show that HOG features provide the strongest representation for both clustering and classification. SVM consistently outperforms K-means, and the RBF kernel gives the best overall accuracy.
+
+% =========================
+% PART 3
+% =========================
+\section{Part 3: ways to fasten the Labelling Process}
+
+% =========================
+% PIPELINE 1
+% =========================
+\section{Pipeline 1: K-Means Bootstrapping with Active SVM Refinement}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{Pipeline1_Flowchart.png}
 \caption{Pipeline 1: K-Means + SVM + Active Learning}
 \end{figure}
+
+The flowchart highlights the main design idea of Pipeline 1: use low-cost cluster-level supervision first, then spend manual effort only on uncertain boundary samples where human labels give maximum gain.
 
 The pipeline consists of the following steps:
 \begin{itemize}
@@ -111,14 +206,14 @@ The pipeline consists of the following steps:
 \end{itemize}
 
 % =========================
-% FEATURE EXTRACTION
+% STEP 1
 % =========================
-\section{Feature Extraction}
+\section{Step 1 - Feature Extraction and K-Means Clustering}
 
 Histogram of Oriented Gradients (HOG) was used to extract features from images.
 
 \begin{itemize}
-    \item Image size: 32 × 32
+    \item Image size: 32 x 32
     \item Feature vector size: 1764
 \end{itemize}
 
@@ -128,10 +223,12 @@ Histogram of Oriented Gradients (HOG) was used to extract features from images.
 \caption{Example of HOG Feature Representation}
 \end{figure}
 
+The HOG visualization illustrates why this feature performs well in our experiments: it preserves local edge orientation patterns that are stable across many writing styles and minor geometric variations.
+
 % =========================
-% CLUSTERING
+% STEP 2
 % =========================
-\section{K-Means Clustering}
+\section{Step 2 - Human Labelling of Clusters (Bootstrapping Phase)}
 
 K-Means clustering was applied with different values of K:
 
@@ -147,10 +244,12 @@ K-Means clustering was applied with different values of K:
 \caption{K vs Accuracy Before SVM}
 \end{figure}
 
+This plot shows that increasing K improves the initial pseudo-label quality up to the tested range, because smaller and more coherent clusters reduce mixed-class assignments during cluster bootstrapping.
+
 % =========================
-% SVM AND ACTIVE LEARNING
+% STEP 3 AND STEP 4
 % =========================
-\section{SVM and Active Learning}
+\section{Step 3 - Initial SVM Training and Step 4 - Active Refinement: Labelling Boundary Images}
 
 A multi-class SVM with RBF kernel (One-vs-One strategy) was used.
 
@@ -174,10 +273,12 @@ The process stops when:
 \caption{Accuracy Before vs After SVM}
 \end{figure}
 
+The bar chart quantifies the gain from SVM refinement over raw cluster labels. The gain is larger when initial clusters are weaker, and smaller when clustering is already highly pure.
+
 % =========================
-% RESULTS
+% STEP 5
 % =========================
-\section{Results}
+\section{Step 5 - Retrain and Evaluate}
 
 \subsection{Accuracy}
 
@@ -195,6 +296,8 @@ K & Before SVM (\%) & After SVM (\%) \\
 \caption{Accuracy Comparison}
 \end{table}
 
+Table-based comparison confirms that the best operating point in Pipeline 1 is at high K with SVM refinement, reaching the required 99\% threshold.
+
 \subsection{Iterations}
 
 \begin{table}[H]
@@ -211,16 +314,18 @@ K & Iterations \\
 \caption{Number of Iterations}
 \end{table}
 
+The iteration table indicates fast convergence for all tested K values, which is consistent with using high-weight human corrections near the decision boundary.
+
 % =========================
-% MANUAL EFFORT
+% MANUAL TIME METRIC
 % =========================
-\section{Manual Effort}
+\section{Comparing Pipelines: Manual Labelling Time}
 
 For K = 80:
 
 \begin{itemize}
-    \item Cluster labeling: 80 × 8 = 640 images
-    \item Active learning: 30 × 2 = 60 images
+    \item Cluster labeling: 80 x 8 = 640 images
+    \item Active learning: 30 x 2 = 60 images
 \end{itemize}
 
 Total images manually handled:
@@ -239,9 +344,9 @@ Total time:
 \]
 
 % =========================
-% CONCLUSION
+% REPORTING
 % =========================
-\section{Conclusion}
+\section{Reporting Requirements}
 
 The proposed pipeline significantly reduces manual labeling effort from 27.8 hours to approximately 37 minutes while achieving 99.26\% accuracy.
 
@@ -317,6 +422,8 @@ output/.style={fill=red!15}
 \caption{Pipeline 2: Semi-Supervised Learning Framework}
 \end{figure}
 
+The Pipeline 2 diagram emphasizes a different strategy: begin from a trusted manual seed, then expand supervision through augmentation, confidence-based pseudo-labeling, and iterative hard-sample correction.
+
 
 % =========================
 % RESULTS
@@ -343,6 +450,8 @@ The improvement in model accuracy across iterations is shown in Figure below.
 \caption{Active Learning: Iteration vs Accuracy}
 \end{figure}
 
+This curve demonstrates the expected diminishing returns of active learning: accuracy rises rapidly in early rounds, then improvements become smaller as the model approaches convergence.
+
 
 
 % =========================
@@ -356,11 +465,15 @@ The improvement in model accuracy across iterations is shown in Figure below.
 \caption{Initial Human Seed Samples (10 per class)}
 \end{figure}
 
+The seed gallery documents the initial trusted supervision used to anchor training. Quality at this stage is critical because early label noise can propagate through later pseudo-labeling.
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{class_3_sample_0.png}
 \caption{Example of Data Augmentation (7 variants)}
 \end{figure}
+
+The augmentation example shows the controlled transformations used to improve robustness. These variants help the classifier generalize beyond exact stroke shapes seen in the manually labeled seed.
 
 \begin{figure}[H]
 \centering
@@ -368,11 +481,15 @@ The improvement in model accuracy across iterations is shown in Figure below.
 \caption{Hard Samples (Iteration 1)}
 \end{figure}
 
+Iteration 1 hard samples are primarily ambiguous boundary cases. Manually correcting these points has a high impact because they strongly influence decision surfaces.
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{hard_samples_iter_2.png}
 \caption{Hard Samples (Iteration 2)}
 \end{figure}
+
+By Iteration 2, hard samples become more specific and fewer broad ambiguities remain, which is consistent with progressive boundary tightening after each retraining cycle.
 
 % =========================
 % MANUAL EFFORT
@@ -415,6 +532,8 @@ Iterations & 2 & 4 \\
 \end{tabular}
 \caption{Pipeline Comparison}
 \end{table}
+
+This comparison shows the practical trade-off between the two approaches: Pipeline 1 achieves slightly higher final accuracy, while Pipeline 2 reduces the number of manually labeled images by design.
 
 Pipeline 1 achieves higher accuracy due to clustering-based initialization, while Pipeline 2 significantly reduces manual labeling effort by leveraging self-training. However, Pipeline 2 requires slightly more total time due to per-image labeling cost.
 

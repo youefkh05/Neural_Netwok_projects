@@ -1,0 +1,11 @@
+Part 2 Conclusions (Auto Draft)
+
+Best overall setup: feature=HOG, classifier=svm, spec=kernel=rbf,gamma=scale,C=10.0, accuracy=0.9980.
+Best K-means setup: feature=HOG, clusters_per_class=16, accuracy=0.9940.
+Best SVM setup: feature=HOG, kernel=rbf,gamma=scale,C=10.0, accuracy=0.9980.
+
+Notes:
+- DCT (225 dims), PCA (>=95% variance), and HOG were all benchmarked.
+- K-means was evaluated with 1, 4, 16, and 32 clusters per class.
+- SVM was evaluated with linear and RBF kernels.
+- Confusion matrices were generated only for the best K-means and best SVM setups as required.

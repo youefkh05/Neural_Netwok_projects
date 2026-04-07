@@ -1,10 +1,8 @@
 import os
 import cv2
 import argparse
-import random
 import numpy as np
 import matplotlib.pyplot as plt
-from check_accuracy import check_accuracy
 
 
 # ==============================
@@ -14,6 +12,7 @@ BASE_DIR = os.path.dirname(__file__)
 DATA_PATH = os.path.join(BASE_DIR, "Indian_Digits_Train")
 IMAGES_CACHE = "images.npy"
 DEFAULT_OUTPUT_DIR = os.path.join(BASE_DIR, "pipeline3")
+DEFAULT_FULL_LABELS_PATH = os.path.join(DEFAULT_OUTPUT_DIR, "full_labels_vector.csv")
 
 
 # ==============================
@@ -68,58 +67,34 @@ def show_class_samples(images, matrix, num_per_class=10, save_path=None):
 
 
 # ==============================
-# STEP 2 — Brute-force Seed Generation
+# STEP 2 — Random Seed Generation from Full Labels
 # ==============================
-def generate_seed_matrix(target_per_class=50, num_classes=10, n_images=10000, random_seed=42):
-    random.seed(random_seed)
-    np.random.seed(random_seed)
+def generate_seed_matrix_from_full_labels(
+    full_labels_path,
+    target_per_class=50,
+    num_classes=10,
+    random_seed=42,
+):
+    labels = np.loadtxt(full_labels_path, delimiter=",", dtype=int)
+    if labels.ndim != 1:
+        labels = labels.reshape(-1)
 
-    labels = np.random.randint(0, num_classes, size=n_images)
-    _, base_correct, _ = check_accuracy(labels)
-
-    found = {i: [] for i in range(num_classes)}
-    used_indices = set()
-
-    for i in range(n_images):
-        if all(len(found[d]) >= target_per_class for d in range(num_classes)):
-            print(f"[INFO] Completed {num_classes * target_per_class} samples!")
-            break
-
-        if i in used_indices:
-            continue
-
-        original = labels[i]
-
-        needed_digits = [d for d in range(num_classes) if len(found[d]) < target_per_class]
-        digits = needed_digits + [d for d in range(num_classes) if d not in needed_digits]
-        random.shuffle(digits)
-
-        for d in digits:
-            labels[i] = d
-            _, new_correct, _ = check_accuracy(labels)
-
-            if new_correct > base_correct:
-                found[d].append(i)
-                used_indices.add(i)
-                base_correct = new_correct
-
-                print(
-                    f"[FOUND] Image {i} -> Label {d} "
-                    f"({len(found[d])}/{target_per_class})"
-                )
-                break
-        else:
-            labels[i] = original
-
+    rng = np.random.default_rng(seed=random_seed)
     matrix = []
-    for d in range(num_classes):
-        if len(found[d]) < target_per_class:
-            print(f"[WARNING] Not enough samples for digit {d}: {len(found[d])}")
-        matrix.append(found[d][:target_per_class])
+
+    for digit in range(num_classes):
+        class_indices = np.where(labels == digit)[0]
+        if len(class_indices) < target_per_class:
+            raise ValueError(
+                f"Not enough samples for digit {digit}: {len(class_indices)} < {target_per_class}"
+            )
+
+        picked = rng.choice(class_indices, size=target_per_class, replace=False)
+        matrix.append(picked)
 
     matrix = np.array(matrix, dtype=int)
-
-    print("\n[INFO] Final matrix shape:", matrix.shape)
+    print(f"[INFO] Loaded full labels from: {full_labels_path}")
+    print("[INFO] Final matrix shape:", matrix.shape)
     return matrix
 
 
@@ -145,21 +120,26 @@ def save_matrix_outputs(matrix, output_dir, csv_name="label_matrix_500.csv"):
 # MAIN
 # ==============================
 def main():
-    parser = argparse.ArgumentParser(description="Pipeline 3 seed generation using check_accuracy brute force")
+    parser = argparse.ArgumentParser(description="Pipeline 3 random seed generation from full label matrix")
     parser.add_argument("--target-per-class", type=int, default=50, help="Number of samples to collect per class")
     parser.add_argument("--num-classes", type=int, default=10, help="Number of classes")
-    parser.add_argument("--n-images", type=int, default=10000, help="Number of dataset images")
     parser.add_argument("--seed", type=int, default=42, help="Random seed")
+    parser.add_argument(
+        "--full-labels-path",
+        type=str,
+        default=DEFAULT_FULL_LABELS_PATH,
+        help="Path to full labels vector CSV (10000 labels in file order)",
+    )
     parser.add_argument("--output-dir", type=str, default=DEFAULT_OUTPUT_DIR, help="Output directory")
     parser.add_argument("--csv-name", type=str, default="label_matrix_500.csv", help="CSV output file name")
     parser.add_argument("--no-preview", action="store_true", help="Disable saving preview image grid")
 
     args = parser.parse_args()
 
-    matrix = generate_seed_matrix(
+    matrix = generate_seed_matrix_from_full_labels(
+        full_labels_path=args.full_labels_path,
         target_per_class=args.target_per_class,
         num_classes=args.num_classes,
-        n_images=args.n_images,
         random_seed=args.seed,
     )
 

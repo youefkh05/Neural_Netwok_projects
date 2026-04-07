@@ -1,0 +1,41 @@
+model,file_number,true_label,pred_label,is_correct,raw_response,error,prompt_tokens,completion_tokens,total_tokens
+google/gemini-3-pro-image-preview,6971,4,4,1,4,,729,443,1172
+google/gemini-3-pro-image-preview,4976,2,,0,"**Initiating Digit Recognition**
+
+I'm starting the process of classifying a handwritten Indian digit from an image. My focus is on understanding the visual characteristics necessary for accurate identification. I'm exploring potential algorithms for feature extraction and pattern recognition to achieve this goal.
+
+
+",parse_fail,459,13,472
+google/gemini-3-pro-image-preview,2672,8,8,1,8,,729,620,1349
+google/gemini-3-pro-image-preview,9256,7,7,1,7,,729,450,1179
+google/gemini-3-pro-image-preview,5978,5,5,1,5,,729,210,939
+google/gemini-3-pro-image-preview,6355,6,,0,"**Initiating Digit Recognition**
+
+I'm now focused on understanding the core task: classifying a handwritten Indian digit. The initial stage involves framing the problem. I need to figure out the best approach to extract and identify the digit. I'm exploring the data input and will consider possible methods.
+
+
+",parse_fail,459,13,472
+google/gemini-3-pro-image-preview,7644,1,,0,"**Initiating Digit Recognition**
+
+I'm starting the process of classifying a handwritten Indian digit from an image. My focus is on understanding the visual characteristics necessary for accurate identification. I'm exploring potential algorithms for feature extraction and pattern recognition to achieve this goal.
+
+
+",parse_fail,459,13,472
+google/gemini-3-pro-image-preview,146,0,,0,"**Initiating Digit Recognition**
+
+I'm starting the process of classifying a handwritten Indian digit from an image. My focus is on understanding the visual characteristics necessary for accurate identification. I'm exploring potential algorithms for feature extraction and pattern recognition to achieve this goal.
+
+
+",parse_fail,459,13,472
+google/gemini-3-pro-image-preview,2503,3,,0,"**Initiating Digit Recognition**
+
+I'm starting the process of classifying a handwritten Indian digit from an image. My focus is on understanding the visual characteristics necessary for accurate identification. I'm exploring potential algorithms for feature extraction and pattern recognition to achieve this goal.
+
+
+",parse_fail,459,13,472
+google/gemini-3-pro-image-preview,8280,9,,0,"**Initiating Digit Recognition**
+
+I'm now focused on understanding the core task: classifying a handwritten Indian digit. The initial stage involves framing the problem. I need to figure out the best approach to extract and identify the digit. I'm exploring the data input and will consider possible methods.
+
+
+",parse_fail,459,13,472

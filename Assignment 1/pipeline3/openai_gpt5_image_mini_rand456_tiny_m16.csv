@@ -1,0 +1,11 @@
+model,file_number,true_label,pred_label,is_correct,raw_response,error,prompt_tokens,completion_tokens,total_tokens
+openai/gpt-5-image-mini,6971,4,,0,,http_400,0,0,0
+openai/gpt-5-image-mini,4976,2,,0,,http_400,0,0,0
+openai/gpt-5-image-mini,2672,8,,0,,http_400,0,0,0
+openai/gpt-5-image-mini,9256,7,,0,,http_400,0,0,0
+openai/gpt-5-image-mini,5978,5,,0,,http_400,0,0,0
+openai/gpt-5-image-mini,6355,6,,0,,http_400,0,0,0
+openai/gpt-5-image-mini,7644,1,,0,,http_400,0,0,0
+openai/gpt-5-image-mini,146,0,,0,,http_400,0,0,0
+openai/gpt-5-image-mini,2503,3,,0,,http_400,0,0,0
+openai/gpt-5-image-mini,8280,9,,0,,http_400,0,0,0
