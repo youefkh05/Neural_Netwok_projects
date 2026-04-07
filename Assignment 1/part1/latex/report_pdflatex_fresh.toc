@@ -1,0 +1,33 @@
+\contentsline {section}{PART1 : Regressing Problems}{3}{section*.3}%
+\contentsline {subsection}{Problem 1: Insurance Company}{3}{section*.4}%
+\contentsline {subsubsection}{1.1 Dataset}{3}{section*.5}%
+\contentsline {subsubsection}{1.2 Case A: WITH Outlier}{3}{section*.6}%
+\contentsline {paragraph}{\textbf {1. Scatter Plot \& Outlier Identification}}{3}{section*.7}%
+\contentsline {paragraph}{\textbf {2. Regression Models (WITH Outlier)}}{4}{section*.8}%
+\contentsline {subparagraph}{\textbf {\emph {2.}1 Linear Model}}{4}{section*.9}%
+\contentsline {subparagraph}{\textbf {2.2 Quadratic Model}}{6}{section*.15}%
+\contentsline {subparagraph}{\textbf {2.3 Cubic Model}}{8}{section*.20}%
+\contentsline {paragraph}{\textbf {3. Comparison between three models (WITH Outlier):}}{10}{section*.25}%
+\contentsline {subsubsection}{1.3 Case B: WITHOUT Outlier}{11}{section*.26}%
+\contentsline {paragraph}{\textbf {1. Outlier Removal and Scatter Plot of Cleaned Data}}{11}{section*.27}%
+\contentsline {paragraph}{\textbf {2. Regression Models (WITHOUT Outlier)}}{12}{section*.28}%
+\contentsline {subparagraph}{\textbf {2.1 Linear Model}}{12}{section*.29}%
+\contentsline {subparagraph}{\textbf {2.2 Quadratic Model}}{14}{section*.35}%
+\contentsline {subparagraph}{\textbf {2.3 Cubic Model}}{16}{section*.40}%
+\contentsline {paragraph}{\textbf {1.3 Comparison Between Three Models (Cleaned Data):}}{18}{section*.45}%
+\contentsline {subsubsection}{1.4 Best-Fit Model Selection}{19}{section*.46}%
+\contentsline {subsubsection}{1.5 Prediction of Insured People }{21}{section*.47}%
+\contentsline {subsection}{Problem 2: Heating Oil}{21}{section*.48}%
+\contentsline {subsubsection}{2.1 Dataset}{22}{section*.49}%
+\contentsline {subsubsection}{2.2 Case A: WITH Outlier}{22}{section*.50}%
+\contentsline {paragraph}{\textbf {1. Scatter Plot \& Outlier Identification}}{22}{section*.51}%
+\contentsline {paragraph}{\textbf {2. Regression Models}}{22}{section*.52}%
+\contentsline {subparagraph}{\textbf {2.1 Linear Model}}{22}{section*.53}%
+\contentsline {subparagraph}{\textbf {2.2 Quadratic Model}}{23}{section*.54}%
+\contentsline {subsubsection}{2.3 Case B: WITHOUT Outlier}{24}{section*.55}%
+\contentsline {paragraph}{\textbf {1. Scatter Plot \& Outlier Identification (WITHOUT Outlier)}}{24}{section*.56}%
+\contentsline {paragraph}{\textbf {2. Regression Models (WITHOUT Outlier)}}{25}{section*.57}%
+\contentsline {subparagraph}{\textbf {2.1 Linear Model}}{25}{section*.58}%
+\contentsline {subparagraph}{\textbf {2.2 Quadratic Model}}{26}{section*.59}%
+\contentsline {subsubsection}{2.4 Comparison of Models and Best-Fit Selection }{27}{section*.60}%
+\contentsline {subsubsection}{2.5 Prediction of Oil }{28}{section*.61}%

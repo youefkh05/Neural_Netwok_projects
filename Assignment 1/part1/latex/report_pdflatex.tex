@@ -1,0 +1,2038 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\usepackage{geometry}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{newunicodechar}
+  \newunicodechar{ᵢ}{\ensuremath{_i}}
+  \newunicodechar{₀}{\ensuremath{_0}}
+  \newunicodechar{₁}{\ensuremath{_1}}
+  \newunicodechar{₂}{\ensuremath{_2}}
+  \newunicodechar{₃}{\ensuremath{_3}}
+  \newunicodechar{₄}{\ensuremath{_4}}
+  \newunicodechar{₅}{\ensuremath{_5}}
+  \newunicodechar{₆}{\ensuremath{_6}}
+  \newunicodechar{₇}{\ensuremath{_7}}
+  \newunicodechar{₈}{\ensuremath{_8}}
+  \newunicodechar{₉}{\ensuremath{_9}}
+  \newunicodechar{⁰}{\ensuremath{^0}}
+  \newunicodechar{¹}{\ensuremath{^1}}
+  \newunicodechar{²}{\ensuremath{^2}}
+  \newunicodechar{³}{\ensuremath{^3}}
+  \newunicodechar{⁴}{\ensuremath{^4}}
+  \newunicodechar{⁵}{\ensuremath{^5}}
+  \newunicodechar{⁶}{\ensuremath{^6}}
+  \newunicodechar{⁷}{\ensuremath{^7}}
+  \newunicodechar{⁸}{\ensuremath{^8}}
+  \newunicodechar{⁹}{\ensuremath{^9}}
+  \newunicodechar{β}{\ensuremath{\beta}}
+  \newunicodechar{Σ}{\ensuremath{\Sigma}}
+  \newunicodechar{ŷ}{\ensuremath{\hat{y}}}
+  \newunicodechar{ȳ}{\ensuremath{\bar{y}}}
+  \newunicodechar{→}{\ensuremath{\to}}
+  \newunicodechar{−}{\ensuremath{-}}
+  \newunicodechar{≈}{\ensuremath{\approx}}
+  \newunicodechar{×}{\ensuremath{\times}}
+  \newunicodechar{≤}{\ensuremath{\leq}}
+  \newunicodechar{≥}{\ensuremath{\geq}}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{3pt plus 1pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt plus 1pt minus 1pt}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.2em,itemsep=2pt,topsep=3pt,parsep=0pt}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width=0.92\linewidth,keepaspectratio]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\geometry{a4paper,margin=0.75in}
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+\setlength{\abovecaptionskip}{4pt}
+\setlength{\belowcaptionskip}{0pt}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\ifPDFTeX
+  \TeXXeTstate=1
+  \newcommand{\RL}[1]{\beginR #1\endR}
+  \newcommand{\LR}[1]{\beginL #1\endL}
+  \newenvironment{RTL}{\beginR}{\endR}
+  \newenvironment{LTR}{\beginL}{\endL}
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\begin{center}
+\includegraphics[width=0.47\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image1.png}
+\includegraphics[width=0.47\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image2.png}
+\end{center}
+Cairo University
+
+Faculty of Engineering
+
+Electronics and Electrical Communications Engineering
+
+\textbf{Assignment 1}
+
+\textbf{ELC 4028 - Artificial Neural Networks}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3015}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1793}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.5191}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\emph{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{Sec}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\emph{Name}
+\end{minipage} \\
+\midrule()
+\endhead
+9220399 & \textbf{2} & \textbf{Shehda Gamal Mahmoud Hussein} \\
+9220411 & \textbf{2} & \textbf{Salah Eldin Hassan Hassan Mohamed} \\
+9220984 & \textbf{4} & \textbf{Yousef Khaled Omar Mahmoud} \\
+\bottomrule()
+\end{longtable}
+
+\emph{Supervised by:}
+
+\emph{Dr. Mohsen Rashwan}
+
+\emph{Dr. Mohamed Motaz}
+
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+
+
+\hypertarget{part1-regressing-problems}{%
+\section{PART1 : Regressing Problems}\label{part1-regressing-problems}}
+
+\hypertarget{problem-1-insurance-company}{%
+\subsection{Problem 1: Insurance
+Company}\label{problem-1-insurance-company}}
+
+The numbers of insured persons y with an insurance company for the years
+1987 to 1996 are given. We let x represent the number of years since
+1987 (x = 0 for 1987, x = 9 for 1996).
+
+\hypertarget{dataset}{%
+\subsubsection{1.1 Dataset}\label{dataset}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3205}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2671}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4124}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{x (years since 1987)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Year}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{y (insured persons)}
+\end{minipage} \\
+\midrule()
+\endhead
+0 & 1987 & 12,400 \\
+1 & 1988 & 10,900 \\
+2 & 1989 & 10,000 \\
+\textbf{3} & 1990 & \textbf{1,050 (OUTLIER)} \\
+4 & 1991 & 9,500 \\
+5 & 1992 & 8,900 \\
+6 & 1993 & 8,000 \\
+7 & 1994 & 7,800 \\
+8 & 1995 & 7,600 \\
+9 & 1996 & 7,200 \\
+\bottomrule()
+\end{longtable}
+
+\emph{* Value 1050 at x = 3 (year 1990) is the outlier --- likely a data
+entry error or anomaly.}
+
+\hypertarget{case-a-with-outlier}{%
+\subsubsection{1.2 Case A: WITH Outlier}\label{case-a-with-outlier}}
+
+\hypertarget{scatter-plot-outlier-identification}{%
+\paragraph{\texorpdfstring{\textbf{1. Scatter Plot \& Outlier
+Identification}}{1. Scatter Plot \& Outlier Identification}}\label{scatter-plot-outlier-identification}}
+
+A scatter plot of y (number of insured persons) versus x (years since
+1987) reveals a generally decreasing trend from \textasciitilde12,400
+down to \textasciitilde7,200. However, one data point stands out
+sharply:
+
+\begin{itemize}
+\item
+  x = 3 (year 1990): y = 1050
+\end{itemize}
+
+This value is dramatically lower than the surrounding data , which are
+all within the range of approximately \textbf{7,200 to 12,400}. The
+sharp drop at this point breaks the otherwise smooth downward trend.
+
+Therefore, this observation is identified as a clear outlier, most
+likely due to a data entry error (for example, a missing digit such as
+\emph{10,500} instead of \emph{1,050}).
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image3.png}
+\captionof{figure}{Scatter plot of original dataset identifying the outlier at x = 3 (y = 1050)}
+\end{center}
+
+dataset identifying the outlier at x = 3 (y = 1050)
+
+\hypertarget{regression-models-with-outlier}{%
+\paragraph{\texorpdfstring{\textbf{2. Regression Models (WITH
+Outlier)}}{2. Regression Models (WITH Outlier)}}\label{regression-models-with-outlier}}
+
+We apply both OLS and matrix-form methods to compute linear model
+parameters, then use the matrix form for quadratic and cubic models.
+
+\hypertarget{linear-model}{%
+\subparagraph{\texorpdfstring{\textbf{\emph{2.}1 Linear
+Model}}{2.1 Linear Model}}\label{linear-model}}
+
+\begin{itemize}
+\item ~
+  \hypertarget{hand-analysis-ols-method}{%
+  \subparagraph{\texorpdfstring{\textbf{Hand Analysis (OLS
+  Method)}}{Hand Analysis (OLS Method)}}\label{hand-analysis-ols-method}}
+\end{itemize}
+
+The equation for the linear model is given as follows:
+
+\[\widehat{y_{i}} = \beta_{0} + \beta_{1}x_{i}\]
+
+The key formulas used are:
+
+\(\widehat{\beta_{1}} = \frac{\sum_{i = i}^{n}{x_{i}y_{i}}\ \  - \ \ \frac{\left( \sum_{i = 1}^{n}x_{i} \right)\left( \sum_{i = 1}^{n}y_{i} \right)}{n}}{\sum_{i = 1}^{n}x_{i}^{2\ \ } - \ \ \ \frac{\left( \sum_{i = 1}^{n}x_{i} \right)^{2}}{n}}\)
+, \(\widehat{\beta_{0}} = \widehat{y}\  - \ \widehat{\beta_{i}}x\)
+
+Data Table for Hand Computation:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1098}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1122}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1572}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1572}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1974}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2663}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{year}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{xᵢ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{yᵢ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{xᵢ²}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{yᵢ²}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{xᵢyᵢ}
+\end{minipage} \\
+\midrule()
+\endhead
+1987 & 0 & 12400 & 0 & 153,760,000 & 0 \\
+1988 & 1 & 10900 & 1 & 118,810,000 & 10,900 \\
+1989 & 2 & 10000 & 4 & 100,000,000 & 20,000 \\
+1990 & 3 & 1050 & 9 & 1,102,500 & 3,150 \\
+1991 & 4 & 9500 & 16 & 90,250,000 & 38,000 \\
+1992 & 5 & 8900 & 25 & 79,210,000 & 44,500 \\
+1993 & 6 & 8000 & 36 & 64,000,000 & 48,000 \\
+1994 & 7 & 7800 & 49 & 60,840,000 & 54,600 \\
+1995 & 8 & 7600 & 64 & 57,760,000 & 60,800 \\
+1996 & 9 & 7200 & 81 & 51,840,000 & 64,800 \\
+\textbf{Σ =} & \textbf{45} & \textbf{83,350} & \textbf{285} &
+\textbf{777,572,500} & \textbf{344,750} \\
+\bottomrule()
+\end{longtable}
+
+\(n\  = \ 10\) , \(y = \frac{83350}{10} = 8335\) ,
+\(x = \frac{45}{10} = 4.5\)
+
+\(\widehat{\beta_{1}} = \frac{344,750\ \  - \ \ \frac{45\ *\ 83,350\ }{10}}{285 - \ \ \ \frac{45^{2}}{10}}\ \ \)
+\(= \  - \ 367.57\)
+
+\[\widehat{\beta_{0}} = 8335\  + 367.57\ *\ \ 4.5 = 9989.09\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{hand-analysis-matrix-form}{%
+  \subparagraph{\texorpdfstring{\textbf{Hand Analysis (Matrix
+  Form)}}{Hand Analysis (Matrix Form)}}\label{hand-analysis-matrix-form}}
+\end{itemize}
+
+\[\mathbf{\beta} = {(X^{T}X)}^{- 1}X^{T}Y\]
+
+\[\ \beta = \ \begin{pmatrix}
+\beta_{0} \\
+\beta_{1} \\
+\end{pmatrix}\ ,\ \ X = \begin{pmatrix}
+1 & 0 \\
+1 & 1 \\
+1 & 2 \\
+1 & 3 \\
+1 & 4 \\
+1 & 5 \\
+1 & 6 \\
+1 & 7 \\
+1 & 8 \\
+1 & 9 \\
+\end{pmatrix}\ ,\ Y\  = \begin{pmatrix}
+12400 \\
+10900 \\
+10000 \\
+1050 \\
+9500 \\
+8900 \\
+8000 \\
+7800 \\
+7600 \\
+7200 \\
+\end{pmatrix}\]
+
+\[\begin{pmatrix}
+\beta_{0} \\
+\beta_{1} \\
+\end{pmatrix} = \begin{pmatrix}
+9989.09 \\
+ - 367.576 \\
+\end{pmatrix}\]
+
+So ,linear equation is:
+
+\[\widehat{y_{i}} = \ 9989.09 - 367.576\ x\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{ruxb2-verification-table}{%
+  \subparagraph{\texorpdfstring{\textbf{R² Verification
+  Table}}{R² Verification Table}}\label{ruxb2-verification-table}}
+\end{itemize}
+
+\[\overline{y} = \frac{\sum_{i = 1}^{n}y_{i}}{n} = \frac{83350}{10} = 8335\]
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0877}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1328}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1417}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2303}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1949}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2126}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{year}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{xᵢ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{yᵢ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ŷᵢ =}
+\(\mathbf{\beta}_{\mathbf{0}}\mathbf{+}\mathbf{\beta}_{\mathbf{1}}\mathbf{x}_{\mathbf{i}}\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{SSE = (yᵢ − ŷᵢ)²}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{SSyy = (yᵢ − ȳ)²}
+\end{minipage} \\
+\midrule()
+\endhead
+1987 & 0 & 12400 & 9,989.1 & 5,812,483 & 16,524,225 \\
+1988 & 1 & 10900 & 9,621.5 & 1,634,524 & 6,579,225 \\
+1989 & 2 & 10000 & 9,253.9 & 556,606 & 2,772,225 \\
+1990 & 3 & 1050 & 8,886.4 & 61,408,600 & 53,071,225 \\
+1991 & 4 & 9500 & 8,518.8 & 962,777 & 1,357,225 \\
+1992 & 5 & 8900 & 8,151.2 & 560,683 & 319,225 \\
+1993 & 6 & 8000 & 7,783.6 & 46,813 & 112,225 \\
+1994 & 7 & 7800 & 7,416.1 & 147,410 & 286,225 \\
+1995 & 8 & 7600 & 7,048.5 & 304,169 & 540,225 \\
+1996 & 9 & 7200 & 6,680.9 & 269,455 & 1,288,225 \\
+\textbf{Σ =} & \textbf{45} & \textbf{83,350} & \textbf{83,350} &
+\textbf{71,703,515} & \textbf{82,850,250} \\
+\bottomrule()
+\end{longtable}
+
+\[R_{linear\ model}^{2}\  = \ \frac{SS\  - \ SSE}{SS}\  = \ \frac{82,850,250\  - \ 71,703,515}{82,850,250}\  = \ 0.13454\ \]
+
+\begin{itemize}
+\item ~
+  \hypertarget{output-graph}{%
+  \subparagraph{\texorpdfstring{\textbf{Output
+  Graph}}{Output Graph}}\label{output-graph}}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image4.png}
+\captionof{figure}{Linear Model of Original Data with Outlier}
+\end{center}
+
+\begin{itemize}
+\item ~
+  \hypertarget{simulation-results}{%
+  \subparagraph{\texorpdfstring{\textbf{Simulation
+  Results:}}{Simulation Results:}}\label{simulation-results}}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image5.png}
+\captionof{figure}{Simulation Results of Linear Model of Original Data with Outlier}
+\end{center}
+
+\hypertarget{quadratic-model}{%
+\subparagraph{\texorpdfstring{\textbf{2.2 Quadratic
+Model}}{2.2 Quadratic Model}}\label{quadratic-model}}
+
+The equation for the quadratic model is given as follows:
+
+\[\widehat{y_{i}} = \beta_{0} + \beta_{1}x_{i} + {\beta_{2}x}_{i}^{2}\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{hand-analysis-matrix-form-1}{%
+  \subparagraph{\texorpdfstring{\textbf{Hand Analysis (Matrix
+  Form)}}{Hand Analysis (Matrix Form)}}\label{hand-analysis-matrix-form-1}}
+\end{itemize}
+
+\[\beta = {(X^{T}X)}^{- 1}X^{T}Y\]
+
+\[\ \beta = \ \begin{pmatrix}
+\beta_{0} \\
+\beta_{1} \\
+\beta_{2} \\
+\end{pmatrix}\ ,\ \ X = \begin{pmatrix}
+1 & 0 & 0^{2} \\
+1 & 1 & 1^{2} \\
+1 & 2 & 2^{2} \\
+1 & 3 & 3^{2} \\
+1 & 4 & 4^{2} \\
+1 & 5 & 5^{2} \\
+1 & 6 & 6^{2} \\
+1 & 7 & 7^{2} \\
+1 & 8 & 8^{2} \\
+1 & 9 & 9^{2} \\
+\end{pmatrix}\ ,\ Y\  = \begin{pmatrix}
+12400 \\
+10900 \\
+10000 \\
+1050 \\
+9500 \\
+8900 \\
+8000 \\
+7800 \\
+7600 \\
+7200 \\
+\end{pmatrix}\]
+
+\[\begin{pmatrix}
+\beta_{0} \\
+\beta_{1} \\
+\beta_{2} \\
+\end{pmatrix} = \begin{pmatrix}
+11627.73 \\
+ - 1596.55 \\
+136.55 \\
+\end{pmatrix}\]
+
+So ,linear equation is:
+
+\[\widehat{y_{i}} = 11627.73 - 1596.55x + 136.55x^{2}\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{ruxb2-verification-table-1}{%
+  \subparagraph{\texorpdfstring{\textbf{R² Verification
+  Table}}{R² Verification Table}}\label{ruxb2-verification-table-1}}
+\end{itemize}
+
+\[\overline{y} = \frac{\sum_{i = 1}^{n}y_{i}}{n} = \frac{83350}{10} = 8335\]
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0877}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1328}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1152}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2569}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1949}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2126}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{year}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{xᵢ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{yᵢ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ŷᵢ =}
+\(\mathbf{\beta}_{\mathbf{0}}\mathbf{+}\mathbf{\beta}_{\mathbf{1}}\mathbf{x}_{\mathbf{i}}\mathbf{+}{\mathbf{\beta}_{\mathbf{2}}\mathbf{x}}_{\mathbf{i}}^{\mathbf{2}}\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{SSE = (yᵢ − ŷᵢ)²}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{SSyy = (yᵢ − ȳ)²}
+\end{minipage} \\
+\midrule()
+\endhead
+1987 & 0 & 12400 & \textbf{11,627.7} & \textbf{596,405} &
+\textbf{16,524,225} \\
+1988 & 1 & 10900 & 10,167.7 & 536,223 & 6,579,225 \\
+1989 & 2 & 10000 & 8,980.8 & 1,038,701 & 2,772,225 \\
+1990 & 3 & 1050 & 8,067.0 & 49,238,925 & 53,071,225 \\
+1991 & 4 & 9500 & 7,426.4 & 4,299,969 & 1,357,225 \\
+1992 & 5 & 8900 & 7,058.8 & 3,390,064 & 319,225 \\
+1993 & 6 & 8000 & 6,964.3 & 1,072,639 & 112,225 \\
+1994 & 7 & 7800 & 7,143.0 & 431,710 & 286,225 \\
+1995 & 8 & 7600 & 7,594.7 & 28 & 540,225 \\
+1996 & 9 & 7200 & 8,319.5 & 1,253,377 & 1,288,225 \\
+\textbf{Σ =} & \textbf{45} & \textbf{83,350} & 83,350 & 61,858,042 &
+82,850,250 \\
+\bottomrule()
+\end{longtable}
+
+\[R_{quad\ model}^{2}\  = \ \frac{SS\  - \ SSE}{SS}\  = \frac{82,850,250\mathbf{-}\ \mathbf{61,858,042}}{82,850,250} = 0.2534\ \]
+
+\begin{itemize}
+\item ~
+  \hypertarget{output-graph-1}{%
+  \subparagraph{\texorpdfstring{\textbf{Output
+  Graph}}{Output Graph}}\label{output-graph-1}}
+\item ~
+  \hypertarget{simulation-results-1}{%
+  \subparagraph{\texorpdfstring{\textbf{Simulation
+  Results:}}{Simulation Results:}}\label{simulation-results-1}}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image6.png}
+\captionof{figure}{Quadratic Model of Original Data with Outlier}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image7.png}
+\captionof{figure}{Simulation Results of Quadratic Model of Original Data with Outlier}
+\end{center}
+
+\hypertarget{cubic-model}{%
+\subparagraph{\texorpdfstring{\textbf{2.3 Cubic
+Model}}{2.3 Cubic Model}}\label{cubic-model}}
+
+The equation for the cubic model is given as follows:
+
+\[\widehat{y_{i}} = \beta_{0} + \beta_{1}x_{i} + {\beta_{2}x}_{i}^{2} + {\beta_{3}x}_{i}^{3}\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{hand-analysis-matrix-form-2}{%
+  \subparagraph{\texorpdfstring{\textbf{Hand Analysis (Matrix
+  Form)}}{Hand Analysis (Matrix Form)}}\label{hand-analysis-matrix-form-2}}
+\end{itemize}
+
+\[\mathbf{\beta =}{\mathbf{(}\mathbf{X}^{\mathbf{T}}\mathbf{X)}}^{\mathbf{- 1}}\mathbf{X}^{\mathbf{T}}\mathbf{Y}\]
+
+\[\ \mathbf{\beta =}\ \begin{pmatrix}
+\mathbf{\beta}_{0} \\
+\mathbf{\beta}_{1} \\
+\mathbf{\beta}_{2} \\
+\mathbf{\beta}_{3} \\
+\end{pmatrix}\ ,\ \ X = \begin{pmatrix}
+1 & 0^{2} & 0^{3} \\
+1 & 1^{2} & 1^{3} \\
+1 & 2^{2} & 2^{3} \\
+1 & 3^{2} & 3^{3} \\
+1 & 4^{2} & 4^{3} \\
+1 & 5^{2} & 5^{3} \\
+1 & 6^{2} & 6^{3} \\
+1 & 7^{2} & 7^{3} \\
+1 & 8^{2} & 8^{3} \\
+1 & 9^{2} & 9^{3} \\
+\end{pmatrix}\ ,\ Y\  = \begin{pmatrix}
+12400 \\
+10900 \\
+10000 \\
+1050 \\
+9500 \\
+8900 \\
+8000 \\
+7800 \\
+7600 \\
+7200 \\
+\end{pmatrix}\]
+
+\[\begin{pmatrix}
+\mathbf{\beta}_{0} \\
+\mathbf{\beta}_{1} \\
+\mathbf{\beta}_{2} \\
+\mathbf{\beta}_{3} \\
+\end{pmatrix} = \begin{pmatrix}
+13113.15 \\
+ - 4313.93 \\
+932.31 \\
+ - 58.95 \\
+\end{pmatrix}\]
+
+So ,linear equation is:
+
+\[\widehat{y_{i}} = 13113.15 - 4313.93\ x_{i}{\  + \ 932.31\ x}_{i}^{2}\ {- \ \ 58.95\ x}_{i}^{3}\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{ruxb2-verification-table-2}{%
+  \subparagraph{\texorpdfstring{\textbf{R² Verification
+  Table}}{R² Verification Table}}\label{ruxb2-verification-table-2}}
+\end{itemize}
+
+\[\overline{y} = \frac{\sum_{i = 1}^{n}y_{i}}{n} = \frac{83350}{10} = 8335\]
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0699}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0886}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1152}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.3189}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1949}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2126}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{year}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{xᵢ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{yᵢ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ŷᵢ =}
+\(\mathbf{\beta}_{\mathbf{0}}\mathbf{+}\mathbf{\beta}_{\mathbf{1}}\mathbf{x}_{\mathbf{i}}\mathbf{+}{\mathbf{\beta}_{\mathbf{2}}\mathbf{x}}_{\mathbf{i}}^{\mathbf{2}}\mathbf{+}{\mathbf{\beta}_{\mathbf{3}}\mathbf{x}}_{\mathbf{i}}^{\mathbf{3}}\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{SSE = (yᵢ − ŷᵢ)²}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{SSyy = (yᵢ − ȳ)²}
+\end{minipage} \\
+\midrule()
+\endhead
+1987 & 0 & 12400 & \textbf{13,113.1} & \textbf{508,578} &
+\textbf{16,524,225} \\
+1988 & 1 & 10900 & 9,672.6 & 1,506,542 & 6,579,225 \\
+1989 & 2 & 10000 & 7,743.0 & 5,094,123 & 2,772,225 \\
+1990 & 3 & 1050 & 6,970.7 & 35,054,266 & 53,071,225 \\
+1991 & 4 & 9500 & 7,002.0 & 6,240,214 & 1,357,225 \\
+1992 & 5 & 8900 & 7,483.2 & 2,007,341 & 319,225 \\
+1993 & 6 & 8000 & 8,060.7 & 3,684 & 112,225 \\
+1994 & 7 & 7800 & 8,380.8 & 337,334 & 286,225 \\
+1995 & 8 & 7600 & 8,089.8 & 239,940 & 540,225 \\
+1996 & 9 & 7200 & 6,834.1 & 133,864 & 1,288,225 \\
+\textbf{Σ =} & \textbf{45} & \textbf{83,350} & 83,350 & 51,125,885 &
+82,850,250 \\
+\bottomrule()
+\end{longtable}
+
+\[R_{cubic\ model}^{2}\  = \ \frac{SS\  - \ SSE}{SS}\  = \ \frac{82,850,250\  - \mathbf{51,125,885}}{82,850,250}\  = \ 0.3829\ \]
+
+\begin{itemize}
+\item ~
+  \hypertarget{output-graph-2}{%
+  \subparagraph{\texorpdfstring{\textbf{Output
+  Graph}}{Output Graph}}\label{output-graph-2}}
+\item ~
+  \hypertarget{simulation-results-2}{%
+  \subparagraph{\texorpdfstring{\textbf{Simulation
+  Results:}}{Simulation Results:}}\label{simulation-results-2}}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image8.png}
+\captionof{figure}{Cubic Model of Original Data with Outlier}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image9.png}
+\captionof{figure}{Simulation Results of Cubic Model of Original Data with Outlier}
+\end{center}
+
+\hypertarget{comparison-between-three-models-with-outlier}{%
+\paragraph{\texorpdfstring{\textbf{3. Comparison between three models
+(WITH
+Outlier):}}{3. Comparison between three models (WITH Outlier):}}\label{comparison-between-three-models-with-outlier}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1528}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.6154}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2318}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Model}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Equation (MATLAB)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{R²}
+\end{minipage} \\
+\midrule()
+\endhead
+\textbf{Linear} & \(\widehat{y_{i}} = \ 9989.09 - 367.576\ x_{i}\) &
+0.1345 \\
+\textbf{Quadratic} &
+\(\widehat{y_{i}} = 11627.73 - 1596.55{\ x}_{i} + 136.55\ x_{i}^{2}\) &
+0.2534 \\
+\textbf{Cubic} &
+\(\widehat{y_{i}} = 13113.15 - 4313.93\ x_{i}{\  + \ 932.31\ x}_{i}^{2}\ {- \ \ 58.95\ x}_{i}^{3}\)
+& 0.3829 \\
+\bottomrule()
+\end{longtable}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image10.png}
+\captionof{figure}{Comparison between three Models of Original Data with Outlier}
+\end{center}
+
+\textbf{Comment:}
+
+All R² values are low (\textless{} 0.50) due to the heavy influence of
+the outlier at x = 3 (y = 1050). The cubic model yields the highest R.
+
+\hypertarget{case-b-without-outlier}{%
+\subsubsection{1.3 Case B: WITHOUT
+Outlier}\label{case-b-without-outlier}}
+
+\hypertarget{outlier-removal-and-scatter-plot-of-cleaned-data}{%
+\paragraph{\texorpdfstring{\textbf{1. Outlier Removal and Scatter Plot
+of Cleaned
+Data}}{1. Outlier Removal and Scatter Plot of Cleaned Data}}\label{outlier-removal-and-scatter-plot-of-cleaned-data}}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image11.png}
+\captionof{figure}{Scatter Plot of Cleaned Data without Outlier}
+\end{center}
+
+\hypertarget{regression-models-without-outlier}{%
+\paragraph{\texorpdfstring{\textbf{2. Regression Models (WITHOUT
+Outlier)}}{2. Regression Models (WITHOUT Outlier)}}\label{regression-models-without-outlier}}
+
+After removing the outlier at x = 3 (y = 1,050), the cleaned dataset
+contains 9 data points. We now repeat the regression analysis using the
+same methods.
+
+\hypertarget{linear-model-1}{%
+\subparagraph{\texorpdfstring{\textbf{2.1 Linear
+Model}}{2.1 Linear Model}}\label{linear-model-1}}
+
+\begin{itemize}
+\item ~
+  \hypertarget{hand-analysis-ols-method-1}{%
+  \subparagraph{\texorpdfstring{\textbf{Hand Analysis (OLS
+  Method)}}{Hand Analysis (OLS Method)}}\label{hand-analysis-ols-method-1}}
+\end{itemize}
+
+The equation for the linear model is given as follows:
+
+\[\widehat{y_{i}} = \beta_{0} + \beta_{1}x_{i}\]
+
+Data Table for Hand Computation:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1098}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1122}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1572}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1572}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1974}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2663}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{year}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{xᵢ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{yᵢ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{xᵢ²}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{yᵢ²}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{xᵢyᵢ}
+\end{minipage} \\
+\midrule()
+\endhead
+1987 & 0 & 12,400 & 0 & 153,760,000 & 0 \\
+1988 & 1 & 10,900 & 1 & 118,810,000 & 10,900 \\
+1989 & 2 & 10,000 & 4 & 100,000,000 & 20,000 \\
+1991 & 4 & 9,500 & 16 & 90,250,000 & 38,000 \\
+1992 & 5 & 8,900 & 25 & 79,210,000 & 44,500 \\
+1993 & 6 & 8,000 & 36 & 64,000,000 & 48,000 \\
+1994 & 7 & 7,800 & 49 & 60,840,000 & 54,600 \\
+1995 & 8 & 7,600 & 64 & 57,760,000 & 60,800 \\
+1996 & 9 & 7,200 & 81 & 51,840,000 & 64,800 \\
+\textbf{Σ =} & \textbf{42} & \textbf{82,300} & \textbf{276} &
+\textbf{776,470,000} & \textbf{341,600} \\
+\bottomrule()
+\end{longtable}
+
+\(n\  = \ 9\) , \(y = \frac{82300}{9} = 9,144.44\) ,
+\(x = \frac{42}{9} = 4.667\)
+
+\(\widehat{\beta_{1}} = \frac{341,600\ \  - \ \ \frac{42*82300\ }{9}}{276 - \ \ \ \frac{42^{2}}{9}}\ \ \)
+\(= \  - \ 530.83\)
+
+\[\widehat{\beta_{0}} = 9,144.44\  + 530.83\ *\ \ 4.667 = 11,621.67\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{hand-analysis-matrix-form-3}{%
+  \subparagraph{\texorpdfstring{\textbf{Hand Analysis (Matrix
+  Form)}}{Hand Analysis (Matrix Form)}}\label{hand-analysis-matrix-form-3}}
+\end{itemize}
+
+\[\beta = {(X^{T}X)}^{- 1}X^{T}Y\]
+
+\[\ \beta = \ \begin{pmatrix}
+\beta_{0} \\
+\beta_{1} \\
+\end{pmatrix}\ ,\ \ X = \begin{pmatrix}
+1 & 0 \\
+1 & 1 \\
+1 & 2 \\
+1 & 4 \\
+1 & 5 \\
+1 & 6 \\
+1 & 7 \\
+1 & 8 \\
+1 & 9 \\
+\end{pmatrix}\ ,\ Y\  = \begin{pmatrix}
+12400 \\
+10900 \\
+10000 \\
+9500 \\
+8900 \\
+8000 \\
+7800 \\
+7600 \\
+7200 \\
+\end{pmatrix}\]
+
+\[\begin{pmatrix}
+\beta_{0} \\
+\beta_{1} \\
+\end{pmatrix} = \begin{pmatrix}
+\ 11,621.67 \\
+\  - 530.83 \\
+\end{pmatrix}\]
+
+\begin{quote}
+So ,linear equation is:
+\end{quote}
+
+\[\widehat{y_{i}} = 11,621.67\  - 530.83\ x\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{ruxb2-verification-table-3}{%
+  \subparagraph{\texorpdfstring{\textbf{R² Verification
+  Table}}{R² Verification Table}}\label{ruxb2-verification-table-3}}
+\end{itemize}
+
+\[\widehat{y_{i}}\mathbf{=}\frac{82300}{\mathbf{9}}\mathbf{=}9,144.44\]
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0877}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1328}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1417}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2303}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1949}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2126}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{year}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{xᵢ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{yᵢ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ŷᵢ =}
+\(\mathbf{\beta}_{\mathbf{0}}\mathbf{+}\mathbf{\beta}_{\mathbf{1}}\mathbf{x}_{\mathbf{i}}\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{SSE = (yᵢ − ŷᵢ)²}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{SSyy = (yᵢ − ȳ)²}
+\end{minipage} \\
+\midrule()
+\endhead
+1987 & 0 & 12400 & 11621.7 & 605,803 & 10,598,642 \\
+1988 & 1 & 10900 & 11090.8 & 36,417 & 3,081,975 \\
+1989 & 2 & 10000 & 10560.0 & 313,600 & 731,975 \\
+1991 & 4 & 9500 & 9498.3 & 3 & 126,420 \\
+1992 & 5 & 8900 & 8967.5 & 4,556 & 59,753 \\
+1993 & 6 & 8000 & 8436.7 & 190,678 & 1,309,753 \\
+1994 & 7 & 7800 & 7905.8 & 11,201 & 1,807,531 \\
+1995 & 8 & 7600 & 7375.0 & 50,625 & 2,385,309 \\
+1996 & 9 & 7200 & 6844.2 & 126,617 & 3,780,864 \\
+\textbf{Σ =} & \textbf{42} & \textbf{82,300} & \textbf{82300.0} &
+\textbf{1,339,500} & \textbf{23,882,222} \\
+\bottomrule()
+\end{longtable}
+
+\[R_{linear\ model}^{2}\  = \ \frac{SS\  - \ SSE}{SS}\  = \ \frac{23,882,222\  - \ 1,339,500}{23,882,222}\  = \ 0.9439\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{output-graph-3}{%
+  \subparagraph{\texorpdfstring{\textbf{Output
+  Graph}}{Output Graph}}\label{output-graph-3}}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image12.png}
+\captionof{figure}{Linear Model of Cleaned Data without Outlier}
+\end{center}
+
+\begin{itemize}
+\item ~
+  \hypertarget{simulation-results-3}{%
+  \subparagraph{\texorpdfstring{\textbf{Simulation
+  Results:}}{Simulation Results:}}\label{simulation-results-3}}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image13.png}
+\captionof{figure}{Simulation Results of Linear Model of Cleaned Data without Outlier}
+\end{center}
+
+\hypertarget{quadratic-model-1}{%
+\subparagraph{\texorpdfstring{\textbf{2.2 Quadratic
+Model}}{2.2 Quadratic Model}}\label{quadratic-model-1}}
+
+The equation for the quadratic model is given as follows:
+
+\[\widehat{y_{i}} = \beta_{0} + \beta_{1}x_{i} + {\beta_{2}x}_{i}^{2}\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{hand-analysis-matrix-form-4}{%
+  \subparagraph{\texorpdfstring{\textbf{Hand Analysis (Matrix
+  Form)}}{Hand Analysis (Matrix Form)}}\label{hand-analysis-matrix-form-4}}
+\end{itemize}
+
+\[\mathbf{\beta =}{\mathbf{(}\mathbf{X}^{\mathbf{T}}\mathbf{X)}}^{\mathbf{- 1}}\mathbf{X}^{\mathbf{T}}\mathbf{Y}\]
+
+\[\mathbf{\ \beta = \ }\begin{pmatrix}
+\mathbf{\beta}_{\mathbf{0}} \\
+\mathbf{\beta}_{\mathbf{1}} \\
+\mathbf{\beta}_{\mathbf{2}} \\
+\end{pmatrix}\mathbf{\ }\mathbf{,\ \ X =}\begin{pmatrix}
+\mathbf{1} & \mathbf{0} & \mathbf{0}^{\mathbf{2}} \\
+\mathbf{1} & \mathbf{1} & \mathbf{1}^{\mathbf{2}} \\
+\mathbf{1} & \mathbf{2} & \mathbf{2}^{\mathbf{2}} \\
+\mathbf{1} & \mathbf{4} & \mathbf{4}^{\mathbf{2}} \\
+\mathbf{1} & \mathbf{5} & \mathbf{5}^{\mathbf{2}} \\
+\mathbf{1} & \mathbf{6} & \mathbf{6}^{\mathbf{2}} \\
+\mathbf{1} & \mathbf{7} & \mathbf{7}^{\mathbf{2}} \\
+\mathbf{1} & \mathbf{8} & \mathbf{8}^{\mathbf{2}} \\
+\mathbf{1} & \mathbf{9} & \mathbf{9}^{\mathbf{2}} \\
+\end{pmatrix}\mathbf{\ ,\ Y\  =}\begin{pmatrix}
+\mathbf{12400} \\
+\mathbf{10900} \\
+\mathbf{10000} \\
+\mathbf{9500} \\
+\mathbf{8900} \\
+\mathbf{8000} \\
+\mathbf{7800} \\
+\mathbf{7600} \\
+\mathbf{7200} \\
+\end{pmatrix}\]
+
+\[\begin{pmatrix}
+\mathbf{\beta}_{\mathbf{0}} \\
+\mathbf{\beta}_{\mathbf{1}} \\
+\mathbf{\beta}_{\mathbf{2}} \\
+\end{pmatrix}\mathbf{=}\begin{pmatrix}
+\mathbf{12,024.17} \\
+\mathbf{\  - 863.13\ } \\
+\mathbf{37.44} \\
+\end{pmatrix}\]
+
+So ,linear equation is:
+
+\[\widehat{\mathbf{y}_{\mathbf{i}}}\mathbf{=}\mathbf{12,024.17\  - 863.13\ }\mathbf{x +}\mathbf{37.44}\mathbf{\ }\mathbf{x}^{\mathbf{2}}\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{ruxb2-verification-table-4}{%
+  \subparagraph{\texorpdfstring{\textbf{R² Verification
+  Table}}{R² Verification Table}}\label{ruxb2-verification-table-4}}
+\end{itemize}
+
+\[\overline{y} = \frac{\sum_{i = 1}^{n}y_{i}}{n} = \frac{\mathbf{82,300}}{9} = 9,144.44\]
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0877}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1328}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1152}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2569}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1949}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2126}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{year}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{xᵢ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{yᵢ}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ŷᵢ =}
+\(\mathbf{\beta}_{\mathbf{0}}\mathbf{+}\mathbf{\beta}_{\mathbf{1}}\mathbf{x}_{\mathbf{i}}\mathbf{+}{\mathbf{\beta}_{\mathbf{2}}\mathbf{x}}_{\mathbf{i}}^{\mathbf{2}}\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{SSE = (yᵢ − ŷᵢ)²}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{SSyy = (yᵢ − ȳ)²}
+\end{minipage} \\
+\midrule()
+\endhead
+1987 & 0 & 12400 & 12024.2 & 141,248 & 10,598,642 \\
+1988 & 1 & 10900 & 11198.5 & 89,090 & 3,081,975 \\
+1989 & 2 & 10000 & 10447.7 & 200,411 & 731,975 \\
+1991 & 4 & 9500 & 9170.7 & 108,429 & 126,420 \\
+1992 & 5 & 8900 & 8644.6 & 65,249 & 59,753 \\
+1993 & 6 & 8000 & 8193.3 & 37,362 & 1,309,753 \\
+1994 & 7 & 7800 & 7816.9 & 286 & 1,807,531 \\
+1995 & 8 & 7600 & 7515.4 & 7,156 & 2,385,309 \\
+1996 & 9 & 7200 & 7288.8 & 7,884 & 3,780,864 \\
+\textbf{Σ =} & \textbf{42} & \textbf{82,300} & \textbf{82300.0} &
+\textbf{657,116} & \textbf{23,882,222} \\
+\bottomrule()
+\end{longtable}
+
+\[\mathbf{R}_{\mathbf{quad\ model}}^{\mathbf{2}}\mathbf{\  = \ }\frac{\mathbf{SS\  - \ SSE}}{\mathbf{SS}}\mathbf{\  =}\frac{\mathbf{23,882,222}\mathbf{- \ }\mathbf{657,116}}{\mathbf{23,882,222}}\mathbf{= 0.9725\ }\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{output-graph-4}{%
+  \subparagraph{\texorpdfstring{\textbf{Output
+  Graph}}{Output Graph}}\label{output-graph-4}}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image14.png}
+\captionof{figure}{Quadratic Model of Cleaned Data without Outlier}
+\end{center}
+
+Cleaned Data without Outlier
+
+\begin{itemize}
+\item ~
+  \hypertarget{simulation-results-4}{%
+  \subparagraph{\texorpdfstring{\textbf{Simulation
+  Results:}}{Simulation Results:}}\label{simulation-results-4}}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image15.png}
+\captionof{figure}{Simulation Results of Quadratic Model of Cleaned Data without Outlier}
+\end{center}
+
+\hypertarget{cubic-model-1}{%
+\subparagraph{\texorpdfstring{\textbf{2.3 Cubic
+Model}}{2.3 Cubic Model}}\label{cubic-model-1}}
+
+The equation for the cubic model is given as follows:
+
+\[\widehat{y_{i}} = \beta_{0} + \beta_{1}x_{i} + {\beta_{2}x}_{i}^{2} + {\beta_{3}x}_{i}^{3}\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{hand-analysis-matrix-form-5}{%
+  \subparagraph{\texorpdfstring{\textbf{Hand Analysis (Matrix
+  Form)}}{Hand Analysis (Matrix Form)}}\label{hand-analysis-matrix-form-5}}
+\end{itemize}
+
+\[\mathbf{\beta =}{\mathbf{(}\mathbf{X}^{\mathbf{T}}\mathbf{X)}}^{\mathbf{- 1}}\mathbf{X}^{\mathbf{T}}\mathbf{Y}\]
+
+\[\ \mathbf{\beta =}\ \begin{pmatrix}
+\mathbf{\beta}_{0} \\
+\mathbf{\beta}_{1} \\
+\mathbf{\beta}_{2} \\
+\mathbf{\beta}_{3} \\
+\end{pmatrix}\ ,\ \ X = \begin{pmatrix}
+1 & 0^{2} & 0^{3} \\
+1 & 1^{2} & 1^{3} \\
+1 & 2^{2} & 2^{3} \\
+1 & 4^{2} & 4^{3} \\
+1 & 5^{2} & 5^{3} \\
+1 & 6^{2} & 6^{3} \\
+1 & 7^{2} & 7^{3} \\
+1 & 8^{2} & 8^{3} \\
+1 & 9^{2} & 9^{3} \\
+\end{pmatrix}\ ,\ Y\  = \begin{pmatrix}
+12400 \\
+10900 \\
+10000 \\
+9500 \\
+8900 \\
+8000 \\
+7800 \\
+7600 \\
+7200 \\
+\end{pmatrix}\]
+
+\[\begin{pmatrix}
+\mathbf{\beta}_{0} \\
+\mathbf{\beta}_{1} \\
+\mathbf{\beta}_{2} \\
+\mathbf{\beta}_{3} \\
+\end{pmatrix} = \begin{pmatrix}
+12,204.42 \\
+\  - 1,221.74 \\
+140.17 \\
+ - 7.46 \\
+\end{pmatrix}\]
+
+So ,linear equation is:
+
+\[\widehat{y_{i}} = \mathbf{12,204.42\  - 1,221.74}\ x_{i}{\  + \ \mathbf{140.17}\ x}_{i}^{2}\ {- \ \ \mathbf{7.46}\ x}_{i}^{3}\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{ruxb2-verification-table-5}{%
+  \subparagraph{\texorpdfstring{\textbf{R² Verification
+  Table}}{R² Verification Table}}\label{ruxb2-verification-table-5}}
+\end{itemize}
+
+\[\overline{y} = \frac{\sum_{i = 1}^{n}y_{i}}{n} = \frac{82,300\ }{9} = 9,144.44\]
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0959}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0839}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1353}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2937}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1874}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2038}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{year}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{xᵢ}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{yᵢ}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{ŷᵢ =}
+\(\mathbf{\beta}_{\mathbf{0}}\mathbf{+}\mathbf{\beta}_{\mathbf{1}}\mathbf{x}_{\mathbf{i}}\mathbf{+}{\mathbf{\beta}_{\mathbf{2}}\mathbf{x}}_{\mathbf{i}}^{\mathbf{2}}\mathbf{+}{\mathbf{\beta}_{\mathbf{3}}\mathbf{x}}_{\mathbf{i}}^{\mathbf{3}}\)
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{SSE = (yᵢ − ŷᵢ)²}
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+\textbf{SSyy = (yᵢ − ȳ)²}
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1987
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+0
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+12400
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+12204.4
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+38,251
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+10,598,642
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1988
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+10900
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+11115.4
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+46,392
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+3,081,975
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1989
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+2
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+10000
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+10261.9
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+68,595
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+731,975
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1991
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+4
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+9500
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+8666.9
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+174,339
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+126,420
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1992
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+5
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+8900
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+8307.8
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+54,323
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+59,753
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1993
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+6
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+8000
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+7960.3
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+94,746
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1,309,753
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1994
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+7
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+7800
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+7579.7
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+25,702
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1,807,531
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1995
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+8
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+7600
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+7121.1
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+413
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+2,385,309
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1996
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+9
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+7200
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\textbf{82300.0}
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+6,227
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+3,780,864
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\textbf{Σ =}
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\textbf{42}
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+82,300
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+12204.4
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\textbf{508,988}
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\textbf{23,882,222}
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+\[R_{cubic\ model}^{2}\  = \ \frac{SS\  - \ SSE}{SS}\  = \ \frac{\mathbf{23,882,222}\  - \mathbf{508,988}}{\mathbf{23,882,222}}\  = \ 0.9787\]
+
+\begin{itemize}
+\item ~
+  \hypertarget{output-graph-5}{%
+  \subparagraph{\texorpdfstring{\textbf{Output
+  Graph}}{Output Graph}}\label{output-graph-5}}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image16.png}
+\captionof{figure}{Cubic Model of Cleaned Data without Outlier}
+\end{center}
+
+\begin{itemize}
+\item ~
+  \hypertarget{simulation-results-5}{%
+  \subparagraph{\texorpdfstring{\textbf{Simulation
+  Results:}}{Simulation Results:}}\label{simulation-results-5}}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image17.png}
+\captionof{figure}{Simulation Results of Cubic Model of Cleaned Data without Outlier}
+\end{center}
+
+\hypertarget{comparison-between-three-models-cleaned-data}{%
+\paragraph{\texorpdfstring{\textbf{1.3 Comparison Between Three Models
+(Cleaned
+Data):}}{1.3 Comparison Between Three Models (Cleaned Data):}}\label{comparison-between-three-models-cleaned-data}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1446}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.6643}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1911}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Model}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Equation (MATLAB)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{R²}
+\end{minipage} \\
+\midrule()
+\endhead
+\textbf{Linear} & \(\widehat{y_{i}} = 11,621.67\  - 530.83\ x\) &
+0.9439 \\
+\textbf{Quadratic} &
+\(\widehat{y_{i}} = 12,024.17\  - 863.13\ x + 37.44\ x^{2}\) & 0.9725 \\
+\textbf{Cubic} &
+\(\widehat{y_{i}} = 12,204.42\  - 1,221.74\ x_{i}{\  + \ 140.17\ x}_{i}^{2}\ {- \ \ 7.46\ x}_{i}^{3}\)
+& 0.9787 \\
+\bottomrule()
+\end{longtable}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image18.png}
+\captionof{figure}{Comparison between three Models of Cleamed Data without Outlier}
+\end{center}
+
+\textbf{Comment:}
+
+All three R² values are very high (\textgreater{} 0.94) after removing
+the outlier, confirming that it was the primary source of distortion.
+The linear model alone explains 94.4\% of the variance.
+
+\hypertarget{best-fit-model-selection}{%
+\subsubsection{1.4 Best-Fit Model
+Selection}\label{best-fit-model-selection}}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image19.png}
+\captionof{figure}{R-square Comparison between three Models}
+\end{center}
+\textbf{R² Comparison}
+
+between three Models
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1043}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1252}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3467}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4237}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Model}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Parameters}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{R² (Original)} → \textbf{R² (Cleaned)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Gain in R² (Original)} → \textbf{Gain in} \textbf{R² (Cleaned)}
+\end{minipage} \\
+\midrule()
+\endhead
+Linear & 2 & 0.1345 → 0.9439 & --- \\
+Quadratic & 3 & 0.2534 → 0.9725 & +0.1189 → +0.0286 \\
+Cubic & 4 & 0.3829 → 0.9787 & +0.1295 → +0.0062 \\
+\bottomrule()
+\end{longtable}
+
+\textbf{Conclusion (with outlier):}
+
+\begin{itemize}
+\item
+  Linear → Quadratic: R² gain = 0.1189 (significant) → Quadratic is
+  better.
+\item
+  Quadratic → Cubic: R² gain = 0.1295 (significant) → Cubic is better.
+\end{itemize}
+
+\textbf{Best-fit model (with outlier): Cubic ŷ = 13113.15 -- 4313.93 x +
+932.31 x² -- 58.95} \(\mathbf{x}^{\mathbf{3}}\) \textbf{(R² = 0.3829)}
+
+\textbf{Conclusion (without outlier):}
+
+\begin{itemize}
+\item
+  \begin{quote}
+  Linear → Quadratic: R² gain = 0.0286 (significant) → Quadratic is
+  better.
+  \end{quote}
+\item
+  \begin{quote}
+  Quadratic → Cubic: R² gain = 0.0062 → gain is NOT significant enough.
+  \end{quote}
+\end{itemize}
+
+\textbf{Best-fit model (without outlier): Quadratic ŷ = 12,024.17 − 863.13 x + 37.44 x² (R² = 0.972)}
+
+\begin{center}
+\includegraphics[width=0.65\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image21.png}
+\captionof{figure}{Best Fit Model without Outlier}
+\end{center}
+\begin{center}
+\includegraphics[width=0.65\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image20.png}
+\captionof{figure}{Simulation Results of Best Fit Model with Outlier}
+\end{center}
+\begin{center}
+\includegraphics[width=0.65\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image22.png}
+\captionof{figure}{Best Fit Model with Outlier}
+\end{center}
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image23.png}
+\captionof{figure}{SImulation Results of Best Fit Model without Outlier}
+\end{center}
+
+\hypertarget{prediction-of-insured-people}{%
+\subsubsection{\texorpdfstring{1.5 Prediction of Insured People
+}{1.5 Prediction of Insured People }}\label{prediction-of-insured-people}}
+
+\textbf{At year 1997 (x=10) :}
+
+\begin{itemize}
+\item
+  \begin{quote}
+  Using the best-fit model from the original data with outlier (Cubic
+  model as selected):
+  \end{quote}
+\end{itemize}
+
+\[\widehat{y_{i}} = 13113.15 - 4313.93\ x_{i}{\  + \ 932.31\ x}_{i}^{2}\ {- \ \ 58.95\ x}_{i}^{3}\]
+
+\begin{quote}
+ŷ = 13113.15 − 4313.93(10) + 932.31(10²) − 58.95(10³)= 4,254.85
+\end{quote}
+
+\textbf{Insured People ≈ 4,254.85 insured person}
+
+\begin{itemize}
+\item
+  \begin{quote}
+  Using the best-fit model from the cleaned data without outlier
+  (Quadratic model as selected):
+  \end{quote}
+\end{itemize}
+
+\[\widehat{y_{i}} = 12,024.17\  - 863.13\ x + 37.44\ x^{2}\]
+
+ŷ = 12,024.17 − 863.13(10) + 37.44(10²) = 7,136.87
+
+\textbf{Insured People ≈ 7,136.87 insured person}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image24.png}
+\captionof{figure}{Simulation Results of Predection Insured People at year 1997}
+\end{center}
+
+Predection Insured People at year 1997
+
+\hypertarget{problem-2-heating-oil}{%
+\subsection{Problem 2: Heating Oil}\label{problem-2-heating-oil}}
+
+We develop a regression model to estimate heating oil usage for a
+single-family home in January, based on two predictors: average
+temperature (Temp, in °F) and amount of insulation (Insulation, in
+inches).
+
+\hypertarget{dataset-1}{%
+\subsubsection{2.1 Dataset}\label{dataset-1}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Oil (gallons)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Temp (°F)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Insulation (in)}
+\end{minipage} \\
+\midrule()
+\endhead
+270 & 40 & 4 \\
+362 & 27 & 4 \\
+162 & 40 & 10 \\
+45 & 73 & 6 \\
+91 & 65 & 7 \\
+\textbf{233} & \textbf{65} & \textbf{40 ← OUTLIER} \\
+372 & 10 & 6 \\
+305 & 9 & 10 \\
+234 & 24 & 10 \\
+122 & 65 & 4 \\
+25 & 66 & 10 \\
+210 & 41 & 6 \\
+450 & 22 & 4 \\
+325 & 40 & 4 \\
+52 & 60 & 10 \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{case-a-with-outlier-1}{%
+\subsubsection{2.2 Case A: WITH Outlier}\label{case-a-with-outlier-1}}
+
+\hypertarget{scatter-plot-outlier-identification-1}{%
+\paragraph{\texorpdfstring{\textbf{1. Scatter Plot \& Outlier
+Identification}}{1. Scatter Plot \& Outlier Identification}}\label{scatter-plot-outlier-identification-1}}
+
+A 3D scatter plot of Oil Usage vs. Temperature and Insulation reveals
+that one data point is far outside the cluster formed by the other
+observations: the point (Temp=65°F, Insulation=40 in, Oil=233 gallons).
+All other insulation values range from 4 to 10 inches; an insulation
+thickness of 40 inches is physically unreasonable for a typical
+single-family home and is almost certainly a data entry error (e.g., the
+value 4 recorded as 40). This point is identified as the outlier and is
+highlighted in red in the scatter plot below.
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image25.png}
+\captionof{figure}{3D Scatter Plot to Detect Outlier (outlier in red: Insulation=40)}
+\end{center}
+
+Detect Outlier (outlier in red: Insulation=40)
+
+\hypertarget{regression-models}{%
+\paragraph{\texorpdfstring{\textbf{2. Regression
+Models}}{2. Regression Models}}\label{regression-models}}
+
+\hypertarget{linear-model-2}{%
+\subparagraph{\texorpdfstring{\textbf{2.1 Linear
+Model}}{2.1 Linear Model}}\label{linear-model-2}}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image26.png}
+\captionof{figure}{3D Linear Regression Surface (With Outlier), R2 = 0.6967}
+\end{center}
+
+The multivariate linear model has the form:
+
+\[Oil = \beta_{0} + \beta_{1}*\ T\  + \beta_{2}*\ I\ \]
+
+where T = Temp, I = Insulation
+
+\[Oil = 426.97\  - \ 5.274*T\  + 1.966*I\ \]
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image27.png}
+\captionof{figure}{Simulation Results of Linear Regression Surface (With Outlier)}
+\end{center}
+
+So, the linear fit equation for the original dataset is:
+
+\[\widehat{y_{i}} = 426.97 - \ 5.27x_{1i} + 1.966\ \ x_{2i}\]
+
+The Coefficient of Determination (R²):
+
+R² (Linear, With Outlier) = 0.6967
+
+\hypertarget{quadratic-model-2}{%
+\subparagraph{\texorpdfstring{\textbf{2.2 Quadratic
+Model}}{2.2 Quadratic Model}}\label{quadratic-model-2}}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image28.png}
+\captionof{figure}{3D Quadratic Regression Surface (With Outlier), R2 = 0.9742}
+\end{center}
+
+Surface (With Outlier), R² = 0.9742
+
+The multivariate linear model has the form:
+
+\[Oil = \beta_{0} + \beta_{1}\ T\  + \beta_{2}\ I\  + \beta_{3}T^{2} + \beta_{4}TI + \beta_{5}{\ I}^{2}\]
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image29.png}
+\captionof{figure}{Simulation Results of Quadratic Regression Surface (With Outlier)}
+\end{center}
+where T = Temp, I = Insulation
+
+\[Oil = 680.03\  - \ 6.168\ T\  - \ 41.716\ I\  - \ 0.01248\ T^{2} + 0.2392\ TI + 0.6586{\ I}^{2}\]
+
+So, the quadratic fit equation for the original dataset is:
+
+\[\widehat{y_{i}} = 680\  - \ 6.17x_{1i} - 41.72\ x_{2i} - \ 0.012\ x_{1i}^{2} + 0.24\ x_{1i}x_{2i} + 0.66\ x_{2i}^{2}\]
+
+The Coefficient of Determination (R²):
+
+R² (Quadratic, With Outlier) = 0.9742
+
+\hypertarget{case-b-without-outlier-1}{%
+\subsubsection{2.3 Case B: WITHOUT
+Outlier}\label{case-b-without-outlier-1}}
+
+\hypertarget{scatter-plot-outlier-identification-without-outlier}{%
+\paragraph{\texorpdfstring{\textbf{1. Scatter Plot \& Outlier
+Identification (WITHOUT
+Outlier)}}{1. Scatter Plot \& Outlier Identification (WITHOUT Outlier)}}\label{scatter-plot-outlier-identification-without-outlier}}
+
+The data point (Temp=65, Insulation=40, Oil=233) is removed. All
+remaining 14 data points have insulation values between 4 and 10 inches,
+which is physically reasonable. The cleaned scatter plot is shown below.
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image30.png}
+\captionof{figure}{3D Scatter Plot (Cleaned Data, Outlier Removed)}
+\end{center}
+
+\hypertarget{regression-models-without-outlier-1}{%
+\paragraph{\texorpdfstring{\textbf{2. Regression Models (WITHOUT
+Outlier)}}{2. Regression Models (WITHOUT Outlier)}}\label{regression-models-without-outlier-1}}
+
+\hypertarget{linear-model-3}{%
+\subparagraph{\texorpdfstring{\textbf{2.1 Linear
+Model}}{2.1 Linear Model}}\label{linear-model-3}}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image31.png}
+\captionof{figure}{3D Linear Regression Surface (Cleaned Data), R2 = 0.9606}
+\end{center}
+
+Surface (Cleaned Data), R² = 0.9606
+
+The multivariate linear model has the form:
+
+\[Oil = \beta_{0} + \beta_{1}*\ T\  + \beta_{2}*\ I\ \]
+
+where T = Temp, I = Insulation
+
+\[Oil = 601.6\  - \ 5.482\ T\  - \ 23.232\ I\ \]
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image32.png}
+\captionof{figure}{Simulation Results of Linear Regression Surface (Cleaned Data)}
+\end{center}
+
+So, the linear fit equation for the original dataset is:
+
+\[\widehat{y_{i}} = 601.6 - \ 5.482\ x_{1i} + 23.232\ \ x_{2i}\]
+
+The Coefficient of Determination (R²):
+
+R² (Linear, With Outlier) = 0.96061
+
+\hypertarget{quadratic-model-3}{%
+\subparagraph{\texorpdfstring{\textbf{2.2 Quadratic
+Model}}{2.2 Quadratic Model}}\label{quadratic-model-3}}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image33.png}
+\captionof{figure}{3D Quadratic Regression Surface (Cleaned Data), R² = 0.9769}
+\end{center}
+
+Surface (Cleaned Data), R² = 0.9769
+
+The multivariate quadratic model has the form:
+
+\[Oil = \beta_{0} + \beta_{1}\ T\  + \beta_{2}\ I\  + \beta_{3}T^{2} + \beta_{4}TI + \beta_{5}{\ I}^{2}\]
+
+where T = Temp, I = Insulation
+
+\[Oil = 785.52 - \ 6.963\ T\  - \ 72.159\ I\  - \ 0.00348\ T^{2} + 0.2567\ TI + 2.7438{\ I}^{2}\]
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image34.png}
+\captionof{figure}{Simulation Results of Quadratic Regression Surface (Cleaned Data)}
+\end{center}
+
+So, the linear fit equation for the original dataset is:
+
+\[\widehat{y_{i}} = 785.52\  - \ 6.963\ x_{1i} - 72.159\ x_{2i} - \ 0.00348\ x_{1i}^{2} + 0.2567\ x_{1i}x_{2i} + 2.7438\ x_{2i}^{2}\]
+
+The Coefficient of Determination (R²):
+
+R² (Quadratic, With Outlier) = 0.9769
+
+\hypertarget{comparison-of-models-and-best-fit-selection}{%
+\subsubsection{\texorpdfstring{2.4 Comparison of Models and Best-Fit
+Selection
+}{2.4 Comparison of Models and Best-Fit Selection }}\label{comparison-of-models-and-best-fit-selection}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2504}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1726}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1778}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1778}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2214}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Model}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{R² (With Outlier)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{R² ² (Without Outlier)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Gain (With Outlier)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Gain ² (Without Outlier)}
+\end{minipage} \\
+\midrule()
+\endhead
+Linear & 0.6967 & 0.9606 & --- & --- \\
+Quadratic & 0.9742 & 0.9769 & +0.2775 & +0.0163 \\
+\bottomrule()
+\end{longtable}
+
+\textbf{Conclusion (Part a --- With Outlier):}
+
+Linear → Quadratic gain = +0.2775
+
+\textbf{Best-fit model (with outlier): Quadratic (R² = 0.9742).}
+
+\textbf{\hfill\break
+Conclusion (Part b --- Without Data):}
+
+Linear → Quadratic gain = +0.0163 (NOT significant enough).
+
+\textbf{Best-fit model (without outlier): Linear (R² = 0.9606).}
+
+\begin{center}
+\includegraphics[width=0.75\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image35.png}
+\captionof{figure}{Best Fit Model of Cleaned Data (Linear Model)}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.75\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image36.png}
+\captionof{figure}{Best Fit Model of Original Data (Quadratic Model)}
+\end{center}
+After removing the outlier, the linear model already achieves R² = 0.9606. The
+gain from linear to quadratic is only +0.0163, which is NOT significant
+enough as specified in Note 4 of the assignment.
+
+\begin{itemize}
+\item
+  \begin{quote}
+  \textbf{Simulation Results:}
+  \end{quote}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image37.png}
+\captionof{figure}{Simulation Results of Best Fit Model}
+\end{center}
+
+\hypertarget{prediction-of-oil}{%
+\subsubsection{\texorpdfstring{2.5 Prediction of Oil
+}{2.5 Prediction of Oil }}\label{prediction-of-oil}}
+
+Temp =15°F, Insulation = 5 inches
+
+The linear model could be abstracted as follows:
+
+\emph{ŷᵢ = β₀ + β₁x₁ᵢ + β₂x₂ᵢ}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Linear Model}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Data with Outlier}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Data without Outlier}
+
+\textbf{(Best Fit)}
+\end{minipage} \\
+\midrule()
+\endhead
+\textbf{β₀} & 427 & 601.6 \\
+\textbf{β₁} & - 5.273 & - 5.482 \\
+\textbf{β₂} & 1.966 & - 23.23 \\
+\textbf{R²} & 0.6966 & 0.9606 \\
+\textbf{ŷ(temp = 15, insulation = 5)} & 357.7 & 403.22 \\
+\bottomrule()
+\end{longtable}
+
+\begin{itemize}
+\item
+  \begin{quote}
+  Using the best-fit model from the cleaned data without outlier (Linear
+  model as selected):
+  \end{quote}
+\end{itemize}
+
+Oil = 601.60 − 5.482 * 15 − 23.232 * 5 = 403.21
+
+\textbf{Predicted Oil Usage ≈ 403.2 gallons}
+
+\begin{itemize}
+\item
+  \begin{quote}
+  \textbf{Simulation Results:}
+  \end{quote}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image38.png}
+\captionof{figure}{Simulation Results of Prediction Oil of Cleaned Data}
+\end{center}
+
+Prediction Oil of Cleaned Data
+
+The quadratic model could be abstracted as follows:
+
+\emph{ŷᵢ = β₀ + β₁x₁ᵢ + β₂x₂ᵢ + β₃x₁²ᵢ + β₄x₁ᵢx₂ᵢ + β₅x₂²ᵢ}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Linear Model}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Data with Outlier}
+
+\textbf{(Best Fit)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Data without Outlier}
+\end{minipage} \\
+\midrule()
+\endhead
+\textbf{β₀} & 680 & 785.5 \\
+\textbf{β₁} & - 6.17 & - 6.96 \\
+\textbf{β₂} & - 41.72 & - 72.16 \\
+\textbf{β₃} & - 0.012 & - 0.0034 \\
+\textbf{β₄} & 0.24 & 0.2567 \\
+\textbf{β₅} & 0.66 & 2.744 \\
+\textbf{R²} & 0.9741 & 0.9768 \\
+\textbf{ŷ(temp = 15, insulation = 5)} & 410.52 & 407.35 \\
+\bottomrule()
+\end{longtable}
+
+\begin{itemize}
+\item
+  \begin{quote}
+  Using the best-fit model from the original data with outlier
+  (Quadratic model as selected):
+  \end{quote}
+\end{itemize}
+
+Oil = 680 + (−6.17)(15) + (−41.72)(5) + (−0.012)(15²) + (0.24)(15)(5) +
+(0.66)(5²) = 410.65
+
+\textbf{Predicted Oil Usage ≈ 410.65 gallons}
+
+\begin{itemize}
+\item
+  \begin{quote}
+  \textbf{Simulation Results:}
+  \end{quote}
+\end{itemize}
+
+\begin{center}
+\includegraphics[width=0.92\linewidth,keepaspectratio]{vertopal_949f0de44c59406998abca066c65aa34/media/image39.png}
+\captionof{figure}{Simulation Results of Prediction Oil of Original Data}
+\end{center}
+
+Prediction Oil of Original Data
+
+\end{document}

@@ -23,10 +23,6 @@
 \usepackage[utf8]{inputenc}
 \usepackage{bm}
 \usepackage{mathtools}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta, positioning}
 
 % ── Hyperref setup ───────────────────────────────────────────────────────────
 \hypersetup{
@@ -50,7 +46,7 @@
 \renewcommand{\headrulewidth}{0.4pt}
 
 % ── Graphics path ────────────────────────────────────────────────────────────
-\graphicspath{{../part1/latex/vertopal_949f0de44c59406998abca066c65aa34/media/}{Figures/}}
+\graphicspath{{vertopal_949f0de44c59406998abca066c65aa34/media/}}
 
 % ── Useful macros ────────────────────────────────────────────────────────────
 \newcommand{\yhat}{\hat{y}}
@@ -64,8 +60,8 @@
 \centering
 \vspace*{0.5cm}
 
-\includegraphics[width=0.18\textwidth]{image1.png}\hspace{1.5cm}
-\includegraphics[width=0.15\textwidth]{image2.png}
+\includegraphics[width=0.18\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image1.png}\hspace{1.5cm}
+\includegraphics[width=0.15\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image2.png}
 
 \vspace{0.5cm}
 {\Large\bfseries Cairo University\\}
@@ -170,7 +166,7 @@ likely due to a data entry error (e.g.\ $10{,}500$ instead of $1{,}050$).
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{image3.png}
+\includegraphics[width=0.85\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image3.png}
 \caption{Scatter plot of original dataset identifying the outlier at $x=3$ ($y=1050$)}
 \label{fig:scatter_outlier}
 \end{figure}
@@ -289,7 +285,7 @@ R^2_{\text{linear}} = \frac{\text{SS}_{yy} - \text{SSE}}{\text{SS}_{yy}} = \frac
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{image4.png}
+\includegraphics[width=0.85\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image4.png}
 \caption{Linear Model of Original Data with Outlier}
 \label{fig:linear_with_outlier}
 \end{figure}
@@ -298,7 +294,7 @@ R^2_{\text{linear}} = \frac{\text{SS}_{yy} - \text{SSE}}{\text{SS}_{yy}} = \frac
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{image5.png}
+\includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image5.png}
 \caption{Simulation Results of Linear Model of Original Data with Outlier}
 \label{fig:sim_linear_outlier}
 \end{figure}
@@ -361,7 +357,7 @@ R^2_{\text{quadratic}} = \frac{82{,}850{,}250 - 61{,}858{,}042}{82{,}850{,}250} 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{image6.png}
+\includegraphics[width=0.85\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image6.png}
 \caption{Quadratic Model of Original Data with Outlier}
 \label{fig:quad_with_outlier}
 \end{figure}
@@ -370,7 +366,7 @@ R^2_{\text{quadratic}} = \frac{82{,}850{,}250 - 61{,}858{,}042}{82{,}850{,}250} 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{image7.png}
+\includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image7.png}
 \caption{Simulation Results of Quadratic Model of Original Data with Outlier}
 \label{fig:sim_quad_outlier}
 \end{figure}
@@ -437,7 +433,7 @@ R^2_{\text{cubic}} = \frac{82{,}850{,}250 - 51{,}125{,}885}{82{,}850{,}250} = 0.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{image8.png}
+\includegraphics[width=0.85\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image8.png}
 \caption{Cubic Model of Original Data with Outlier}
 \label{fig:cubic_with_outlier}
 \end{figure}
@@ -446,7 +442,7 @@ R^2_{\text{cubic}} = \frac{82{,}850{,}250 - 51{,}125{,}885}{82{,}850{,}250} = 0.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{image9.png}
+\includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image9.png}
 \caption{Simulation Results of Cubic Model of Original Data with Outlier}
 \label{fig:sim_cubic_outlier}
 \end{figure}
@@ -469,7 +465,7 @@ Cubic     & $\hat{y}_i = 13113.15 - 4313.93\,x_i + 932.31\,x_i^2 - 58.95\,x_i^3$
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{image10.png}
+\includegraphics[width=0.85\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image10.png}
 \caption{Comparison between three Models of Original Data with Outlier}
 \label{fig:compare_outlier}
 \end{figure}
@@ -485,7 +481,7 @@ outlier at $x=3$ ($y=1050$). The cubic model yields the highest $R^2$.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{image11.png}
+\includegraphics[width=0.85\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image11.png}
 \caption{Scatter Plot of Cleaned Data without Outlier}
 \label{fig:scatter_clean}
 \end{figure}
@@ -593,7 +589,7 @@ R^2_{\text{linear}} = \frac{23{,}882{,}222 - 1{,}339{,}500}{23{,}882{,}222} = 0.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{image12.png}
+\includegraphics[width=0.85\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image12.png}
 \caption{Linear Model of Cleaned Data without Outlier}
 \label{fig:linear_clean}
 \end{figure}
@@ -602,7 +598,7 @@ R^2_{\text{linear}} = \frac{23{,}882{,}222 - 1{,}339{,}500}{23{,}882{,}222} = 0.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{image13.png}
+\includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image13.png}
 \caption{Simulation Results of Linear Model of Cleaned Data without Outlier}
 \label{fig:sim_linear_clean}
 \end{figure}
@@ -660,7 +656,7 @@ R^2_{\text{quadratic}} = \frac{23{,}882{,}222 - 657{,}116}{23{,}882{,}222} = 0.9
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{image14.png}
+\includegraphics[width=0.85\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image14.png}
 \caption{Quadratic Model of Cleaned Data without Outlier}
 \label{fig:quad_clean}
 \end{figure}
@@ -669,7 +665,7 @@ R^2_{\text{quadratic}} = \frac{23{,}882{,}222 - 657{,}116}{23{,}882{,}222} = 0.9
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{image15.png}
+\includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image15.png}
 \caption{Simulation Results of Quadratic Model of Cleaned Data without Outlier}
 \label{fig:sim_quad_clean}
 \end{figure}
@@ -722,7 +718,7 @@ R^2_{\text{cubic}} = \frac{23{,}882{,}222 - 508{,}988}{23{,}882{,}222} = 0.9787
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{image16.png}
+\includegraphics[width=0.85\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image16.png}
 \caption{Cubic Model of Cleaned Data without Outlier}
 \label{fig:cubic_clean}
 \end{figure}
@@ -731,7 +727,7 @@ R^2_{\text{cubic}} = \frac{23{,}882{,}222 - 508{,}988}{23{,}882{,}222} = 0.9787
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{image17.png}
+\includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image17.png}
 \caption{Simulation Results of Cubic Model of Cleaned Data without Outlier}
 \label{fig:sim_cubic_clean}
 \end{figure}
@@ -754,7 +750,7 @@ Cubic     & $\hat{y}_i = 12{,}204.42 - 1{,}221.74\,x_i + 140.17\,x_i^2 - 7.46\,x
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{image18.png}
+\includegraphics[width=0.85\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image18.png}
 \caption{Comparison between three Models of Cleaned Data without Outlier}
 \label{fig:compare_clean}
 \end{figure}
@@ -771,7 +767,7 @@ explains 94.4\% of the variance.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{image19.png}
+\includegraphics[width=0.85\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image19.png}
 \caption{$R^2$ Comparison between three Models}
 \label{fig:r2_compare}
 \end{figure}
@@ -816,13 +812,13 @@ Cubic     & 4 & $0.3829 \to 0.9787$ & $+0.1295$ & $+0.0062$ \\
 \centering
 \begin{subfigure}[t]{0.47\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{image20.png}
+  \includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image20.png}
   \caption{Best Fit Model with Outlier}
   \label{fig:bestfit_with}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.47\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{image21.png}
+  \includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image21.png}
   \caption{Best Fit Model without Outlier}
   \label{fig:bestfit_without}
 \end{subfigure}
@@ -831,14 +827,14 @@ Cubic     & 4 & $0.3829 \to 0.9787$ & $+0.1295$ & $+0.0062$ \\
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{image22.png}
+\includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image22.png}
 \caption{Simulation Results of Best Fit Model with Outlier}
 \label{fig:sim_bestfit_with}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{image23.png}
+\includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image23.png}
 \caption{Simulation Results of Best Fit Model without Outlier}
 \label{fig:sim_bestfit_without}
 \end{figure}
@@ -875,7 +871,7 @@ Cubic     & 4 & $0.3829 \to 0.9787$ & $+0.1295$ & $+0.0062$ \\
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{image24.png}
+\includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image24.png}
 \caption{Simulation Results of Prediction of Insured People at Year 1997}
 \label{fig:pred_insured}
 \end{figure}
@@ -932,7 +928,7 @@ inches is physically unreasonable and is almost certainly a data entry error (e.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.82\textwidth]{image25.png}
+\includegraphics[width=0.82\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image25.png}
 \caption{3D Scatter Plot to Detect Outlier (outlier in red: Insulation$=40$)}
 \label{fig:3d_scatter}
 \end{figure}
@@ -943,7 +939,7 @@ inches is physically unreasonable and is almost certainly a data entry error (e.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{image26.png}
+\includegraphics[width=0.9\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image26.png}
 \caption{3D Linear Regression Surface (With Outlier), $R^2 = 0.6967$}
 \label{fig:3d_linear_with}
 \end{figure}
@@ -960,7 +956,7 @@ where $T = \text{Temp}$, $I = \text{Insulation}$.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{image27.png}
+\includegraphics[width=0.9\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image27.png}
 \caption{Simulation Results of Linear Regression Surface (With Outlier)}
 \label{fig:sim_3d_linear_with}
 \end{figure}
@@ -977,7 +973,7 @@ R^2\ (\text{Linear, With Outlier}) = 0.6967
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{image28.png}
+\includegraphics[width=0.9\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image28.png}
 \caption{3D Quadratic Regression Surface (With Outlier), $R^2 = 0.9742$}
 \label{fig:3d_quad_with}
 \end{figure}
@@ -989,7 +985,7 @@ The multivariate quadratic model:
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{image29.png}
+\includegraphics[width=0.9\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image29.png}
 \caption{Coefficient values for quadratic model with outlier}
 \label{fig:coef_quad_with}
 \end{figure}
@@ -1016,7 +1012,7 @@ points have insulation values between 4 and 10 inches, which is physically reaso
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.82\textwidth]{image30.png}
+\includegraphics[width=0.82\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image30.png}
 \caption{3D Scatter Plot (Cleaned Data, Outlier Removed)}
 \label{fig:3d_scatter_clean}
 \end{figure}
@@ -1027,7 +1023,7 @@ points have insulation values between 4 and 10 inches, which is physically reaso
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.88\textwidth]{image31.png}
+\includegraphics[width=0.88\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image31.png}
 \caption{3D Linear Regression Surface (Cleaned Data), $R^2 = 0.9606$}
 \label{fig:3d_linear_clean}
 \end{figure}
@@ -1038,7 +1034,7 @@ points have insulation values between 4 and 10 inches, which is physically reaso
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{image32.png}
+\includegraphics[width=0.9\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image32.png}
 \caption{Simulation Results of Linear Regression Surface (Cleaned Data)}
 \label{fig:sim_3d_linear_clean}
 \end{figure}
@@ -1055,7 +1051,7 @@ R^2\ (\text{Linear, Without Outlier}) = 0.9606
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.88\textwidth]{image33.png}
+\includegraphics[width=0.88\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image33.png}
 \caption{3D Quadratic Regression Surface (Cleaned Data), $R^2 = 0.9769$}
 \label{fig:3d_quad_clean}
 \end{figure}
@@ -1066,7 +1062,7 @@ R^2\ (\text{Linear, Without Outlier}) = 0.9606
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{image34.png}
+\includegraphics[width=0.9\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image34.png}
 \caption{Simulation Results of Quadratic Regression Surface (Cleaned Data)}
 \label{fig:sim_3d_quad_clean}
 \end{figure}
@@ -1106,12 +1102,12 @@ Linear $\to$ Quadratic gain $= +0.0163$ (not significant) \quad $\Rightarrow$ \t
 \centering
 \begin{subfigure}[t]{0.47\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{image35.png}
+  \includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image35.png}
   \caption{Best Fit Model of Original Data (Quadratic)}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.47\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{image36.png}
+  \includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image36.png}
   \caption{Best Fit Model of Cleaned Data (Linear)}
 \end{subfigure}
 \caption{Best-fit surface plots for heating oil}
@@ -1123,7 +1119,7 @@ as specified in Note~4 of the assignment.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{image37.png}
+\includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image37.png}
 \caption{Simulation Results of Best Fit Model}
 \label{fig:sim_bestfit_oil}
 \end{figure}
@@ -1167,7 +1163,7 @@ Using the best-fit model from the cleaned data without outlier (Linear model):
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{image38.png}
+\includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image38.png}
 \caption{Simulation Results of Prediction Oil of Cleaned Data}
 \label{fig:pred_oil_clean}
 \end{figure}
@@ -1208,618 +1204,9 @@ Using the best-fit model from the original data with outlier (Quadratic model):
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{image39.png}
+\includegraphics[width=\textwidth]{vertopal_949f0de44c59406998abca066c65aa34/media/image39.png}
 \caption{Simulation Results of Prediction Oil of Original Data}
 \label{fig:pred_oil_orig}
 \end{figure}
-
-\section{Part 2: some classical ML modeling}
-
-Part 2 uses the recovered ground-truth labels from \texttt{pipeline3/full\_labels\_vector.csv} and evaluates three feature representations: DCT, PCA, and HOG. Each feature set was tested with K-means per class using 1, 4, 16, and 32 clusters per class, and with SVM using linear and RBF kernels.
-
-\begin{itemize}
-    \item \textbf{Best overall classifier:} HOG + RBF SVM with 99.80\% accuracy.
-    \item \textbf{Best K-means classifier:} HOG + 16 clusters per class with 99.40\% accuracy.
-    \item \textbf{PCA dimensionality:} 161 components were needed to reach at least 95\% explained variance.
-\end{itemize}
-
-\begin{table}[H]
-\centering
-\small
-\setlength{\tabcolsep}{5pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabular}{llcccccc}
-\toprule
-Classifier & Spec & \multicolumn{2}{c}{DCT\_225} & \multicolumn{2}{c}{PCA\_95} & \multicolumn{2}{c}{HOG} \\
-\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
- &  & Accuracy (\%) & Time (s) & Accuracy (\%) & Time (s) & Accuracy (\%) & Time (s) \\
-\midrule
-K-means & $K=1$  & 91.55 & 0.22 & 91.65 & 0.12 & 96.90 & 6.68 \\
-K-means & $K=4$  & 95.90 & 0.65 & 95.95 & 0.63 & 98.65 & 14.98 \\
-K-means & $K=16$ & 97.60 & 1.95 & 97.75 & 1.67 & 99.40 & 22.08 \\
-K-means & $K=32$ & 97.90 & 3.47 & 97.75 & 2.53 & 99.35 & 33.54 \\
-SVM & Linear & 98.15 & 0.72 & 97.85 & 0.59 & 99.70 & 4.61 \\
-SVM & RBF & 98.55 & 1.85 & 98.95 & 2.05 & 99.80 & 11.69 \\
-\bottomrule
-\end{tabular}
-\caption{Full Part 2 comparative matrix specified by the assignment}
-\end{table}
-
-\noindent The best results are HOG + RBF SVM with 99.80\% accuracy and HOG + K-means with $K=16$ at 99.40\% accuracy.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.95\textwidth]{reducedmnist_samples_grid.png}
-\caption{Sample images from the labeled dataset used in Part 2}
-\end{figure}
-
-This figure confirms that the dataset includes broad handwriting variability (stroke thickness, slant, and small shifts), which motivates using robust descriptors such as HOG and not relying only on raw pixels.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{pca_cumulative_variance.png}
-\caption{PCA cumulative explained variance curve}
-\end{figure}
-
-The PCA curve validates our component selection rule from the assignment. The retained dimensionality reaches the 95\% variance target while still reducing feature size compared with the original 784-pixel representation.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.6\textwidth]{best_kmeans_confusion_matrix.png}
-\caption{Best K-means confusion matrix for Part 2}
-\end{figure}
-
-The K-means confusion matrix shows that most predictions are concentrated on the diagonal, indicating strong cluster purity in the best configuration. Remaining off-diagonal cells highlight the visually similar digits that remain difficult under centroid-based classification.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.6\textwidth]{best_svm_confusion_matrix.png}
-\caption{Best SVM confusion matrix for Part 2}
-\end{figure}
-
-Compared with K-means, the best SVM matrix has cleaner diagonal dominance and fewer confusion pockets. This directly supports the measured improvement in final accuracy for discriminative training over prototype matching.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{best_svm_support_vectors_per_class.png}
-\caption{Support vectors per class for the best SVM setup}
-\end{figure}
-
-This figure summarizes model complexity by class. Classes with higher support-vector counts are closer to decision boundaries and require more boundary constraints, while lower-count classes are separated more easily.
-
-The results show that HOG features provide the strongest representation for both clustering and classification. SVM consistently outperforms K-means, and the RBF kernel gives the best overall accuracy.
-
-% =========================
-% PART 3
-% =========================
-\section{Part 3: ways to fasten the Labelling Process}
-
-% =========================
-% PIPELINE 1
-% =========================
-\section{Pipeline 1: K-Means Bootstrapping with Active SVM Refinement}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.95\textwidth]{Pipeline1_Flowchart.png}
-\caption{Pipeline 1: K-Means + SVM + Active Learning}
-\end{figure}
-
-The flowchart highlights the main design idea of Pipeline 1: use low-cost cluster-level supervision first, then spend manual effort only on uncertain boundary samples where human labels give maximum gain.
-
-The pipeline consists of the following steps:
-\begin{itemize}
-    \item Load dataset (10,000 BMP images)
-    \item Extract HOG features
-    \item Apply K-Means clustering
-    \item Label clusters (bootstrapping)
-    \item Train SVM classifier
-    \item Apply active learning for refinement
-\end{itemize}
-
-% =========================
-% STEP 1
-% =========================
-\subsection{Step 1 - Feature Extraction and K-Means Clustering}
-
-Histogram of Oriented Gradients (HOG) was used to extract features from images.
-
-\begin{itemize}
-    \item Image size: 32 x 32
-    \item Feature vector size: 1764
-\end{itemize}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.7\textwidth]{HOG_Feature.png}
-\caption{Example of HOG Feature Representation}
-\end{figure}
-
-The HOG visualization illustrates why this feature performs well in our experiments: it preserves local edge orientation patterns that are stable across many writing styles and minor geometric variations.
-
-% =========================
-% STEP 2
-% =========================
-\subsection{Step 2 - Human Labelling of Clusters (Bootstrapping Phase)}
-
-K-Means clustering was applied with different values of K:
-
-\begin{itemize}
-    \item K = 40
-    \item K = 60
-    \item K = 80
-\end{itemize}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.7\textwidth]{k_vs_accuracy.png}
-\caption{K vs Accuracy Before SVM}
-\end{figure}
-
-This plot shows that increasing K improves the initial pseudo-label quality up to the tested range, because smaller and more coherent clusters reduce mixed-class assignments during cluster bootstrapping.
-
-% =========================
-% STEP 3 AND STEP 4
-% =========================
-\subsection{Step 3 - Initial SVM Training and Step 4 - Active Refinement: Labelling Boundary Images}
-
-A multi-class SVM with RBF kernel (One-vs-One strategy) was used.
-
-Active learning was applied as follows:
-\begin{itemize}
-    \item Select 30 least confident samples (lowest margin)
-    \item Relabel manually
-    \item Assign weight = 100
-    \item Retrain SVM
-\end{itemize}
-
-The process stops when:
-\begin{itemize}
-    \item Accuracy $\geq 99\%$
-    \item Improvement $< 0.1\%$
-\end{itemize}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.7\textwidth]{svm_bar_chart.png}
-\caption{Accuracy Before vs After SVM}
-\end{figure}
-
-The bar chart quantifies the gain from SVM refinement over raw cluster labels. The gain is larger when initial clusters are weaker, and smaller when clustering is already highly pure.
-
-% =========================
-% STEP 5
-% =========================
-\subsection{Step 5 - Retrain and Evaluate}
-
-\subsection{Accuracy}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{ccc}
-\toprule
-K & Before SVM (\%) & After SVM (\%) \\
-\midrule
-40 & 98.30 & 98.46 \\
-60 & 98.70 & 98.80 \\
-80 & 99.22 & 99.26 \\
-\bottomrule
-\end{tabular}
-\caption{Accuracy Comparison}
-\end{table}
-
-Table-based comparison confirms that the best operating point in Pipeline 1 is at high K with SVM refinement, reaching the 99\% target threshold.
-
-\subsection{Iterations}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{cc}
-\toprule
-K & Iterations \\
-\midrule
-40 & 2 \\
-60 & 2 \\
-80 & 2 \\
-\bottomrule
-\end{tabular}
-\caption{Number of Iterations}
-\end{table}
-
-The iteration table indicates fast convergence for all tested K values, which is consistent with using high-weight human corrections near the decision boundary.
-
-% =========================
-% MANUAL TIME METRIC
-% =========================
-\section{Comparing Pipelines: Manual Labelling Time}
-
-For K = 80:
-
-\begin{itemize}
-    \item Cluster labeling: 80 x 8 = 640 images
-    \item Active learning: 30 x 2 = 60 images
-\end{itemize}
-
-Total images manually handled:
-\[
-700 \text{ images}
-\]
-
-Total time:
-\begin{itemize}
-    \item Cluster labeling: 1600 seconds
-    \item Active learning: 600 seconds
-\end{itemize}
-
-\[
-\text{Total time} = 2200 \text{ seconds} \approx 36.7 \text{ minutes}
-\]
-
-% =========================
-% REPORTING
-% =========================
-\section{Reporting Requirements}
-
-The proposed pipeline significantly reduces manual labeling effort from 27.8 hours to approximately 37 minutes while achieving 99.26\% accuracy.
-
-K-Means clustering provides strong initial labels, while SVM and active learning refine ambiguous samples. The improvement from SVM is more noticeable at lower K values, while higher K values already produce highly pure clusters.
-
-% =========================
-% PIPELINE 2
-% =========================
-\section{Pipeline 2: Manual Seed + Augmentation + Self-Training}
-
-This pipeline adopts a semi-supervised learning approach starting from a small, high-quality human-labelled seed set. The model progressively expands its knowledge using data augmentation, active learning, and self-training.
-
-% =========================
-% FLOWCHART (TIKZ)
-% =========================
-\subsection{Pipeline Diagram}
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[
-node distance=2cm,
-every node/.style={
-    draw, rounded corners, align=center,
-    minimum width=3cm, minimum height=1cm,
-    font=\small
-},
-arrow/.style={->, thick},
-data/.style={fill=blue!15},
-process/.style={fill=green!15},
-model/.style={fill=orange!20},
-decision/.style={fill=purple!15},
-output/.style={fill=red!15}
-]
-
-\node (data) [data] {Load Dataset\\10,000 Images};
-
-\node (seed) [below of=data, process] {Manual Seed\\300 Images\\(Weight = 100)};
-\node (aug) [below of=seed, process] {Data Augmentation\\(7 per image)\\(Weight = 1)};
-
-\node (svm1) [below of=aug, model] {Train SVM-1\\(RBF, OvO)};
-\node (predict) [below of=svm1, model] {Predict All Data\\+ Scores};
-
-\node (hard) [right of=predict, xshift=4cm, decision] {Select 20 Hard Samples\\(Lowest Margin)};
-\node (label) [below of=hard, process] {Manual Labeling\\(Weight = 100)};
-\node (pseudo) [left of=label, xshift=-4cm, decision] {Top 50 per Class\\High Confidence\\(Weight = 1)};
-
-\node (retrain) [below of=predict, yshift=-4cm, model] {Retrain SVM};
-
-\node (output) [below of=retrain, output] {Final Output\\Accuracy $\geq$ 99\%};
-
-\draw[arrow] (data) -> (seed);
-\draw[arrow] (seed) -> (aug);
-\draw[arrow] (aug) -> (svm1);
-\draw[arrow] (svm1) -> (predict);
-
-\draw[arrow] (predict) -> (hard);
-\draw[arrow] (hard) -> (label);
-\draw[arrow] (label) |- (retrain);
-
-\draw[arrow] (predict.east) -- ++(1,0) |- (hard.west);
-\draw[arrow] (predict.west) -- ++(-1,0) |- (pseudo.north);
-
-\draw[arrow] (hard) -> (label);
-\draw[arrow] (label) |- (retrain);
-
-\draw[arrow] (pseudo) |- (retrain);
-
-\draw[arrow] (retrain) -> (output);
-
-
-
-\end{tikzpicture}
-\caption{Pipeline 2: Semi-Supervised Learning Framework}
-\end{figure}
-
-The Pipeline 2 diagram emphasizes a different strategy: begin from a trusted manual seed, then expand supervision through augmentation, confidence-based pseudo-labeling, and iterative hard-sample correction.
-
-
-% =========================
-% RESULTS
-% =========================
-\subsection{Final Results}
-
-The final performance of Pipeline 2 after convergence is summarized as follows:
-
-\begin{itemize}
-    \item Final Accuracy: 99.04\%
-    \item Number of Iterations: 4
-    \item Total Manual Labels: 380
-    \item Total Pseudo Labels: 1898
-    \item Estimated Manual Time: 63.33 minutes
-\end{itemize}
-
-\subsection{Iteration Progress}
-
-The improvement in model accuracy across iterations is shown in Figure below.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\textwidth]{iteration_accuracy_plot.png}
-\caption{Active Learning: Iteration vs Accuracy}
-\end{figure}
-
-This curve demonstrates the expected diminishing returns of active learning: accuracy rises rapidly in early rounds, then improvements become smaller as the model approaches convergence.
-
-
-
-% =========================
-% VISUALIZATION
-% =========================
-\subsection{Visualization}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\textwidth]{Human_seed.png}
-\caption{Initial Human Seed Samples (10 per class)}
-\end{figure}
-
-The seed gallery documents the initial trusted supervision used to anchor training. Quality at this stage is critical because early label noise can propagate through later pseudo-labeling.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\textwidth]{class_3_sample_0.png}
-\caption{Example of Data Augmentation (7 variants)}
-\end{figure}
-
-The augmentation example shows the controlled transformations used to improve robustness. These variants help the classifier generalize beyond exact stroke shapes seen in the manually labeled seed.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{hard_samples_iter_1.png}
-\caption{Hard Samples (Iteration 1)}
-\end{figure}
-
-Iteration 1 hard samples are primarily ambiguous boundary cases. Manually correcting these points has a high impact because they strongly influence decision surfaces.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{hard_samples_iter_2.png}
-\caption{Hard Samples (Iteration 2)}
-\end{figure}
-
-By Iteration 2, hard samples become more specific and fewer broad ambiguities remain, which is consistent with progressive boundary tightening after each retraining cycle.
-
-% =========================
-% MANUAL EFFORT
-% =========================
-\subsection{Manual Effort}
-
-Manual labeling consists of:
-
-\begin{itemize}
-    \item Initial seed: 300 images
-    \item Active learning: $20 \times 4 = 80$ images
-\end{itemize}
-
-Total manual labels:
-\[
-300 + 80 = 380
-\]
-
-Estimated time:
-\[
-380 \times 10 = 3800 \text{ seconds} \approx 63.33 \text{ minutes}
-\]
-
-% =========================
-% COMPARISON
-% =========================
-\subsection{Comparison with Pipeline 1}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{ccc}
-\toprule
-Metric & Pipeline 1 & Pipeline 2 \\
-\midrule
-Accuracy & 99.26\% & 99.04\% \\
-Manual Images & 700 & 380 \\
-Manual Time & 36.7 min & 63.3 min \\
-Iterations & 2 & 4 \\
-\bottomrule
-\end{tabular}
-\caption{Pipeline Comparison}
-\end{table}
-
-This comparison shows the practical trade-off between the two approaches: Pipeline 1 achieves slightly higher final accuracy, while Pipeline 2 reduces the number of manually labeled images by design.
-
-Pipeline 1 achieves higher accuracy due to clustering-based initialization, while Pipeline 2 significantly reduces manual labeling effort by leveraging self-training. However, Pipeline 2 requires slightly more total time due to per-image labeling cost.
-
-% =========================
-% CONCLUSION
-% =========================
-\subsection{Discussion}
-
-Pipeline 2 demonstrates the effectiveness of semi-supervised learning. Starting from a small, high-quality seed set, the model successfully expands its training data using both active learning and self-training.
-
-Although the final accuracy (99.04\%) is slightly below Pipeline 1, the reduction in manual labeling effort is significant. This pipeline better reflects real-world scenarios where labeled data is scarce and expensive.
-
-The combination of:
-\begin{itemize}
-    \item Human supervision (high confidence)
-    \item Model confidence (self-training)
-    \item Iterative refinement
-\end{itemize}
-
-creates a scalable and efficient labeling strategy.
-
-% =========================
-% PIPELINE 3
-% =========================
-\section{Pipeline 3: LLM-Based Automatic Labelling with Agreement Validation}
-
-Pipeline 3 was implemented with OpenRouter-based multimodal models and evaluated on the practical 500-image matrix. During experimentation, several runs were completed successfully, while some long/full runs were only partially completed because of API-credit limits (HTTP 402) and provider payload instability on some requests.
-
-The implemented setup included:
-\begin{itemize}
-    \item Balanced practical subset matrix (500 images total, 50 per class).
-    \item Image resizing to 224$\times$224 before API submission.
-    \item Optional batched requests (5 or 10 images per API call).
-    \item Robust retry handling for timeout/429 and fallback for HTTP 400 batch failures.
-    \item A labeled reference sheet (digits 0--9) sent as an additional context image.
-\end{itemize}
-
-\subsection{Block Diagram}
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[
-node distance=1.65cm and 1.4cm,
-every node/.style={
-    draw, rounded corners, align=center,
-    minimum width=3.15cm, minimum height=1.0cm,
-    font=\footnotesize
-},
-arrow/.style={->, thick},
-input/.style={fill=blue!12},
-bench/.style={fill=teal!14},
-select/.style={fill=orange!18},
-run/.style={fill=green!13},
-agree/.style={fill=violet!12},
-manual/.style={fill=red!12},
-check/.style={fill=yellow!18},
-output/.style={fill=gray!16}
-]
-
-\node (data) [input] {Input Data\\10,000 Indian Digits};
-\node (step1) [below=of data, bench] {Step 1\\Benchmark 5 LLMs on\\500-image practical set};
-\node (step2) [below=of step1, select] {Step 2\\Select Top-2 Models\\(LLM\_1, LLM\_2)};
-\node (step3) [below=of step2, run] {Step 3\\Dual Labeling on\\10,000 images};
-
-\node (step4a) [below left=of step3, agree, xshift=-0.2cm] {Step 4a\\Keep agreed labels\\and evaluate subset};
-\node (step4b) [below right=of step3, manual, xshift=0.2cm] {Step 4b\\Manual labeling for\\disagreements};
-
-\node (step5) [below=3.0cm of step3, check] {Step 5\\If accuracy $<99\%$:\\apply corrective action};
-\node (final) [below=of step5, output] {Final Output\\Labels + Accuracy +\\Manual-time estimate};
-
-\draw[arrow] (data) -> (step1);
-\draw[arrow] (step1) -> (step2);
-\draw[arrow] (step2) -> (step3);
-\draw[arrow] (step3) -> (step4a);
-\draw[arrow] (step3) -> (step4b);
-\draw[arrow] (step4a) |- (step5.west);
-\draw[arrow] (step4b) |- (step5.east);
-\draw[arrow] (step5) -> (final);
-
-\end{tikzpicture}
-\caption{Pipeline 3 block diagram based on the assignment workflow and selected practical setup}
-\end{figure}
-
-\subsection{Step 1 Benchmarking Output}
-
-\begin{table}[H]
-\centering
-\small
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X c >{\raggedright\arraybackslash}X}
-\toprule
-Candidate LLM (run) & Accuracy (\%) & Notes \\
-\midrule
-Google Gemini 3 Flash Preview & 89.33 & Practical-set benchmark run \\
-Google Gemma 4 31B Instruct & 89.47 & Practical-set benchmark run \\
-Google Gemma 4 31B Instruct (validation run) & 95.00 & Full-prompt + reference-image validation \\
-\bottomrule
-\end{tabularx}
-\caption{Pipeline 3 Step 1: benchmark and validation outputs used for model selection}
-\end{table}
-
-\noindent Based on obtained runs, the top practical candidates were \texttt{google/gemini-3-flash-preview} and \texttt{google/gemma-4-31b-it}.
-
-\subsection{Step 4 Agreement and Disagreement Outputs}
-
-\begin{table}[H]
-\centering
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
-\toprule
-Metric & Value \\
-\midrule
-Selected LLM\_1 name & \texttt{google/gemma-4-31b-it} (selected candidate) \\
-Selected LLM\_2 name & \texttt{google/gemini-3-flash-preview} (selected candidate) \\
-Final accuracy on agreed subset (Step 4a) & To be finalized in extended deployment stage \\
-Number of disagreements ($N_{\text{disagree}}$) & To be finalized in extended deployment stage \\
-Manual time for disagreement resolution ($N_{\text{disagree}} \times 10$ s) & To be finalized in extended deployment stage \\
-\bottomrule
-\end{tabularx}
-\caption{Pipeline 3 Step 4 outputs: selected-model setup and deployment-stage metrics}
-\end{table}
-
-\subsection{Manual Effort and Cost Summary}
-
-\begin{table}[H]
-\centering
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
-\toprule
-Metric & Value \\
-\midrule
-Total manually handled images (completed Pipeline 3 experiments) & 0 \\
-Total estimated manual time (completed Pipeline 3 experiments) & 0 min \\
-Estimated computational/API cost for dual-LLM run on 10,000 images & To be finalized in extended deployment stage \\
-\bottomrule
-\end{tabularx}
-\caption{Pipeline 3 manual-effort/cost summary for the completed work}
-\end{table}
-
-\subsection{Comparison Against Pipelines 1 and 2}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lcc}
-\toprule
-Pipeline & Final Accuracy (\%) & Manual Time \\
-\midrule
-Pipeline 1 & 99.26 & 36.7 min \\
-Pipeline 2 & 99.04 & 63.33 min \\
-Pipeline 3 & 89.47 (best practical benchmark) & 0 min (agreement stage pending) \\
-\bottomrule
-\end{tabular}
-\caption{Comparison table using best obtained Pipeline 3 completed-run metric}
-\end{table}
-
-\subsection{Pipeline 3 Compact Summary Table (Assignment Style)}
-
-\begin{table}[H]
-\centering
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
-\toprule
-Pipeline 3 entry & Result \\
-\midrule
-LLM\_1 alone & Gemma 4 31B: 89.47\% (best obtained practical benchmark) \\
-LLM\_2 alone & Gemini 3 Flash Preview: 89.33\% (best obtained practical benchmark) \\
-LLM\_1 \& LLM\_2 agreement strategy & Planned for extended deployment stage \\
-\bottomrule
-\end{tabularx}
-\caption{Pipeline 3 compact summary from obtained and pending outputs}
-\end{table}
-
-\section{References}
-
-\begin{itemize}
-    \item Project Repository: \\
-    \url{https://github.com/youefkh05/Neural_Netwok_projects}
-\end{itemize}
-
 
 \end{document}

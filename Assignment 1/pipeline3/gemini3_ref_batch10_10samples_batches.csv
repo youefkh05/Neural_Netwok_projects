@@ -1,0 +1,2 @@
+batch_id,model,batch_size,file_numbers,true_labels,pred_labels,batch_correct,batch_attempted,error,http_status,raw_response,prompt_tokens,completion_tokens,total_tokens
+1,google/gemini-3-flash-preview,10,5122|4523|8782|8956|5177|7227|4455|4905|5978|8274,6|4|7|1|8|9|0|2|5|3,6|4|7|1|8|9|0|2|5|3,10,10,,200,"6,4,7,1,8,9,0,2,5,3",12068,19,12087

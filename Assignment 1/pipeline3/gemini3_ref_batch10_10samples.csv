@@ -1,0 +1,11 @@
+model,file_number,true_label,pred_label,is_correct,raw_response,error,prompt_tokens,completion_tokens,total_tokens
+google/gemini-3-flash-preview,5122,6,6,1,"6,4,7,1,8,9,0,2,5,3",,12068,19,12087
+google/gemini-3-flash-preview,4523,4,4,1,"6,4,7,1,8,9,0,2,5,3",,12068,19,12087
+google/gemini-3-flash-preview,8782,7,7,1,"6,4,7,1,8,9,0,2,5,3",,12068,19,12087
+google/gemini-3-flash-preview,8956,1,1,1,"6,4,7,1,8,9,0,2,5,3",,12068,19,12087
+google/gemini-3-flash-preview,5177,8,8,1,"6,4,7,1,8,9,0,2,5,3",,12068,19,12087
+google/gemini-3-flash-preview,7227,9,9,1,"6,4,7,1,8,9,0,2,5,3",,12068,19,12087
+google/gemini-3-flash-preview,4455,0,0,1,"6,4,7,1,8,9,0,2,5,3",,12068,19,12087
+google/gemini-3-flash-preview,4905,2,2,1,"6,4,7,1,8,9,0,2,5,3",,12068,19,12087
+google/gemini-3-flash-preview,5978,5,5,1,"6,4,7,1,8,9,0,2,5,3",,12068,19,12087
+google/gemini-3-flash-preview,8274,3,3,1,"6,4,7,1,8,9,0,2,5,3",,12068,19,12087

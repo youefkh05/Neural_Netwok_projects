@@ -1,0 +1,501 @@
+model,file_number,true_label,pred_label,is_correct,raw_response,error,prompt_tokens,completion_tokens,total_tokens
+google/gemini-3-flash-preview,3690,5,5,1,"5,8,3,2,0,4,8,6,9,8",,11125,19,11144
+google/gemini-3-flash-preview,1910,8,8,1,"5,8,3,2,0,4,8,6,9,8",,11125,19,11144
+google/gemini-3-flash-preview,5551,3,3,1,"5,8,3,2,0,4,8,6,9,8",,11125,19,11144
+google/gemini-3-flash-preview,7657,2,2,1,"5,8,3,2,0,4,8,6,9,8",,11125,19,11144
+google/gemini-3-flash-preview,3554,5,0,0,"5,8,3,2,0,4,8,6,9,8",,11125,19,11144
+google/gemini-3-flash-preview,1981,3,4,0,"5,8,3,2,0,4,8,6,9,8",,11125,19,11144
+google/gemini-3-flash-preview,8541,8,8,1,"5,8,3,2,0,4,8,6,9,8",,11125,19,11144
+google/gemini-3-flash-preview,4304,6,6,1,"5,8,3,2,0,4,8,6,9,8",,11125,19,11144
+google/gemini-3-flash-preview,3610,9,9,1,"5,8,3,2,0,4,8,6,9,8",,11125,19,11144
+google/gemini-3-flash-preview,5533,8,8,1,"5,8,3,2,0,4,8,6,9,8",,11125,19,11144
+google/gemini-3-flash-preview,8585,8,8,1,"8, 3, 6, 8, 6, 7, 0, 1, 1, 5",,11125,28,11153
+google/gemini-3-flash-preview,9067,3,3,1,"8, 3, 6, 8, 6, 7, 0, 1, 1, 5",,11125,28,11153
+google/gemini-3-flash-preview,9154,6,6,1,"8, 3, 6, 8, 6, 7, 0, 1, 1, 5",,11125,28,11153
+google/gemini-3-flash-preview,6443,8,8,1,"8, 3, 6, 8, 6, 7, 0, 1, 1, 5",,11125,28,11153
+google/gemini-3-flash-preview,2641,6,6,1,"8, 3, 6, 8, 6, 7, 0, 1, 1, 5",,11125,28,11153
+google/gemini-3-flash-preview,8791,7,7,1,"8, 3, 6, 8, 6, 7, 0, 1, 1, 5",,11125,28,11153
+google/gemini-3-flash-preview,4455,0,0,1,"8, 3, 6, 8, 6, 7, 0, 1, 1, 5",,11125,28,11153
+google/gemini-3-flash-preview,2295,1,1,1,"8, 3, 6, 8, 6, 7, 0, 1, 1, 5",,11125,28,11153
+google/gemini-3-flash-preview,2187,1,1,1,"8, 3, 6, 8, 6, 7, 0, 1, 1, 5",,11125,28,11153
+google/gemini-3-flash-preview,129,5,5,1,"8, 3, 6, 8, 6, 7, 0, 1, 1, 5",,11125,28,11153
+google/gemini-3-flash-preview,7381,3,2,0,"2,2,4,8,0,9,7,6,8,7",,11125,19,11144
+google/gemini-3-flash-preview,9450,2,2,1,"2,2,4,8,0,9,7,6,8,7",,11125,19,11144
+google/gemini-3-flash-preview,5710,4,4,1,"2,2,4,8,0,9,7,6,8,7",,11125,19,11144
+google/gemini-3-flash-preview,5196,8,8,1,"2,2,4,8,0,9,7,6,8,7",,11125,19,11144
+google/gemini-3-flash-preview,589,0,0,1,"2,2,4,8,0,9,7,6,8,7",,11125,19,11144
+google/gemini-3-flash-preview,3275,5,9,0,"2,2,4,8,0,9,7,6,8,7",,11125,19,11144
+google/gemini-3-flash-preview,9125,7,7,1,"2,2,4,8,0,9,7,6,8,7",,11125,19,11144
+google/gemini-3-flash-preview,3499,6,6,1,"2,2,4,8,0,9,7,6,8,7",,11125,19,11144
+google/gemini-3-flash-preview,1414,8,8,1,"2,2,4,8,0,9,7,6,8,7",,11125,19,11144
+google/gemini-3-flash-preview,8391,7,7,1,"2,2,4,8,0,9,7,6,8,7",,11125,19,11144
+google/gemini-3-flash-preview,1998,5,5,1,"5,1,9,8,9,6,2,8,3,3",,11125,19,11144
+google/gemini-3-flash-preview,8956,1,1,1,"5,1,9,8,9,6,2,8,3,3",,11125,19,11144
+google/gemini-3-flash-preview,8907,9,9,1,"5,1,9,8,9,6,2,8,3,3",,11125,19,11144
+google/gemini-3-flash-preview,2672,8,8,1,"5,1,9,8,9,6,2,8,3,3",,11125,19,11144
+google/gemini-3-flash-preview,8880,9,9,1,"5,1,9,8,9,6,2,8,3,3",,11125,19,11144
+google/gemini-3-flash-preview,500,6,6,1,"5,1,9,8,9,6,2,8,3,3",,11125,19,11144
+google/gemini-3-flash-preview,6507,3,2,0,"5,1,9,8,9,6,2,8,3,3",,11125,19,11144
+google/gemini-3-flash-preview,5177,8,8,1,"5,1,9,8,9,6,2,8,3,3",,11125,19,11144
+google/gemini-3-flash-preview,5007,3,3,1,"5,1,9,8,9,6,2,8,3,3",,11125,19,11144
+google/gemini-3-flash-preview,1378,3,3,1,"5,1,9,8,9,6,2,8,3,3",,11125,19,11144
+google/gemini-3-flash-preview,8723,1,1,1,"1, 9, 6, 7, 1, 8, 3, 4, 4, 9",,11125,28,11153
+google/gemini-3-flash-preview,8411,9,9,1,"1, 9, 6, 7, 1, 8, 3, 4, 4, 9",,11125,28,11153
+google/gemini-3-flash-preview,3044,6,6,1,"1, 9, 6, 7, 1, 8, 3, 4, 4, 9",,11125,28,11153
+google/gemini-3-flash-preview,8800,7,7,1,"1, 9, 6, 7, 1, 8, 3, 4, 4, 9",,11125,28,11153
+google/gemini-3-flash-preview,4931,1,1,1,"1, 9, 6, 7, 1, 8, 3, 4, 4, 9",,11125,28,11153
+google/gemini-3-flash-preview,8367,8,8,1,"1, 9, 6, 7, 1, 8, 3, 4, 4, 9",,11125,28,11153
+google/gemini-3-flash-preview,7143,3,3,1,"1, 9, 6, 7, 1, 8, 3, 4, 4, 9",,11125,28,11153
+google/gemini-3-flash-preview,3371,4,4,1,"1, 9, 6, 7, 1, 8, 3, 4, 4, 9",,11125,28,11153
+google/gemini-3-flash-preview,15,4,4,1,"1, 9, 6, 7, 1, 8, 3, 4, 4, 9",,11125,28,11153
+google/gemini-3-flash-preview,7874,9,9,1,"1, 9, 6, 7, 1, 8, 3, 4, 4, 9",,11125,28,11153
+google/gemini-3-flash-preview,5573,4,4,1,"4,7,0,4,7,5,3,2,1,9",,11125,19,11144
+google/gemini-3-flash-preview,1524,7,7,1,"4,7,0,4,7,5,3,2,1,9",,11125,19,11144
+google/gemini-3-flash-preview,4996,0,0,1,"4,7,0,4,7,5,3,2,1,9",,11125,19,11144
+google/gemini-3-flash-preview,8683,4,4,1,"4,7,0,4,7,5,3,2,1,9",,11125,19,11144
+google/gemini-3-flash-preview,1722,7,7,1,"4,7,0,4,7,5,3,2,1,9",,11125,19,11144
+google/gemini-3-flash-preview,9037,5,5,1,"4,7,0,4,7,5,3,2,1,9",,11125,19,11144
+google/gemini-3-flash-preview,1653,3,3,1,"4,7,0,4,7,5,3,2,1,9",,11125,19,11144
+google/gemini-3-flash-preview,1295,3,2,0,"4,7,0,4,7,5,3,2,1,9",,11125,19,11144
+google/gemini-3-flash-preview,2223,1,1,1,"4,7,0,4,7,5,3,2,1,9",,11125,19,11144
+google/gemini-3-flash-preview,8268,9,9,1,"4,7,0,4,7,5,3,2,1,9",,11125,19,11144
+google/gemini-3-flash-preview,3094,0,1,0,"1, 9, 1, 3, 3, 2, 9, 0, 7, 7",,11125,28,11153
+google/gemini-3-flash-preview,1586,9,9,1,"1, 9, 1, 3, 3, 2, 9, 0, 7, 7",,11125,28,11153
+google/gemini-3-flash-preview,3632,0,1,0,"1, 9, 1, 3, 3, 2, 9, 0, 7, 7",,11125,28,11153
+google/gemini-3-flash-preview,2650,4,3,0,"1, 9, 1, 3, 3, 2, 9, 0, 7, 7",,11125,28,11153
+google/gemini-3-flash-preview,5544,4,3,0,"1, 9, 1, 3, 3, 2, 9, 0, 7, 7",,11125,28,11153
+google/gemini-3-flash-preview,1885,2,2,1,"1, 9, 1, 3, 3, 2, 9, 0, 7, 7",,11125,28,11153
+google/gemini-3-flash-preview,5455,9,9,1,"1, 9, 1, 3, 3, 2, 9, 0, 7, 7",,11125,28,11153
+google/gemini-3-flash-preview,7243,5,0,0,"1, 9, 1, 3, 3, 2, 9, 0, 7, 7",,11125,28,11153
+google/gemini-3-flash-preview,1480,7,7,1,"1, 9, 1, 3, 3, 2, 9, 0, 7, 7",,11125,28,11153
+google/gemini-3-flash-preview,2338,7,7,1,"1, 9, 1, 3, 3, 2, 9, 0, 7, 7",,11125,28,11153
+google/gemini-3-flash-preview,4009,0,0,1,"0,6,2,5,6,7,7,9,9,6",,11125,19,11144
+google/gemini-3-flash-preview,8979,6,6,1,"0,6,2,5,6,7,7,9,9,6",,11125,19,11144
+google/gemini-3-flash-preview,4713,2,2,1,"0,6,2,5,6,7,7,9,9,6",,11125,19,11144
+google/gemini-3-flash-preview,8616,5,5,1,"0,6,2,5,6,7,7,9,9,6",,11125,19,11144
+google/gemini-3-flash-preview,3639,6,6,1,"0,6,2,5,6,7,7,9,9,6",,11125,19,11144
+google/gemini-3-flash-preview,7328,7,7,1,"0,6,2,5,6,7,7,9,9,6",,11125,19,11144
+google/gemini-3-flash-preview,3825,7,7,1,"0,6,2,5,6,7,7,9,9,6",,11125,19,11144
+google/gemini-3-flash-preview,3615,9,9,1,"0,6,2,5,6,7,7,9,9,6",,11125,19,11144
+google/gemini-3-flash-preview,4064,9,9,1,"0,6,2,5,6,7,7,9,9,6",,11125,19,11144
+google/gemini-3-flash-preview,9696,6,6,1,"0,6,2,5,6,7,7,9,9,6",,11125,19,11144
+google/gemini-3-flash-preview,8829,7,7,1,"7, 4, 4, 7, 4, 4, 2, 2, 9, 4",,11125,28,11153
+google/gemini-3-flash-preview,7273,4,4,1,"7, 4, 4, 7, 4, 4, 2, 2, 9, 4",,11125,28,11153
+google/gemini-3-flash-preview,2231,4,4,1,"7, 4, 4, 7, 4, 4, 2, 2, 9, 4",,11125,28,11153
+google/gemini-3-flash-preview,6088,7,7,1,"7, 4, 4, 7, 4, 4, 2, 2, 9, 4",,11125,28,11153
+google/gemini-3-flash-preview,4154,4,4,1,"7, 4, 4, 7, 4, 4, 2, 2, 9, 4",,11125,28,11153
+google/gemini-3-flash-preview,1632,4,4,1,"7, 4, 4, 7, 4, 4, 2, 2, 9, 4",,11125,28,11153
+google/gemini-3-flash-preview,4905,2,2,1,"7, 4, 4, 7, 4, 4, 2, 2, 9, 4",,11125,28,11153
+google/gemini-3-flash-preview,7592,2,2,1,"7, 4, 4, 7, 4, 4, 2, 2, 9, 4",,11125,28,11153
+google/gemini-3-flash-preview,9029,9,9,1,"7, 4, 4, 7, 4, 4, 2, 2, 9, 4",,11125,28,11153
+google/gemini-3-flash-preview,9898,4,4,1,"7, 4, 4, 7, 4, 4, 2, 2, 9, 4",,11125,28,11153
+google/gemini-3-flash-preview,3,5,5,1,"5,0,0,2,4,9,6,9,9,9",,11125,19,11144
+google/gemini-3-flash-preview,1187,0,0,1,"5,0,0,2,4,9,6,9,9,9",,11125,19,11144
+google/gemini-3-flash-preview,3218,0,0,1,"5,0,0,2,4,9,6,9,9,9",,11125,19,11144
+google/gemini-3-flash-preview,9906,2,2,1,"5,0,0,2,4,9,6,9,9,9",,11125,19,11144
+google/gemini-3-flash-preview,1359,4,4,1,"5,0,0,2,4,9,6,9,9,9",,11125,19,11144
+google/gemini-3-flash-preview,4995,9,9,1,"5,0,0,2,4,9,6,9,9,9",,11125,19,11144
+google/gemini-3-flash-preview,2116,6,6,1,"5,0,0,2,4,9,6,9,9,9",,11125,19,11144
+google/gemini-3-flash-preview,4926,9,9,1,"5,0,0,2,4,9,6,9,9,9",,11125,19,11144
+google/gemini-3-flash-preview,8203,9,9,1,"5,0,0,2,4,9,6,9,9,9",,11125,19,11144
+google/gemini-3-flash-preview,7226,9,9,1,"5,0,0,2,4,9,6,9,9,9",,11125,19,11144
+google/gemini-3-flash-preview,4333,9,9,1,"9, 5, 5, 7, 2, 0, 8, 4, 3, 4",,11125,28,11153
+google/gemini-3-flash-preview,2492,5,5,1,"9, 5, 5, 7, 2, 0, 8, 4, 3, 4",,11125,28,11153
+google/gemini-3-flash-preview,7939,5,5,1,"9, 5, 5, 7, 2, 0, 8, 4, 3, 4",,11125,28,11153
+google/gemini-3-flash-preview,6188,7,7,1,"9, 5, 5, 7, 2, 0, 8, 4, 3, 4",,11125,28,11153
+google/gemini-3-flash-preview,2797,3,2,0,"9, 5, 5, 7, 2, 0, 8, 4, 3, 4",,11125,28,11153
+google/gemini-3-flash-preview,6562,0,0,1,"9, 5, 5, 7, 2, 0, 8, 4, 3, 4",,11125,28,11153
+google/gemini-3-flash-preview,5740,8,8,1,"9, 5, 5, 7, 2, 0, 8, 4, 3, 4",,11125,28,11153
+google/gemini-3-flash-preview,6399,0,4,0,"9, 5, 5, 7, 2, 0, 8, 4, 3, 4",,11125,28,11153
+google/gemini-3-flash-preview,4003,4,3,0,"9, 5, 5, 7, 2, 0, 8, 4, 3, 4",,11125,28,11153
+google/gemini-3-flash-preview,8546,3,4,0,"9, 5, 5, 7, 2, 0, 8, 4, 3, 4",,11125,28,11153
+google/gemini-3-flash-preview,5732,4,4,1,"4,5,4,4,6,6,9,4,5,1",,11125,19,11144
+google/gemini-3-flash-preview,2155,5,5,1,"4,5,4,4,6,6,9,4,5,1",,11125,19,11144
+google/gemini-3-flash-preview,9872,4,4,1,"4,5,4,4,6,6,9,4,5,1",,11125,19,11144
+google/gemini-3-flash-preview,5017,4,4,1,"4,5,4,4,6,6,9,4,5,1",,11125,19,11144
+google/gemini-3-flash-preview,3070,6,6,1,"4,5,4,4,6,6,9,4,5,1",,11125,19,11144
+google/gemini-3-flash-preview,6742,6,6,1,"4,5,4,4,6,6,9,4,5,1",,11125,19,11144
+google/gemini-3-flash-preview,7208,9,9,1,"4,5,4,4,6,6,9,4,5,1",,11125,19,11144
+google/gemini-3-flash-preview,6994,4,4,1,"4,5,4,4,6,6,9,4,5,1",,11125,19,11144
+google/gemini-3-flash-preview,9391,5,5,1,"4,5,4,4,6,6,9,4,5,1",,11125,19,11144
+google/gemini-3-flash-preview,8966,1,1,1,"4,5,4,4,6,6,9,4,5,1",,11125,19,11144
+google/gemini-3-flash-preview,9255,6,6,1,"6,9,3,4,4,1,3,0,0,9",,11125,19,11144
+google/gemini-3-flash-preview,5787,2,9,0,"6,9,3,4,4,1,3,0,0,9",,11125,19,11144
+google/gemini-3-flash-preview,7111,3,3,1,"6,9,3,4,4,1,3,0,0,9",,11125,19,11144
+google/gemini-3-flash-preview,9876,4,4,1,"6,9,3,4,4,1,3,0,0,9",,11125,19,11144
+google/gemini-3-flash-preview,9972,4,4,1,"6,9,3,4,4,1,3,0,0,9",,11125,19,11144
+google/gemini-3-flash-preview,586,1,1,1,"6,9,3,4,4,1,3,0,0,9",,11125,19,11144
+google/gemini-3-flash-preview,9396,3,3,1,"6,9,3,4,4,1,3,0,0,9",,11125,19,11144
+google/gemini-3-flash-preview,2852,0,0,1,"6,9,3,4,4,1,3,0,0,9",,11125,19,11144
+google/gemini-3-flash-preview,3251,0,0,1,"6,9,3,4,4,1,3,0,0,9",,11125,19,11144
+google/gemini-3-flash-preview,1615,2,9,0,"6,9,3,4,4,1,3,0,0,9",,11125,19,11144
+google/gemini-3-flash-preview,2777,4,4,1,"4, 4, 6, 6, 6, 1, 8, 1, 2, 0",,11125,28,11153
+google/gemini-3-flash-preview,8279,3,4,0,"4, 4, 6, 6, 6, 1, 8, 1, 2, 0",,11125,28,11153
+google/gemini-3-flash-preview,7842,6,6,1,"4, 4, 6, 6, 6, 1, 8, 1, 2, 0",,11125,28,11153
+google/gemini-3-flash-preview,4635,6,6,1,"4, 4, 6, 6, 6, 1, 8, 1, 2, 0",,11125,28,11153
+google/gemini-3-flash-preview,8996,6,6,1,"4, 4, 6, 6, 6, 1, 8, 1, 2, 0",,11125,28,11153
+google/gemini-3-flash-preview,1823,1,1,1,"4, 4, 6, 6, 6, 1, 8, 1, 2, 0",,11125,28,11153
+google/gemini-3-flash-preview,1384,8,8,1,"4, 4, 6, 6, 6, 1, 8, 1, 2, 0",,11125,28,11153
+google/gemini-3-flash-preview,6838,1,1,1,"4, 4, 6, 6, 6, 1, 8, 1, 2, 0",,11125,28,11153
+google/gemini-3-flash-preview,2601,2,2,1,"4, 4, 6, 6, 6, 1, 8, 1, 2, 0",,11125,28,11153
+google/gemini-3-flash-preview,4904,0,0,1,"4, 4, 6, 6, 6, 1, 8, 1, 2, 0",,11125,28,11153
+google/gemini-3-flash-preview,9175,5,5,1,"5,2,8,9,0,7,3,1,1,6",,11125,19,11144
+google/gemini-3-flash-preview,2067,2,2,1,"5,2,8,9,0,7,3,1,1,6",,11125,19,11144
+google/gemini-3-flash-preview,9657,8,8,1,"5,2,8,9,0,7,3,1,1,6",,11125,19,11144
+google/gemini-3-flash-preview,1495,9,9,1,"5,2,8,9,0,7,3,1,1,6",,11125,19,11144
+google/gemini-3-flash-preview,2287,0,0,1,"5,2,8,9,0,7,3,1,1,6",,11125,19,11144
+google/gemini-3-flash-preview,9912,6,7,0,"5,2,8,9,0,7,3,1,1,6",,11125,19,11144
+google/gemini-3-flash-preview,5931,3,3,1,"5,2,8,9,0,7,3,1,1,6",,11125,19,11144
+google/gemini-3-flash-preview,9315,1,1,1,"5,2,8,9,0,7,3,1,1,6",,11125,19,11144
+google/gemini-3-flash-preview,8382,1,1,1,"5,2,8,9,0,7,3,1,1,6",,11125,19,11144
+google/gemini-3-flash-preview,6537,6,6,1,"5,2,8,9,0,7,3,1,1,6",,11125,19,11144
+google/gemini-3-flash-preview,4418,2,2,1,"2,2,0,7,0,1,1,2,4,5",,11125,19,11144
+google/gemini-3-flash-preview,7153,2,2,1,"2,2,0,7,0,1,1,2,4,5",,11125,19,11144
+google/gemini-3-flash-preview,7485,0,0,1,"2,2,0,7,0,1,1,2,4,5",,11125,19,11144
+google/gemini-3-flash-preview,3848,7,7,1,"2,2,0,7,0,1,1,2,4,5",,11125,19,11144
+google/gemini-3-flash-preview,9270,0,0,1,"2,2,0,7,0,1,1,2,4,5",,11125,19,11144
+google/gemini-3-flash-preview,3994,1,1,1,"2,2,0,7,0,1,1,2,4,5",,11125,19,11144
+google/gemini-3-flash-preview,5597,1,1,1,"2,2,0,7,0,1,1,2,4,5",,11125,19,11144
+google/gemini-3-flash-preview,7807,3,2,0,"2,2,0,7,0,1,1,2,4,5",,11125,19,11144
+google/gemini-3-flash-preview,3123,4,4,1,"2,2,0,7,0,1,1,2,4,5",,11125,19,11144
+google/gemini-3-flash-preview,5304,0,5,0,"2,2,0,7,0,1,1,2,4,5",,11125,19,11144
+google/gemini-3-flash-preview,4789,4,4,1,"٤,٩,٣,١,٩,٢,٥,٩,٥,٦",,11125,19,11144
+google/gemini-3-flash-preview,765,9,9,1,"٤,٩,٣,١,٩,٢,٥,٩,٥,٦",,11125,19,11144
+google/gemini-3-flash-preview,2813,3,3,1,"٤,٩,٣,١,٩,٢,٥,٩,٥,٦",,11125,19,11144
+google/gemini-3-flash-preview,8250,0,1,0,"٤,٩,٣,١,٩,٢,٥,٩,٥,٦",,11125,19,11144
+google/gemini-3-flash-preview,7469,9,9,1,"٤,٩,٣,١,٩,٢,٥,٩,٥,٦",,11125,19,11144
+google/gemini-3-flash-preview,5842,2,2,1,"٤,٩,٣,١,٩,٢,٥,٩,٥,٦",,11125,19,11144
+google/gemini-3-flash-preview,7116,5,5,1,"٤,٩,٣,١,٩,٢,٥,٩,٥,٦",,11125,19,11144
+google/gemini-3-flash-preview,3635,9,9,1,"٤,٩,٣,١,٩,٢,٥,٩,٥,٦",,11125,19,11144
+google/gemini-3-flash-preview,433,5,5,1,"٤,٩,٣,١,٩,٢,٥,٩,٥,٦",,11125,19,11144
+google/gemini-3-flash-preview,5122,6,6,1,"٤,٩,٣,١,٩,٢,٥,٩,٥,٦",,11125,19,11144
+google/gemini-3-flash-preview,1956,5,5,1,"5,0,1,4,4,8,4,2,4,4",,11125,19,11144
+google/gemini-3-flash-preview,2409,0,0,1,"5,0,1,4,4,8,4,2,4,4",,11125,19,11144
+google/gemini-3-flash-preview,2479,1,1,1,"5,0,1,4,4,8,4,2,4,4",,11125,19,11144
+google/gemini-3-flash-preview,3657,4,4,1,"5,0,1,4,4,8,4,2,4,4",,11125,19,11144
+google/gemini-3-flash-preview,963,4,4,1,"5,0,1,4,4,8,4,2,4,4",,11125,19,11144
+google/gemini-3-flash-preview,3464,0,8,0,"5,0,1,4,4,8,4,2,4,4",,11125,19,11144
+google/gemini-3-flash-preview,8381,4,4,1,"5,0,1,4,4,8,4,2,4,4",,11125,19,11144
+google/gemini-3-flash-preview,6057,2,2,1,"5,0,1,4,4,8,4,2,4,4",,11125,19,11144
+google/gemini-3-flash-preview,3570,4,4,1,"5,0,1,4,4,8,4,2,4,4",,11125,19,11144
+google/gemini-3-flash-preview,6971,4,4,1,"5,0,1,4,4,8,4,2,4,4",,11125,19,11144
+google/gemini-3-flash-preview,2998,5,5,1,"5,1,7,0,2,5,4,7,4,8",,11125,19,11144
+google/gemini-3-flash-preview,2326,1,1,1,"5,1,7,0,2,5,4,7,4,8",,11125,19,11144
+google/gemini-3-flash-preview,9552,7,7,1,"5,1,7,0,2,5,4,7,4,8",,11125,19,11144
+google/gemini-3-flash-preview,5439,0,0,1,"5,1,7,0,2,5,4,7,4,8",,11125,19,11144
+google/gemini-3-flash-preview,4275,3,2,0,"5,1,7,0,2,5,4,7,4,8",,11125,19,11144
+google/gemini-3-flash-preview,4447,5,5,1,"5,1,7,0,2,5,4,7,4,8",,11125,19,11144
+google/gemini-3-flash-preview,2836,2,4,0,"5,1,7,0,2,5,4,7,4,8",,11125,19,11144
+google/gemini-3-flash-preview,4060,7,7,1,"5,1,7,0,2,5,4,7,4,8",,11125,19,11144
+google/gemini-3-flash-preview,5003,4,4,1,"5,1,7,0,2,5,4,7,4,8",,11125,19,11144
+google/gemini-3-flash-preview,3143,6,8,0,"5,1,7,0,2,5,4,7,4,8",,11125,19,11144
+google/gemini-3-flash-preview,7079,5,5,1,"5,5,5,1,0,6,4,8,0,1",,11125,19,11144
+google/gemini-3-flash-preview,9738,5,5,1,"5,5,5,1,0,6,4,8,0,1",,11125,19,11144
+google/gemini-3-flash-preview,6299,5,5,1,"5,5,5,1,0,6,4,8,0,1",,11125,19,11144
+google/gemini-3-flash-preview,9273,1,1,1,"5,5,5,1,0,6,4,8,0,1",,11125,19,11144
+google/gemini-3-flash-preview,5799,0,0,1,"5,5,5,1,0,6,4,8,0,1",,11125,19,11144
+google/gemini-3-flash-preview,9882,6,6,1,"5,5,5,1,0,6,4,8,0,1",,11125,19,11144
+google/gemini-3-flash-preview,6226,4,4,1,"5,5,5,1,0,6,4,8,0,1",,11125,19,11144
+google/gemini-3-flash-preview,9624,8,8,1,"5,5,5,1,0,6,4,8,0,1",,11125,19,11144
+google/gemini-3-flash-preview,7715,0,0,1,"5,5,5,1,0,6,4,8,0,1",,11125,19,11144
+google/gemini-3-flash-preview,3600,1,1,1,"5,5,5,1,0,6,4,8,0,1",,11125,19,11144
+google/gemini-3-flash-preview,523,4,4,1,"4,1,2,7,3,7,0,8,2,8",,11125,19,11144
+google/gemini-3-flash-preview,770,1,1,1,"4,1,2,7,3,7,0,8,2,8",,11125,19,11144
+google/gemini-3-flash-preview,8227,2,2,1,"4,1,2,7,3,7,0,8,2,8",,11125,19,11144
+google/gemini-3-flash-preview,5463,7,7,1,"4,1,2,7,3,7,0,8,2,8",,11125,19,11144
+google/gemini-3-flash-preview,4183,3,3,1,"4,1,2,7,3,7,0,8,2,8",,11125,19,11144
+google/gemini-3-flash-preview,7069,7,7,1,"4,1,2,7,3,7,0,8,2,8",,11125,19,11144
+google/gemini-3-flash-preview,784,0,0,1,"4,1,2,7,3,7,0,8,2,8",,11125,19,11144
+google/gemini-3-flash-preview,4825,8,8,1,"4,1,2,7,3,7,0,8,2,8",,11125,19,11144
+google/gemini-3-flash-preview,1743,2,2,1,"4,1,2,7,3,7,0,8,2,8",,11125,19,11144
+google/gemini-3-flash-preview,6970,8,8,1,"4,1,2,7,3,7,0,8,2,8",,11125,19,11144
+google/gemini-3-flash-preview,2419,4,4,1,"4, 3, 6, 8, 2, 9, 1, 7, 5, 0",,11125,28,11153
+google/gemini-3-flash-preview,8274,3,3,1,"4, 3, 6, 8, 2, 9, 1, 7, 5, 0",,11125,28,11153
+google/gemini-3-flash-preview,1556,6,6,1,"4, 3, 6, 8, 2, 9, 1, 7, 5, 0",,11125,28,11153
+google/gemini-3-flash-preview,9442,0,8,0,"4, 3, 6, 8, 2, 9, 1, 7, 5, 0",,11125,28,11153
+google/gemini-3-flash-preview,9752,3,2,0,"4, 3, 6, 8, 2, 9, 1, 7, 5, 0",,11125,28,11153
+google/gemini-3-flash-preview,8280,9,9,1,"4, 3, 6, 8, 2, 9, 1, 7, 5, 0",,11125,28,11153
+google/gemini-3-flash-preview,8776,1,1,1,"4, 3, 6, 8, 2, 9, 1, 7, 5, 0",,11125,28,11153
+google/gemini-3-flash-preview,1321,6,7,0,"4, 3, 6, 8, 2, 9, 1, 7, 5, 0",,11125,28,11153
+google/gemini-3-flash-preview,7558,5,5,1,"4, 3, 6, 8, 2, 9, 1, 7, 5, 0",,11125,28,11153
+google/gemini-3-flash-preview,849,9,0,0,"4, 3, 6, 8, 2, 9, 1, 7, 5, 0",,11125,28,11153
+google/gemini-3-flash-preview,5501,9,9,1,"9,8,3,7,5,2,7,8,2,0",,11125,19,11144
+google/gemini-3-flash-preview,5370,8,8,1,"9,8,3,7,5,2,7,8,2,0",,11125,19,11144
+google/gemini-3-flash-preview,7615,3,3,1,"9,8,3,7,5,2,7,8,2,0",,11125,19,11144
+google/gemini-3-flash-preview,2114,7,7,1,"9,8,3,7,5,2,7,8,2,0",,11125,19,11144
+google/gemini-3-flash-preview,2457,0,5,0,"9,8,3,7,5,2,7,8,2,0",,11125,19,11144
+google/gemini-3-flash-preview,3541,2,2,1,"9,8,3,7,5,2,7,8,2,0",,11125,19,11144
+google/gemini-3-flash-preview,2022,7,7,1,"9,8,3,7,5,2,7,8,2,0",,11125,19,11144
+google/gemini-3-flash-preview,9949,8,8,1,"9,8,3,7,5,2,7,8,2,0",,11125,19,11144
+google/gemini-3-flash-preview,4057,2,2,1,"9,8,3,7,5,2,7,8,2,0",,11125,19,11144
+google/gemini-3-flash-preview,959,0,0,1,"9,8,3,7,5,2,7,8,2,0",,11125,19,11144
+google/gemini-3-flash-preview,5620,8,8,1,"8,2,2,2,1,0,5,7,1,9",,11125,19,11144
+google/gemini-3-flash-preview,4250,6,2,0,"8,2,2,2,1,0,5,7,1,9",,11125,19,11144
+google/gemini-3-flash-preview,3863,2,2,1,"8,2,2,2,1,0,5,7,1,9",,11125,19,11144
+google/gemini-3-flash-preview,4914,2,2,1,"8,2,2,2,1,0,5,7,1,9",,11125,19,11144
+google/gemini-3-flash-preview,9055,1,1,1,"8,2,2,2,1,0,5,7,1,9",,11125,19,11144
+google/gemini-3-flash-preview,1842,0,0,1,"8,2,2,2,1,0,5,7,1,9",,11125,19,11144
+google/gemini-3-flash-preview,145,5,5,1,"8,2,2,2,1,0,5,7,1,9",,11125,19,11144
+google/gemini-3-flash-preview,1686,7,7,1,"8,2,2,2,1,0,5,7,1,9",,11125,19,11144
+google/gemini-3-flash-preview,2977,1,1,1,"8,2,2,2,1,0,5,7,1,9",,11125,19,11144
+google/gemini-3-flash-preview,8048,9,9,1,"8,2,2,2,1,0,5,7,1,9",,11125,19,11144
+google/gemini-3-flash-preview,4457,2,2,1,"2,9,6,5,7,6,3,6,7,6",,11125,19,11144
+google/gemini-3-flash-preview,2953,9,9,1,"2,9,6,5,7,6,3,6,7,6",,11125,19,11144
+google/gemini-3-flash-preview,2196,6,6,1,"2,9,6,5,7,6,3,6,7,6",,11125,19,11144
+google/gemini-3-flash-preview,6878,5,5,1,"2,9,6,5,7,6,3,6,7,6",,11125,19,11144
+google/gemini-3-flash-preview,4107,7,7,1,"2,9,6,5,7,6,3,6,7,6",,11125,19,11144
+google/gemini-3-flash-preview,9856,6,6,1,"2,9,6,5,7,6,3,6,7,6",,11125,19,11144
+google/gemini-3-flash-preview,5478,3,3,1,"2,9,6,5,7,6,3,6,7,6",,11125,19,11144
+google/gemini-3-flash-preview,5913,6,6,1,"2,9,6,5,7,6,3,6,7,6",,11125,19,11144
+google/gemini-3-flash-preview,4225,7,7,1,"2,9,6,5,7,6,3,6,7,6",,11125,19,11144
+google/gemini-3-flash-preview,7091,6,6,1,"2,9,6,5,7,6,3,6,7,6",,11125,19,11144
+google/gemini-3-flash-preview,9577,3,3,1,"3, 4, 9, 2, 1, 8, 9, 2, 3, 7",,11125,28,11153
+google/gemini-3-flash-preview,9100,4,4,1,"3, 4, 9, 2, 1, 8, 9, 2, 3, 7",,11125,28,11153
+google/gemini-3-flash-preview,9609,9,9,1,"3, 4, 9, 2, 1, 8, 9, 2, 3, 7",,11125,28,11153
+google/gemini-3-flash-preview,908,2,2,1,"3, 4, 9, 2, 1, 8, 9, 2, 3, 7",,11125,28,11153
+google/gemini-3-flash-preview,2353,1,1,1,"3, 4, 9, 2, 1, 8, 9, 2, 3, 7",,11125,28,11153
+google/gemini-3-flash-preview,1867,8,8,1,"3, 4, 9, 2, 1, 8, 9, 2, 3, 7",,11125,28,11153
+google/gemini-3-flash-preview,7684,9,9,1,"3, 4, 9, 2, 1, 8, 9, 2, 3, 7",,11125,28,11153
+google/gemini-3-flash-preview,4369,2,2,1,"3, 4, 9, 2, 1, 8, 9, 2, 3, 7",,11125,28,11153
+google/gemini-3-flash-preview,9281,3,3,1,"3, 4, 9, 2, 1, 8, 9, 2, 3, 7",,11125,28,11153
+google/gemini-3-flash-preview,8772,7,7,1,"3, 4, 9, 2, 1, 8, 9, 2, 3, 7",,11125,28,11153
+google/gemini-3-flash-preview,1459,1,1,1,"1,8,2,8,2,6,9,7,0,2",,11125,19,11144
+google/gemini-3-flash-preview,5810,8,8,1,"1,8,2,8,2,6,9,7,0,2",,11125,19,11144
+google/gemini-3-flash-preview,3096,6,2,0,"1,8,2,8,2,6,9,7,0,2",,11125,19,11144
+google/gemini-3-flash-preview,3542,8,8,1,"1,8,2,8,2,6,9,7,0,2",,11125,19,11144
+google/gemini-3-flash-preview,2110,6,2,0,"1,8,2,8,2,6,9,7,0,2",,11125,19,11144
+google/gemini-3-flash-preview,2439,6,6,1,"1,8,2,8,2,6,9,7,0,2",,11125,19,11144
+google/gemini-3-flash-preview,2038,9,9,1,"1,8,2,8,2,6,9,7,0,2",,11125,19,11144
+google/gemini-3-flash-preview,8147,8,7,0,"1,8,2,8,2,6,9,7,0,2",,11125,19,11144
+google/gemini-3-flash-preview,464,0,0,1,"1,8,2,8,2,6,9,7,0,2",,11125,19,11144
+google/gemini-3-flash-preview,2605,2,2,1,"1,8,2,8,2,6,9,7,0,2",,11125,19,11144
+google/gemini-3-flash-preview,2895,3,3,1,"3, 4, 6, 0, 1, 2, 6, 8, 5, 7",,11125,28,11153
+google/gemini-3-flash-preview,9555,4,4,1,"3, 4, 6, 0, 1, 2, 6, 8, 5, 7",,11125,28,11153
+google/gemini-3-flash-preview,1207,6,6,1,"3, 4, 6, 0, 1, 2, 6, 8, 5, 7",,11125,28,11153
+google/gemini-3-flash-preview,9205,0,0,1,"3, 4, 6, 0, 1, 2, 6, 8, 5, 7",,11125,28,11153
+google/gemini-3-flash-preview,2488,1,1,1,"3, 4, 6, 0, 1, 2, 6, 8, 5, 7",,11125,28,11153
+google/gemini-3-flash-preview,1757,2,2,1,"3, 4, 6, 0, 1, 2, 6, 8, 5, 7",,11125,28,11153
+google/gemini-3-flash-preview,6355,6,6,1,"3, 4, 6, 0, 1, 2, 6, 8, 5, 7",,11125,28,11153
+google/gemini-3-flash-preview,295,8,8,1,"3, 4, 6, 0, 1, 2, 6, 8, 5, 7",,11125,28,11153
+google/gemini-3-flash-preview,1739,5,5,1,"3, 4, 6, 0, 1, 2, 6, 8, 5, 7",,11125,28,11153
+google/gemini-3-flash-preview,4104,7,7,1,"3, 4, 6, 0, 1, 2, 6, 8, 5, 7",,11125,28,11153
+google/gemini-3-flash-preview,6469,4,4,1,"4, 1, 1, 2, 8, 2, 8, 8, 2, 7",,11125,28,11153
+google/gemini-3-flash-preview,7329,1,1,1,"4, 1, 1, 2, 8, 2, 8, 8, 2, 7",,11125,28,11153
+google/gemini-3-flash-preview,1174,1,1,1,"4, 1, 1, 2, 8, 2, 8, 8, 2, 7",,11125,28,11153
+google/gemini-3-flash-preview,4192,2,2,1,"4, 1, 1, 2, 8, 2, 8, 8, 2, 7",,11125,28,11153
+google/gemini-3-flash-preview,4285,8,8,1,"4, 1, 1, 2, 8, 2, 8, 8, 2, 7",,11125,28,11153
+google/gemini-3-flash-preview,160,2,2,1,"4, 1, 1, 2, 8, 2, 8, 8, 2, 7",,11125,28,11153
+google/gemini-3-flash-preview,1322,8,8,1,"4, 1, 1, 2, 8, 2, 8, 8, 2, 7",,11125,28,11153
+google/gemini-3-flash-preview,5639,8,8,1,"4, 1, 1, 2, 8, 2, 8, 8, 2, 7",,11125,28,11153
+google/gemini-3-flash-preview,6191,2,2,1,"4, 1, 1, 2, 8, 2, 8, 8, 2, 7",,11125,28,11153
+google/gemini-3-flash-preview,9035,7,7,1,"4, 1, 1, 2, 8, 2, 8, 8, 2, 7",,11125,28,11153
+google/gemini-3-flash-preview,3983,8,8,1,"8,2,4,9,0,8,1,7,1,5",,11125,19,11144
+google/gemini-3-flash-preview,4712,2,2,1,"8,2,4,9,0,8,1,7,1,5",,11125,19,11144
+google/gemini-3-flash-preview,3818,4,4,1,"8,2,4,9,0,8,1,7,1,5",,11125,19,11144
+google/gemini-3-flash-preview,8285,9,9,1,"8,2,4,9,0,8,1,7,1,5",,11125,19,11144
+google/gemini-3-flash-preview,4207,0,0,1,"8,2,4,9,0,8,1,7,1,5",,11125,19,11144
+google/gemini-3-flash-preview,8374,8,8,1,"8,2,4,9,0,8,1,7,1,5",,11125,19,11144
+google/gemini-3-flash-preview,6169,1,1,1,"8,2,4,9,0,8,1,7,1,5",,11125,19,11144
+google/gemini-3-flash-preview,2182,6,7,0,"8,2,4,9,0,8,1,7,1,5",,11125,19,11144
+google/gemini-3-flash-preview,6116,1,1,1,"8,2,4,9,0,8,1,7,1,5",,11125,19,11144
+google/gemini-3-flash-preview,5374,5,5,1,"8,2,4,9,0,8,1,7,1,5",,11125,19,11144
+google/gemini-3-flash-preview,6522,0,0,1,"0, 8, 3, 9, 4, 3, 5, 7, 7, 6",,11125,28,11153
+google/gemini-3-flash-preview,2458,8,8,1,"0, 8, 3, 9, 4, 3, 5, 7, 7, 6",,11125,28,11153
+google/gemini-3-flash-preview,5167,3,3,1,"0, 8, 3, 9, 4, 3, 5, 7, 7, 6",,11125,28,11153
+google/gemini-3-flash-preview,2167,9,9,1,"0, 8, 3, 9, 4, 3, 5, 7, 7, 6",,11125,28,11153
+google/gemini-3-flash-preview,753,4,4,1,"0, 8, 3, 9, 4, 3, 5, 7, 7, 6",,11125,28,11153
+google/gemini-3-flash-preview,9824,3,3,1,"0, 8, 3, 9, 4, 3, 5, 7, 7, 6",,11125,28,11153
+google/gemini-3-flash-preview,5781,5,5,1,"0, 8, 3, 9, 4, 3, 5, 7, 7, 6",,11125,28,11153
+google/gemini-3-flash-preview,9839,7,7,1,"0, 8, 3, 9, 4, 3, 5, 7, 7, 6",,11125,28,11153
+google/gemini-3-flash-preview,5188,7,7,1,"0, 8, 3, 9, 4, 3, 5, 7, 7, 6",,11125,28,11153
+google/gemini-3-flash-preview,5039,6,6,1,"0, 8, 3, 9, 4, 3, 5, 7, 7, 6",,11125,28,11153
+google/gemini-3-flash-preview,1211,3,2,0,"2,3,9,0,4,3,7,8,1,3",,11125,19,11144
+google/gemini-3-flash-preview,9684,3,3,1,"2,3,9,0,4,3,7,8,1,3",,11125,19,11144
+google/gemini-3-flash-preview,1160,9,9,1,"2,3,9,0,4,3,7,8,1,3",,11125,19,11144
+google/gemini-3-flash-preview,9565,5,0,0,"2,3,9,0,4,3,7,8,1,3",,11125,19,11144
+google/gemini-3-flash-preview,3676,4,4,1,"2,3,9,0,4,3,7,8,1,3",,11125,19,11144
+google/gemini-3-flash-preview,1849,3,3,1,"2,3,9,0,4,3,7,8,1,3",,11125,19,11144
+google/gemini-3-flash-preview,7614,7,7,1,"2,3,9,0,4,3,7,8,1,3",,11125,19,11144
+google/gemini-3-flash-preview,8708,8,8,1,"2,3,9,0,4,3,7,8,1,3",,11125,19,11144
+google/gemini-3-flash-preview,1198,1,1,1,"2,3,9,0,4,3,7,8,1,3",,11125,19,11144
+google/gemini-3-flash-preview,7557,3,3,1,"2,3,9,0,4,3,7,8,1,3",,11125,19,11144
+google/gemini-3-flash-preview,7768,0,0,1,"0, 9, 4, 1, 8, 3, 6, 0, 5, 5",,11125,28,11153
+google/gemini-3-flash-preview,5682,9,9,1,"0, 9, 4, 1, 8, 3, 6, 0, 5, 5",,11125,28,11153
+google/gemini-3-flash-preview,7197,4,4,1,"0, 9, 4, 1, 8, 3, 6, 0, 5, 5",,11125,28,11153
+google/gemini-3-flash-preview,2553,1,1,1,"0, 9, 4, 1, 8, 3, 6, 0, 5, 5",,11125,28,11153
+google/gemini-3-flash-preview,5541,8,8,1,"0, 9, 4, 1, 8, 3, 6, 0, 5, 5",,11125,28,11153
+google/gemini-3-flash-preview,5038,3,3,1,"0, 9, 4, 1, 8, 3, 6, 0, 5, 5",,11125,28,11153
+google/gemini-3-flash-preview,2428,6,6,1,"0, 9, 4, 1, 8, 3, 6, 0, 5, 5",,11125,28,11153
+google/gemini-3-flash-preview,1805,0,0,1,"0, 9, 4, 1, 8, 3, 6, 0, 5, 5",,11125,28,11153
+google/gemini-3-flash-preview,1137,5,5,1,"0, 9, 4, 1, 8, 3, 6, 0, 5, 5",,11125,28,11153
+google/gemini-3-flash-preview,8087,5,5,1,"0, 9, 4, 1, 8, 3, 6, 0, 5, 5",,11125,28,11153
+google/gemini-3-flash-preview,4055,8,8,1,"8, 0, 7, 5, 7, 6, 5, 1, 8, 0",,11125,28,11153
+google/gemini-3-flash-preview,3073,0,0,1,"8, 0, 7, 5, 7, 6, 5, 1, 8, 0",,11125,28,11153
+google/gemini-3-flash-preview,9317,7,7,1,"8, 0, 7, 5, 7, 6, 5, 1, 8, 0",,11125,28,11153
+google/gemini-3-flash-preview,2241,5,5,1,"8, 0, 7, 5, 7, 6, 5, 1, 8, 0",,11125,28,11153
+google/gemini-3-flash-preview,6979,7,7,1,"8, 0, 7, 5, 7, 6, 5, 1, 8, 0",,11125,28,11153
+google/gemini-3-flash-preview,7415,6,6,1,"8, 0, 7, 5, 7, 6, 5, 1, 8, 0",,11125,28,11153
+google/gemini-3-flash-preview,1170,5,5,1,"8, 0, 7, 5, 7, 6, 5, 1, 8, 0",,11125,28,11153
+google/gemini-3-flash-preview,1053,1,1,1,"8, 0, 7, 5, 7, 6, 5, 1, 8, 0",,11125,28,11153
+google/gemini-3-flash-preview,1261,8,8,1,"8, 0, 7, 5, 7, 6, 5, 1, 8, 0",,11125,28,11153
+google/gemini-3-flash-preview,7022,0,0,1,"8, 0, 7, 5, 7, 6, 5, 1, 8, 0",,11125,28,11153
+google/gemini-3-flash-preview,5049,9,9,1,"9, 2, 1, 5, 7, 2, 8, 1, 9, 0",,11125,28,11153
+google/gemini-3-flash-preview,7860,2,2,1,"9, 2, 1, 5, 7, 2, 8, 1, 9, 0",,11125,28,11153
+google/gemini-3-flash-preview,7867,1,1,1,"9, 2, 1, 5, 7, 2, 8, 1, 9, 0",,11125,28,11153
+google/gemini-3-flash-preview,8740,5,5,1,"9, 2, 1, 5, 7, 2, 8, 1, 9, 0",,11125,28,11153
+google/gemini-3-flash-preview,1158,7,7,1,"9, 2, 1, 5, 7, 2, 8, 1, 9, 0",,11125,28,11153
+google/gemini-3-flash-preview,2356,2,2,1,"9, 2, 1, 5, 7, 2, 8, 1, 9, 0",,11125,28,11153
+google/gemini-3-flash-preview,5905,8,8,1,"9, 2, 1, 5, 7, 2, 8, 1, 9, 0",,11125,28,11153
+google/gemini-3-flash-preview,3915,1,1,1,"9, 2, 1, 5, 7, 2, 8, 1, 9, 0",,11125,28,11153
+google/gemini-3-flash-preview,875,9,9,1,"9, 2, 1, 5, 7, 2, 8, 1, 9, 0",,11125,28,11153
+google/gemini-3-flash-preview,2652,5,0,0,"9, 2, 1, 5, 7, 2, 8, 1, 9, 0",,11125,28,11153
+google/gemini-3-flash-preview,349,5,9,0,"9,6,8,2,5,1,9,0,5,5",,11125,19,11144
+google/gemini-3-flash-preview,9268,6,6,1,"9,6,8,2,5,1,9,0,5,5",,11125,19,11144
+google/gemini-3-flash-preview,5806,5,8,0,"9,6,8,2,5,1,9,0,5,5",,11125,19,11144
+google/gemini-3-flash-preview,7005,2,2,1,"9,6,8,2,5,1,9,0,5,5",,11125,19,11144
+google/gemini-3-flash-preview,638,5,5,1,"9,6,8,2,5,1,9,0,5,5",,11125,19,11144
+google/gemini-3-flash-preview,6969,1,1,1,"9,6,8,2,5,1,9,0,5,5",,11125,19,11144
+google/gemini-3-flash-preview,198,9,9,1,"9,6,8,2,5,1,9,0,5,5",,11125,19,11144
+google/gemini-3-flash-preview,7690,5,0,0,"9,6,8,2,5,1,9,0,5,5",,11125,19,11144
+google/gemini-3-flash-preview,5237,5,5,1,"9,6,8,2,5,1,9,0,5,5",,11125,19,11144
+google/gemini-3-flash-preview,5978,5,5,1,"9,6,8,2,5,1,9,0,5,5",,11125,19,11144
+google/gemini-3-flash-preview,2680,7,7,1,"7,8,4,6,2,7,7,8,8,5",,11125,19,11144
+google/gemini-3-flash-preview,5881,8,8,1,"7,8,4,6,2,7,7,8,8,5",,11125,19,11144
+google/gemini-3-flash-preview,5985,4,4,1,"7,8,4,6,2,7,7,8,8,5",,11125,19,11144
+google/gemini-3-flash-preview,1972,6,6,1,"7,8,4,6,2,7,7,8,8,5",,11125,19,11144
+google/gemini-3-flash-preview,8887,2,2,1,"7,8,4,6,2,7,7,8,8,5",,11125,19,11144
+google/gemini-3-flash-preview,8782,7,7,1,"7,8,4,6,2,7,7,8,8,5",,11125,19,11144
+google/gemini-3-flash-preview,7181,7,7,1,"7,8,4,6,2,7,7,8,8,5",,11125,19,11144
+google/gemini-3-flash-preview,6343,8,8,1,"7,8,4,6,2,7,7,8,8,5",,11125,19,11144
+google/gemini-3-flash-preview,9974,8,8,1,"7,8,4,6,2,7,7,8,8,5",,11125,19,11144
+google/gemini-3-flash-preview,9026,5,5,1,"7,8,4,6,2,7,7,8,8,5",,11125,19,11144
+google/gemini-3-flash-preview,3395,3,3,1,"3, 0, 5, 9, 7, 5, 2, 2, 4, 8",,11125,28,11153
+google/gemini-3-flash-preview,4809,0,0,1,"3, 0, 5, 9, 7, 5, 2, 2, 4, 8",,11125,28,11153
+google/gemini-3-flash-preview,1881,5,5,1,"3, 0, 5, 9, 7, 5, 2, 2, 4, 8",,11125,28,11153
+google/gemini-3-flash-preview,3981,9,9,1,"3, 0, 5, 9, 7, 5, 2, 2, 4, 8",,11125,28,11153
+google/gemini-3-flash-preview,9099,7,7,1,"3, 0, 5, 9, 7, 5, 2, 2, 4, 8",,11125,28,11153
+google/gemini-3-flash-preview,8717,5,5,1,"3, 0, 5, 9, 7, 5, 2, 2, 4, 8",,11125,28,11153
+google/gemini-3-flash-preview,8777,2,2,1,"3, 0, 5, 9, 7, 5, 2, 2, 4, 8",,11125,28,11153
+google/gemini-3-flash-preview,6700,2,2,1,"3, 0, 5, 9, 7, 5, 2, 2, 4, 8",,11125,28,11153
+google/gemini-3-flash-preview,4523,4,4,1,"3, 0, 5, 9, 7, 5, 2, 2, 4, 8",,11125,28,11153
+google/gemini-3-flash-preview,5423,8,8,1,"3, 0, 5, 9, 7, 5, 2, 2, 4, 8",,11125,28,11153
+google/gemini-3-flash-preview,2251,3,3,1,"3, 7, 1, 9, 1, 0, 5, 3, 7, 0",,11125,28,11153
+google/gemini-3-flash-preview,383,6,7,0,"3, 7, 1, 9, 1, 0, 5, 3, 7, 0",,11125,28,11153
+google/gemini-3-flash-preview,7644,1,1,1,"3, 7, 1, 9, 1, 0, 5, 3, 7, 0",,11125,28,11153
+google/gemini-3-flash-preview,5932,9,9,1,"3, 7, 1, 9, 1, 0, 5, 3, 7, 0",,11125,28,11153
+google/gemini-3-flash-preview,2061,1,1,1,"3, 7, 1, 9, 1, 0, 5, 3, 7, 0",,11125,28,11153
+google/gemini-3-flash-preview,9659,0,0,1,"3, 7, 1, 9, 1, 0, 5, 3, 7, 0",,11125,28,11153
+google/gemini-3-flash-preview,848,5,5,1,"3, 7, 1, 9, 1, 0, 5, 3, 7, 0",,11125,28,11153
+google/gemini-3-flash-preview,2503,3,3,1,"3, 7, 1, 9, 1, 0, 5, 3, 7, 0",,11125,28,11153
+google/gemini-3-flash-preview,5395,6,7,0,"3, 7, 1, 9, 1, 0, 5, 3, 7, 0",,11125,28,11153
+google/gemini-3-flash-preview,1848,0,0,1,"3, 7, 1, 9, 1, 0, 5, 3, 7, 0",,11125,28,11153
+google/gemini-3-flash-preview,7419,7,7,1,"7,3,9,6,0,1,7,8,6,5",,11125,19,11144
+google/gemini-3-flash-preview,3394,3,3,1,"7,3,9,6,0,1,7,8,6,5",,11125,19,11144
+google/gemini-3-flash-preview,2362,9,9,1,"7,3,9,6,0,1,7,8,6,5",,11125,19,11144
+google/gemini-3-flash-preview,6402,6,6,1,"7,3,9,6,0,1,7,8,6,5",,11125,19,11144
+google/gemini-3-flash-preview,5248,0,0,1,"7,3,9,6,0,1,7,8,6,5",,11125,19,11144
+google/gemini-3-flash-preview,2461,1,1,1,"7,3,9,6,0,1,7,8,6,5",,11125,19,11144
+google/gemini-3-flash-preview,3308,7,7,1,"7,3,9,6,0,1,7,8,6,5",,11125,19,11144
+google/gemini-3-flash-preview,3306,8,8,1,"7,3,9,6,0,1,7,8,6,5",,11125,19,11144
+google/gemini-3-flash-preview,3581,6,6,1,"7,3,9,6,0,1,7,8,6,5",,11125,19,11144
+google/gemini-3-flash-preview,8249,5,5,1,"7,3,9,6,0,1,7,8,6,5",,11125,19,11144
+google/gemini-3-flash-preview,429,3,3,1,"3, 6, 2, 1, 4, 1, 8, 2, 9, 6",,11125,28,11153
+google/gemini-3-flash-preview,9918,6,6,1,"3, 6, 2, 1, 4, 1, 8, 2, 9, 6",,11125,28,11153
+google/gemini-3-flash-preview,3749,2,2,1,"3, 6, 2, 1, 4, 1, 8, 2, 9, 6",,11125,28,11153
+google/gemini-3-flash-preview,3179,1,1,1,"3, 6, 2, 1, 4, 1, 8, 2, 9, 6",,11125,28,11153
+google/gemini-3-flash-preview,2348,4,4,1,"3, 6, 2, 1, 4, 1, 8, 2, 9, 6",,11125,28,11153
+google/gemini-3-flash-preview,8604,1,1,1,"3, 6, 2, 1, 4, 1, 8, 2, 9, 6",,11125,28,11153
+google/gemini-3-flash-preview,7407,8,8,1,"3, 6, 2, 1, 4, 1, 8, 2, 9, 6",,11125,28,11153
+google/gemini-3-flash-preview,2657,3,2,0,"3, 6, 2, 1, 4, 1, 8, 2, 9, 6",,11125,28,11153
+google/gemini-3-flash-preview,493,9,9,1,"3, 6, 2, 1, 4, 1, 8, 2, 9, 6",,11125,28,11153
+google/gemini-3-flash-preview,6732,6,6,1,"3, 6, 2, 1, 4, 1, 8, 2, 9, 6",,11125,28,11153
+google/gemini-3-flash-preview,9662,7,7,1,"7, 7, 2, 4, 3, 1, 3, 0, 6, 9",,11125,28,11153
+google/gemini-3-flash-preview,6538,7,7,1,"7, 7, 2, 4, 3, 1, 3, 0, 6, 9",,11125,28,11153
+google/gemini-3-flash-preview,8549,3,2,0,"7, 7, 2, 4, 3, 1, 3, 0, 6, 9",,11125,28,11153
+google/gemini-3-flash-preview,2521,4,4,1,"7, 7, 2, 4, 3, 1, 3, 0, 6, 9",,11125,28,11153
+google/gemini-3-flash-preview,3919,3,3,1,"7, 7, 2, 4, 3, 1, 3, 0, 6, 9",,11125,28,11153
+google/gemini-3-flash-preview,6385,1,1,1,"7, 7, 2, 4, 3, 1, 3, 0, 6, 9",,11125,28,11153
+google/gemini-3-flash-preview,6074,3,3,1,"7, 7, 2, 4, 3, 1, 3, 0, 6, 9",,11125,28,11153
+google/gemini-3-flash-preview,2888,0,0,1,"7, 7, 2, 4, 3, 1, 3, 0, 6, 9",,11125,28,11153
+google/gemini-3-flash-preview,4953,6,6,1,"7, 7, 2, 4, 3, 1, 3, 0, 6, 9",,11125,28,11153
+google/gemini-3-flash-preview,7227,9,9,1,"7, 7, 2, 4, 3, 1, 3, 0, 6, 9",,11125,28,11153
+google/gemini-3-flash-preview,6775,3,3,1,"3,4,9,1,0,6,2,1,8,2",,11125,19,11144
+google/gemini-3-flash-preview,687,4,4,1,"3,4,9,1,0,6,2,1,8,2",,11125,19,11144
+google/gemini-3-flash-preview,2547,0,9,0,"3,4,9,1,0,6,2,1,8,2",,11125,19,11144
+google/gemini-3-flash-preview,7357,1,1,1,"3,4,9,1,0,6,2,1,8,2",,11125,19,11144
+google/gemini-3-flash-preview,4029,0,0,1,"3,4,9,1,0,6,2,1,8,2",,11125,19,11144
+google/gemini-3-flash-preview,2738,6,6,1,"3,4,9,1,0,6,2,1,8,2",,11125,19,11144
+google/gemini-3-flash-preview,9314,2,2,1,"3,4,9,1,0,6,2,1,8,2",,11125,19,11144
+google/gemini-3-flash-preview,6709,1,1,1,"3,4,9,1,0,6,2,1,8,2",,11125,19,11144
+google/gemini-3-flash-preview,4378,8,8,1,"3,4,9,1,0,6,2,1,8,2",,11125,19,11144
+google/gemini-3-flash-preview,5945,2,2,1,"3,4,9,1,0,6,2,1,8,2",,11125,19,11144
+google/gemini-3-flash-preview,5844,6,6,1,"6,4,2,6,9,7,1,7,9,1",,11125,19,11144
+google/gemini-3-flash-preview,5815,4,4,1,"6,4,2,6,9,7,1,7,9,1",,11125,19,11144
+google/gemini-3-flash-preview,4976,2,2,1,"6,4,2,6,9,7,1,7,9,1",,11125,19,11144
+google/gemini-3-flash-preview,4709,6,6,1,"6,4,2,6,9,7,1,7,9,1",,11125,19,11144
+google/gemini-3-flash-preview,1541,9,9,1,"6,4,2,6,9,7,1,7,9,1",,11125,19,11144
+google/gemini-3-flash-preview,2429,7,7,1,"6,4,2,6,9,7,1,7,9,1",,11125,19,11144
+google/gemini-3-flash-preview,7086,1,1,1,"6,4,2,6,9,7,1,7,9,1",,11125,19,11144
+google/gemini-3-flash-preview,8718,7,7,1,"6,4,2,6,9,7,1,7,9,1",,11125,19,11144
+google/gemini-3-flash-preview,4385,9,9,1,"6,4,2,6,9,7,1,7,9,1",,11125,19,11144
+google/gemini-3-flash-preview,1363,1,1,1,"6,4,2,6,9,7,1,7,9,1",,11125,19,11144
+google/gemini-3-flash-preview,217,2,2,1,"2,2,2,9,3,7,4,7,1,7",,11125,19,11144
+google/gemini-3-flash-preview,5138,3,2,0,"2,2,2,9,3,7,4,7,1,7",,11125,19,11144
+google/gemini-3-flash-preview,6952,2,2,1,"2,2,2,9,3,7,4,7,1,7",,11125,19,11144
+google/gemini-3-flash-preview,8925,9,9,1,"2,2,2,9,3,7,4,7,1,7",,11125,19,11144
+google/gemini-3-flash-preview,5923,3,3,1,"2,2,2,9,3,7,4,7,1,7",,11125,19,11144
+google/gemini-3-flash-preview,5653,7,7,1,"2,2,2,9,3,7,4,7,1,7",,11125,19,11144
+google/gemini-3-flash-preview,7379,4,4,1,"2,2,2,9,3,7,4,7,1,7",,11125,19,11144
+google/gemini-3-flash-preview,4870,7,7,1,"2,2,2,9,3,7,4,7,1,7",,11125,19,11144
+google/gemini-3-flash-preview,8026,1,1,1,"2,2,2,9,3,7,4,7,1,7",,11125,19,11144
+google/gemini-3-flash-preview,8989,7,7,1,"2,2,2,9,3,7,4,7,1,7",,11125,19,11144
+google/gemini-3-flash-preview,1123,5,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,2275,2,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,8100,5,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,4545,4,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,2908,8,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,1590,4,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,727,2,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,7993,9,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,6935,2,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,9256,7,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,449,4,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,5629,8,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,168,1,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,6835,9,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,5865,2,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,402,8,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,2411,0,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,73,8,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,4544,0,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,6645,0,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,6171,1,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,3252,3,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,5785,2,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,8946,3,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,999,9,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,648,0,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,4115,7,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,9072,9,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,6184,8,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,8289,9,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,7682,6,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,9846,3,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,6747,2,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,7534,0,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,4252,0,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,4607,8,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,146,0,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,9320,8,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,3594,8,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,3202,5,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,5712,7,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,5596,7,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,8891,1,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,3348,2,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,1736,9,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,8570,4,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,6658,3,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,7997,7,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,2494,5,,0,,http_402,0,0,0
+google/gemini-3-flash-preview,9663,1,,0,,http_402,0,0,0

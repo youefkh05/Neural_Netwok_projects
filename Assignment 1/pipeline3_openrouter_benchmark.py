@@ -19,7 +19,9 @@ BASE_DIR = os.path.dirname(__file__)
 DATA_DIR = os.path.join(BASE_DIR, "Indian_Digits_Train")
 MATRIX_PATH = os.path.join(BASE_DIR, "pipeline3", "label_matrix_500.csv")
 OUT_DIR = os.path.join(BASE_DIR, "pipeline3")
+REFERENCE_IMAGE_PATH = os.path.join(OUT_DIR, "reference_digits_0_to_9_labeled.png")
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+LOCKED_MODEL = "google/gemma-4-31b-it"
 
 
 # ==============================
@@ -30,8 +32,13 @@ def parse_args():
     parser.add_argument(
         "--model",
         type=str,
-        default="google/gemini-2.0-flash-001",
+        default=LOCKED_MODEL,
         help="OpenRouter model id",
+    )
+    parser.add_argument(
+        "--allow-any-model",
+        action="store_true",
+        help="Allow running models other than the locked safe default",
     )
     parser.add_argument(
         "--samples-per-digit",
@@ -43,6 +50,12 @@ def parse_args():
     parser.add_argument("--delay", type=float, default=0.4, help="Delay in seconds between requests")
     parser.add_argument("--max-retries-429", type=int, default=4, help="Maximum retries on HTTP 429")
     parser.add_argument(
+        "--max-retries-timeout",
+        type=int,
+        default=3,
+        help="Maximum retries on request timeout/network errors",
+    )
+    parser.add_argument(
         "--max-retry-wait",
         type=float,
         default=8.0,
@@ -53,6 +66,12 @@ def parse_args():
         type=int,
         default=16,
         help="Maximum completion tokens per request",
+    )
+    parser.add_argument(
+        "--request-timeout",
+        type=float,
+        default=180.0,
+        help="HTTP request timeout in seconds",
     )
     parser.add_argument(
         "--output",
@@ -67,10 +86,33 @@ def parse_args():
         help="Path to label matrix CSV",
     )
     parser.add_argument(
+        "--reference-image-path",
+        type=str,
+        default=REFERENCE_IMAGE_PATH,
+        help="Path to labeled reference image (0..9)",
+    )
+    parser.add_argument(
+        "--api-key-env-var",
+        type=str,
+        default="OPENROUTER_API_KEY",
+        help="Environment variable name to read OpenRouter API key from",
+    )
+    parser.add_argument(
         "--random-seed",
         type=int,
         default=None,
         help="Optional seed for reproducible random sampling",
+    )
+    parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=1,
+        help="Number of images per API request",
+    )
+    parser.add_argument(
+        "--compact-prompt",
+        action="store_true",
+        help="Use a shorter prompt to reduce token usage",
     )
     return parser.parse_args()
 
@@ -108,7 +150,14 @@ def parse_digit(text):
     return None
 
 
-def build_prompt():
+def build_prompt(compact=False):
+    if compact:
+        return (
+            "Classify the handwritten Indian (Devanagari) digit in each image. "
+            "The first image is a labeled reference for digits 0..9. "
+            "Return digits only (0-9)."
+        )
+
     return (
         "Task: Classify the handwritten Indian (Hindi/Devanagari) digit in the provided image. "
         "Image Context: This image is an upscaled version of a 28x28 grayscale handwritten digit. "
@@ -122,6 +171,31 @@ def build_prompt():
         "Do not include any text, labels, punctuation, or explanations in your response. "
         "Response Example: 5"
     )
+
+
+def build_prompt_for_batch(base_prompt, batch_size):
+    if batch_size <= 1:
+        return base_prompt
+
+    return (
+        base_prompt
+        + " "
+        + f"This request contains {batch_size} images. "
+        + f"Return exactly {batch_size} digits in order as a comma-separated list. "
+        + "Example output format: 3,1,9,0"
+    )
+
+
+def parse_batch_digits(text, expected_count):
+    if text is None:
+        return None
+
+    cleaned = text.strip().translate(str.maketrans("٠١٢٣٤٥٦٧٨٩۰۱۲۳۴۵۶۷۸۹", "01234567890123456789"))
+    matches = re.findall(r"[0-9]", cleaned)
+    if len(matches) < expected_count:
+        return None
+
+    return [int(x) for x in matches[:expected_count]]
 
 
 def collect_balanced_samples(matrix_path, samples_per_digit, random_seed=None):
@@ -161,15 +235,37 @@ def preprocess_image(path, resize):
     return enc.tobytes()
 
 
-def call_openrouter(headers, model, prompt, query_png_bytes, max_tokens):
-    query_b64 = base64.b64encode(query_png_bytes).decode("ascii")
-    content = [
-        {"type": "text", "text": prompt},
-        {
-            "type": "image_url",
-            "image_url": {"url": f"data:image/png;base64,{query_b64}"},
-        },
-    ]
+def load_reference_image(path):
+    img = cv2.imread(path, cv2.IMREAD_COLOR)
+    if img is None:
+        raise RuntimeError(f"Failed to read reference image: {path}")
+
+    ok, enc = cv2.imencode(".png", img)
+    if not ok:
+        raise RuntimeError(f"Failed to encode reference image: {path}")
+
+    return enc.tobytes()
+
+
+def call_openrouter(headers, model, prompt, query_png_bytes_list, max_tokens, request_timeout, reference_png_bytes=None):
+    content = [{"type": "text", "text": prompt}]
+    if reference_png_bytes is not None:
+        ref_b64 = base64.b64encode(reference_png_bytes).decode("ascii")
+        content.append(
+            {
+                "type": "image_url",
+                "image_url": {"url": f"data:image/png;base64,{ref_b64}"},
+            }
+        )
+
+    for query_png_bytes in query_png_bytes_list:
+        query_b64 = base64.b64encode(query_png_bytes).decode("ascii")
+        content.append(
+            {
+                "type": "image_url",
+                "image_url": {"url": f"data:image/png;base64,{query_b64}"},
+            }
+        )
 
     payload = {
         "model": model,
@@ -185,7 +281,33 @@ def call_openrouter(headers, model, prompt, query_png_bytes, max_tokens):
     if not model.startswith("openai/"):
         payload["temperature"] = 0
 
-    return requests.post(OPENROUTER_URL, headers=headers, json=payload, timeout=90)
+    return requests.post(
+        OPENROUTER_URL,
+        headers=headers,
+        json=payload,
+        timeout=request_timeout,
+    )
+
+
+def extract_message_text(data):
+    choices = data.get("choices")
+    if not isinstance(choices, list) or not choices:
+        return None, "missing_choices"
+
+    first = choices[0]
+    if not isinstance(first, dict):
+        return None, "invalid_choice_item"
+
+    message = first.get("message")
+    if not isinstance(message, dict):
+        return None, "missing_message"
+
+    raw = message.get("content")
+    if raw is None:
+        raw = message.get("reasoning")
+    if raw is None:
+        raw = ""
+    return raw, ""
 
 
 # ==============================
@@ -193,14 +315,25 @@ def call_openrouter(headers, model, prompt, query_png_bytes, max_tokens):
 # ==============================
 def main():
     args = parse_args()
+    if args.batch_size < 1:
+        raise ValueError("--batch-size must be >= 1")
+    if not args.allow_any_model and args.model != LOCKED_MODEL:
+        raise ValueError(
+            f"Model '{args.model}' is blocked by safety lock. "
+            f"Use '{LOCKED_MODEL}' or pass --allow-any-model to override."
+        )
     # Force .env values to override any stale exported key in terminal session.
     load_dotenv(os.path.join(BASE_DIR, ".env"), override=True)
 
-    api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
+    api_key = os.getenv(args.api_key_env_var, "").strip()
     if not api_key:
-        raise RuntimeError("Missing OPENROUTER_API_KEY in .env")
+        raise RuntimeError(f"Missing {args.api_key_env_var} in .env")
 
-    prompt = build_prompt()
+    prompt = build_prompt(compact=args.compact_prompt)
+    reference_png_bytes = None
+    if args.reference_image_path:
+        reference_png_bytes = load_reference_image(args.reference_image_path)
+
     samples = collect_balanced_samples(
         args.matrix_path,
         args.samples_per_digit,
@@ -215,6 +348,7 @@ def main():
     }
 
     rows = []
+    batch_rows = []
     attempted = 0
     correct = 0
     parse_fail = 0
@@ -225,26 +359,82 @@ def main():
     usage_completion_tokens = 0
     usage_total_tokens = 0
 
-    for i, (index_0, true_digit) in enumerate(samples, start=1):
-        image_path = os.path.join(DATA_DIR, f"{index_0 + 1}.bmp")
+    batch_id = 0
+    for start in range(0, len(samples), args.batch_size):
+        batch_id += 1
+        batch = samples[start : start + args.batch_size]
+        valid_items = []
 
-        try:
-            png_bytes = preprocess_image(image_path, args.resize)
-        except Exception as exc:
-            errors += 1
-            rows.append([args.model, index_0 + 1, true_digit, "", 0, "", f"image_error: {exc}", 0, 0, 0])
+        for index_0, true_digit in batch:
+            image_path = os.path.join(DATA_DIR, f"{index_0 + 1}.bmp")
+            try:
+                png_bytes = preprocess_image(image_path, args.resize)
+                valid_items.append((index_0, true_digit, png_bytes))
+            except Exception as exc:
+                errors += 1
+                rows.append([args.model, index_0 + 1, true_digit, "", 0, "", f"image_error: {exc}", 0, 0, 0])
+
+        if not valid_items:
             continue
 
+        batch_file_numbers = [str(index_0 + 1) for index_0, _, _ in valid_items]
+        batch_true_labels = [str(true_digit) for _, true_digit, _ in valid_items]
+        batch_pred_labels = ["" for _ in valid_items]
+        batch_raw = ""
+        batch_error = ""
+        batch_http_status = ""
+        batch_attempted = 0
+        batch_correct = 0
+        batch_pt = 0
+        batch_ct = 0
+        batch_tt = 0
+
+        request_prompt = build_prompt_for_batch(prompt, len(valid_items))
+
         tries = 0
+        timeout_retries = 0
+        response = None
         while True:
             tries += 1
-            response = call_openrouter(
-                headers,
-                args.model,
-                prompt,
-                png_bytes,
-                args.max_tokens,
-            )
+            try:
+                response = call_openrouter(
+                    headers,
+                    args.model,
+                    request_prompt,
+                    [x[2] for x in valid_items],
+                    args.max_tokens,
+                    args.request_timeout,
+                    reference_png_bytes,
+                )
+            except requests.exceptions.RequestException as exc:
+                timeout_retries += 1
+                if timeout_retries <= args.max_retries_timeout:
+                    wait_s = min(2.0 * timeout_retries, args.max_retry_wait)
+                    print(
+                        f"[WARN] network/timeout on batch {start + 1}-{min(start + len(batch), len(samples))}/{len(samples)} | "
+                        f"retry {timeout_retries}/{args.max_retries_timeout} | waiting {wait_s:.1f}s | {type(exc).__name__}"
+                    )
+                    time.sleep(wait_s)
+                    continue
+
+                for index_0, true_digit, _ in valid_items:
+                    errors += 1
+                    rows.append(
+                        [
+                            args.model,
+                            index_0 + 1,
+                            true_digit,
+                            "",
+                            0,
+                            "",
+                            f"request_error: {type(exc).__name__}",
+                            0,
+                            0,
+                            0,
+                        ]
+                    )
+                response = None
+                break
 
             if response.status_code == 429 and tries <= args.max_retries_429:
                 retry_after = response.headers.get("retry-after", "5")
@@ -254,47 +444,363 @@ def main():
                     wait_s = 5.0
                 wait_s = min(max(wait_s, 1.0), args.max_retry_wait)
                 print(
-                    f"[WARN] 429 rate-limit on item {i}/{len(samples)} | "
+                    f"[WARN] 429 rate-limit on batch {start + 1}-{min(start + len(batch), len(samples))}/{len(samples)} | "
                     f"retry {tries}/{args.max_retries_429} | waiting {wait_s:.1f}s"
                 )
                 time.sleep(wait_s)
                 continue
             break
 
+        if response is None:
+            batch_error = "request_error"
+            batch_rows.append(
+                [
+                    batch_id,
+                    args.model,
+                    len(valid_items),
+                    "|".join(batch_file_numbers),
+                    "|".join(batch_true_labels),
+                    "|".join(batch_pred_labels),
+                    batch_correct,
+                    batch_attempted,
+                    batch_error,
+                    batch_http_status,
+                    batch_raw,
+                    batch_pt,
+                    batch_ct,
+                    batch_tt,
+                ]
+            )
+            continue
+
         if response.status_code != 200:
-            errors += 1
-            rows.append([args.model, index_0 + 1, true_digit, "", 0, "", f"http_{response.status_code}", 0, 0, 0])
+            batch_error = f"http_{response.status_code}"
+            batch_http_status = str(response.status_code)
+
+            # If a multi-image request is rejected by provider validation,
+            # retry each item individually instead of failing the whole batch.
+            if response.status_code == 400 and len(valid_items) > 1:
+                print(
+                    f"[WARN] 400 on batch {start + 1}-{min(start + len(batch), len(samples))}/{len(samples)} | "
+                    "retrying items one-by-one"
+                )
+                batch_error = "http_400_fallback"
+                batch_raw = "fallback_to_single"
+
+                for j, (index_0, true_digit, png_bytes) in enumerate(valid_items):
+                    single_response = None
+                    single_tries = 0
+                    single_timeout_retries = 0
+
+                    while True:
+                        single_tries += 1
+                        try:
+                            single_response = call_openrouter(
+                                headers,
+                                args.model,
+                                build_prompt_for_batch(prompt, 1),
+                                [png_bytes],
+                                args.max_tokens,
+                                args.request_timeout,
+                                reference_png_bytes,
+                            )
+                        except requests.exceptions.RequestException as exc:
+                            single_timeout_retries += 1
+                            if single_timeout_retries <= args.max_retries_timeout:
+                                wait_s = min(2.0 * single_timeout_retries, args.max_retry_wait)
+                                print(
+                                    f"[WARN] network/timeout on fallback item {index_0 + 1} | "
+                                    f"retry {single_timeout_retries}/{args.max_retries_timeout} | waiting {wait_s:.1f}s | {type(exc).__name__}"
+                                )
+                                time.sleep(wait_s)
+                                continue
+
+                            errors += 1
+                            rows.append(
+                                [
+                                    args.model,
+                                    index_0 + 1,
+                                    true_digit,
+                                    "",
+                                    0,
+                                    "",
+                                    f"request_error: {type(exc).__name__}",
+                                    0,
+                                    0,
+                                    0,
+                                ]
+                            )
+                            single_response = None
+                            break
+
+                        if single_response.status_code == 429 and single_tries <= args.max_retries_429:
+                            retry_after = single_response.headers.get("retry-after", "5")
+                            try:
+                                wait_s = float(retry_after)
+                            except Exception:
+                                wait_s = 5.0
+                            wait_s = min(max(wait_s, 1.0), args.max_retry_wait)
+                            print(
+                                f"[WARN] 429 on fallback item {index_0 + 1} | "
+                                f"retry {single_tries}/{args.max_retries_429} | waiting {wait_s:.1f}s"
+                            )
+                            time.sleep(wait_s)
+                            continue
+                        break
+
+                    if single_response is None:
+                        continue
+
+                    if single_response.status_code != 200:
+                        errors += 1
+                        rows.append(
+                            [
+                                args.model,
+                                index_0 + 1,
+                                true_digit,
+                                "",
+                                0,
+                                "",
+                                f"http_{single_response.status_code}",
+                                0,
+                                0,
+                                0,
+                            ]
+                        )
+                        continue
+
+                    try:
+                        single_data = single_response.json()
+                    except ValueError:
+                        errors += 1
+                        rows.append(
+                            [
+                                args.model,
+                                index_0 + 1,
+                                true_digit,
+                                "",
+                                0,
+                                "",
+                                "bad_json",
+                                0,
+                                0,
+                                0,
+                            ]
+                        )
+                        continue
+
+                    single_raw, single_err = extract_message_text(single_data)
+                    if single_err:
+                        errors += 1
+                        rows.append(
+                            [
+                                args.model,
+                                index_0 + 1,
+                                true_digit,
+                                "",
+                                0,
+                                "",
+                                f"bad_payload:{single_err}",
+                                0,
+                                0,
+                                0,
+                            ]
+                        )
+                        continue
+
+                    single_usage = single_data.get("usage", {})
+                    pt = int(single_usage.get("prompt_tokens", 0) or 0)
+                    ct = int(single_usage.get("completion_tokens", 0) or 0)
+                    tt = int(single_usage.get("total_tokens", 0) or 0)
+
+                    usage_prompt_tokens += pt
+                    usage_completion_tokens += ct
+                    usage_total_tokens += tt
+                    batch_pt += pt
+                    batch_ct += ct
+                    batch_tt += tt
+
+                    attempted += 1
+                    batch_attempted += 1
+
+                    pred = parse_digit(single_raw)
+                    if pred is None:
+                        parse_fail += 1
+                        rows.append([args.model, index_0 + 1, true_digit, "", 0, single_raw, "parse_fail", pt, ct, tt])
+                    else:
+                        batch_pred_labels[j] = str(pred)
+                        is_correct = int(pred == true_digit)
+                        correct += is_correct
+                        batch_correct += is_correct
+                        rows.append([args.model, index_0 + 1, true_digit, pred, is_correct, single_raw, "", pt, ct, tt])
+
+                batch_rows.append(
+                    [
+                        batch_id,
+                        args.model,
+                        len(valid_items),
+                        "|".join(batch_file_numbers),
+                        "|".join(batch_true_labels),
+                        "|".join(batch_pred_labels),
+                        batch_correct,
+                        batch_attempted,
+                        batch_error,
+                        batch_http_status,
+                        batch_raw,
+                        batch_pt,
+                        batch_ct,
+                        batch_tt,
+                    ]
+                )
+            else:
+                for index_0, true_digit, _ in valid_items:
+                    errors += 1
+                    rows.append([args.model, index_0 + 1, true_digit, "", 0, "", f"http_{response.status_code}", 0, 0, 0])
+                batch_rows.append(
+                    [
+                        batch_id,
+                        args.model,
+                        len(valid_items),
+                        "|".join(batch_file_numbers),
+                        "|".join(batch_true_labels),
+                        "|".join(batch_pred_labels),
+                        batch_correct,
+                        batch_attempted,
+                        batch_error,
+                        batch_http_status,
+                        batch_raw,
+                        batch_pt,
+                        batch_ct,
+                        batch_tt,
+                    ]
+                )
         else:
-            data = response.json()
-            message = data["choices"][0]["message"]
-            raw = message.get("content")
-            if raw is None:
-                raw = message.get("reasoning")
-            if raw is None:
-                raw = ""
-            pred = parse_digit(raw)
-            attempted += 1
+            try:
+                data = response.json()
+            except ValueError:
+                batch_error = "bad_json"
+                for index_0, true_digit, _ in valid_items:
+                    errors += 1
+                    rows.append([args.model, index_0 + 1, true_digit, "", 0, "", "bad_json", 0, 0, 0])
+                batch_rows.append(
+                    [
+                        batch_id,
+                        args.model,
+                        len(valid_items),
+                        "|".join(batch_file_numbers),
+                        "|".join(batch_true_labels),
+                        "|".join(batch_pred_labels),
+                        batch_correct,
+                        batch_attempted,
+                        batch_error,
+                        batch_http_status,
+                        batch_raw,
+                        batch_pt,
+                        batch_ct,
+                        batch_tt,
+                    ]
+                )
+                processed = min(start + len(batch), len(samples))
+                if processed % 10 == 0 or processed == len(samples):
+                    print(
+                        f"{processed}/{len(samples)} attempted={attempted} "
+                        f"correct={correct} parse_fail={parse_fail} errors={errors}"
+                    )
+                if args.delay > 0:
+                    time.sleep(args.delay)
+                continue
+
+            raw, payload_err = extract_message_text(data)
+            if payload_err:
+                batch_error = f"bad_payload:{payload_err}"
+                for index_0, true_digit, _ in valid_items:
+                    errors += 1
+                    rows.append([args.model, index_0 + 1, true_digit, "", 0, "", batch_error, 0, 0, 0])
+                batch_rows.append(
+                    [
+                        batch_id,
+                        args.model,
+                        len(valid_items),
+                        "|".join(batch_file_numbers),
+                        "|".join(batch_true_labels),
+                        "|".join(batch_pred_labels),
+                        batch_correct,
+                        batch_attempted,
+                        batch_error,
+                        batch_http_status,
+                        batch_raw,
+                        batch_pt,
+                        batch_ct,
+                        batch_tt,
+                    ]
+                )
+                processed = min(start + len(batch), len(samples))
+                if processed % 10 == 0 or processed == len(samples):
+                    print(
+                        f"{processed}/{len(samples)} attempted={attempted} "
+                        f"correct={correct} parse_fail={parse_fail} errors={errors}"
+                    )
+                if args.delay > 0:
+                    time.sleep(args.delay)
+                continue
+
+            batch_raw = raw
+            batch_http_status = str(response.status_code)
 
             usage = data.get("usage", {})
             pt = int(usage.get("prompt_tokens", 0) or 0)
             ct = int(usage.get("completion_tokens", 0) or 0)
             tt = int(usage.get("total_tokens", 0) or 0)
+            batch_pt, batch_ct, batch_tt = pt, ct, tt
 
             usage_prompt_tokens += pt
             usage_completion_tokens += ct
             usage_total_tokens += tt
 
-            if pred is None:
-                parse_fail += 1
-                rows.append([args.model, index_0 + 1, true_digit, "", 0, raw, "parse_fail", pt, ct, tt])
-            else:
-                is_correct = int(pred == true_digit)
-                correct += is_correct
-                rows.append([args.model, index_0 + 1, true_digit, pred, is_correct, raw, "", pt, ct, tt])
+            attempted += len(valid_items)
+            batch_attempted = len(valid_items)
 
-        if i % 10 == 0 or i == len(samples):
+            if len(valid_items) == 1:
+                preds = [parse_digit(raw)]
+            else:
+                preds = parse_batch_digits(raw, len(valid_items))
+
+            if preds is None:
+                parse_fail += len(valid_items)
+                batch_error = "parse_fail"
+                for index_0, true_digit, _ in valid_items:
+                    rows.append([args.model, index_0 + 1, true_digit, "", 0, raw, "parse_fail", pt, ct, tt])
+            else:
+                for j, ((index_0, true_digit, _), pred) in enumerate(zip(valid_items, preds)):
+                    batch_pred_labels[j] = str(pred)
+                    is_correct = int(pred == true_digit)
+                    correct += is_correct
+                    batch_correct += is_correct
+                    rows.append([args.model, index_0 + 1, true_digit, pred, is_correct, raw, "", pt, ct, tt])
+
+            batch_rows.append(
+                [
+                    batch_id,
+                    args.model,
+                    len(valid_items),
+                    "|".join(batch_file_numbers),
+                    "|".join(batch_true_labels),
+                    "|".join(batch_pred_labels),
+                    batch_correct,
+                    batch_attempted,
+                    batch_error,
+                    batch_http_status,
+                    batch_raw,
+                    batch_pt,
+                    batch_ct,
+                    batch_tt,
+                ]
+            )
+
+        processed = min(start + len(batch), len(samples))
+        if processed % 10 == 0 or processed == len(samples):
             print(
-                f"{i}/{len(samples)} attempted={attempted} "
+                f"{processed}/{len(samples)} attempted={attempted} "
                 f"correct={correct} parse_fail={parse_fail} errors={errors}"
             )
 
@@ -324,6 +830,30 @@ def main():
         )
         writer.writerows(rows)
 
+    out_root, out_ext = os.path.splitext(args.output)
+    batch_out_path = os.path.join(OUT_DIR, f"{out_root}_batches{out_ext or '.csv'}")
+    with open(batch_out_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(
+            [
+                "batch_id",
+                "model",
+                "batch_size",
+                "file_numbers",
+                "true_labels",
+                "pred_labels",
+                "batch_correct",
+                "batch_attempted",
+                "error",
+                "http_status",
+                "raw_response",
+                "prompt_tokens",
+                "completion_tokens",
+                "total_tokens",
+            ]
+        )
+        writer.writerows(batch_rows)
+
     print("\n===== SUMMARY =====")
     print(f"model={args.model}")
     print(f"samples={len(samples)} ({args.samples_per_digit} per digit)")
@@ -335,6 +865,7 @@ def main():
         f"prompt={usage_prompt_tokens}, completion={usage_completion_tokens}, total={usage_total_tokens}"
     )
     print(f"saved={out_path}")
+    print(f"saved_batches={batch_out_path}")
 
 
 if __name__ == "__main__":

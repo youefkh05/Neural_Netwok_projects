@@ -1,0 +1,5 @@
+batch_id,model,batch_size,file_numbers,true_labels,pred_labels,batch_correct,batch_attempted,error,http_status,raw_response,prompt_tokens,completion_tokens,total_tokens
+1,google/gemma-4-31b-it,5,8367|7226|8907|6057|8979,8|9|9|2|6,8|9|9|2|6,5,5,,200,"8,9,9,2,6",1797,10,1807
+2,google/gemma-4-31b-it,5,2977|8274|3632|5945|5653,1|3|0|2|7,1|3|0|5|7,4,5,,200,"1,3,0,5,7",1797,10,1807
+3,google/gemma-4-31b-it,5,8772|15|5978|8100|7485,7|4|5|5|0,7|4|5|5|0,5,5,,200,"7,4,5,5,0",1797,10,1807
+4,google/gemma-4-31b-it,5,1849|3096|5985|2223|5905,3|6|4|1|8,||||,0,0,bad_payload:missing_choices,,,0,0,0
