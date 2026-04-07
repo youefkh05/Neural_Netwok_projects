@@ -209,7 +209,7 @@ The pipeline consists of the following steps:
 % =========================
 % STEP 1
 % =========================
-\section{Step 1 - Feature Extraction and K-Means Clustering}
+\subsection{Step 1 - Feature Extraction and K-Means Clustering}
 
 Histogram of Oriented Gradients (HOG) was used to extract features from images.
 
@@ -229,7 +229,7 @@ The HOG visualization illustrates why this feature performs well in our experime
 % =========================
 % STEP 2
 % =========================
-\section{Step 2 - Human Labelling of Clusters (Bootstrapping Phase)}
+\subsection{Step 2 - Human Labelling of Clusters (Bootstrapping Phase)}
 
 K-Means clustering was applied with different values of K:
 
@@ -250,7 +250,7 @@ This plot shows that increasing K improves the initial pseudo-label quality up t
 % =========================
 % STEP 3 AND STEP 4
 % =========================
-\section{Step 3 - Initial SVM Training and Step 4 - Active Refinement: Labelling Boundary Images}
+\subsection{Step 3 - Initial SVM Training and Step 4 - Active Refinement: Labelling Boundary Images}
 
 A multi-class SVM with RBF kernel (One-vs-One strategy) was used.
 
@@ -279,7 +279,7 @@ The bar chart quantifies the gain from SVM refinement over raw cluster labels. T
 % =========================
 % STEP 5
 % =========================
-\section{Step 5 - Retrain and Evaluate}
+\subsection{Step 5 - Retrain and Evaluate}
 
 \subsection{Accuracy}
 
@@ -555,6 +555,112 @@ The combination of:
 \end{itemize}
 
 creates a scalable and efficient labeling strategy.
+
+% =========================
+% PIPELINE 3
+% =========================
+\section{Pipeline 3: LLM-Based Automatic Labelling with Agreement Validation}
+
+This section is reserved for the Pipeline 3 implementation and final results according to the assignment requirements.
+
+\subsection{Block Diagram (Required)}
+
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.92\textwidth}{
+\vspace{0.2cm}
+\textbf{Placeholder:} Insert Pipeline 3 block diagram showing the exact chosen steps and values.
+
+Suggested flow based on assignment:\\
+Step 1 (5-LLM benchmark on 500 practical set) $\rightarrow$ Step 2 (top-2 selection) $\rightarrow$ Step 3 (10,000 dual labeling) $\rightarrow$ Step 4a (agreed subset evaluation) + Step 4b (disagreement manual labeling) $\rightarrow$ Step 5 (corrective action if needed).
+\vspace{0.2cm}
+}}
+\caption{Pipeline 3 block diagram (placeholder)}
+\end{figure}
+
+\subsection{Step 1 Benchmarking Output (Required)}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lc}
+\toprule
+Candidate LLM & Accuracy on 500-image practical set (\%) \\
+\midrule
+LLM\_A & TBD \\
+LLM\_B & TBD \\
+LLM\_C & TBD \\
+LLM\_D & TBD \\
+LLM\_E & TBD \\
+\bottomrule
+\end{tabular}
+\caption{Pipeline 3 Step 1: accuracy of five candidate LLMs (placeholder)}
+\end{table}
+
+\subsection{Step 4 Agreement and Disagreement Outputs (Required)}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lc}
+\toprule
+Metric & Value \\
+\midrule
+Selected LLM\_1 name & TBD \\
+Selected LLM\_2 name & TBD \\
+Final accuracy on agreed subset (Step 4a) & TBD \\
+Number of disagreements ($N_{\text{disagree}}$) & TBD \\
+Manual time for disagreement resolution ($N_{\text{disagree}} \times 10$ s) & TBD \\
+\bottomrule
+\end{tabular}
+\caption{Pipeline 3 Step 4 required outputs (placeholder)}
+\end{table}
+
+\subsection{Manual Effort and Cost Summary (Required)}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lc}
+\toprule
+Metric & Value \\
+\midrule
+Total manually handled images (all steps) & TBD \\
+Total estimated manual time (all steps) & TBD \\
+Estimated computational/API cost for dual-LLM run on 10,000 images & TBD \\
+\bottomrule
+\end{tabular}
+\caption{Pipeline 3 manual effort and API-cost summary (placeholder)}
+\end{table}
+
+\subsection{Comparison Against Pipelines 1 and 2 (Required)}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcc}
+\toprule
+Pipeline & Final Accuracy (\%) & Manual Time \\
+\midrule
+Pipeline 1 & 99.26 & 36.7 min \\
+Pipeline 2 & 99.04 & 63.33 min \\
+Pipeline 3 & TBD & TBD \\
+\bottomrule
+\end{tabular}
+\caption{Required accuracy and manual-time comparison for Pipeline 3 (placeholder)}
+\end{table}
+
+\subsection{Pipeline 3 Compact Summary Table (Assignment Style)}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lc}
+\toprule
+Pipeline 3 entry & Result \\
+\midrule
+LLM\_1 alone & TBD \\
+LLM\_2 alone & TBD \\
+LLM\_1 \& LLM\_2 agreement strategy & TBD \\
+\bottomrule
+\end{tabular}
+\caption{Pipeline 3 summary rows requested by the assignment (placeholder)}
+\end{table}
 
 \section{References}
 
