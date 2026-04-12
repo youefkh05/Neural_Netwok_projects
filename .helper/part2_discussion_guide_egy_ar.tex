@@ -1,0 +1,120 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{xcolor}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainlanguage{arabic}
+\setotherlanguage{english}
+\setmainfont{FreeSerif}
+\newfontfamily\arabicfont[Script=Arabic]{FreeSerif}
+\newfontfamily\englishfont{FreeSerif}
+\usepackage{enumitem}
+
+\title{دليل مناقشة الجزء التاني (بالمصري)}
+\author{Assignment 1 -- Neural Networks}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{مهم قبل ما تبدأ}
+الملف ده معمول عشان يبقى معاك سكريبت جاهز للكلام في المناقشة على \textbf{Part 2} خطوة بخطوة.\\
+\textbf{ملحوظة:} عشان العربي يطلع مظبوط، شغّل الملف بـ \textenglish{XeLaTeX}.
+
+\section*{افتتاحية سريعة (20 ثانية)}
+ممكن تبدأ بالجملة دي:
+
+\textbf{``الجزء التاني كان هدفه نقارن بين 3 أنواع \textenglish{features} (\textenglish{DCT, PCA, HOG}) مع نوعين \textenglish{classifiers} (\textenglish{K-means} و\textenglish{SVM})، ونقيس \textenglish{accuracy} و\textenglish{processing time}، وبعد كده نحدد أحسن \textenglish{setup}.''}
+
+\section*{أنت مطلوب منك تتكلم عن إيه من التقرير؟}
+ترتيب الكلام المقترح في المناقشة:
+\begin{enumerate}[leftmargin=1.5em]
+    \item مقدمة قصيرة عن المطلوب في \textenglish{Part 2}.
+    \item الجدول المقارن الرئيسي (أهم مخرج).
+    \item الصور/الرسوم: \textenglish{samples grid} ثم \textenglish{PCA curve} ثم \textenglish{confusion matrices} ثم \textenglish{support vectors chart}.
+    \item الخلاصة النهائية: أفضل تمثيل + أفضل مصنف + ليه.
+\end{enumerate}
+
+\section*{دليل الكلام على كل مخرج في التقرير}
+
+\subsection*{1) الجدول الرئيسي المقارن}
+\textbf{المخرج:} \textenglish{Full Part 2 comparative matrix}
+
+\textbf{تقول إيه:}
+\begin{itemize}[leftmargin=1.5em]
+    \item ``ده أهم جدول في الجزء التاني لأنه مجمع كل التركيبات.''
+    \item ``أفضل نتيجة عامة كانت \textenglish{HOG + RBF SVM} بدقة \textenglish{99.80\%}.''
+    \item ``أفضل \textenglish{K-means} كانت \textenglish{HOG + K=16} بدقة \textenglish{99.40\%}.''
+    \item ``واضح إن \textenglish{SVM} غالبًا متفوق على \textenglish{K-means} لأنه بيتعلم حدود فصل مباشرة.''
+    \item ``في \textenglish{trade-off}: لما \textenglish{K} بيزيد، الدقة غالبًا تتحسن بس الزمن كمان بيزيد.''
+\end{itemize}
+
+\textbf{لو الدكتور سأل: ليه \textenglish{HOG} أحسن؟}\\
+``لأن \textenglish{HOG} بيركز على اتجاهات الحواف والخطوط، فبيكون أكثر ثباتًا قدام اختلافات بسيطة في الكتابة زي السمك والميل.''
+
+\subsection*{2) \textenglish{reducedmnist\_samples\_grid.png}}
+\textbf{المخرج:} عيّنات من الداتا
+
+\textbf{تقول إيه:}
+\begin{itemize}[leftmargin=1.5em]
+    \item ``الشكل ده بيبين إن في تنوع واضح في كتابة الأرقام (ميل بسيط، سمك خط مختلف، إزاحات صغيرة).''
+    \item ``وده سبب إن \textenglish{feature descriptors} زي \textenglish{HOG} بتفيد أكتر من الاعتماد على \textenglish{raw pixels} بس.''
+\end{itemize}
+
+\subsection*{3) \textenglish{pca\_cumulative\_variance.png}}
+\textbf{المخرج:} منحنى \textenglish{PCA cumulative explained variance}
+
+\textbf{تقول إيه:}
+\begin{itemize}[leftmargin=1.5em]
+    \item ``إحنا طبقنا شرط الأسايمنت إن \textenglish{PCA} تحتفظ بـ \textenglish{>=95\% variance}.''
+    \item ``في التقرير وصلنا للشرط ده عند حوالي \textenglish{161 components}.''
+    \item ``يعني قللنا الأبعاد من \textenglish{784} لـ \textenglish{161} مع الحفاظ على أغلب المعلومات.''
+\end{itemize}
+
+\subsection*{4) \textenglish{best\_kmeans\_confusion\_matrix.png}}
+\textbf{المخرج:} أفضل \textenglish{K-means confusion matrix}
+
+\textbf{تقول إيه:}
+\begin{itemize}[leftmargin=1.5em]
+    \item ``القيم على القطر الرئيسي عالية، فده معناه إن التصنيف صحيح في معظم الحالات.''
+    \item ``القيم خارج القطر هي حالات اللخبطة بين أرقام شكلها قريب من بعض.''
+    \item ``وده متوقع لأن \textenglish{K-means} معتمدة على أقرب \textenglish{centroid}.''
+\end{itemize}
+
+\subsection*{5) \textenglish{best\_svm\_confusion\_matrix.png}}
+\textbf{المخرج:} أفضل \textenglish{SVM confusion matrix}
+
+\textbf{تقول إيه:}
+\begin{itemize}[leftmargin=1.5em]
+    \item ``القطر هنا أنضف من \textenglish{K-means}، والأخطاء الجانبية أقل.''
+    \item ``وده متسق مع الدقة الأعلى \textenglish{99.80\%}.''
+    \item ``فده بيدعم إن \textenglish{SVM} في الحالة دي فصلت الكلاسات المتشابهة بشكل أحسن.''
+\end{itemize}
+
+\subsection*{6) \textenglish{best\_svm\_support\_vectors\_per\_class.png}}
+\textbf{المخرج:} رسم \textenglish{support vectors per class}
+
+\textbf{تقول إيه:}
+\begin{itemize}[leftmargin=1.5em]
+    \item ``الشكل ده بيشرح تعقيد الموديل لكل رقم.''
+    \item ``لو رقم معين عنده \textenglish{support vectors} كتير، يبقى حدوده أصعب وفيه تداخل أعلى.''
+    \item ``ولو العدد أقل، غالبًا الفصل بينه وبين باقي الأرقام أسهل.''
+\end{itemize}
+
+\section*{خلاصة تقولها في الآخر (30 ثانية)}
+\textbf{``الجزء التاني أثبت إن اختيار \textenglish{feature representation} مؤثر جدًا. جرّبنا \textenglish{DCT} و\textenglish{PCA} و\textenglish{HOG} مع \textenglish{K-means} و\textenglish{SVM}. أفضل نتيجة كانت \textenglish{HOG + RBF SVM} بدقة \textenglish{99.80\%}. وكمان \textenglish{confusion matrix} دعمت النتيجة دي. الخلاصة إن \textenglish{HOG} كانت أفضل \textenglish{feature}، و\textenglish{SVM-RBF} كان أفضل \textenglish{classifier}.''}
+
+\section*{أسئلة متوقعة وإجابات قصيرة}
+\textbf{س1: ليه استخدمتوا \textenglish{RBF} ومش \textenglish{linear} بس؟}\\
+لأن حدود الفصل بين الأرقام غالبًا غير خطية، فـ \textenglish{RBF} مرن أكتر وبيوصل لدقة أعلى.
+
+\textbf{س2: ليه \textenglish{K=16} كانت أحسن من \textenglish{K=32} في أحسن \textenglish{K-means}؟}\\
+لأن الزيادة الكبيرة في \textenglish{K} ممكن تزود الحساسية للـ \textenglish{noise} أو تعمل تفتيت زيادة، فمش دايمًا الأكبر أحسن.
+
+\textbf{س3: إيه الرسالة الأساسية من \textenglish{Part 2}؟}\\
+إن جودة الـ \textenglish{feature} هي الأساس، ومعها \textenglish{SVM-RBF} حقق أعلى أداء.
+
+\section*{سكريبت جاهز للحفظ (دقيقة تقريبًا)}
+\textbf{``إزيك يا دكتور. في \textenglish{Part 2} عملنا مقارنة منهجية بين 3 \textenglish{features}: \textenglish{DCT-225}، \textenglish{PCA} بشرط \textenglish{95\% variance}، و\textenglish{HOG}. واختبرناهم مع \textenglish{K-means} لكل كلاس عند \textenglish{K=1,4,16,32}، ومع \textenglish{SVM} بنوعين \textenglish{linear} و\textenglish{RBF}. الجدول المقارن بيبين إن أفضل نتيجة عامة كانت \textenglish{HOG + RBF SVM} بدقة \textenglish{99.80\%}. كمان أفضل \textenglish{K-means} كانت \textenglish{HOG + K=16} بدقة \textenglish{99.40\%}. \textenglish{Confusion matrices} دعمت النتيجة دي: مصفوفة \textenglish{SVM} أنضف وأقل لخبطة خارج القطر. وأخيرًا، رسم \textenglish{support vectors per class} بيشرح تعقيد الفصل لكل رقم. فالخلاصة: \textenglish{HOG} أفضل تمثيل في الداتا دي، و\textenglish{SVM-RBF} أفضل مصنف.''}
+
+\end{document}

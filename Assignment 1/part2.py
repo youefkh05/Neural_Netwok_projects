@@ -1,19 +1,40 @@
+# OS path/file operations and directory checks.
 import os
+# CSV read/write for benchmark and summary tables.
 import csv
+# JSON export for metadata artifacts.
 import json
+# Timing utilities for feature extraction and model benchmarking.
 import time
+# Access command-line arguments and runtime context.
 import sys
+# Command-line interface parsing.
 import argparse
+# Lightweight class container for model artifacts.
 from dataclasses import dataclass
 
+# OpenCV image I/O, resizing, and DCT transforms.
 import cv2
+# Core numerical arrays and vectorized computation.
 import numpy as np
+# Plotting figures for report visuals and diagnostics.
 import matplotlib.pyplot as plt
+# HOG feature descriptor extraction.
 from skimage.feature import hog
+# Principal Component Analysis for dimensionality reduction.
 from sklearn.decomposition import PCA
+# K-means clustering for per-class centroid models.
 from sklearn.cluster import KMeans
+# Support Vector Machine classifier implementations.
 from sklearn.svm import SVC
+# Accuracy and confusion-matrix metrics/visualization.
 from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
+
+# Steps:
+# 1) load ReducedMNIST,
+# 2) build features (DCT / PCA / HOG),
+# 3) benchmark K-means-per-class and SVM,
+# 4) export report-ready tables and figures.
 
 
 # ==============================
@@ -39,6 +60,7 @@ DEFAULT_AUTO_CONFIG = {
 # DATA LOADING
 # ==============================
 def _load_images_from_class_folder(class_dir, label):
+    # Read all image files for one class folder (e.g., train/3 or test/7).
     files = [f for f in os.listdir(class_dir) if f.lower().endswith((".bmp", ".png", ".jpg", ".jpeg"))]
     files = sorted(files)
 
@@ -50,6 +72,7 @@ def _load_images_from_class_folder(class_dir, label):
         if img is None:
             continue
 
+        # Keep all data in the same 28x28 resolution expected by the assignment.
         if img.shape != (28, 28):
             img = cv2.resize(img, (28, 28), interpolation=cv2.INTER_AREA)
 
@@ -60,6 +83,7 @@ def _load_images_from_class_folder(class_dir, label):
 
 
 def load_dataset_from_dir(dataset_dir):
+    """Load ReducedMNIST-style folder dataset with train/test and class folders 0..9."""
     train_dir = os.path.join(dataset_dir, "train")
     test_dir = os.path.join(dataset_dir, "test")
 
@@ -71,6 +95,7 @@ def load_dataset_from_dir(dataset_dir):
     x_train, y_train, x_test, y_test = [], [], [], []
 
     for digit in range(10):
+        # For each digit, collect train and test samples separately.
         tr_class = os.path.join(train_dir, str(digit))
         te_class = os.path.join(test_dir, str(digit))
 
@@ -90,7 +115,8 @@ def load_dataset_from_dir(dataset_dir):
     x_test = np.array(x_test, dtype=np.uint8)
     y_test = np.array(y_test, dtype=np.int32)
 
-    # Assignment sanity check for ReducedMNIST structure.
+    # Assignment sanity check for official ReducedMNIST sizes.
+    # Expected counts are 1000 train and 200 test images per class.
     for digit in range(10):
         tr_count = int(np.sum(y_train == digit))
         te_count = int(np.sum(y_test == digit))
@@ -103,6 +129,7 @@ def load_dataset_from_dir(dataset_dir):
 
 
 def load_dataset_from_npz(npz_path):
+    """Load dataset from pre-packed npz containing x_train/y_train/x_test/y_test."""
     data = np.load(npz_path)
 
     required_keys = ["x_train", "y_train", "x_test", "y_test"]
@@ -115,6 +142,7 @@ def load_dataset_from_npz(npz_path):
     x_test = data["x_test"]
     y_test = data["y_test"]
 
+    # Normalize geometry if npz images are not already 28x28.
     if x_train.ndim == 3 and x_train.shape[1:] != (28, 28):
         x_train = np.array([cv2.resize(img, (28, 28), interpolation=cv2.INTER_AREA) for img in x_train])
     if x_test.ndim == 3 and x_test.shape[1:] != (28, 28):
@@ -124,6 +152,7 @@ def load_dataset_from_npz(npz_path):
 
 
 def load_dataset_from_indian_digits(indian_dir, train_ratio=0.8):
+    """Fallback loader when no labels are available (labels become -1 placeholders)."""
     files = [f for f in os.listdir(indian_dir) if f.lower().endswith(".bmp")]
     files = sorted(files, key=lambda x: int(os.path.splitext(x)[0]))
 
@@ -143,6 +172,7 @@ def load_dataset_from_indian_digits(indian_dir, train_ratio=0.8):
         raise ValueError(f"No images loaded from: {indian_dir}")
 
     images = np.array(images, dtype=np.uint8)
+    # Deterministic split keeps runs reproducible for debugging/reporting.
     split_idx = int(len(images) * train_ratio)
     split_idx = max(1, min(split_idx, len(images) - 1))
 
@@ -160,6 +190,7 @@ def load_dataset_from_indian_digits(indian_dir, train_ratio=0.8):
 
 
 def load_label_vector_csv(labels_csv):
+    """Load recovered 1D label vector (one label per image, filename order)."""
     if not os.path.isfile(labels_csv):
         raise FileNotFoundError(f"Labels CSV not found: {labels_csv}")
 
@@ -173,6 +204,7 @@ def load_label_vector_csv(labels_csv):
 
 
 def load_dataset_from_indian_digits_with_labels(indian_dir, labels_csv):
+    """Load Indian digits + recovered labels, then split into train/test."""
     files = [f for f in os.listdir(indian_dir) if f.lower().endswith(".bmp")]
     files = sorted(files, key=lambda x: int(os.path.splitext(x)[0]))
 
@@ -192,6 +224,7 @@ def load_dataset_from_indian_digits_with_labels(indian_dir, labels_csv):
         raise ValueError(f"No images loaded from: {indian_dir}")
 
     labels = load_label_vector_csv(labels_csv)
+    # Labels must be exactly aligned with sorted image filenames.
     if len(labels) != len(images):
         raise ValueError(
             f"Label count mismatch: {len(labels)} labels for {len(images)} images"
@@ -215,6 +248,10 @@ def load_dataset_from_indian_digits_with_labels(indian_dir, labels_csv):
 
 
 def load_reduced_mnist(dataset_dir=None, dataset_npz=None, labels_csv=None, train_ratio=0.8):
+    # Priority order:
+    # 1) explicit --dataset-npz
+    # 2) explicit --dataset-dir
+    # 3) workspace defaults (Indian_Digits_Train + recovered labels)
     if dataset_npz:
         return load_dataset_from_npz(dataset_npz)
     if dataset_dir:
@@ -236,6 +273,7 @@ def load_reduced_mnist(dataset_dir=None, dataset_npz=None, labels_csv=None, trai
 # VISUALIZATION HELPERS
 # ==============================
 def plot_samples_grid(images, labels, save_path, n=20):
+    """Save a quick visual sanity-check grid for training images and labels."""
     n = min(n, len(images))
     cols = 10
     rows = int(np.ceil(n / cols))
@@ -244,6 +282,7 @@ def plot_samples_grid(images, labels, save_path, n=20):
     for i in range(n):
         plt.subplot(rows, cols, i + 1)
         plt.imshow(images[i], cmap="gray")
+        # If labels are unknown (-1), print '?'.
         if int(labels[i]) >= 0:
             title = str(int(labels[i]))
         else:
@@ -257,6 +296,7 @@ def plot_samples_grid(images, labels, save_path, n=20):
 
 
 def plot_dct_example(image, save_path):
+    """Visualize DCT transform intuition: original, DCT map, and low-frequency reconstruction."""
     img_f = image.astype(np.float32) / 255.0
     dct_map = cv2.dct(img_f)
 
@@ -289,6 +329,7 @@ def plot_dct_example(image, save_path):
 
 
 def plot_pca_curve(pca_model, save_path):
+    """Plot cumulative explained variance and mark first component count reaching 95%."""
     cum = np.cumsum(pca_model.explained_variance_ratio_)
     k95 = int(np.searchsorted(cum, 0.95) + 1)
 
@@ -307,6 +348,7 @@ def plot_pca_curve(pca_model, save_path):
 
 
 def plot_hog_example(image, save_path):
+    """Visualize HOG representation for one sample image."""
     _, hog_img = hog(
         image,
         orientations=9,
@@ -337,14 +379,17 @@ def plot_hog_example(image, save_path):
 # FEATURE EXTRACTION
 # ==============================
 def dct_features_225(images):
+    """Feature A: keep top-left 15x15 2D-DCT coefficients (225 dimensions)."""
     feats = []
     for img in images:
+        # Low frequencies (top-left) usually carry most shape information.
         dct_map = cv2.dct(img.astype(np.float32) / 255.0)
         feats.append(dct_map[:15, :15].reshape(-1))
     return np.array(feats, dtype=np.float32)
 
 
 def pca_features_95(x_train_flat, x_test_flat):
+    """Feature B: PCA with enough components to preserve >=95% variance."""
     pca = PCA(n_components=0.95, svd_solver="full", random_state=42)
     z_train = pca.fit_transform(x_train_flat)
     z_test = pca.transform(x_test_flat)
@@ -352,6 +397,7 @@ def pca_features_95(x_train_flat, x_test_flat):
 
 
 def hog_features(images):
+    """Feature C: HOG descriptor capturing local edge orientations."""
     feats = []
     for img in images:
         feat = hog(
@@ -370,19 +416,24 @@ def hog_features(images):
 # ==============================
 @dataclass
 class KMeansPerClassModel:
+    # centroids: stacked centroids for all classes
+    # centroid_labels: digit label for each centroid row
     centroids: np.ndarray
     centroid_labels: np.ndarray
 
 
 def fit_kmeans_per_class(x_train, y_train, clusters_per_class):
+    """Train one K-means model per class, then concatenate all centroids."""
     centroids = []
     centroid_labels = []
 
     for digit in range(10):
+        # Extract all training vectors for this class.
         class_x = x_train[y_train == digit]
         if len(class_x) == 0:
             continue
 
+        # Guard against asking for more clusters than samples.
         k = min(clusters_per_class, len(class_x))
         kmeans = KMeans(n_clusters=k, n_init=10, random_state=42)
         kmeans.fit(class_x)
@@ -404,9 +455,11 @@ def predict_kmeans_per_class(model, x_test):
 
 
 def fit_svm(x_train, y_train, kernel):
+    """Train multiclass SVM (One-vs-One internally in scikit-learn)."""
     if kernel == "linear":
         svm = SVC(kernel="linear", decision_function_shape="ovo")
     elif kernel == "rbf":
+        # C=10 gives a slightly stronger margin penalty for this dataset.
         svm = SVC(kernel="rbf", gamma="scale", C=10.0, decision_function_shape="ovo")
     else:
         raise ValueError(f"Unsupported kernel: {kernel}")
@@ -416,6 +469,7 @@ def fit_svm(x_train, y_train, kernel):
 
 
 def save_confusion_matrix(y_true, y_pred, title, save_path):
+    """Save confusion matrix image for report discussion and error analysis."""
     cm = confusion_matrix(y_true, y_pred, labels=np.arange(10))
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=np.arange(10))
 
@@ -428,12 +482,14 @@ def save_confusion_matrix(y_true, y_pred, title, save_path):
 
 
 def evaluate_part2_classifiers(feature_sets, y_train, y_test, output_dir):
+    """Run full benchmark matrix across all features and classifier settings."""
     results = []
 
     best_kmeans = {"acc": -1.0}
     best_svm = {"acc": -1.0}
 
     for feature_name, x_train, x_test in feature_sets:
+        # Benchmark this feature representation against all required classifiers.
         # K-means per class with K in {1,4,16,32}
         for kpc in [1, 4, 16, 32]:
             t0 = time.perf_counter()
@@ -452,6 +508,7 @@ def evaluate_part2_classifiers(feature_sets, y_train, y_test, output_dir):
             results.append(row)
 
             if acc > best_kmeans["acc"]:
+                # Keep only the globally best K-means setup for confusion matrix export.
                 best_kmeans = {
                     "acc": acc,
                     "feature": feature_name,
@@ -482,6 +539,7 @@ def evaluate_part2_classifiers(feature_sets, y_train, y_test, output_dir):
             results.append(row)
 
             if acc > best_svm["acc"]:
+                # Keep only the globally best SVM setup for confusion matrix export.
                 best_svm = {
                     "acc": acc,
                     "feature": feature_name,
@@ -489,7 +547,7 @@ def evaluate_part2_classifiers(feature_sets, y_train, y_test, output_dir):
                     "y_pred": y_pred.copy(),
                 }
 
-    # Save benchmark table
+    # Save row-wise benchmark table (one row per run configuration).
     benchmark_csv = os.path.join(output_dir, "part2_results_table.csv")
     with open(benchmark_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(
@@ -499,7 +557,7 @@ def evaluate_part2_classifiers(feature_sets, y_train, y_test, output_dir):
         writer.writeheader()
         writer.writerows(results)
 
-    # Save confusion matrices only for best kmeans and best svm.
+    # Assignment asks confusion matrices only for the best result of each classifier family.
     fig_dir = os.path.join(output_dir, "figures")
     os.makedirs(fig_dir, exist_ok=True)
 
@@ -521,7 +579,8 @@ def evaluate_part2_classifiers(feature_sets, y_train, y_test, output_dir):
 
 
 def build_comparative_matrix_table(results, output_dir):
-    # Build assignment-style compact matrix: one row per feature, columns per classifier setup.
+    # Build assignment-style compact matrix:
+    # one row per feature, columns for all classifier variants.
     table = {
         "DCT_225": {},
         "PCA_95": {},
@@ -569,7 +628,7 @@ def build_comparative_matrix_table(results, output_dir):
 
 
 def write_conclusions(results, best_kmeans, best_svm, output_dir):
-    # Lightweight automatic conclusions draft for the report.
+    # Auto-generated conclusion notes to speed up report writing.
     top = sorted(results, key=lambda x: x["accuracy"], reverse=True)
     best_overall = top[0]
 
@@ -595,10 +654,12 @@ def write_conclusions(results, best_kmeans, best_svm, output_dir):
 
 
 def _feature_map(feature_sets):
+    # Convenience map: feature name -> (x_train_feature, x_test_feature)
     return {name: (x_train, x_test) for name, x_train, x_test in feature_sets}
 
 
 def save_kmeans_cluster_representatives(best_kmeans, feature_sets, x_train_images, y_train, output_dir):
+    """Visualize nearest real image to each centroid for the best K-means configuration."""
     fmap = _feature_map(feature_sets)
     feat_name = best_kmeans["feature"]
     x_train_feat = fmap[feat_name][0]
@@ -609,6 +670,7 @@ def save_kmeans_cluster_representatives(best_kmeans, feature_sets, x_train_image
     # Choose the nearest training image to each centroid as a visual representative.
     representatives = []
     for c_idx, centroid in enumerate(model.centroids):
+        # Pick nearest training sample in feature space to represent this centroid visually.
         d = np.sum((x_train_feat - centroid[None, :]) ** 2, axis=1)
         idx = int(np.argmin(d))
         representatives.append((c_idx, idx, int(model.centroid_labels[c_idx])))
@@ -643,6 +705,7 @@ def save_kmeans_cluster_representatives(best_kmeans, feature_sets, x_train_image
 
 
 def save_svm_support_vector_visuals(best_svm, feature_sets, x_train_images, y_train, output_dir):
+    """Export support-vector diagnostics for the best SVM setup."""
     fmap = _feature_map(feature_sets)
     feat_name = best_svm["feature"]
     x_train_feat = fmap[feat_name][0]
@@ -654,6 +717,7 @@ def save_svm_support_vector_visuals(best_svm, feature_sets, x_train_images, y_tr
     os.makedirs(fig_dir, exist_ok=True)
 
     # 1) Support vectors per class bar chart.
+    # Higher bars usually mean that class is harder to separate.
     cls = svm.classes_.astype(int)
     counts = svm.n_support_
 
@@ -669,6 +733,7 @@ def save_svm_support_vector_visuals(best_svm, feature_sets, x_train_images, y_tr
     plt.close(fig)
 
     # 2) Small gallery of support-vector images.
+    # These are the boundary-critical examples learned by the SVM.
     sv_idx = svm.support_
     max_show = min(30, len(sv_idx))
     cols = 10
@@ -699,6 +764,7 @@ def save_svm_support_vector_visuals(best_svm, feature_sets, x_train_images, y_tr
 # MAIN
 # ==============================
 def main():
+    """Entry point: run full Part 2 pipeline and save all report artifacts."""
     parser = argparse.ArgumentParser(description="Part 2 - Step 1: ReducedMNIST feature extraction")
     parser.add_argument("--dataset-dir", type=str, default="", help="Dataset directory with train/test class folders")
     parser.add_argument("--dataset-npz", type=str, default="", help="NPZ path with x_train,y_train,x_test,y_test")
@@ -708,6 +774,7 @@ def main():
     parser.add_argument("--skip-classifiers", action="store_true", help="Only run Step 1 feature extraction")
 
     if len(sys.argv) == 1:
+        # No CLI args => use project-local defaults for a reproducible run.
         args = parser.parse_args([])
         args.dataset_dir = DEFAULT_AUTO_CONFIG["dataset_dir"]
         args.dataset_npz = DEFAULT_AUTO_CONFIG["dataset_npz"]
@@ -734,7 +801,7 @@ def main():
     print(f"[INFO] Test images : {x_test.shape}, Test labels : {y_test.shape}")
 
     # ------------------------------
-    # Visualizations
+    # Visualizations (for report narrative)
     # ------------------------------
     plot_samples_grid(
         x_train,
@@ -754,6 +821,7 @@ def main():
     # ------------------------------
     # Feature extraction timing
     # ------------------------------
+    # Each block records extraction time to satisfy the assignment comparison table.
     summary_rows = []
 
     t0 = time.perf_counter()
@@ -764,6 +832,7 @@ def main():
 
     x_train_flat = x_train.reshape(len(x_train), -1).astype(np.float32) / 255.0
     x_test_flat = x_test.reshape(len(x_test), -1).astype(np.float32) / 255.0
+    # PCA expects 2D samples (N x 784), values scaled to [0,1].
 
     t0 = time.perf_counter()
     x_train_pca, x_test_pca, pca_model = pca_features_95(x_train_flat, x_test_flat)
@@ -782,8 +851,9 @@ def main():
     summary_rows.append(["HOG", x_train_hog.shape[1], dt])
 
     # ------------------------------
-    # Save features
+    # Save extracted feature arrays
     # ------------------------------
+    # Keeping .npy files makes reruns fast (skip repeated feature extraction if needed).
     np.save(os.path.join(args.output_dir, "x_train_dct225.npy"), x_train_dct)
     np.save(os.path.join(args.output_dir, "x_test_dct225.npy"), x_test_dct)
 
@@ -797,7 +867,7 @@ def main():
     np.save(os.path.join(args.output_dir, "y_test.npy"), y_test)
 
     # ------------------------------
-    # Save metadata + summary table
+    # Save metadata + timing summary
     # ------------------------------
     metadata = {
         "train_shape": list(x_train.shape),
@@ -818,7 +888,7 @@ def main():
         writer.writerows(summary_rows)
 
     # ------------------------------
-    # Part 2 classifiers (labels are available)
+    # Classifier benchmarking (requires labels)
     # ------------------------------
     labels_available = bool(np.all(y_train >= 0) and np.all(y_test >= 0))
     if args.skip_classifiers:
@@ -827,6 +897,7 @@ def main():
         print("[WARNING] Labels are not available.")
         print("[WARNING] Classifier accuracy/comparison is skipped until the recovered label vector is provided.")
     else:
+        # Benchmark matrix required by the assignment.
         feature_sets = [
             ("DCT_225", x_train_dct, x_test_dct),
             ("PCA_95", x_train_pca, x_test_pca),
@@ -841,6 +912,7 @@ def main():
 
         matrix_table_path = build_comparative_matrix_table(results, args.output_dir)
         conclusions_path = write_conclusions(results, best_kmeans, best_svm, args.output_dir)
+        # Extra visuals that help explain model behavior in discussion.
         kmeans_vis_path = save_kmeans_cluster_representatives(
             best_kmeans,
             feature_sets,
