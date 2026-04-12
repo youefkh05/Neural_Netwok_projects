@@ -45,7 +45,6 @@ DEFAULT_OUTPUT_DIR = os.path.join(BASE_DIR, "part2", "step1")
 DEFAULT_INDIAN_DIR = os.path.join(BASE_DIR, "Indian_Digits_Train")
 DEFAULT_LABELS_CSV = os.path.join(BASE_DIR, "pipeline3", "full_labels_vector.csv")
 
-# Zero-argument default run config for this workspace.
 DEFAULT_AUTO_CONFIG = {
     "dataset_dir": "",
     "dataset_npz": "",
@@ -59,6 +58,8 @@ DEFAULT_AUTO_CONFIG = {
 # ==============================
 # DATA LOADING
 # ==============================
+
+# Load and normalize all images from a single digit folder.
 def _load_images_from_class_folder(class_dir, label):
     # Read all image files for one class folder (e.g., train/3 or test/7).
     files = [f for f in os.listdir(class_dir) if f.lower().endswith((".bmp", ".png", ".jpg", ".jpeg"))]
@@ -82,6 +83,7 @@ def _load_images_from_class_folder(class_dir, label):
     return images, labels
 
 
+# Load the ReducedMNIST folder structure with train/test and digit subfolders.
 def load_dataset_from_dir(dataset_dir):
     """Load ReducedMNIST-style folder dataset with train/test and class folders 0..9."""
     train_dir = os.path.join(dataset_dir, "train")
@@ -128,6 +130,7 @@ def load_dataset_from_dir(dataset_dir):
     return x_train, y_train, x_test, y_test
 
 
+# Load a prepacked NPZ file containing train/test images and labels.
 def load_dataset_from_npz(npz_path):
     """Load dataset from pre-packed npz containing x_train/y_train/x_test/y_test."""
     data = np.load(npz_path)
@@ -151,6 +154,7 @@ def load_dataset_from_npz(npz_path):
     return x_train.astype(np.uint8), y_train.astype(np.int32), x_test.astype(np.uint8), y_test.astype(np.int32)
 
 
+# Load the unlabeled Indian digits folder as a fallback dataset.
 def load_dataset_from_indian_digits(indian_dir, train_ratio=0.8):
     """Fallback loader when no labels are available (labels become -1 placeholders)."""
     files = [f for f in os.listdir(indian_dir) if f.lower().endswith(".bmp")]
@@ -189,6 +193,7 @@ def load_dataset_from_indian_digits(indian_dir, train_ratio=0.8):
     return x_train, y_train, x_test, y_test
 
 
+# Load the recovered label vector that matches the sorted image order.
 def load_label_vector_csv(labels_csv):
     """Load recovered 1D label vector (one label per image, filename order)."""
     if not os.path.isfile(labels_csv):
@@ -203,6 +208,7 @@ def load_label_vector_csv(labels_csv):
     return labels
 
 
+# Load Indian digits together with recovered labels and split them.
 def load_dataset_from_indian_digits_with_labels(indian_dir, labels_csv):
     """Load Indian digits + recovered labels, then split into train/test."""
     files = [f for f in os.listdir(indian_dir) if f.lower().endswith(".bmp")]
@@ -247,6 +253,7 @@ def load_dataset_from_indian_digits_with_labels(indian_dir, labels_csv):
     return x_train, y_train, x_test, y_test
 
 
+# Choose the best available dataset source and return the four arrays.
 def load_reduced_mnist(dataset_dir=None, dataset_npz=None, labels_csv=None, train_ratio=0.8):
     # Priority order:
     # 1) explicit --dataset-npz
@@ -272,6 +279,8 @@ def load_reduced_mnist(dataset_dir=None, dataset_npz=None, labels_csv=None, trai
 # ==============================
 # VISUALIZATION HELPERS
 # ==============================
+
+# Save a grid of sample images so the dataset can be inspected visually.
 def plot_samples_grid(images, labels, save_path, n=20):
     """Save a quick visual sanity-check grid for training images and labels."""
     n = min(n, len(images))
@@ -295,6 +304,7 @@ def plot_samples_grid(images, labels, save_path, n=20):
     plt.close()
 
 
+# Show what DCT coefficients and low-frequency reconstruction look like.
 def plot_dct_example(image, save_path):
     """Visualize DCT transform intuition: original, DCT map, and low-frequency reconstruction."""
     img_f = image.astype(np.float32) / 255.0
@@ -328,6 +338,7 @@ def plot_dct_example(image, save_path):
     plt.close()
 
 
+# Plot the PCA variance curve and mark the 95% threshold.
 def plot_pca_curve(pca_model, save_path):
     """Plot cumulative explained variance and mark first component count reaching 95%."""
     cum = np.cumsum(pca_model.explained_variance_ratio_)
@@ -347,6 +358,7 @@ def plot_pca_curve(pca_model, save_path):
     plt.close()
 
 
+# Visualize the HOG descriptor for one image.
 def plot_hog_example(image, save_path):
     """Visualize HOG representation for one sample image."""
     _, hog_img = hog(
@@ -378,6 +390,8 @@ def plot_hog_example(image, save_path):
 # ==============================
 # FEATURE EXTRACTION
 # ==============================
+
+# Convert images into 225-dimensional DCT feature vectors.
 def dct_features_225(images):
     """Feature A: keep top-left 15x15 2D-DCT coefficients (225 dimensions)."""
     feats = []
@@ -388,6 +402,7 @@ def dct_features_225(images):
     return np.array(feats, dtype=np.float32)
 
 
+# Reduce raw pixel vectors with PCA while keeping at least 95% variance.
 def pca_features_95(x_train_flat, x_test_flat):
     """Feature B: PCA with enough components to preserve >=95% variance."""
     pca = PCA(n_components=0.95, svd_solver="full", random_state=42)
@@ -396,6 +411,7 @@ def pca_features_95(x_train_flat, x_test_flat):
     return z_train.astype(np.float32), z_test.astype(np.float32), pca
 
 
+# Compute HOG descriptors for each image.
 def hog_features(images):
     """Feature C: HOG descriptor capturing local edge orientations."""
     feats = []
@@ -414,6 +430,8 @@ def hog_features(images):
 # ==============================
 # CLASSIFIERS
 # ==============================
+
+# Store all centroids from the per-class K-means model.
 @dataclass
 class KMeansPerClassModel:
     # centroids: stacked centroids for all classes
@@ -422,6 +440,7 @@ class KMeansPerClassModel:
     centroid_labels: np.ndarray
 
 
+# Fit one K-means model per digit class and combine their centroids.
 def fit_kmeans_per_class(x_train, y_train, clusters_per_class):
     """Train one K-means model per class, then concatenate all centroids."""
     centroids = []
@@ -447,6 +466,7 @@ def fit_kmeans_per_class(x_train, y_train, clusters_per_class):
     return KMeansPerClassModel(centroids=centroids, centroid_labels=centroid_labels)
 
 
+# Predict a label by finding the nearest centroid across all classes.
 def predict_kmeans_per_class(model, x_test):
     # Squared Euclidean distance to every centroid.
     dists = np.sum((x_test[:, None, :] - model.centroids[None, :, :]) ** 2, axis=2)
@@ -454,6 +474,7 @@ def predict_kmeans_per_class(model, x_test):
     return model.centroid_labels[nearest]
 
 
+# Train an SVM classifier with the requested kernel.
 def fit_svm(x_train, y_train, kernel):
     """Train multiclass SVM (One-vs-One internally in scikit-learn)."""
     if kernel == "linear":
@@ -468,6 +489,7 @@ def fit_svm(x_train, y_train, kernel):
     return svm
 
 
+# Save a confusion matrix figure for a set of predictions.
 def save_confusion_matrix(y_true, y_pred, title, save_path):
     """Save confusion matrix image for report discussion and error analysis."""
     cm = confusion_matrix(y_true, y_pred, labels=np.arange(10))
@@ -481,6 +503,7 @@ def save_confusion_matrix(y_true, y_pred, title, save_path):
     plt.close(fig)
 
 
+# Benchmark every feature set against every classifier configuration.
 def evaluate_part2_classifiers(feature_sets, y_train, y_test, output_dir):
     """Run full benchmark matrix across all features and classifier settings."""
     results = []
@@ -578,6 +601,7 @@ def evaluate_part2_classifiers(feature_sets, y_train, y_test, output_dir):
     return results, best_kmeans, best_svm
 
 
+# Convert the long benchmark list into the wide comparison table format.
 def build_comparative_matrix_table(results, output_dir):
     # Build assignment-style compact matrix:
     # one row per feature, columns for all classifier variants.
@@ -627,6 +651,7 @@ def build_comparative_matrix_table(results, output_dir):
     return path
 
 
+# Write a short conclusions draft from the benchmark winners.
 def write_conclusions(results, best_kmeans, best_svm, output_dir):
     # Auto-generated conclusion notes to speed up report writing.
     top = sorted(results, key=lambda x: x["accuracy"], reverse=True)
@@ -653,11 +678,13 @@ def write_conclusions(results, best_kmeans, best_svm, output_dir):
     return path
 
 
+# Map feature names to their train/test arrays for later lookup.
 def _feature_map(feature_sets):
     # Convenience map: feature name -> (x_train_feature, x_test_feature)
     return {name: (x_train, x_test) for name, x_train, x_test in feature_sets}
 
 
+# Show example training images nearest to the best K-means centroids.
 def save_kmeans_cluster_representatives(best_kmeans, feature_sets, x_train_images, y_train, output_dir):
     """Visualize nearest real image to each centroid for the best K-means configuration."""
     fmap = _feature_map(feature_sets)
@@ -704,6 +731,7 @@ def save_kmeans_cluster_representatives(best_kmeans, feature_sets, x_train_image
     return save_path
 
 
+# Save support-vector diagnostics and support-vector image galleries.
 def save_svm_support_vector_visuals(best_svm, feature_sets, x_train_images, y_train, output_dir):
     """Export support-vector diagnostics for the best SVM setup."""
     fmap = _feature_map(feature_sets)
@@ -763,6 +791,8 @@ def save_svm_support_vector_visuals(best_svm, feature_sets, x_train_images, y_tr
 # ==============================
 # MAIN
 # ==============================
+
+# Run the full Part 2 pipeline and write all outputs to disk.
 def main():
     """Entry point: run full Part 2 pipeline and save all report artifacts."""
     parser = argparse.ArgumentParser(description="Part 2 - Step 1: ReducedMNIST feature extraction")
