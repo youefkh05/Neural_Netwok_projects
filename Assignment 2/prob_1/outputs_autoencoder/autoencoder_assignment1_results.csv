@@ -1,0 +1,7 @@
+feature,classifier,spec,accuracy,processing_time_sec
+AutoEncoder,kmeans_per_class,clusters_per_class=1,0.7085,0.22101967500930186
+AutoEncoder,kmeans_per_class,clusters_per_class=4,0.841,0.3626305420038989
+AutoEncoder,kmeans_per_class,clusters_per_class=16,0.8945,0.8599916470120661
+AutoEncoder,kmeans_per_class,clusters_per_class=32,0.903,1.4506492060027085
+AutoEncoder,svm,kernel=linear,0.9275,1.2246912279952085
+AutoEncoder,svm,"kernel=rbf,gamma=scale,C=10.0",0.9535,1.1378431049961364
