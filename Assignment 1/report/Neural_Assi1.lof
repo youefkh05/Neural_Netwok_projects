@@ -1,0 +1,51 @@
+\contentsline {figure}{\numberline {1}{\ignorespaces Scatter plot of original dataset identifying the outlier at $x=3$ ($y=1050$)}}{4}{figure.caption.2}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Linear Model of Original Data with Outlier}}{7}{figure.caption.5}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Simulation Results of Linear Model of Original Data with Outlier}}{7}{figure.caption.6}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Quadratic Model of Original Data with Outlier}}{9}{figure.caption.8}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Simulation Results of Quadratic Model of Original Data with Outlier}}{9}{figure.caption.9}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Cubic Model of Original Data with Outlier}}{11}{figure.caption.11}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Simulation Results of Cubic Model of Original Data with Outlier}}{11}{figure.caption.12}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Comparison between three Models of Original Data with Outlier}}{12}{figure.caption.14}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Scatter Plot of Cleaned Data without Outlier}}{13}{figure.caption.15}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Linear Model of Cleaned Data without Outlier}}{16}{figure.caption.18}%
+\contentsline {figure}{\numberline {11}{\ignorespaces Simulation Results of Linear Model of Cleaned Data without Outlier}}{16}{figure.caption.19}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Quadratic Model of Cleaned Data without Outlier}}{17}{figure.caption.21}%
+\contentsline {figure}{\numberline {13}{\ignorespaces Simulation Results of Quadratic Model of Cleaned Data without Outlier}}{18}{figure.caption.22}%
+\contentsline {figure}{\numberline {14}{\ignorespaces Cubic Model of Cleaned Data without Outlier}}{19}{figure.caption.24}%
+\contentsline {figure}{\numberline {15}{\ignorespaces Simulation Results of Cubic Model of Cleaned Data without Outlier}}{19}{figure.caption.25}%
+\contentsline {figure}{\numberline {16}{\ignorespaces Comparison between three Models of Cleaned Data without Outlier}}{20}{figure.caption.27}%
+\contentsline {figure}{\numberline {17}{\ignorespaces $R^2$ Comparison between three Models}}{20}{figure.caption.28}%
+\contentsline {figure}{\numberline {18}{\ignorespaces Best-fit models}}{21}{figure.caption.30}%
+\contentsline {figure}{\numberline {19}{\ignorespaces Simulation Results of Best Fit Model with Outlier}}{22}{figure.caption.31}%
+\contentsline {figure}{\numberline {20}{\ignorespaces Simulation Results of Best Fit Model without Outlier}}{22}{figure.caption.32}%
+\contentsline {figure}{\numberline {21}{\ignorespaces Simulation Results of Prediction of Insured People at Year 1997}}{23}{figure.caption.33}%
+\contentsline {figure}{\numberline {22}{\ignorespaces 3D Scatter Plot to Detect Outlier (outlier in red: Insulation$=40$)}}{24}{figure.caption.35}%
+\contentsline {figure}{\numberline {23}{\ignorespaces 3D Linear Regression Surface (With Outlier), $R^2 = 0.6967$}}{25}{figure.caption.36}%
+\contentsline {figure}{\numberline {24}{\ignorespaces Simulation Results of Linear Regression Surface (With Outlier)}}{25}{figure.caption.37}%
+\contentsline {figure}{\numberline {25}{\ignorespaces 3D Quadratic Regression Surface (With Outlier), $R^2 = 0.9742$}}{26}{figure.caption.38}%
+\contentsline {figure}{\numberline {26}{\ignorespaces Coefficient values for quadratic model with outlier}}{26}{figure.caption.39}%
+\contentsline {figure}{\numberline {27}{\ignorespaces 3D Scatter Plot (Cleaned Data, Outlier Removed)}}{27}{figure.caption.40}%
+\contentsline {figure}{\numberline {28}{\ignorespaces 3D Linear Regression Surface (Cleaned Data), $R^2 = 0.9606$}}{28}{figure.caption.41}%
+\contentsline {figure}{\numberline {29}{\ignorespaces Simulation Results of Linear Regression Surface (Cleaned Data)}}{28}{figure.caption.42}%
+\contentsline {figure}{\numberline {30}{\ignorespaces 3D Quadratic Regression Surface (Cleaned Data), $R^2 = 0.9769$}}{29}{figure.caption.43}%
+\contentsline {figure}{\numberline {31}{\ignorespaces Simulation Results of Quadratic Regression Surface (Cleaned Data)}}{29}{figure.caption.44}%
+\contentsline {figure}{\numberline {32}{\ignorespaces Best-fit surface plots for heating oil}}{30}{figure.caption.46}%
+\contentsline {figure}{\numberline {33}{\ignorespaces Simulation Results of Best Fit Model}}{30}{figure.caption.47}%
+\contentsline {figure}{\numberline {34}{\ignorespaces Simulation Results of Prediction Oil of Cleaned Data}}{31}{figure.caption.49}%
+\contentsline {figure}{\numberline {35}{\ignorespaces Simulation Results of Prediction Oil of Original Data}}{32}{figure.caption.51}%
+\contentsline {figure}{\numberline {36}{\ignorespaces Sample images from the labeled dataset used in Part 2}}{33}{figure.caption.53}%
+\contentsline {figure}{\numberline {37}{\ignorespaces PCA cumulative explained variance curve}}{33}{figure.caption.54}%
+\contentsline {figure}{\numberline {38}{\ignorespaces Best K-means confusion matrix for Part 2}}{34}{figure.caption.55}%
+\contentsline {figure}{\numberline {39}{\ignorespaces Best SVM confusion matrix for Part 2}}{34}{figure.caption.56}%
+\contentsline {figure}{\numberline {40}{\ignorespaces Support vectors per class for the best SVM setup}}{35}{figure.caption.57}%
+\contentsline {figure}{\numberline {41}{\ignorespaces Pipeline 1: K-Means + SVM + Active Learning}}{36}{figure.caption.58}%
+\contentsline {figure}{\numberline {42}{\ignorespaces Example of HOG Feature Representation}}{37}{figure.caption.59}%
+\contentsline {figure}{\numberline {43}{\ignorespaces K vs Accuracy Before SVM}}{37}{figure.caption.60}%
+\contentsline {figure}{\numberline {44}{\ignorespaces Accuracy Before vs After SVM}}{38}{figure.caption.61}%
+\contentsline {figure}{\numberline {45}{\ignorespaces Pipeline 2: Semi-Supervised Learning Framework}}{41}{figure.caption.64}%
+\contentsline {figure}{\numberline {46}{\ignorespaces Active Learning: Iteration vs Accuracy}}{42}{figure.caption.65}%
+\contentsline {figure}{\numberline {47}{\ignorespaces Initial Human Seed Samples (10 per class)}}{42}{figure.caption.66}%
+\contentsline {figure}{\numberline {48}{\ignorespaces Example of Data Augmentation (7 variants)}}{43}{figure.caption.67}%
+\contentsline {figure}{\numberline {49}{\ignorespaces Hard Samples (Iteration 1)}}{43}{figure.caption.68}%
+\contentsline {figure}{\numberline {50}{\ignorespaces Hard Samples (Iteration 2)}}{43}{figure.caption.69}%
+\contentsline {figure}{\numberline {51}{\ignorespaces Pipeline 3 block diagram based on the assignment workflow and selected practical setup}}{46}{figure.caption.71}%

@@ -1,0 +1,60 @@
+\contentsline {section}{PART 1: Regression Problems}{3}{Doc-Start}%
+\contentsline {subsection}{\numberline {1.1}Problem 1: Insurance Company}{3}{subsection.0.1}%
+\contentsline {subsubsection}{\numberline {1.1.1}Dataset}{3}{subsubsection.0.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.2}Case A: WITH Outlier}{3}{subsubsection.0.1.2}%
+\contentsline {paragraph}{Scatter Plot \& Outlier Identification}{3}{subsubsection.0.1.2}%
+\contentsline {paragraph}{Regression Models (WITH Outlier)}{4}{figure.caption.2}%
+\contentsline {subparagraph}{Linear Model}{4}{figure.caption.2}%
+\contentsline {subparagraph}{Quadratic Model}{7}{figure.caption.6}%
+\contentsline {subparagraph}{Cubic Model}{9}{figure.caption.9}%
+\contentsline {paragraph}{Comparison Between Three Models (WITH Outlier)}{11}{figure.caption.12}%
+\contentsline {subsubsection}{\numberline {1.1.3}Case B: WITHOUT Outlier}{13}{subsubsection.0.1.3}%
+\contentsline {paragraph}{Outlier Removal and Scatter Plot of Cleaned Data}{13}{subsubsection.0.1.3}%
+\contentsline {paragraph}{Regression Models (WITHOUT Outlier)}{13}{figure.caption.15}%
+\contentsline {subparagraph}{Linear Model}{13}{figure.caption.15}%
+\contentsline {subparagraph}{Quadratic Model}{16}{figure.caption.19}%
+\contentsline {subparagraph}{Cubic Model}{18}{figure.caption.22}%
+\contentsline {paragraph}{Comparison Between Three Models (Cleaned Data)}{19}{figure.caption.25}%
+\contentsline {subsubsection}{\numberline {1.1.4}Best-Fit Model Selection}{20}{subsubsection.0.1.4}%
+\contentsline {subsubsection}{\numberline {1.1.5}Prediction of Insured People}{22}{subsubsection.0.1.5}%
+\contentsline {subsection}{\numberline {1.2}Problem 2: Heating Oil}{23}{subsection.0.2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Dataset}{23}{subsubsection.0.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2}Case A: WITH Outlier}{23}{subsubsection.0.2.2}%
+\contentsline {paragraph}{Scatter Plot \& Outlier Identification}{23}{subsubsection.0.2.2}%
+\contentsline {paragraph}{Regression Models}{24}{figure.caption.35}%
+\contentsline {subparagraph}{Linear Model}{25}{figure.caption.35}%
+\contentsline {subparagraph}{Quadratic Model}{26}{figure.caption.37}%
+\contentsline {subsubsection}{\numberline {1.2.3}Case B: WITHOUT Outlier}{27}{subsubsection.0.2.3}%
+\contentsline {paragraph}{Scatter Plot (WITHOUT Outlier)}{27}{subsubsection.0.2.3}%
+\contentsline {paragraph}{Regression Models (WITHOUT Outlier)}{27}{figure.caption.40}%
+\contentsline {subparagraph}{Linear Model}{28}{figure.caption.40}%
+\contentsline {subparagraph}{Quadratic Model}{29}{figure.caption.42}%
+\contentsline {subsubsection}{\numberline {1.2.4}Comparison of Models and Best-Fit Selection}{30}{subsubsection.0.2.4}%
+\contentsline {subsubsection}{\numberline {1.2.5}Prediction of Oil}{31}{subsubsection.0.2.5}%
+\contentsline {section}{PART 2: Some Classical ML Modeling}{32}{figure.caption.51}%
+\contentsline {section}{PART 3: Ways to Fasten the Labelling Process}{36}{figure.caption.57}%
+\contentsline {subsection}{\numberline {3.1}Pipeline 1: K-Means Bootstrapping with Active SVM Refinement}{36}{subsection.0.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Step 1 - Feature Extraction and K-Means Clustering}{36}{subsubsection.0.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Step 2 - Human Labelling of Clusters (Bootstrapping Phase)}{37}{subsubsection.0.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.3}Step 3 - Initial SVM Training and Step 4 - Active Refinement: Labelling Boundary Images}{38}{subsubsection.0.1.3}%
+\contentsline {subsubsection}{\numberline {3.1.4}Step 5 - Retrain and Evaluate}{39}{subsubsection.0.1.4}%
+\contentsline {subsubsection}{\numberline {3.1.5}Accuracy}{39}{subsubsection.0.1.5}%
+\contentsline {subsubsection}{\numberline {3.1.6}Iterations}{39}{subsubsection.0.1.6}%
+\contentsline {subsection}{\numberline {3.2}Comparing Pipelines: Manual Labelling Time}{39}{subsection.0.2}%
+\contentsline {subsection}{\numberline {3.3}Reporting Requirements}{40}{subsection.0.3}%
+\contentsline {subsection}{\numberline {3.4}Pipeline 2: Manual Seed + Augmentation + Self-Training}{40}{subsection.0.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Pipeline Diagram}{41}{subsubsection.0.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Iteration Progress}{41}{subsubsection.0.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.3}Visualization}{42}{subsubsection.0.4.3}%
+\contentsline {subsubsection}{\numberline {3.4.4}Manual Effort}{43}{subsubsection.0.4.4}%
+\contentsline {subsubsection}{\numberline {3.4.5}Final Results}{44}{subsubsection.0.4.5}%
+\contentsline {subsubsection}{\numberline {3.4.6}Comparison with Pipeline 1}{44}{subsubsection.0.4.6}%
+\contentsline {subsubsection}{\numberline {3.4.7}Discussion}{44}{subsubsection.0.4.7}%
+\contentsline {subsection}{\numberline {3.5}Pipeline 3: LLM-Based Automatic Labelling with Agreement Validation}{45}{subsection.0.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Block Diagram}{46}{subsubsection.0.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}Step 1 Benchmarking Output}{47}{subsubsection.0.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.3}Step 4 Agreement and Disagreement Outputs}{47}{subsubsection.0.5.3}%
+\contentsline {subsubsection}{\numberline {3.5.4}Manual Effort and Cost Summary}{47}{subsubsection.0.5.4}%
+\contentsline {subsubsection}{\numberline {3.5.5}Comparison Against Pipelines 1 and 2}{48}{subsubsection.0.5.5}%
+\contentsline {subsubsection}{\numberline {3.5.6}Pipeline 3 Compact Summary Table (Assignment Style)}{48}{subsubsection.0.5.6}%
+\contentsline {section}{References}{48}{table.caption.76}%

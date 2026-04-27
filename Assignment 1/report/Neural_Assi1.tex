@@ -1539,20 +1539,7 @@ output/.style={fill=red!15}
 The Pipeline 2 diagram emphasizes a different strategy: begin from a trusted manual seed, then expand supervision through augmentation, confidence-based pseudo-labeling, and iterative hard-sample correction.
 
 
-% =========================
-% RESULTS
-% =========================
-\subsubsection{Final Results}
 
-The final performance of Pipeline 2 after convergence is summarized as follows:
-
-\begin{itemize}
-    \item Final Accuracy: 99.04\%
-    \item Number of Iterations: 4
-    \item Total Manual Labels: 380
-    \item Total Pseudo Labels: 1898
-    \item Estimated Manual Time: 63.33 minutes
-\end{itemize}
 
 \subsubsection{Iteration Progress}
 
@@ -1626,6 +1613,21 @@ Estimated time:
 \[
 380 \times 10 = 3800 \text{ seconds} \approx 63.33 \text{ minutes}
 \]
+
+% =========================
+% RESULTS
+% =========================
+\subsubsection{Final Results}
+
+The final performance of Pipeline 2 after convergence is summarized as follows:
+
+\begin{itemize}
+    \item Final Accuracy: 99.04\%
+    \item Number of Iterations: 4
+    \item Total Manual Labels: 380
+    \item Total Pseudo Labels: 1898
+    \item Estimated Manual Time: 63.33 minutes
+\end{itemize}
 
 % =========================
 % COMPARISON
