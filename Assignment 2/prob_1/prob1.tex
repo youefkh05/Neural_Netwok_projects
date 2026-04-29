@@ -1,67 +1,39 @@
-% Problem 1: Structured report content (placeholder figures to be inserted)
-\section{Autoencoder / MLP Analysis}
+% Problem 1: Feature extraction and MLP benchmark
+\section{Feature Extraction and MLP Benchmark}
 
 \subsection{Dataset and Preprocessing}
-The dataset used, directory layout, and preprocessing steps are listed below:
+The Reduced MNIST dataset was downloaded through \texttt{kagglehub} and already provided in labeled training and testing folders, one subdirectory per digit class. In our implementation, each image was loaded from disk, converted again to grayscale to ensure a single-channel input, and normalized to the range $[0,1]$ by dividing pixel intensities by $255$.
+
+The label of each sample was taken directly from the folder name. No relabeling or manual reshuffling was introduced, which keeps the preprocessing aligned with the assignment dataset structure.
+
+\subsection{Feature Construction}
+The assignment required three feature representations: DCT, PCA, and autoencoder features. We implemented each feature extractor separately so that the same classifier could be evaluated on all representations under a fair comparison.
+
+\subsubsection{Discrete Cosine Transform Features}
+For the DCT representation, each grayscale image was transformed using a two-dimensional discrete cosine transform with \texttt{scipy.fft.dctn}. We used the orthonormal DCT-II variant and retained the top-left $15\times15$ low-frequency block, which captures the most informative spatial structure while reducing the original $28\times28$ image to a compact 225-dimensional vector.
+
+\subsubsection{Principal Component Analysis Features}
+For PCA, each image was first flattened into a 784-dimensional vector and then projected onto the principal subspace using \texttt{sklearn.decomposition.PCA}. We configured PCA with \texttt{n\_components=0.95}, which preserves 95\% of the variance in the training data.
+
+\subsubsection{Autoencoder Features}
+We implemented it as part of the same feature pipeline so that its learned latent space could be compared directly with DCT and PCA.
+
+The autoencoder is implemented as a multilayer perceptron regressor with symmetric hidden layers \texttt{(128, 64, 32, 64, 128)}. It is trained to reconstruct the input image using ReLU activations and early stopping. The bottleneck is the middle hidden layer with 32 units. After training, we pass the data forward layer by layer and extract the bottleneck activations as the learned feature vector for each image.
+
+\subsection{Classifier Design}
+After extracting features, we trained a multilayer perceptron classifier on each feature set. The classifier uses ReLU activations, Adam optimization, early stopping, and a maximum of 120 iterations.
+
+We evaluated three hidden-layer configurations:
 \begin{itemize}
-  \item Grayscale input conversion to single channel
-  \item Rescaling / normalization: placeholder for mean/std (to be filled)
-  \item Train / test split as provided in the assignment dataset
+  \item one hidden layer: \texttt{(512,)}
+  \item three hidden layers: \texttt{(512, 256, 128)}
+  \item four hidden layers: \texttt{(512, 256, 128, 64)}
 \end{itemize}
 
-\subsection{Model Architecture and Decisions}
-We implemented an MLP / autoencoder-style architecture. Key design decisions:
-\begin{itemize}
-  \item Hidden layer sizes and activation functions selected to balance capacity and training stability.
-  \item Loss: cross-entropy for classification tasks or mean-squared error for reconstruction tasks, denoted here as $\mathcal{L}$.
-\end{itemize}
+These configurations were chosen to study the effect of model depth on classification performance while keeping the feature extractor fixed.
 
-\subsubsection{Mathematical Formulation}
-For classification we use softmax cross-entropy. Given logits $z\in\mathbb{R}^C$ for $C$ classes, the predicted probabilities are
-$$p_c = \frac{e^{z_c}}{\sum_{j=1}^C e^{z_j}},$$
-and the loss for a single example with one-hot target $y$ is
-$$\mathcal{L}_{CE} = -\sum_{c=1}^C y_c \log p_c.$$ 
-For reconstruction tasks with predicted output $\hat{x}$ and target $x$, we use MSE:
-$$\mathcal{L}_{MSE} = \|x - \hat{x}\|_2^2.$$
+\subsection{Integration with the Assignment 1 Benchmark}
+The autoencoder implementation was also reused later in Problem 2 because the assignment table required us to rerun the Assignment 1 Part 2 benchmark using this feature.
 
-\subsection{Training Procedure}
-Hyperparameters used (placeholders; fill with actual values from runs):
-\begin{itemize}
-  \item Optimizer: SGD/Adam
-  \item Learning rate: 0.001 (example)
-  \item Batch size: 128
-  \item Epochs: 5
-\end{itemize}
-Training and evaluation routines measured wall-clock time using high-precision timers; reported metrics include training accuracy, test accuracy, training time, and test time.
-
-\subsection{Results}
-Insert accuracy and timing tables and plots here. Example table template:
-
-\begin{table}[ht]
-\centering
-\caption{Problem 1: Summary of results}
-\begin{tabular}{lrrr}
-\hline
-Model & Train Acc (\%) & Test Acc (\%) & Train Time (s) \\
-\hline
-Baseline MLP & -- & -- & -- \\
-Variant A & -- & -- & -- \\
-\hline
-\end{tabular}
-\end{table}
-
-% Placeholder for figures
-\begin{figure}[ht]
-  \centering
-  \fbox{\parbox[c][4cm][c]{0.7\textwidth}{\centering Placeholder: prob1\_train\_loss.png}}
-  \caption{Training loss curve (Problem 1).}
-  \label{fig:prob1_loss}
-\end{figure}
-
-\subsection{Discussion and Decisions}
-Summarize observed behaviour, issues encountered (e.g., GPU compatibility), and rationale for chosen hyperparameters.
-
-\subsection{Conclusion}
-State final conclusions and next steps.
-
-% End of Problem 1
+\subsection{Summary}
+In summary, Problem 1 focuses on the feature-extraction stage of the experiment. The three required features were implemented exactly as separate pipelines, and the same MLP classifier was applied to all of them using three hidden-layer configurations. The detailed accuracy and timing results are documented in the results table of Problem 2.
