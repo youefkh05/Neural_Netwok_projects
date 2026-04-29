@@ -11,7 +11,7 @@ After feature extraction each utterance is represented as a variable-length sequ
 \subsection{4.2 Part 1 — Baseline: Average Frame Method}
 The baseline representation collapses an utterance into a single fixed-length vector by averaging all frame features across time, producing a 40-dimensional vector per utterance. This is the simplest fixed-length representation and discards all temporal dynamics. Classification was performed with an SVM using an RBF kernel (C=10, gamma="scale") trained on StandardScaler-normalized features.
 
-The baseline SVM achieved 48.3\% test accuracy. Measured classifier timings were: Train: 71.7\,ms, Test: 20.5\,ms. The low accuracy is explained by the representation choice: averaging removes temporal order and thereby destroys information that distinguishes many digits. For example, digits whose discriminative cues are temporal (the order and timing of formant energy) can have very similar mean spectra even though they are perceptually different.
+The baseline SVM achieved 48.3\% test accuracy. Measured classifier timings were: Train: 117.8\,ms, Test: 18.8\,ms. The low accuracy is explained by the representation choice: averaging removes temporal order and thereby destroys information that distinguishes many digits. For example, digits whose discriminative cues are temporal (the order and timing of formant energy) can have very similar mean spectra even though they are perceptually different.
 
 \subsection{4.3 Part 2 — AutoEncoder Utterance Representation}
 
@@ -40,10 +40,10 @@ Output FC (linear) & 2160 \\
 \end{tabular}
 \end{table}
 
-The autoencoder was trained with mean-squared-error reconstruction loss using Adam (learning rate $1\times10^{-3}$), batch size 64 for 100 epochs. Input features were StandardScaler-normalized before training. The training loss fell rapidly during the first epochs (example values: 0.207 $\rightarrow$ 0.204 $\rightarrow$ ... $\rightarrow$ 0.038), with steep early improvement and gradual convergence toward epoch 80--90.
+The autoencoder was trained with mean-squared-error reconstruction loss using Adam (learning rate $1\times10^{-3}$), batch size 64 for 100 epochs. Input features were StandardScaler-normalized before training. The training loss fell rapidly during the first epochs (epoch 10: 0.209 $\rightarrow$ epoch 20: 0.137 $\rightarrow$ \ldots $\rightarrow$ epoch 100: 0.039), with steep early improvement and gradual convergence toward epoch 80--90.
 
 \subsubsection{4.3.3 Feature Extraction and Classification}
-After training, the 128-dimensional bottleneck activations were used as utterance feature vectors. An SVM with RBF kernel (C=10, gamma="scale") was trained on these latent vectors using StandardScaler normalization. The AE pipeline plus SVM achieved 94.7\% test accuracy. Measured classifier timings were: Train: 86.3\,ms, Test: 26.4\,ms. Note that AE training (several minutes on CPU) is a one-time preprocessing cost and is excluded from these classifier timings.
+After training, the 128-dimensional bottleneck activations were used as utterance feature vectors. An SVM with RBF kernel (C=10, gamma="scale") was trained on these latent vectors using StandardScaler normalization. The AE pipeline plus SVM achieved 93.3\% test accuracy. Measured classifier timings were: Train: 88.2\,ms, Test: 34.0\,ms. Note that AE training (several minutes on CPU) is a one-time preprocessing cost and is excluded from these classifier timings.
 
 \subsection{4.4 Results}
 
@@ -58,8 +58,8 @@ The quantitative results are summarised in Table~\ref{tab:p4_summary}.
 	\toprule
 Method & Accuracy & Train Time & Test Time \\
 \midrule
-Baseline (Average Frame) & 48.3\% & 71.7 ms & 20.5 ms \\
-AE (Pad+Encode+SVM) & \textbf{94.7\%} & 86.3 ms & 26.4 ms \\
+Baseline (Average Frame) & 48.3\% & 117.8 ms & 18.8 ms \\
+AE (Pad+Encode+SVM) & \textbf{93.3\%} & 88.2 ms & 34.0 ms \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -74,7 +74,7 @@ Note: AE training time (several minutes on CPU) is a one-time preprocessing cost
 	\label{fig:p4_confusion}
 \end{figure}
 
-The baseline confusion matrix (left panel of Figure~\ref{fig:p4_confusion}) shows widely scattered predictions with only weak diagonal structure; many digits are confused with acoustically similar alternatives (for example, 5 and 9, 0 and 9). The AE confusion matrix (right panel) is nearly diagonal: most digits are classified correctly (28--30/30). Remaining errors are isolated (digit 3: 2 errors, digit 5: 3 errors, digit 0: 2 errors mislabelled as 7) and correspond to acoustically hard confusions.
+The baseline confusion matrix (left panel of Figure~\ref{fig:p4_confusion}) shows widely scattered predictions with only weak diagonal structure; many digits are confused with acoustically similar alternatives (for example, 5 and 9, 0 and 9). The AE confusion matrix (right panel) is nearly diagonal: most digits are classified correctly (25--30/30). Remaining errors are isolated: digit 5 has the most confusions (6 errors, mostly with digit 3), digit 7 has 5 errors, digit 4 has 4 errors, and digits 0 and 3 each have 3 errors (notably digit 0 is mislabelled as 6 and 7). These correspond to acoustically hard confusions.
 
 \subsubsection{Figure 2 — Per-Digit Accuracy}
 \begin{figure}[H]
@@ -84,16 +84,16 @@ The baseline confusion matrix (left panel of Figure~\ref{fig:p4_confusion}) show
 	\label{fig:p4_perdigit}
 \end{figure}
 
-Figure~\ref{fig:p4_perdigit} shows per-digit accuracy. Under the baseline all digits fall between approximately 33\% and 77\% accuracy, with digit 5 and 9 worst (33\%) and digit 4 best (77\%). After AE encoding digits 1, 2, 6, and 9 reach 100\% accuracy; digits 0, 3, 4, 7, 8 lie in the 87--97\% range; digit 5 is the weakest at 80\%. The AE therefore raises the floor substantially — the weakest class jumps from 33\% to 80\%.
+Figure~\ref{fig:p4_perdigit} shows per-digit accuracy. Under the baseline all digits fall between approximately 33\% and 77\% accuracy, with digits 5 and 9 worst (33\%) and digit 4 best (77\%). After AE encoding, digits 1, 2, 6, 8, and 9 reach 100\% accuracy; digits 0, 3, 4, and 7 lie in the 83--93\% range; digit 5 is the weakest at 80\%. The AE therefore raises the floor substantially — the weakest class jumps from 33\% to 80\%.
 
 \subsection{4.5 Discussion}
 Averaging frames fails because it discards temporal structure: the mean spectrum does not encode the order or timing of spectral events that distinguish many digit utterances. Consequently the baseline accuracy is low (48.3\%).
 
-The autoencoder succeeds because by flattening a padded time sequence the encoder observes the full temporal trajectory and learns to compress discriminative temporal patterns into the 128-dimensional bottleneck. The resulting latent vectors are dense, discriminative, and compact, enabling an SVM to reach 94.7\% accuracy.
+The autoencoder succeeds because by flattening a padded time sequence the encoder observes the full temporal trajectory and learns to compress discriminative temporal patterns into the 128-dimensional bottleneck. The resulting latent vectors are dense, discriminative, and compact, enabling an SVM to reach 93.3\% accuracy.
 
-Timing-wise the SVM classifiers have similar train and test times (baseline ~72/20\,ms, AE ~86/26\,ms). The AE's training cost is a one-time expense that is amortised across inference calls; at test time the cost is an encoder forward pass plus an SVM prediction, which is negligible in most deployment scenarios.
+Timing-wise the SVM classifiers have similar train and test times (baseline ~118/19\,ms, AE ~88/34\,ms). The AE's training cost is a one-time expense that is amortised across inference calls; at test time the cost is an encoder forward pass plus an SVM prediction, which is negligible in most deployment scenarios.
 
-Remaining errors concentrate on acoustically ambiguous digits (notably digit 5), consistent with confusions observed in Problem~3. Compared to the Problem~3 CNN baseline (95.3\%), the AE+SVM pipeline (94.7\%) attains comparable performance while being computationally lighter and simpler to run: no image rendering or 2D convolutions are required.
+Remaining errors concentrate on acoustically ambiguous digits (notably digit 5), consistent with confusions observed in Problem~3. Compared to the Problem~3 CNN baseline (95.3\%), the AE+SVM pipeline (93.3\%) attains comparable performance while being computationally lighter and simpler to run: no image rendering or 2D convolutions are required.
 
 % End of Problem 4
 \endgroup
