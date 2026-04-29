@@ -1,0 +1,67 @@
+% Problem 1: Structured report content (placeholder figures to be inserted)
+\section{Autoencoder / MLP Analysis}
+
+\subsection{Dataset and Preprocessing}
+The dataset used, directory layout, and preprocessing steps are listed below:
+\begin{itemize}
+  \item Grayscale input conversion to single channel
+  \item Rescaling / normalization: placeholder for mean/std (to be filled)
+  \item Train / test split as provided in the assignment dataset
+\end{itemize}
+
+\subsection{Model Architecture and Decisions}
+We implemented an MLP / autoencoder-style architecture. Key design decisions:
+\begin{itemize}
+  \item Hidden layer sizes and activation functions selected to balance capacity and training stability.
+  \item Loss: cross-entropy for classification tasks or mean-squared error for reconstruction tasks, denoted here as $\mathcal{L}$.
+\end{itemize}
+
+\subsubsection{Mathematical Formulation}
+For classification we use softmax cross-entropy. Given logits $z\in\mathbb{R}^C$ for $C$ classes, the predicted probabilities are
+$$p_c = \frac{e^{z_c}}{\sum_{j=1}^C e^{z_j}},$$
+and the loss for a single example with one-hot target $y$ is
+$$\mathcal{L}_{CE} = -\sum_{c=1}^C y_c \log p_c.$$ 
+For reconstruction tasks with predicted output $\hat{x}$ and target $x$, we use MSE:
+$$\mathcal{L}_{MSE} = \|x - \hat{x}\|_2^2.$$
+
+\subsection{Training Procedure}
+Hyperparameters used (placeholders; fill with actual values from runs):
+\begin{itemize}
+  \item Optimizer: SGD/Adam
+  \item Learning rate: 0.001 (example)
+  \item Batch size: 128
+  \item Epochs: 5
+\end{itemize}
+Training and evaluation routines measured wall-clock time using high-precision timers; reported metrics include training accuracy, test accuracy, training time, and test time.
+
+\subsection{Results}
+Insert accuracy and timing tables and plots here. Example table template:
+
+\begin{table}[ht]
+\centering
+\caption{Problem 1: Summary of results}
+\begin{tabular}{lrrr}
+\hline
+Model & Train Acc (\%) & Test Acc (\%) & Train Time (s) \\
+\hline
+Baseline MLP & -- & -- & -- \\
+Variant A & -- & -- & -- \\
+\hline
+\end{tabular}
+\end{table}
+
+% Placeholder for figures
+\begin{figure}[ht]
+  \centering
+  \fbox{\parbox[c][4cm][c]{0.7\textwidth}{\centering Placeholder: prob1\_train\_loss.png}}
+  \caption{Training loss curve (Problem 1).}
+  \label{fig:prob1_loss}
+\end{figure}
+
+\subsection{Discussion and Decisions}
+Summarize observed behaviour, issues encountered (e.g., GPU compatibility), and rationale for chosen hyperparameters.
+
+\subsection{Conclusion}
+State final conclusions and next steps.
+
+% End of Problem 1

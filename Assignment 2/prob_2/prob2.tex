@@ -1,0 +1,69 @@
+% Problem 2: LeNet-5 experiments and variants
+\section{CNN Experiments (LeNet-style)}
+
+\subsection{Design Decisions}
+We implemented a baseline \texttt{LeNet5} with the following structure:
+\begin{itemize}
+  \item Convolutional layer 1: $5\times5$, 6 filters, followed by average pooling (2x2)
+  \item Convolutional layer 2: $5\times5$, 16 filters, followed by average pooling (2x2)
+  \item Fully connected layers: flatten $\to$ 120 $\to$ 84 $\to$ 10 (logits)
+\end{itemize}
+
+Variants added to investigate capacity and regularisation effects:
+\begin{description}
+  \item[Wide:] increase conv filters to (16,32) to raise model capacity.
+  \item[Deep:] add an extra $3\times3$ conv layer (padding=1) increasing depth and receptive field.
+  \item[Sigmoid:] replace ReLU activations in the convolutional and FC layers with Sigmoid activations (no dropout).
+\end{description}
+
+Each variant is constructed by a factory function and run with the same training pipeline to ensure fair comparison.
+
+\subsection{Mathematical and Implementation Details}
+Convolutional operations are denoted as
+$$y_{k} = f\left(\sum_{c} x_c * w_{c,k} + b_k\right),$$
+where $*$ is 2D convolution and $f(\cdot)$ is the activation function (ReLU or Sigmoid for the \texttt{sigmoid} variant).
+
+Training minimises cross-entropy loss over the dataset. We measure per-epoch wall-clock training time $t_{\text{epoch}}$ and report total training time $T = \sum_{e} t_{\text{epoch}}^{(e)}$.
+
+\subsection{Experimental Protocol}
+\begin{itemize}
+  \item Data preprocessing: grayscale conversion and tensor transform (placeholders for normalization values).
+  \item Optimizer: Adam with learning rate 0.001 (default; configurable).
+  \item Batch size: 128; Epochs: 5 (default; configurable).
+  \item Metrics: train accuracy, test accuracy, training wall time, testing wall time.
+\end{itemize}
+
+\subsection{Results and Findings}
+The comparative results for the four variants are saved to a CSV (\texttt{lenet\_variants\_results.csv}) and should be inserted as a table here. Example placeholder table:
+
+\begin{table}[ht]
+\centering
+\caption{LeNet variants: accuracy and timing summary}
+\begin{tabular}{lrrrr}
+\hline
+Variant & Train Acc (\%) & Test Acc (\%) & Train Time (s) & Test Time (s)\\
+\hline
+Baseline & -- & -- & -- & -- \\
+Wide & -- & -- & -- & -- \\
+Deep & -- & -- & -- & -- \\
+Sigmoid & -- & -- & -- & -- \\
+\hline
+\end{tabular}
+\label{tab:lenet_summary}
+\end{table}
+
+% Placeholder figures
+\begin{figure}[ht]
+  \centering
+  \fbox{\parbox[c][4cm][c]{0.7\textwidth}{\centering Placeholder: prob2\_accuracy\_curves.png}}
+  \caption{Per-epoch train/test accuracy curves for LeNet variants.}
+  \label{fig:prob2_curves}
+\end{figure}
+
+\subsection{Discussion}
+Discuss why the wide or deep variants behaved differently from baseline, how Sigmoid activation affected training dynamics, and any regularisation or optimisation observations (e.g., learning rate sensitivity).
+
+\subsection{Conclusion and Recommendations}
+Summarise best-performing variant, trade-offs between accuracy and compute (training time), and recommendations for further experiments (longer training, data augmentation, normalization).
+
+% End of Problem 2
