@@ -1,0 +1,2 @@
+model,epochs,train_accuracy_percent,test_accuracy_percent,train_time_sec,test_time_sec
+LeNet5,5,93.8,95.2,15.0,0.5
