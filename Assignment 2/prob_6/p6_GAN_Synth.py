@@ -195,8 +195,8 @@ def get_reduced_dataset(x, y, samples_per_digit, cache_name=None):
 # Select 3 best images per digit based on classifier confidence
 # =========================
 def select_3_per_digit(fake_imgs, classifier):
-    preds = classifier.predict(fake_imgs, verbose=0)
 
+    preds = classifier.predict(fake_imgs, verbose=0)
     labels = np.argmax(preds, axis=1)
     confidence = np.max(preds, axis=1)
 
@@ -205,10 +205,12 @@ def select_3_per_digit(fake_imgs, classifier):
     for digit in range(10):
         idx = np.where(labels == digit)[0]
 
-        if len(idx) < 3:
+        if len(idx) == 0:
+            print(f"[WARNING] No samples for digit {digit}")
             continue
 
-        best = idx[np.argsort(confidence[idx])[-3:]]
+        # take top 3 OR less if not available
+        best = idx[np.argsort(confidence[idx])[-min(3, len(idx)):]]
         selected_imgs.extend(fake_imgs[best])
 
     return np.array(selected_imgs)
@@ -429,7 +431,7 @@ def main():
     # LOAD CLASSIFIER (LeNet)
     # =========================
     print("[INFO] Loading classifier...")
-    classifier = tf.keras.models.load_model("lenet_model.keras")  # <-- adjust path
+    classifier = tf.keras.models.load_model("lenet_model.keras")  
 
     # =========================
     # GAN CONFIG
@@ -438,7 +440,7 @@ def main():
     disc_path = os.path.join(CACHE_DIR, f"gan_discriminator_{real_n}.h5")
 
     latent_dim = 100
-    total_samples = 2000   # 🔥 IMPORTANT (big pool)
+    total_samples = 2000   # IMPORTANT (big pool)
 
     # =========================
     # TRAIN OR LOAD GAN
@@ -500,25 +502,27 @@ def main():
     selected_images = select_3_per_digit(generated_images, classifier)
 
     # =========================
-    # VISUALIZE SELECTED (3 x 10)
+    # VISUALIZE SELECTED (3 x 10) WITH LABELS
     # =========================
     plt.figure(figsize=(12,4))
+
+    preds = classifier.predict(selected_images, verbose=0)
+    labels = np.argmax(preds, axis=1)
 
     for i in range(min(30, len(selected_images))):
         plt.subplot(3,10,i+1)
         plt.imshow(selected_images[i].squeeze(), cmap='gray')
+        plt.title(str(labels[i]), fontsize=8)   # ← LABEL HERE
         plt.axis('off')
 
     plt.tight_layout()
     plt.savefig(os.path.join(OUTPUT_DIR, "gan_selected_per_digit.png"), dpi=300)
     plt.close()
 
-    print("[INFO] Saved selected GAN digits")
-
+    print("[INFO] Saved labeled selected GAN digits")
     # =========================
     # DISCRIMINATOR ANALYSIS
     # =========================
-    show_discriminator_approved(generator, discriminator)
 
     # FIXED CALL 
     show_discriminator_mistakes(generator, discriminator, x_small)
