@@ -1,6 +1,7 @@
 import os
 import cv2
 import csv
+import pandas as pd
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.datasets import mnist
@@ -15,6 +16,55 @@ OUTPUT_DIR = "outputs"
 os.makedirs(CACHE_DIR, exist_ok=True)
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
+# =========================
+# CALLBACK TO VISUALIZE PREDICTIONS DURING TRAINING
+# =========================
+class PredictionVisualizationCallback(tf.keras.callbacks.Callback):
+    def __init__(self, x_test, y_test, interval=2, prefix="train"):
+        super().__init__()
+        self.x_test = x_test
+        self.y_test = y_test
+        self.interval = interval
+        self.prefix = prefix
+
+    def on_epoch_end(self, epoch, logs=None):
+        if (epoch + 1) % self.interval != 0:
+            return
+
+        idx = np.random.choice(len(self.x_test), 16, replace=False)
+        images = self.x_test[idx]
+        labels = self.y_test[idx]
+
+        preds = self.model.predict(images, verbose=0)
+        pred_labels = np.argmax(preds, axis=1)
+        confidences = np.max(preds, axis=1)
+
+        plt.figure(figsize=(14,14))  # bigger
+
+        for i in range(16):
+            plt.subplot(4,4,i+1)
+            plt.imshow(images[i].squeeze(), cmap='gray')
+
+            correct = labels[i] == pred_labels[i]
+            color = "green" if correct else "red"
+
+            title = f"T:{labels[i]} | P:{pred_labels[i]} ({confidences[i]:.2f})"
+
+            plt.title(title, fontsize=10, color=color)  #  bigger font
+            plt.axis('off')
+
+        plt.tight_layout(pad=2.0)  #  spacing
+
+        path = os.path.join(
+            OUTPUT_DIR,
+            f"{self.prefix}_epoch_{epoch+1}.png"
+        )
+
+        plt.savefig(path, dpi=300)
+        plt.close()
+
+        print(f"[INFO] Saved epoch visualization: {path}")
+                  
 # =========================
 # SAVE / LOAD CACHE
 # =========================
@@ -278,37 +328,155 @@ def build_final_dataset(x_real, y_real, x_aug, y_aug):
     return x_final, y_final
 
 # =========================
-# Run experiments with different real vs augmented splits
+# Build a simple LeNet-like CNN
 # =========================
-def run_experiments(x_train, y_train, x_test, y_test):
+def build_lenet():
+    model = tf.keras.Sequential([
+        tf.keras.Input(shape=(28,28,1)),  # fix warning too
 
-    real_options = [350, 750, 1000]
-    aug_options = [0, 1000, 1500, 2000]
+        tf.keras.layers.Conv2D(6, kernel_size=5, activation='relu'),
+        tf.keras.layers.AveragePooling2D(pool_size=(2,2)),
 
-    results = []
+        tf.keras.layers.Conv2D(16, kernel_size=5, activation='relu'),
+        tf.keras.layers.AveragePooling2D(pool_size=(2,2)),
 
-    for real_n in real_options:
-        for aug_n in aug_options:
+        tf.keras.layers.Flatten(),
 
-            print(f"\n===== EXPERIMENT: {real_n} real + {aug_n} aug =====")
+        tf.keras.layers.Dense(120, activation='relu'),
+        tf.keras.layers.Dense(84, activation='relu'),
+        tf.keras.layers.Dense(10, activation='softmax')
+    ])
 
-            x_final, y_final = get_final_dataset(
-                x_train, y_train,
-                real_n,
-                aug_n
-            )
+    model.compile(
+        optimizer='adam',
+        loss='sparse_categorical_crossentropy',
+        metrics=['accuracy']
+    )
 
-            # TODO: TRAIN LENET HERE
-            # model = build_lenet()
-            # model.fit(...)
-            # acc = model.evaluate(...)
+    return model
 
-            acc = np.random.uniform(0.90, 0.99)  # placeholder
+# =========================
+# Visualize Model Predictions
+# =========================
+def visualize_predictions(model, x_test, y_test, filename="predictions.png", n=25):
+    idx = np.random.choice(len(x_test), n, replace=False)
 
-            results.append([real_n, aug_n, acc])
+    images = x_test[idx]
+    labels = y_test[idx]
 
-    return results
-      
+    preds = model.predict(images, verbose=0)
+    pred_labels = np.argmax(preds, axis=1)
+    confidences = np.max(preds, axis=1)
+
+    plt.figure(figsize=(14,14))  # bigger
+
+    for i in range(n):
+        plt.subplot(5,5,i+1)
+        plt.imshow(images[i].squeeze(), cmap='gray')
+
+        title = f"T:{labels[i]} | P:{pred_labels[i]} ({confidences[i]:.2f})"
+        color = "green" if labels[i] == pred_labels[i] else "red"
+
+        plt.title(title, color=color, fontsize=9)  # bigger font
+        plt.axis('off')
+
+    plt.tight_layout(pad=2.0)  # spacing
+
+    path = os.path.join(OUTPUT_DIR, filename)
+    plt.savefig(path, dpi=300)
+    plt.close()
+
+    print(f"[INFO] Saved predictions: {path}")  
+
+# =========================
+# Visualize misclassified samples
+# =========================
+def visualize_misclassified(model, x_test, y_test, filename="misclassified.png", n=25):
+    preds = model.predict(x_test, verbose=0)
+    pred_labels = np.argmax(preds, axis=1)
+
+    wrong_idx = np.where(pred_labels != y_test)[0]
+
+    if len(wrong_idx) == 0:
+        print("[INFO] No misclassified samples!")
+        return
+
+    idx = np.random.choice(wrong_idx, min(n, len(wrong_idx)), replace=False)
+
+    plt.figure(figsize=(8,8))
+
+    for i, id_ in enumerate(idx):
+        plt.subplot(5,5,i+1)
+        plt.imshow(x_test[id_].squeeze(), cmap='gray')
+
+        title = f"T:{y_test[id_]} P:{pred_labels[id_]}"
+        plt.title(title, color="red", fontsize=8)
+        plt.axis('off')
+
+    path = os.path.join(OUTPUT_DIR, filename)
+    plt.savefig(path, dpi=300)
+    plt.close()
+
+    print(f"[INFO] Saved misclassified: {path}")
+
+# =========================
+# Plot Training Curves
+# =========================
+def plot_training_curves(history, filename="training_curves.png"):
+    hist = history.history
+
+    plt.figure(figsize=(10,4))
+
+    # -----------------
+    # Loss
+    # -----------------
+    plt.plot(hist["loss"], label="Train Loss")
+    plt.title("Loss")
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.legend()
+
+
+    path = os.path.join(OUTPUT_DIR, filename)
+    plt.savefig(path, dpi=300)
+    plt.close()
+
+    print(f"[INFO] Saved training curves: {path}") 
+
+# =========================
+# Plot Results from CSV
+# =========================
+def plot_results_from_csv(csv_path):
+
+    df = pd.read_csv(csv_path)
+
+    plt.figure(figsize=(8,6))
+
+    # Unique real dataset sizes
+    real_values = sorted(df["Real per digit"].unique())
+
+    for real_n in real_values:
+        subset = df[df["Real per digit"] == real_n]
+
+        plt.plot(
+            subset["Aug per digit"],
+            subset["Accuracy"],
+            marker='o',
+            label=f"Real={real_n}"
+        )
+
+    plt.title("Accuracy vs Augmentation")
+    plt.xlabel("Generated Samples per Digit")
+    plt.ylabel("Accuracy")
+    plt.legend()
+    plt.grid(True)
+
+    path = os.path.join(OUTPUT_DIR, "results_plot.png")
+    plt.savefig(path, dpi=300)
+    plt.close()
+
+    print(f"[INFO] Saved results plot: {path}")
+                  
 # =========================
 # MAIN FUNCTION
 # =========================
@@ -337,9 +505,12 @@ def main():
     # EXPERIMENT SETTINGS
     # =========================
     real_options = [350, 750, 1000]
+    real_options = [350]
     aug_options = [0, 1000, 1500, 2000]
+    aug_options = [1000]
 
     results = []
+    visualize_flag = True
 
     # =========================
     # LOOP OVER EXPERIMENTS
@@ -375,31 +546,78 @@ def main():
                 )
 
             # =========================
-            # TODO: TRAIN MODEL
+            # TRAIN MODEL
             # =========================
-            # model = build_lenet()
-            # model.fit(x_final, y_final, epochs=5, batch_size=64)
 
+            model = build_lenet()
+            
+            if visualize_flag == True:
+                visualize_flag = False  # only visualize the first setting to save time 
+                callback = PredictionVisualizationCallback(
+                    x_test,
+                    y_test,
+                    interval=5,
+                    prefix=f"{real_n}_{aug_n}"
+                )
+                
+                history =model.fit(
+                    x_final, y_final,
+                    epochs=30,   
+                    batch_size=64,
+                    verbose=1,
+                    callbacks=[callback]
+                )
+            else:
+                history =model.fit(
+                    x_final, y_final,
+                    epochs=30,   
+                    batch_size=64,
+                    verbose=1,
+                    )
+            
             # =========================
-            # TODO: EVALUATE
+            # EVALUATE MODEL
             # =========================
-            # loss, acc = model.evaluate(x_test, y_test)
+            loss, acc = model.evaluate(x_test, y_test, verbose=0)
 
-            acc = np.random.uniform(0.90, 0.99)  # placeholder for now
 
             print(f"[RESULT] Accuracy = {acc*100:.2f}%")
 
             results.append([real_n, aug_n, acc])
 
+    
+    # =========================
+    # FINAL PREDICTION VISUALIZATION the last trained model (on the last setting)
+    #  =========================
+    visualize_predictions(
+        model,
+        x_test,
+        y_test,
+        filename=f"final_pred_{real_n}_{aug_n}.png"
+    )
+            
+    visualize_misclassified(
+        model,
+        x_test,
+        y_test,
+        filename=f"mis_{real_n}_{aug_n}.png"
+        )
+            
+    plot_training_curves(
+        history,
+        filename=f"curve_{real_n}_{aug_n}.png"
+        )
     # =========================
     # SAVE RESULTS TABLE
     # =========================
-    results_path = os.path.join(OUTPUT_DIR, "results.csv")
+    results_path = os.path.join(OUTPUT_DIR, "results.csv")      
 
     with open(results_path, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["Real per digit", "Aug per digit", "Accuracy"])
         writer.writerows(results)
+        
+    plot_results_from_csv(results_path)       
 
     print(f"[INFO] Results saved to: {results_path}")
 
