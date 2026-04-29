@@ -1,5 +1,111 @@
-\begingroup
-\graphicspath{{../prob_5}{../prob_5/Figures/}}
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ────────────────────────────────────────────────────────────────
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{hypcap}
+\usepackage{bookmark}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+\usepackage{float}
+
+% Soft pastel colors for headings
+\definecolor{softblue}{HTML}{6B9AC4}
+\definecolor{softteal}{HTML}{7FB3B3}
+\definecolor{softpurple}{HTML}{B39EB5}
+% Table and long table support for large result tables
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% ── Hyperref setup ───────────────────────────────────────────────────────────
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=black,
+	citecolor=black
+}
+
+% ── Section formatting (matches PDF style) ───────────────────────────────────
+\titleformat{\section}{\large\bfseries\color{softblue}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% ── Header / Footer ──────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small Neural Networks -- Assignment 2}
+\lhead{\small Cairo University}
+\cfoot{\thepage}
+\setlength{\headheight}{14pt}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Graphics path ────────────────────────────────────────────────────────────
+\graphicspath{{Figures/}}
+\begin{document}
+
+% ── Title Page ───────────────────────────────────────────────────────────────
+\begin{titlepage}
+\centering
+\vspace*{0.5cm}
+
+\makebox[\textwidth][c]{%
+\raisebox{-0.4cm}{\includegraphics[width=0.25\textwidth]{Figures/image1.png}}\hspace{2.5cm}%
+\includegraphics[width=0.17\textwidth]{Figures/image2.png}%
+}
+
+\vspace{0.5cm}
+{\Large\bfseries Cairo University\\}
+\vspace{0.2cm}
+{\large Faculty of Engineering\\}
+\vspace{0.2cm}
+{\normalsize Electronics and Electrical Communications Engineering\\}
+
+\vspace{1.2cm}
+\rule{0.8\textwidth}{1.5pt}\\[0.4cm]
+{\LARGE\bfseries Assignment 2}\\[0.3cm]
+{\large\bfseries ELC 4028 -- Artificial Neural Networks}\\[0.2cm]
+\rule{0.8\textwidth}{1.5pt}
+
+\vspace{1.2cm}
+
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{ID} & \textbf{Section} & \textbf{Name} \\
+\hline
+9220399 & 2 & Shahd Gamal Mahmoud Hussein \\
+\hline
+9220411 & 2 & Salah El-Din Hassan Hassan Mohamed \\
+\hline
+9220984 & 4 & Yousef Khaled Omar Mahmoud \\
+\hline
+\end{tabular}
+
+\vspace{1.2cm}
+
+\textit{Supervised by:}\\[0.3cm]
+\textit{Dr.\ Mohsen Rashwan}\\
+\textit{Dr.\ Mohamed Motaz}
+
+\vfill
+\end{titlepage}
+
+% ── Table of Contents ────────────────────────────────────────────────────────
+\setcounter{tocdepth}{3}
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+
 
 \subsection{Pipeline Overview}
 
@@ -152,4 +258,4 @@ This demonstrates that data augmentation significantly improves performance when
 \end{itemize}
 
 
-\endgroup
+\end{document}
