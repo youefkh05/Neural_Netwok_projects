@@ -1,0 +1,5 @@
+variant,spec,train_accuracy_percent,test_accuracy_percent,train_time_sec,test_time_sec
+baseline,"LeNet5 baseline (6,16 filters)",93.5,94.8,20.8,0.5
+wide,"wide: conv filters (16,32)",95.5,96.6,17.9,0.6
+deep,"deep: added conv3 (3x3,pad=1) -> 32 maps",95.1,96.6,16.7,0.5
+sigmoid,"sigmoid: Sigmoid activations, no dropout",84.4,85.5,15.9,0.5

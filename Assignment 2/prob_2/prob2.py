@@ -52,6 +52,89 @@ class LeNet5(nn.Module):
         return x
 
 
+def build_model(variant: str) -> tuple[nn.Module, str]:
+    """Factory returning (model, spec) for a given variant name.
+
+    Variants:
+    - baseline: original LeNet-5 adapted for 28x28
+    - wide: increase filter counts in conv layers
+    - deep: add an extra small conv layer before flattening
+    - dropout: baseline + dropout before FC layers
+    """
+    if variant == "baseline":
+        return LeNet5(), "LeNet5 baseline (6,16 filters)"
+
+    if variant == "wide":
+        class LeNetWide(nn.Module):
+            def __init__(self) -> None:
+                super().__init__()
+                self.conv1 = nn.Conv2d(1, 16, kernel_size=5)
+                self.pool = nn.AvgPool2d(2, 2)
+                self.conv2 = nn.Conv2d(16, 32, kernel_size=5)
+                self.fc1 = nn.Linear(32 * 4 * 4, 120)
+                self.fc2 = nn.Linear(120, 84)
+                self.fc3 = nn.Linear(84, 10)
+
+            def forward(self, x: torch.Tensor) -> torch.Tensor:
+                x = self.pool(F.relu(self.conv1(x)))
+                x = self.pool(F.relu(self.conv2(x)))
+                x = x.view(x.size(0), -1)
+                x = F.relu(self.fc1(x))
+                x = F.relu(self.fc2(x))
+                return self.fc3(x)
+
+        return LeNetWide(), "wide: conv filters (16,32)"
+
+    if variant == "deep":
+        class LeNetDeep(nn.Module):
+            def __init__(self) -> None:
+                super().__init__()
+                self.conv1 = nn.Conv2d(1, 6, kernel_size=5)
+                self.pool = nn.AvgPool2d(2, 2)
+                self.conv2 = nn.Conv2d(6, 16, kernel_size=5)
+                # extra conv layer (keeps spatial dims via padding=1)
+                self.conv3 = nn.Conv2d(16, 32, kernel_size=3, padding=1)
+                self.fc1 = nn.Linear(32 * 4 * 4, 120)
+                self.fc2 = nn.Linear(120, 84)
+                self.fc3 = nn.Linear(84, 10)
+
+            def forward(self, x: torch.Tensor) -> torch.Tensor:
+                x = self.pool(F.relu(self.conv1(x)))
+                x = F.relu(self.conv2(x))
+                x = self.pool(F.relu(self.conv3(x)))
+                x = x.view(x.size(0), -1)
+                x = F.relu(self.fc1(x))
+                x = F.relu(self.fc2(x))
+                return self.fc3(x)
+
+        return LeNetDeep(), "deep: added conv3 (3x3,pad=1) -> 32 maps"
+
+    if variant == "sigmoid":
+        class LeNetSigmoid(nn.Module):
+            def __init__(self) -> None:
+                super().__init__()
+                self.conv1 = nn.Conv2d(1, 6, kernel_size=5)
+                self.pool = nn.AvgPool2d(2, 2)
+                self.conv2 = nn.Conv2d(6, 16, kernel_size=5)
+                self.fc1 = nn.Linear(16 * 4 * 4, 120)
+                # use Sigmoid activation (no dropout)
+                self.act = nn.Sigmoid()
+                self.fc2 = nn.Linear(120, 84)
+                self.fc3 = nn.Linear(84, 10)
+
+            def forward(self, x: torch.Tensor) -> torch.Tensor:
+                x = self.pool(self.act(self.conv1(x)))
+                x = self.pool(self.act(self.conv2(x)))
+                x = x.view(x.size(0), -1)
+                x = self.act(self.fc1(x))
+                x = self.act(self.fc2(x))
+                return self.fc3(x)
+
+        return LeNetSigmoid(), "sigmoid: Sigmoid activations, no dropout"
+
+    raise ValueError(f"Unknown variant: {variant}")
+
+
 def make_dataloaders(
     train_dir: Path, test_dir: Path, batch_size: int
 ) -> tuple[DataLoader, DataLoader]:
@@ -107,6 +190,7 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--epochs",     type=int,   default=5)
     parser.add_argument("--batch-size", type=int,   default=128)
     parser.add_argument("--lr",         type=float, default=0.001)
+    parser.add_argument("--variant", choices=["baseline","wide","deep","sigmoid","all"], default="all")
     parser.add_argument("--dry-run", action="store_true",
                         help="Build model/dataloaders only, then exit")
     args = parser.parse_args(argv)
@@ -118,44 +202,53 @@ def main(argv: list[str] | None = None) -> None:
     train_loader, test_loader = make_dataloaders(train_dir, test_dir, args.batch_size)
 
     device = torch.device("cpu")
-    model = LeNet5().to(device)
+    # If requested, run one or all variants and save comparative CSV
+    variants = [args.variant] if args.variant != "all" else ["baseline","wide","deep","sigmoid"]
+    results = []
 
-    if args.dry_run:
-        print("Built LeNet5 model and dataloaders")
-        print(model)
-        print(f"Train samples: {len(train_loader.dataset)}, "
-              f"Test samples: {len(test_loader.dataset)}")
-        return
+    for var in variants:
+        model, spec = build_model(var)
+        model = model.to(device)
+        if args.dry_run:
+            print(f"Built model variant={var}: {spec}")
+            continue
 
-    # ← Fixed: Adam instead of SGD
-    optimizer = optim.Adam(model.parameters(), lr=args.lr)
-    criterion = nn.CrossEntropyLoss()
+        optimizer = optim.Adam(model.parameters(), lr=args.lr)
+        criterion = nn.CrossEntropyLoss()
 
-    total_train_time = 0.0
-    train_acc = 0.0
-    test_acc = 0.0
-    test_time = 0.0
+        total_train_time = 0.0
+        train_acc = test_acc = 0.0
+        test_time = 0.0
 
-    for epoch in range(1, args.epochs + 1):
-        train_time = train_one_epoch(model, train_loader, device, optimizer, criterion, epoch)
-        total_train_time += train_time
+        for epoch in range(1, args.epochs + 1):
+            train_time = train_one_epoch(model, train_loader, device, optimizer, criterion, epoch)
+            total_train_time += train_time
 
-        train_acc, _        = evaluate(model, train_loader, device)
-        test_acc, test_time = evaluate(model, test_loader,  device)
+            train_acc, _        = evaluate(model, train_loader, device)
+            test_acc, test_time = evaluate(model, test_loader,  device)
 
-        print(f"Epoch {epoch:02d}: "
-              f"train_acc={train_acc:.1f}%, "
-              f"test_acc={test_acc:.1f}%, "
-              f"epoch_train_time={train_time:.1f}s, "
-              f"test_time={test_time:.1f}s")
+        print(f"Variant {var} epochs={args.epochs}: "
+            f"train_acc={train_acc:.1f}%, "
+            f"test_acc={test_acc:.1f}%, "
+            f"total_train_time={total_train_time:.1f}s, "
+            f"test_time={test_time:.1f}s")
 
-    metrics_path = out / "lenet_baseline_results.csv"
-    with metrics_path.open("w", encoding="utf-8") as f:
-        f.write("model,epochs,train_accuracy_percent,test_accuracy_percent,train_time_sec,test_time_sec\n")
-        f.write(
-            f"LeNet5,{args.epochs},{train_acc:.1f},{test_acc:.1f},"
-            f"{total_train_time:.1f},{test_time:.1f}\n"
-        )
+        results.append({
+            "variant": var,
+            "spec": spec,
+            "train_accuracy_percent": f"{train_acc:.1f}",
+            "test_accuracy_percent": f"{test_acc:.1f}",
+            "train_time_sec": f"{total_train_time:.1f}",
+            "test_time_sec": f"{test_time:.1f}",
+        })
+
+    # save comparative CSV
+    metrics_path = out / "lenet_variants_results.csv"
+    import csv
+    with metrics_path.open("w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=["variant","spec","train_accuracy_percent","test_accuracy_percent","train_time_sec","test_time_sec"])
+        w.writeheader()
+        w.writerows(results)
 
 if __name__ == "__main__":
     main()
