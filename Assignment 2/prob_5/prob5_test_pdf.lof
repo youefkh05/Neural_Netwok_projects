@@ -1,6 +1,0 @@
-\contentsline {figure}{\numberline {1}{\ignorespaces Colored pipeline of the MNIST classification system}}{3}{figure.1}%
-\contentsline {figure}{\numberline {2}{\ignorespaces Examples of augmented MNIST digits}}{4}{figure.2}%
-\contentsline {figure}{\numberline {3}{\ignorespaces Training loss and accuracy curves}}{4}{figure.3}%
-\contentsline {figure}{\numberline {4}{\ignorespaces Model predictions on test samples}}{5}{figure.4}%
-\contentsline {figure}{\numberline {5}{\ignorespaces Misclassified test samples}}{5}{figure.5}%
-\contentsline {figure}{\numberline {6}{\ignorespaces Accuracy vs number of augmented samples}}{6}{figure.6}%
