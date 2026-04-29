@@ -505,9 +505,7 @@ def main():
     # EXPERIMENT SETTINGS
     # =========================
     real_options = [350, 750, 1000]
-    real_options = [350]
     aug_options = [0, 1000, 1500, 2000]
-    aug_options = [1000]
 
     results = []
     visualize_flag = True
@@ -610,6 +608,11 @@ def main():
     # =========================
     # SAVE RESULTS TABLE
     # =========================
+    
+    # Save final best model
+    model.save(os.path.join(CACHE_DIR, "lenet_model.keras"))
+    print("[INFO] Final classifier saved!")
+    
     results_path = os.path.join(OUTPUT_DIR, "results.csv")      
 
     with open(results_path, "w", newline="") as f:
