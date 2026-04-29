@@ -1,46 +1,7 @@
-\documentclass[12pt,a4paper]{article}
+\begingroup
+\graphicspath{{../prob_3/Figures/}}
 
-% ── packages ──────────────────────────────────────────────────────────────────
-\usepackage[margin=2.5cm]{geometry}
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{hyperref}
-\usepackage{xcolor}
-\usepackage{enumitem}
-\usepackage{float}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{multirow}
-\usepackage{titlesec}
-\usepackage{fancyhdr}
-\usepackage{parskip}
-
-% ── header / footer ───────────────────────────────────────────────────────────
-\pagestyle{fancy}
-\fancyhf{}
-\lhead{Cairo University}
-\rhead{Neural Networks -- Assignment 2}
-\cfoot{\thepage}
-\setlength{\headheight}{15pt}
-
-% ── section colours (matching original doc) ───────────────────────────────────
-\definecolor{cuBlue}{RGB}{0,84,166}
-\titleformat{\section}{\large\bfseries\color{cuBlue}}{}{0em}{}
-\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
-\titleformat{\subsubsection}{\normalsize\bfseries\itshape}{}{0em}{}
-
-\begin{document}
-
-% -----------------------------------------------------------------------------
-%  PROBLEM 3 (extracted)
-% -----------------------------------------------------------------------------
-\section*{Problem 3}
-\addcontentsline{toc}{section}{Problem 3}
-
-\section{Speech Recognition from Speech Spectrum with Augmentation}
+\section{Problem 3: Speech Recognition from Speech Spectrum with Augmentation}
 
 This problem targets spoken-digit recognition (digits 0--9) using spectrogram images as
 the primary representation.  Four experimental conditions are studied:
@@ -76,7 +37,7 @@ These visual distinctions between digit classes explain why a CNN can effectivel
 \label{sec:p3a_samples}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/Fig1.jpg}
+\includegraphics[width=0.75\textwidth]{Fig1.jpg}
 \caption{Sample spectrograms produced from the audio dataset.}
 \label{fig:p3a_samples}
 \end{figure}
@@ -183,13 +144,13 @@ Testing time  & \multicolumn{2}{c}{1,758.59~ms} \\
 \centering
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{Figures/Fig2.png}
+    \includegraphics[width=\textwidth]{Fig2.png}
     \caption{Training \& validation accuracy}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{Figures/Fig3.png}
+    \includegraphics[width=\textwidth]{Fig3.png}
     \caption{Training \& validation loss}
 \end{subfigure}
 \caption{Baseline CNN -- learning curves (Part a).}
@@ -198,7 +159,7 @@ Testing time  & \multicolumn{2}{c}{1,758.59~ms} \\
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{Figures/Fig4.png}
+\includegraphics[width=0.65\textwidth]{Fig4.png}
 \caption{Baseline CNN -- confusion matrix on the test set (Part a).}
 \label{fig:p3a_cm}
 \end{figure}
@@ -224,7 +185,7 @@ The same CNN architecture and training protocol were used without modification.
 \label{sec:p3b_samples}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/Fig5.png}
+\includegraphics[width=0.75\textwidth]{Fig5.png}
 \caption{Sample spectrograms produced from the augmented audio dataset.}
 \label{fig:p3b_samples}
 \end{figure}
@@ -303,13 +264,13 @@ Testing time  & \multicolumn{2}{c}{1,740.02~ms} \\
 \centering
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{Figures/Fig6.png}
+    \includegraphics[width=\textwidth]{Fig6.png}
     \caption{Training \& validation accuracy}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{Figures/Fig7.png}
+    \includegraphics[width=\textwidth]{Fig7.png}
     \caption{Training \& validation loss}
 \end{subfigure}
 \caption{Speech-augmentation CNN -- learning curves (Part b).}
@@ -318,7 +279,7 @@ Testing time  & \multicolumn{2}{c}{1,740.02~ms} \\
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{Figures/Fig8.png}
+\includegraphics[width=0.65\textwidth]{Fig8.png}
 \caption{Speech-augmentation CNN -- confusion matrix on the test set (Part b).}
 \label{fig:p3b_cm}
 \end{figure}
@@ -351,7 +312,7 @@ to Part~a.
 \label{sec:p3c_samples}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/Fig9.png}
+\includegraphics[width=0.75\textwidth]{Fig9.png}
 \caption{Sample spectrograms produced from the image-augmented dataset.}
 \label{fig:p3c_samples}
 \end{figure}
@@ -430,13 +391,13 @@ Testing time  & \multicolumn{2}{c}{1,736.08~ms} \\
 \centering
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{Figures/Fig10.png}
+    \includegraphics[width=\textwidth]{Fig10.png}
     \caption{Training \& validation accuracy}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{Figures/Fig11.png}
+    \includegraphics[width=\textwidth]{Fig11.png}
     \caption{Training \& validation loss}
 \end{subfigure}
 \caption{Image-augmentation CNN -- learning curves (Part c).}
@@ -445,7 +406,7 @@ Testing time  & \multicolumn{2}{c}{1,736.08~ms} \\
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{Figures/Fig12.png}
+\includegraphics[width=0.65\textwidth]{Fig12.png}
 \caption{Image-augmentation CNN -- confusion matrix on the test set (Part c).}
 \label{fig:p3c_cm}
 \end{figure}
@@ -468,7 +429,7 @@ broad coverage of both temporal and spectral variability.
 \label{sec:p3d_samples}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/Fig13.png}
+\includegraphics[width=0.75\textwidth]{Fig13.png}
 \caption{Sample spectrograms produced from the combined-augmented dataset.}
 \label{fig:p3d_samples}
 \end{figure}
@@ -547,13 +508,13 @@ Testing time  & \multicolumn{2}{c}{1,834.49~ms} \\
 \centering
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{Figures/Fig14.png}
+    \includegraphics[width=\textwidth]{Fig14.png}
     \caption{Training \& validation accuracy}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{Figures/Fig15.png}
+    \includegraphics[width=\textwidth]{Fig15.png}
     \caption{Training \& validation loss}
 \end{subfigure}
 \caption{Combined-augmentation CNN -- learning curves (Part d).}
@@ -562,7 +523,7 @@ Testing time  & \multicolumn{2}{c}{1,834.49~ms} \\
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{Figures/Fig16.png}
+\includegraphics[width=0.65\textwidth]{Fig16.png}
 \caption{Combined-augmentation CNN -- confusion matrix on the test set (Part d).}
 \label{fig:p3d_cm}
 \end{figure}
@@ -627,4 +588,4 @@ combined augmentation generally reduces these confusions by exposing the model t
 wider range of temporal patterns, at the cost of occasional new confusions introduced
 by very strong distortions.
 
-\end{document}
+\endgroup
