@@ -220,11 +220,21 @@ def select_3_per_digit(fake_imgs, classifier):
 # =========================
 def build_generator(latent_dim=100):
     model = tf.keras.Sequential([
-        tf.keras.layers.Dense(7*7*128, activation="relu", input_dim=latent_dim),
-        tf.keras.layers.Reshape((7,7,128)),
+        tf.keras.layers.Dense(7*7*256, input_dim=latent_dim),
+        tf.keras.layers.BatchNormalization(),
+        tf.keras.layers.ReLU(),
 
-        tf.keras.layers.Conv2DTranspose(64, (4,4), strides=2, padding="same", activation="relu"),
-        tf.keras.layers.Conv2DTranspose(1, (4,4), strides=2, padding="same", activation="sigmoid")
+        tf.keras.layers.Reshape((7,7,256)),
+
+        tf.keras.layers.Conv2DTranspose(128, (4,4), strides=2, padding="same"),
+        tf.keras.layers.BatchNormalization(),
+        tf.keras.layers.ReLU(),
+
+        tf.keras.layers.Conv2DTranspose(64, (4,4), strides=2, padding="same"),
+        tf.keras.layers.BatchNormalization(),
+        tf.keras.layers.ReLU(),
+
+        tf.keras.layers.Conv2D(1, (3,3), padding="same", activation="tanh")
     ])
     return model
 
@@ -238,6 +248,11 @@ def build_discriminator():
 
         tf.keras.layers.Conv2D(128, (3,3), strides=2, padding="same"),
         tf.keras.layers.LeakyReLU(0.2),
+
+        tf.keras.layers.Conv2D(256, (3,3), strides=2, padding="same"),
+        tf.keras.layers.LeakyReLU(0.2),
+
+        tf.keras.layers.Dropout(0.3),
 
         tf.keras.layers.Flatten(),
         tf.keras.layers.Dense(1, activation="sigmoid")
@@ -277,6 +292,7 @@ def train_gan(x_train, epochs=100, batch_size=64, latent_dim=100):
     generator = build_generator(latent_dim)
     discriminator = build_discriminator()
 
+    # Freeze discriminator BEFORE building GAN
     discriminator.trainable = False
 
     gan_input = tf.keras.Input(shape=(latent_dim,))
@@ -284,8 +300,8 @@ def train_gan(x_train, epochs=100, batch_size=64, latent_dim=100):
     gan_output = discriminator(fake_img)
 
     gan = tf.keras.Model(gan_input, gan_output)
-    gan.compile(optimizer="adam", loss="binary_crossentropy")
-
+    gan.compile(optimizer=tf.keras.optimizers.Adam(0.0002, 0.5),
+                loss="binary_crossentropy")
     real = np.ones((batch_size,1))
     fake = np.zeros((batch_size,1))
     
@@ -298,32 +314,32 @@ def train_gan(x_train, epochs=100, batch_size=64, latent_dim=100):
         # Train Discriminator
         # ---------------------
         idx = np.random.randint(0, x_train.shape[0], batch_size)
-        real_imgs = x_train[idx] + 0.05 * np.random.normal(0,1, x_train[idx].shape)
-        real_imgs = np.clip(real_imgs, 0, 1)
+        real_imgs = x_train[idx] 
 
-        noise = np.random.normal(0,1,(batch_size, latent_dim))
+        noise = np.random.normal(0, 1, (batch_size, latent_dim))
         fake_imgs = generator.predict(noise, verbose=0)
 
         discriminator.trainable = True
         # Label smoothing
         real_labels = np.ones((batch_size,1)) * 0.9
-        fake_labels = np.zeros((batch_size,1))
-
+        fake_labels = np.zeros((batch_size,1)) 
+        
         # Train discriminator LESS aggressively
         d_loss_real = discriminator.train_on_batch(real_imgs, real_labels)
 
         # Only sometimes train on fake (stabilization)
         d_loss_fake = 0
-        if np.random.rand() > 0.5:
-            d_loss_fake = discriminator.train_on_batch(fake_imgs, fake_labels)
+        # Train discriminator LESS
+        d_loss_fake = discriminator.train_on_batch(fake_imgs, fake_labels)
+        
         # ---------------------
         # Train Generator
         # ---------------------
-        noise = np.random.normal(0,1,(batch_size, latent_dim))
+        noise = np.random.normal(0, 1, (batch_size, latent_dim))
         discriminator.trainable = False
         
         for _ in range(2):  # train generator twice
-            noise = np.random.normal(0,1,(batch_size, latent_dim))
+            noise = np.random.normal(0, 1, (batch_size, latent_dim))
             g_loss = gan.train_on_batch(noise, real_labels)
         
         # ---------------------
@@ -332,7 +348,7 @@ def train_gan(x_train, epochs=100, batch_size=64, latent_dim=100):
         d_losses.append(d_loss_real)
         g_losses.append(g_loss)
         
-        if epoch % 10 == 0:
+        if epoch % 100 == 0:
             print(f"[Epoch {epoch}] D_loss: {d_loss_real} G_loss: {g_loss}")
             generate_and_save_images(generator, epoch)
 
@@ -454,7 +470,7 @@ def main():
         discriminator = tf.keras.models.load_model(disc_path)
 
         discriminator.compile(
-            optimizer="adam",
+            optimizer=tf.keras.optimizers.Adam(0.0002, 0.5),
             loss="binary_crossentropy"
         )
 
@@ -463,7 +479,7 @@ def main():
 
         generator, discriminator = train_gan(
             x_small,
-            epochs=500,
+            epochs=2000,
             batch_size=64,
             latent_dim=latent_dim
         )
@@ -487,7 +503,7 @@ def main():
     if cached is not None:
         generated_images = cached["x"]
     else:
-        noise = np.random.normal(0, 1, (total_samples, latent_dim))
+        noise = np.random.normal(0, 1, (total_samples, latent_dim))        
         generated_images = generator.predict(noise, verbose=0)
         save_cache("gan_generated.npy", {"x": generated_images})
 
@@ -530,13 +546,14 @@ def main():
     # =========================
     # VISUALIZE RAW GENERATED
     # =========================
-    plt.figure(figsize=(10,5))
+    plt.figure(figsize=(6,6))
 
-    for i in range(30):   # show first 30 only
-        plt.subplot(2,15,i+1)
+    for i in range(16):   # show first only
+        plt.subplot(4,4,i+1)
         plt.imshow(generated_images[i].squeeze(), cmap='gray')
         plt.axis('off')
-
+        
+    plt.tight_layout()
     path = os.path.join(OUTPUT_DIR, "gan_generated_samples.png")
     plt.savefig(path, dpi=300)
     plt.close()
