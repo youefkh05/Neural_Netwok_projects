@@ -1,79 +1,54 @@
-###############################################################################
-# Problem 4: AutoEncoder for Utterance Representation
-#
-# Part 1: Baseline (average frame method)
-# Part 2: AutoEncoder (pad-and-encode method)
-#
-# DATA: Speech files in flat folders named by digit:
-#   audio-dataset/Train/C03n_5.wav  → digit 5
-#   audio-dataset/Test/F19_3.wav    → digit 3
-###############################################################################
+"""Problem 4: Autoencoder for utterance representation."""
 
-# ══════════════════════════════════════════════
-# SECTION 1 — IMPORTS
-# ══════════════════════════════════════════════
 from __future__ import annotations
 
+import argparse
 import os
 import sys
 import time
-import argparse
 from pathlib import Path
 
 import numpy as np
 import librosa
+import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import DataLoader, TensorDataset
-from sklearn.svm import SVC
-from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, confusion_matrix
-import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+from torch.utils.data import DataLoader, TensorDataset
 
-# ══════════════════════════════════════════════
-# SECTION 2 — CONFIGURATION
-# ══════════════════════════════════════════════
-_HERE       = os.path.dirname(os.path.abspath(__file__))
-TRAIN_DIR   = os.path.join(_HERE, "..", "audio-dataset", "Train")
-TEST_DIR    = os.path.join(_HERE, "..", "audio-dataset", "Test")
+BASE_DIR    = os.path.dirname(os.path.abspath(__file__))
+TRAIN_DIR   = os.path.join(BASE_DIR, "..", "audio-dataset", "Train")
+TEST_DIR    = os.path.join(BASE_DIR, "..", "audio-dataset", "Test")
 
-SAMPLE_RATE = 16_000   # Hz — resample all audio to this rate
-FRAME_MS    = 15       # milliseconds per frame (assignment spec)
-N_FFT       = 256      # FFT size (next power-of-2 ≥ frame length 240)
-N_MELS      = 40       # mel filterbank bins per frame
-BOTTLENECK  = 128      # autoencoder bottleneck size
+SAMPLE_RATE = 16_000
+FRAME_MS    = 15
+N_FFT       = 256
+N_MELS      = 40
+BOTTLENECK  = 128
 AE_EPOCHS   = 100
 AE_LR       = 1e-3
 BATCH_SIZE  = 64
 
-# Force CPU: the installed PyTorch requires CUDA sm_75+ but this machine has
-# a Quadro M5000M (sm_52), which causes CUBLAS_STATUS_ARCH_MISMATCH at runtime.
-# CPU training is perfectly fine for this dataset size (~1200 utterances).
 device = torch.device("cpu")
-print(f"[INFO] Device: {device}")
+FRAME_SIZE = int(FRAME_MS * SAMPLE_RATE / 1000)
 
-# Non-overlapping frames (assignment spec: hop = window = frame size)
-FRAME_SIZE = int(FRAME_MS * SAMPLE_RATE / 1000)   # 15ms × 16000 = 240 samples
-print(f"[INFO] Frame size: {FRAME_SIZE} samples ({FRAME_MS}ms @ {SAMPLE_RATE}Hz) — non-overlapping")
 
-# ══════════════════════════════════════════════
-# SECTION 3 — AUDIO LOADING & FEATURE EXTRACTION
-# ══════════════════════════════════════════════
+def print_section(title: str) -> None:
+    bar = "=" * 60
+    print(f"\n{bar}")
+    print(f"  {title}")
+    print(bar)
+
+
+def print_subsection(title: str) -> None:
+    print(f"\n  -- {title} --")
 
 def extract_frame_features(audio: np.ndarray, sr: int = SAMPLE_RATE,
                             n_mels: int = N_MELS) -> np.ndarray:
-    """
-    Divide audio into non-overlapping 15 ms frames (assignment requirement)
-    and extract log-mel filterbank features for each frame.
-
-    Returns shape: (n_frames, n_mels)
-
-    Why log-mel?
-    Raw mel power spans ~1e-10 to 1e+3; converting to dB compresses everything
-    into a clean ~80 dB range that makes speech features meaningful to both
-    the SVM and the AE.
-    """
+    """Extract log-mel frame features from one utterance."""
     if len(audio) == 0:
         return np.zeros((1, n_mels), dtype=np.float32)
 
@@ -84,23 +59,12 @@ def extract_frame_features(audio: np.ndarray, sr: int = SAMPLE_RATE,
         hop_length=FRAME_SIZE,   # non-overlapping
         n_mels=n_mels,
     )
-    mel_db = librosa.power_to_db(mel, ref=np.max)   # log (dB) scale
-    return mel_db.T.astype(np.float32)              # (n_frames, n_mels)
+    mel_db = librosa.power_to_db(mel, ref=np.max)
+    return mel_db.T.astype(np.float32)
 
 
 def load_all_utterances(data_dir: str):
-    """
-    Load every audio file from data_dir (flat folder, no class subfolders).
-
-    Label is parsed from the filename:
-        "C03n_5.wav"  → digit 5   (last token after '_', before extension)
-        "F19_3.wav"   → digit 3
-
-    Returns:
-        all_frames : list of arrays, each (n_frames_i, N_MELS)
-        all_labels : np.ndarray of ints (digit 0-9)
-        all_fnames : list of stem strings (for the prediction grid)
-    """
+    """Load every utterance in a flat folder and parse the digit label."""
     all_frames: list[np.ndarray] = []
     all_labels: list[int]        = []
     all_fnames: list[str]        = []
@@ -111,7 +75,7 @@ def load_all_utterances(data_dir: str):
     )
 
     if not files:
-        print(f"  [WARN] No audio files found in: {data_dir}", file=sys.stderr)
+        print(f"[WARN] No audio files found in: {data_dir}", file=sys.stderr)
 
     for fname in files:
         stem  = os.path.splitext(fname)[0]           # e.g. "C03n_5"
@@ -122,7 +86,7 @@ def load_all_utterances(data_dir: str):
             audio, sr = librosa.load(fpath, sr=SAMPLE_RATE, mono=True)
             frames    = extract_frame_features(audio, sr=sr)
         except Exception as exc:
-            print(f"  [WARN] skipping {fname}: {exc}", file=sys.stderr)
+            print(f"[WARN] skipping {fname}: {exc}", file=sys.stderr)
             continue
 
         all_frames.append(frames)
@@ -132,116 +96,26 @@ def load_all_utterances(data_dir: str):
     print(f"[INFO] Loaded {len(all_labels)} utterances from {data_dir}")
     return all_frames, np.array(all_labels), all_fnames
 
-
-print("[INFO] Loading training utterances …")
-train_frames, train_labels, train_fnames = load_all_utterances(TRAIN_DIR)
-
-print("[INFO] Loading test utterances …")
-test_frames,  test_labels,  test_fnames  = load_all_utterances(TEST_DIR)
-
-if not train_frames:
-    sys.exit(f"[ERROR] No training data found in {TRAIN_DIR}")
-if not test_frames:
-    sys.exit(f"[ERROR] No test data found in {TEST_DIR}")
-
-# ══════════════════════════════════════════════
-# SECTION 4 — PART 1: BASELINE (AVERAGE FRAME)
-# ══════════════════════════════════════════════
-
 def compute_average_features(frames_list: list[np.ndarray]) -> np.ndarray:
-    """
-    Average all frames for each utterance → one fixed-length vector per utterance.
-
-    Input:  list of (n_frames_i, N_MELS)
-    Output: (N_utterances, N_MELS)
-
-    This is the simplest possible fixed-length representation and serves as
-    the BASELINE against which the AE result is compared.
-    """
+    """Average frames for each utterance into one fixed-length vector."""
     return np.array([f.mean(axis=0) for f in frames_list], dtype=np.float32)
-
-
-print("\n[BASELINE] Computing average-frame features …")
-X_train_avg = compute_average_features(train_frames)   # (N_train, 40)
-X_test_avg  = compute_average_features(test_frames)    # (N_test,  40)
-print(f"  Feature shape: {X_train_avg.shape}")
-
-# Scale
-scaler_avg   = StandardScaler()
-X_tr_avg_sc  = scaler_avg.fit_transform(X_train_avg)
-X_te_avg_sc  = scaler_avg.transform(X_test_avg)
-
-# Train SVM
-print("[BASELINE] Training SVM …")
-t0 = time.perf_counter()
-svm_avg = SVC(kernel="rbf", C=10, gamma="scale", random_state=42)
-svm_avg.fit(X_tr_avg_sc, train_labels)
-t_train_avg = (time.perf_counter() - t0) * 1000   # ms
-
-t0 = time.perf_counter()
-y_pred_avg = svm_avg.predict(X_te_avg_sc)
-t_test_avg = (time.perf_counter() - t0) * 1000    # ms
-
-acc_avg = accuracy_score(test_labels, y_pred_avg) * 100
-print(f"  [BASELINE] Accuracy: {acc_avg:.1f}%  "
-      f"Train: {t_train_avg:.1f} ms  Test: {t_test_avg:.1f} ms")
-
-# ══════════════════════════════════════════════
-# SECTION 5 — PAD TO MAXIMUM FRAME COUNT
-# ══════════════════════════════════════════════
-# Use TRAINING set maximum only — no leakage from test set
-MAX_FRAMES = max(f.shape[0] for f in train_frames)
-INPUT_DIM  = MAX_FRAMES * N_MELS
-print(f"\n[AE] MAX_FRAMES (from training): {MAX_FRAMES}")
-print(f"[AE] AE input dimension:          {MAX_FRAMES} × {N_MELS} = {INPUT_DIM}")
 
 
 def pad_and_flatten(frames_list: list[np.ndarray],
                     max_frames: int,
                     n_mels: int = N_MELS) -> np.ndarray:
-    """
-    Pad each utterance to max_frames with zero-vectors, then flatten.
-
-    Assignment spec: "use the maximum length and append zero frames in
-    shorter utterances."
-
-    Test utterances that are LONGER than max_frames are truncated from the
-    end (beginning of the digit is kept — most informative part).
-
-    Input:  list of (n_frames_i, n_mels)
-    Output: (N_utterances, max_frames × n_mels)
-    """
+    """Pad each utterance to max_frames with zeros and flatten it."""
     N      = len(frames_list)
     result = np.zeros((N, max_frames * n_mels), dtype=np.float32)
 
     for i, frames in enumerate(frames_list):
-        n = min(frames.shape[0], max_frames)     # truncate if longer
+        n = min(frames.shape[0], max_frames)
         result[i, : n * n_mels] = frames[:n].ravel()
-        # remaining positions stay 0 (zero-padding for shorter utterances)
 
     return result
 
-
-print("[AE] Padding and flattening utterances …")
-X_train_padded = pad_and_flatten(train_frames, MAX_FRAMES)   # (N_train, INPUT_DIM)
-X_test_padded  = pad_and_flatten(test_frames,  MAX_FRAMES)   # (N_test,  INPUT_DIM)
-print(f"  Padded shape: {X_train_padded.shape}")
-
-# ══════════════════════════════════════════════
-# SECTION 6 — AUTOENCODER MODEL
-# ══════════════════════════════════════════════
-
 class UtteranceAutoEncoder(nn.Module):
-    """
-    Symmetric dense AE for padded+flattened utterance vectors.
-
-    Architecture (encoder side):
-        INPUT_DIM → min(INPUT_DIM//2, 512) → min(INPUT_DIM//4, 256) → BOTTLENECK
-    Decoder mirrors the encoder.
-
-    The bottleneck activations become the fixed-length feature vector used
-    by the downstream SVM classifier.
-    """
+    """Symmetric dense AE for padded utterance vectors."""
 
     def __init__(self, input_dim: int, bottleneck: int = BOTTLENECK):
         super().__init__()
@@ -267,18 +141,11 @@ class UtteranceAutoEncoder(nn.Module):
 
 
 # ══════════════════════════════════════════════
-# SECTION 7 — TRAIN AUTOENCODER
-# ══════════════════════════════════════════════
-
 def train_ae(X_train: np.ndarray,
              epochs: int     = AE_EPOCHS,
              batch_size: int = BATCH_SIZE,
              lr: float       = AE_LR):
-    """
-    Normalize training data, then train the AE with MSE reconstruction loss.
-    Returns the trained model and the scaler (needed to normalize test data
-    with the same statistics).
-    """
+    """Train the AE with MSE reconstruction loss."""
     scaler = StandardScaler()
     X_norm = scaler.fit_transform(X_train).astype(np.float32)
 
@@ -289,9 +156,10 @@ def train_ae(X_train: np.ndarray,
     optimizer = optim.Adam(model.parameters(), lr=lr)
     criterion = nn.MSELoss()
 
-    print(f"\n[AE] Training AutoEncoder  "
-          f"(input_dim={X_train.shape[1]}, bottleneck={BOTTLENECK}, "
-          f"epochs={epochs}) …")
+    print_section("AUTOENCODER TRAINING")
+    print(f"  input_dim={X_train.shape[1]}")
+    print(f"  bottleneck={BOTTLENECK}")
+    print(f"  epochs={epochs}")
 
     model.train()
     for epoch in range(epochs):
@@ -306,28 +174,15 @@ def train_ae(X_train: np.ndarray,
             total_loss += loss.item()
 
         if (epoch + 1) % 10 == 0:
-            print(f"  Epoch [{epoch+1:3d}/{epochs}]  "
-                  f"Loss: {total_loss / len(loader):.6f}")
+            print(f"  Epoch [{epoch+1:3d}/{epochs}]  Loss: {total_loss / len(loader):.6f}")
 
     return model, scaler
-
-
-ae_model, ae_scaler = train_ae(X_train_padded)
-
-# ══════════════════════════════════════════════
-# SECTION 8 — EXTRACT AE BOTTLENECK FEATURES
-# ══════════════════════════════════════════════
 
 def extract_ae_features(model: UtteranceAutoEncoder,
                         scaler: StandardScaler,
                         X: np.ndarray,
                         batch_size: int = 256) -> np.ndarray:
-    """
-    Apply the same normalization used during training, then pass through
-    the encoder to obtain bottleneck vectors.
-
-    Returns: (N, BOTTLENECK)
-    """
+    """Normalize inputs and encode them into bottleneck vectors."""
     model.eval()
     X_norm    = scaler.transform(X).astype(np.float32)
     all_feats = []
@@ -341,115 +196,163 @@ def extract_ae_features(model: UtteranceAutoEncoder,
     return np.vstack(all_feats)
 
 
-print("\n[AE] Extracting bottleneck features …")
-X_train_ae = extract_ae_features(ae_model, ae_scaler, X_train_padded)
-X_test_ae  = extract_ae_features(ae_model, ae_scaler, X_test_padded)
-print(f"  AE feature shape: {X_train_ae.shape}")   # (N_train, BOTTLENECK)
+def main() -> None:
+    print_section("PROBLEM 4")
+    print_subsection("CONFIGURATION")
+    print(f"device: {device}")
+    print(f"sample_rate: {SAMPLE_RATE}")
+    print(f"frame_size: {FRAME_SIZE}")
 
-# ══════════════════════════════════════════════
-# SECTION 9 — CLASSIFY WITH AE FEATURES
-# ══════════════════════════════════════════════
-print("\n[AE] Training SVM on AE features …")
-scaler_ae  = StandardScaler()
-X_tr_ae_sc = scaler_ae.fit_transform(X_train_ae)
-X_te_ae_sc = scaler_ae.transform(X_test_ae)
+    print_section("LOADING DATA")
+    print("  loading training utterances")
+    train_frames, train_labels, train_fnames = load_all_utterances(TRAIN_DIR)
+    print("  loading test utterances")
+    test_frames, test_labels, test_fnames = load_all_utterances(TEST_DIR)
 
-t0 = time.perf_counter()
-svm_ae = SVC(kernel="rbf", C=10, gamma="scale", random_state=42)
-svm_ae.fit(X_tr_ae_sc, train_labels)
-t_train_ae = (time.perf_counter() - t0) * 1000
+    if not train_frames:
+        sys.exit(f"[ERROR] No training data found in {TRAIN_DIR}")
+    if not test_frames:
+        sys.exit(f"[ERROR] No test data found in {TEST_DIR}")
 
-t0 = time.perf_counter()
-y_pred_ae = svm_ae.predict(X_te_ae_sc)
-t_test_ae = (time.perf_counter() - t0) * 1000
+    print_section("BASELINE")
+    print("  computing average-frame features")
+    X_train_avg = compute_average_features(train_frames)
+    X_test_avg = compute_average_features(test_frames)
+    print(f"  feature shape: {X_train_avg.shape}")
 
-acc_ae = accuracy_score(test_labels, y_pred_ae) * 100
-print(f"  [AE] Accuracy: {acc_ae:.1f}%  "
-      f"Train: {t_train_ae:.1f} ms  Test: {t_test_ae:.1f} ms")
+    scaler_avg = StandardScaler()
+    X_tr_avg_sc = scaler_avg.fit_transform(X_train_avg)
+    X_te_avg_sc = scaler_avg.transform(X_test_avg)
 
-# ══════════════════════════════════════════════
-# SECTION 10 — RESULTS TABLE
-# ══════════════════════════════════════════════
-print("\n\n" + "=" * 65)
-print("PROBLEM 4 RESULTS COMPARISON")
-print("=" * 65)
-print(f"{'Method':<30} {'Acc':>6}  {'Train(ms)':>10}  {'Test(ms)':>8}")
-print("-" * 65)
-print(f"{'Baseline (Average Frame)':<30} {acc_avg:>5.1f}%  "
-      f"{t_train_avg:>10.1f}  {t_test_avg:>8.1f}")
-print(f"{'AE (Pad+Encode+SVM)':<30} {acc_ae:>5.1f}%  "
-      f"{t_train_ae:>10.1f}  {t_test_ae:>8.1f}")
-print("=" * 65)
-print("\nNote: AE training time is excluded (it is a preprocessing step).")
+    print("  training SVM")
+    t0 = time.perf_counter()
+    svm_avg = SVC(kernel="rbf", C=10, gamma="scale", random_state=42)
+    svm_avg.fit(X_tr_avg_sc, train_labels)
+    t_train_avg = (time.perf_counter() - t0) * 1000
 
-# ══════════════════════════════════════════════
-# SECTION 11 — VISUALISATIONS
-# ══════════════════════════════════════════════
-DIGIT_NAMES = [str(d) for d in range(10)]
+    t0 = time.perf_counter()
+    y_pred_avg = svm_avg.predict(X_te_avg_sc)
+    t_test_avg = (time.perf_counter() - t0) * 1000
 
-# Create Figures output folder next to the script
-FIG_DIR = os.path.join(_HERE, "Figures")
-os.makedirs(FIG_DIR, exist_ok=True)
+    acc_avg = accuracy_score(test_labels, y_pred_avg) * 100
+    print(f"  accuracy: {acc_avg:.1f}%")
+    print(f"  train time: {t_train_avg:.1f} ms")
+    print(f"  test time: {t_test_avg:.1f} ms")
 
-# ── Figure 1: Confusion Matrices ──────────────────────────────────
-cm_avg = confusion_matrix(test_labels, y_pred_avg)
-cm_ae  = confusion_matrix(test_labels, y_pred_ae)
+    print_section("AUTOENCODER")
+    MAX_FRAMES = max(f.shape[0] for f in train_frames)
+    INPUT_DIM = MAX_FRAMES * N_MELS
+    print(f"  max_frames: {MAX_FRAMES}")
+    print(f"  input_dim: {INPUT_DIM}")
 
-fig1, axes = plt.subplots(1, 2, figsize=(14, 6))
-fig1.suptitle("Confusion Matrices — Test Set", fontsize=14, fontweight="bold")
+    print("  padding and flattening utterances")
+    X_train_padded = pad_and_flatten(train_frames, MAX_FRAMES)
+    X_test_padded = pad_and_flatten(test_frames, MAX_FRAMES)
+    print(f"  padded shape: {X_train_padded.shape}")
 
-for ax, cm, title in [
-    (axes[0], cm_avg, f"Baseline (Average Frame)\nAcc = {acc_avg:.1f}%"),
-    (axes[1], cm_ae,  f"AutoEncoder (Pad+Encode)\nAcc = {acc_ae:.1f}%"),
-]:
-    im = ax.imshow(cm, interpolation="nearest", cmap="Blues")
-    ax.set_title(title, fontsize=12)
-    ax.set_xlabel("Predicted Label", fontsize=10)
-    ax.set_ylabel("True Label", fontsize=10)
-    ax.set_xticks(range(10)); ax.set_xticklabels(DIGIT_NAMES)
-    ax.set_yticks(range(10)); ax.set_yticklabels(DIGIT_NAMES)
-    plt.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
-    thresh = cm.max() / 2.0
-    for i in range(10):
-        for j in range(10):
-            ax.text(j, i, str(cm[i, j]), ha="center", va="center",
-                    fontsize=8,
-                    color="white" if cm[i, j] > thresh else "black")
+    ae_model, ae_scaler = train_ae(X_train_padded)
 
-plt.tight_layout()
-plt.savefig(os.path.join(FIG_DIR, "confusion_matrices.png"), dpi=120, bbox_inches="tight")
-print(f"[VIZ] Saved Figures/confusion_matrices.png")
-plt.close()
+    print("  extracting bottleneck features")
+    X_train_ae = extract_ae_features(ae_model, ae_scaler, X_train_padded)
+    X_test_ae = extract_ae_features(ae_model, ae_scaler, X_test_padded)
+    print(f"  ae feature shape: {X_train_ae.shape}")
 
-# ── Figure 2: Per-Digit Accuracy Bar Chart ────────────────────────
-per_digit_avg = []
-per_digit_ae  = []
-for d in range(10):
-    mask = (test_labels == d)
-    per_digit_avg.append(accuracy_score(test_labels[mask], y_pred_avg[mask]) * 100)
-    per_digit_ae.append( accuracy_score(test_labels[mask], y_pred_ae[mask])  * 100)
+    print("  training SVM on AE features")
+    scaler_ae = StandardScaler()
+    X_tr_ae_sc = scaler_ae.fit_transform(X_train_ae)
+    X_te_ae_sc = scaler_ae.transform(X_test_ae)
 
-x     = np.arange(10)
-width = 0.35
-fig2, ax2 = plt.subplots(figsize=(12, 5))
-bars1 = ax2.bar(x - width / 2, per_digit_avg, width,
-                label=f"Baseline ({acc_avg:.1f}%)", color="steelblue", alpha=0.85)
-bars2 = ax2.bar(x + width / 2, per_digit_ae,  width,
-                label=f"AutoEncoder ({acc_ae:.1f}%)", color="coral", alpha=0.85)
-ax2.set_xlabel("Digit", fontsize=11)
-ax2.set_ylabel("Accuracy (%)", fontsize=11)
-ax2.set_title("Per-Digit Accuracy on Test Set", fontsize=13, fontweight="bold")
-ax2.set_xticks(x); ax2.set_xticklabels(DIGIT_NAMES, fontsize=11)
-ax2.set_ylim(0, 110)
-ax2.axhline(y=100, color="gray", linestyle="--", linewidth=0.8)
-ax2.legend(fontsize=10)
-for bar in bars1:
-    ax2.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1,
-             f"{bar.get_height():.0f}", ha="center", va="bottom", fontsize=7)
-for bar in bars2:
-    ax2.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1,
-             f"{bar.get_height():.0f}", ha="center", va="bottom", fontsize=7)
-plt.tight_layout()
-plt.savefig(os.path.join(FIG_DIR, "per_digit_accuracy.png"), dpi=120, bbox_inches="tight")
-print(f"[VIZ] Saved Figures/per_digit_accuracy.png")
-plt.close()
+    t0 = time.perf_counter()
+    svm_ae = SVC(kernel="rbf", C=10, gamma="scale", random_state=42)
+    svm_ae.fit(X_tr_ae_sc, train_labels)
+    t_train_ae = (time.perf_counter() - t0) * 1000
+
+    t0 = time.perf_counter()
+    y_pred_ae = svm_ae.predict(X_te_ae_sc)
+    t_test_ae = (time.perf_counter() - t0) * 1000
+
+    acc_ae = accuracy_score(test_labels, y_pred_ae) * 100
+    print(f"  accuracy: {acc_ae:.1f}%")
+    print(f"  train time: {t_train_ae:.1f} ms")
+    print(f"  test time: {t_test_ae:.1f} ms")
+
+    print_section("RESULTS")
+    print(f"{'Method':<30} {'Acc':>6}  {'Train(ms)':>10}  {'Test(ms)':>8}")
+    print("-" * 65)
+    print(f"{'Baseline (Average Frame)':<30} {acc_avg:>5.1f}%  {t_train_avg:>10.1f}  {t_test_avg:>8.1f}")
+    print(f"{'AE (Pad+Encode+SVM)':<30} {acc_ae:>5.1f}%  {t_train_ae:>10.1f}  {t_test_ae:>8.1f}")
+    print("=" * 65)
+    print("Note: AE training time is excluded because it is a preprocessing step.")
+
+    print_section("VISUALISATIONS")
+    DIGIT_NAMES = [str(d) for d in range(10)]
+    FIG_DIR = os.path.join(BASE_DIR, "Figures")
+    os.makedirs(FIG_DIR, exist_ok=True)
+
+    cm_avg = confusion_matrix(test_labels, y_pred_avg)
+    cm_ae = confusion_matrix(test_labels, y_pred_ae)
+
+    fig1, axes = plt.subplots(1, 2, figsize=(14, 6))
+    fig1.suptitle("Confusion Matrices — Test Set", fontsize=14, fontweight="bold")
+
+    for ax, cm, title in [
+        (axes[0], cm_avg, f"Baseline (Average Frame)\nAcc = {acc_avg:.1f}%"),
+        (axes[1], cm_ae, f"AutoEncoder (Pad+Encode)\nAcc = {acc_ae:.1f}%"),
+    ]:
+        im = ax.imshow(cm, interpolation="nearest", cmap="Blues")
+        ax.set_title(title, fontsize=12)
+        ax.set_xlabel("Predicted Label", fontsize=10)
+        ax.set_ylabel("True Label", fontsize=10)
+        ax.set_xticks(range(10))
+        ax.set_xticklabels(DIGIT_NAMES)
+        ax.set_yticks(range(10))
+        ax.set_yticklabels(DIGIT_NAMES)
+        plt.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+        thresh = cm.max() / 2.0
+        for i in range(10):
+            for j in range(10):
+                ax.text(j, i, str(cm[i, j]), ha="center", va="center",
+                        fontsize=8,
+                        color="white" if cm[i, j] > thresh else "black")
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(FIG_DIR, "confusion_matrices.png"), dpi=120, bbox_inches="tight")
+    print("  saved Figures/confusion_matrices.png")
+    plt.close()
+
+    per_digit_avg = []
+    per_digit_ae = []
+    for d in range(10):
+        mask = (test_labels == d)
+        per_digit_avg.append(accuracy_score(test_labels[mask], y_pred_avg[mask]) * 100)
+        per_digit_ae.append(accuracy_score(test_labels[mask], y_pred_ae[mask]) * 100)
+
+    x = np.arange(10)
+    width = 0.35
+    fig2, ax2 = plt.subplots(figsize=(12, 5))
+    bars1 = ax2.bar(x - width / 2, per_digit_avg, width,
+                    label=f"Baseline ({acc_avg:.1f}%)", color="steelblue", alpha=0.85)
+    bars2 = ax2.bar(x + width / 2, per_digit_ae, width,
+                    label=f"AutoEncoder ({acc_ae:.1f}%)", color="coral", alpha=0.85)
+    ax2.set_xlabel("Digit", fontsize=11)
+    ax2.set_ylabel("Accuracy (%)", fontsize=11)
+    ax2.set_title("Per-Digit Accuracy on Test Set", fontsize=13, fontweight="bold")
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(DIGIT_NAMES, fontsize=11)
+    ax2.set_ylim(0, 110)
+    ax2.axhline(y=100, color="gray", linestyle="--", linewidth=0.8)
+    ax2.legend(fontsize=10)
+    for bar in bars1:
+        ax2.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1,
+                 f"{bar.get_height():.0f}", ha="center", va="bottom", fontsize=7)
+    for bar in bars2:
+        ax2.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 1,
+                 f"{bar.get_height():.0f}", ha="center", va="bottom", fontsize=7)
+    plt.tight_layout()
+    plt.savefig(os.path.join(FIG_DIR, "per_digit_accuracy.png"), dpi=120, bbox_inches="tight")
+    print("  saved Figures/per_digit_accuracy.png")
+    plt.close()
+
+
+if __name__ == "__main__":
+    main()
