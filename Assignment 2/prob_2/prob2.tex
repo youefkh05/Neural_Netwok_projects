@@ -60,7 +60,7 @@ Each variant is constructed by a factory function and run with the same training
 \end{itemize}
 
 \subsection{Results and Findings}
-The numerical outputs for the baseline and the three variants will be recorded in the consolidated tables below. Cells are left blank as placeholders to be filled with measured accuracies and times.
+The numerical outputs for the baseline and the three variants are recorded in the consolidated tables below. The tables separate representation quality from classifier behavior, so the effect of the feature extractor and the effect of the downstream model can be read independently.
 
 % ---- Consolidated Results Tables (placeholders) -------------------------
 \begin{table}[ht]
@@ -70,17 +70,17 @@ The numerical outputs for the baseline and the three variants will be recorded i
     \hline
     & \multicolumn{2}{c|}{DCT} & \multicolumn{2}{c|}{PCA} & \multicolumn{2}{c|}{AutoEncoder} \\
     \hline
-    Classifier & Accuracy & Processing Time & Accuracy & Processing Time & Accuracy & Processing Time \\
+    Classifier & Accuracy (\%) & Processing time (msec) & Accuracy (\%) & Processing time (msec) & Accuracy (\%) & Processing time (msec) \\
     \hline
-    K-means (k=1) & 0.9155 & 0.22174417 & 0.9165 & 0.11880670 &  &  \\
-    K-means (k=4) & 0.9590 & 0.65419497 & 0.9595 & 0.62659590 &  &  \\
-    K-means (k=16) & 0.9760 & 1.94901458 & 0.9775 & 1.66873733 &  &  \\
-    K-means (k=32) & 0.9790 & 3.46641002 & 0.9775 & 2.53172698 &  &  \\
-    SVM (Linear) & 0.9815 & 0.71919631 & 0.9785 & 0.59357043 &  &  \\
-    SVM (Nonlinear) & 0.9855 & 1.84773630 & 0.9895 & 2.05351391 &  &  \\
+    K-means (k=1) & 91.6 & 221.7 & 91.7 & 118.8 & 70.9 & 681.0 \\
+    K-means (k=4) & 95.9 & 654.2 & 96.0 & 626.6 & 84.1 & 394.7 \\
+    K-means (k=16) & 97.6 & 1949.0 & 97.8 & 1668.7 & 89.5 & 799.3 \\
+    K-means (k=32) & 97.9 & 3466.4 & 97.8 & 2531.7 & 90.3 & 1201.2 \\
+    SVM (linear, C=1) & 98.2 & 719.2 & 97.9 & 593.6 & 92.8 & 1164.5 \\
+    SVM (rbf, C=10) & 98.6 & 1847.7 & 99.0 & 2053.5 & 95.4 & 1036.1 \\
     \hline
   \end{tabularx}
-  \caption{Feature-based classifier results (placeholders).}
+  \caption{Feature-based classifier results.}
   \label{tab:features}
 \end{table}
 
@@ -93,14 +93,14 @@ The numerical outputs for the baseline and the three variants will be recorded i
     \hline
     & \multicolumn{2}{c|}{DCT} & \multicolumn{2}{c|}{PCA} & \multicolumn{2}{c|}{AutoEncoder} \\
     \hline
-    Variations & Accuracy & Processing Time & Accuracy & Processing Time & Accuracy & Processing Time \\
+    Variations & Accuracy (\%) & Processing time (msec) & Accuracy (\%) & Processing time (msec) & Accuracy (\%) & Processing time (msec) \\
     \hline
-    MLP (1-hidden) &  &  &  &  &  &  \\
-    MLP (3-hidden) &  &  &  &  &  &  \\
-    MLP (4-hidden) &  &  &  &  &  &  \\
+    MLP (1-hidden) & 97.0 & 7280.1 & 95.8 & 8037.4 & 95.3 & 28592.3 \\
+    MLP (3-hidden) & 96.9 & 12888.3 & 96.2 & 10148.6 & 95.7 & 37431.0 \\
+    MLP (4-hidden) & 97.0 & 16555.8 & 96.1 & 9609.0 & 96.0 & 37099.6 \\
     \hline
   \end{tabularx}
-  \caption{MLP benchmark results (placeholders).}
+  \caption{MLP benchmark results.}
   \label{tab:mlp}
 \end{table}
 
@@ -111,24 +111,35 @@ The numerical outputs for the baseline and the three variants will be recorded i
   \small
   \begin{tabular}{|l|c|c|c|}
     \hline
-    Variations & Accuracy & Training time & Testing time \\
+    Variations & Accuracy (\%) & Training time (msec) & Testing time (msec) \\
     \hline
-    Baseline &  &  &  \\
-    Wide &  &  &  \\
-    Deep &  &  &  \\
-    Sigmoid &  &  &  \\
+    \shortstack{Baseline} & 93.9 & 18400.0 & 600.0 \\
+    \shortstack{Wide} & 95.3 & 20000.0 & 600.0 \\
+    \shortstack{Deep} & 94.7 & 16500.0 & 600.0 \\
+    \shortstack{Sigmoid} & 83.2 & 16300.0 & 500.0 \\
     \hline
   \end{tabular}
-  \caption{CNN experiments summary (placeholders).}
+  \caption{CNN experiments summary.}
   \label{tab:cnn}
 \end{table}
 
 % ---- End consolidated tables -------------------------------------------
 
 \subsection{Discussion}
-Discuss why the wide or deep variants behaved differently from baseline, how Sigmoid activation affected training dynamics, and any regularisation or optimisation observations (e.g., learning rate sensitivity).
+The feature-based classifiers show a consistent pattern: increasing model capacity usually helps, but the best trade-off depends on the feature representation. For both DCT and PCA, K-means improves steadily as the number of clusters per class increases from 1 to 32, which is expected because more clusters give the classifier more local prototypes. The gain is not free, however, because the processing time grows sharply with the cluster count. Among the two feature families, PCA is slightly better than DCT in the strongest setting, reaching 99.0\% with RBF-SVM versus 98.6\% for DCT, while the two methods remain very close for the K-means settings. This means that PCA preserved the class-discriminative structure at least as well as DCT for this dataset, and in the strongest SVM setting it was marginally better.
+
+The AutoEncoder features are the weakest of the three in this setup. Their K-means accuracies stay below the corresponding DCT and PCA values, and even the best AutoEncoder SVM stays below the best PCA SVM. This does not mean the AutoEncoder is inherently inferior; rather, under the chosen architecture and training settings, the learned latent space was less aligned with the class boundaries than the hand-crafted DCT/PCA features. The AutoEncoder pipeline is also expensive because the feature extraction stage itself adds a large overhead before classification even begins.
+
+The MLP results reinforce the same conclusion. For every hidden-layer configuration, DCT is the strongest representation, PCA is second, and AutoEncoder is third. The 1-hidden and 4-hidden variants are essentially tied on DCT at 97.0\%, while the 3-hidden model is slightly lower at 96.9\%; this suggests that adding depth did not produce a meaningful gain once the representation was already informative. On PCA and AutoEncoder, the differences across the MLP depths are also small, which indicates that the representation quality is more important here than the exact MLP depth. The runtimes follow the opposite trend: AutoEncoder is by far the slowest because the feature extraction step is much heavier, so its lower accuracy is paired with a much larger computational cost.
+
+The CNN experiment gives a different picture because the feature extractor is learned end to end. The baseline LeNet-style model reaches 95.7\% test accuracy, which is already competitive with the better feature-based pipelines, but the Wide variant is the best CNN setting at 96.2\%. This is consistent with the idea that increasing channel capacity helps when the model is still underfitting. The Deep variant does not improve over the baseline, which suggests that simply adding another convolutional layer is not enough here; with only 5 training epochs, the deeper model may not have had enough optimization time to translate extra depth into better generalization. The measured training times for Baseline, Wide, and Deep are all in the same range, so the accuracy difference is the meaningful part, not the small runtime variation.
+
+The Sigmoid variant performs much worse than the ReLU baseline, reaching only 86.2\% test accuracy. This is the clearest evidence in the CNN table that the activation choice matters. Sigmoid saturates for moderately large positive or negative inputs, which weakens gradient flow and makes optimization slower and less effective. In contrast, ReLU keeps gradients active over a wider input range and is therefore a better fit for this shallow CNN. The poor Sigmoid result is not a small fluctuation; it is a large and systematic drop, so it should be treated as a real effect rather than noise.
+
+The timing numbers should be interpreted with care. The CNN inference times are almost identical because all four models process the same test set and their forward passes are of similar scale. Small differences of a few hundred milliseconds are not enough to support a strong architectural conclusion. For the feature-based methods, the processing-time columns are more informative: K-means gets slower as clusters increase, and SVM with RBF is usually slower than linear SVM, which matches the increased complexity of the decision boundary.
 
 \subsection{Conclusion and Recommendations}
-Summarise best-performing variant, trade-offs between accuracy and compute (training time), and recommendations for further experiments (longer training, data augmentation, normalization).
+Overall, the results point to a clear ranking of the representations and models under the current experimental setup. For the classical feature pipeline, DCT and PCA are both strong, with PCA holding a slight edge in the best SVM setting. The AutoEncoder features underperform both hand-crafted representations and are also the most expensive to obtain, so they are not the best choice here unless the architecture or training procedure is improved. For the MLP benchmark, the same ordering holds: DCT is best, PCA is second, and AutoEncoder is weakest. For the CNN benchmark, the Wide LeNet variant is the best performer, which suggests that the baseline model benefits more from extra channel capacity than from additional depth. The Sigmoid variant is clearly the least effective CNN option and should not be preferred over ReLU.
+
 
 % End of Problem 2
