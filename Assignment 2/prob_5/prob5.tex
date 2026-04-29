@@ -121,7 +121,47 @@ This indicates that the model struggles with digits that have similar shapes.
 \label{fig:p5_errors}
 \end{figure}
 
-\section{Results and Discussion}
+\subsection{Results Table}
+
+Table~\ref{tab:results} presents the classification accuracy obtained for different combinations of real and augmented data per digit.
+
+Each row represents a fixed number of real training samples per class, while each column corresponds to the number of generated (augmented) samples.
+
+Color intensity reflects performance, where darker cells indicate higher accuracy.
+
+\begin{table}[H]
+\centering
+\caption{Accuracy for different real and augmented dataset sizes}
+\begin{tabular}{c|c|c|c|c}
+\toprule
+\textbf{Real $\backslash$ Aug} & \textbf{0} & \textbf{1000} & \textbf{1500} & \textbf{2000} \\
+\midrule
+
+350 
+& \cellcolor{low}0.9664 
+& \cellcolor{mid}0.9790 
+& \cellcolor{high}0.9808 
+& \cellcolor{mid}0.9770 \\
+
+750 
+& \cellcolor{mid}0.9777 
+& \cellcolor{high}0.9845 
+& \cellcolor{high}0.9824 
+& \cellcolor{high}0.9843 \\
+
+1000 
+& \cellcolor{mid}0.9784 
+& \cellcolor{high}0.9835 
+& \cellcolor{best}0.9876 
+& \cellcolor{best}0.9874 \\
+
+\bottomrule
+\end{tabular}
+\label{tab:results}
+\end{table}
+
+
+\subsection{Results and Discussion}
 
 Figure~\ref{fig:p5_results} summarizes the performance of different configurations.
 
