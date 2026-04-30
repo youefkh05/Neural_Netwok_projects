@@ -117,6 +117,9 @@ def load_mnist():
 
     x_train = x_train.astype("float32") / 255.0
     x_test = x_test.astype("float32") / 255.0
+    
+    x_train = (x_train - 0.5) * 2   # range [-1, 1]
+    x_test = (x_test - 0.5) * 2     # range [-1, 1]
 
     x_train = x_train[..., None]
     x_test = x_test[..., None]
@@ -406,6 +409,69 @@ def show_discriminator_mistakes(generator, discriminator, real_imgs, latent_dim=
     plt.close()
 
     print(f"[INFO] Saved discriminator mistakes: {path}")
+
+# =========================
+# Build a simple LeNet-like CNN
+# =========================
+def build_lenet():
+    model = tf.keras.Sequential([
+        tf.keras.Input(shape=(28,28,1)),  # fix warning too
+
+        tf.keras.layers.Conv2D(6, kernel_size=5, activation='relu'),
+        tf.keras.layers.AveragePooling2D(pool_size=(2,2)),
+
+        tf.keras.layers.Conv2D(16, kernel_size=5, activation='relu'),
+        tf.keras.layers.AveragePooling2D(pool_size=(2,2)),
+
+        tf.keras.layers.Flatten(),
+
+        tf.keras.layers.Dense(120, activation='relu'),
+        tf.keras.layers.Dense(84, activation='relu'),
+        tf.keras.layers.Dense(10, activation='softmax')
+    ])
+
+    model.compile(
+        optimizer='adam',
+        loss='sparse_categorical_crossentropy',
+        metrics=['accuracy']
+    )
+
+    return model
+
+# =========================
+# Plot Results from CSV
+# =========================
+def plot_results_from_csv(csv_path):
+
+    df = pd.read_csv(csv_path)
+
+    plt.figure(figsize=(8,6))
+
+    # Unique real dataset sizes
+    real_values = sorted(df["Real per digit"].unique())
+
+    for real_n in real_values:
+        subset = df[df["Real per digit"] == real_n]
+
+        plt.plot(
+            subset["GAN per digit"],
+            subset["Accuracy"],
+            marker='o',
+            label=f"Real={real_n}"
+        )
+
+    plt.title("Accuracy vs GAN Generated Data")
+    plt.xlabel("Generated Samples per Digit")
+    plt.ylabel("Accuracy")
+    plt.legend()
+    plt.grid(True)
+
+    path = os.path.join(OUTPUT_DIR, "results_plot.png")
+    plt.savefig(path, dpi=300)
+    plt.close()
+
+    print(f"[INFO] Saved results plot: {path}")
+  
            
 # =========================
 # MAIN FUNCTION (GAN)
@@ -479,7 +545,7 @@ def main():
 
         generator, discriminator = train_gan(
             x_small,
-            epochs=2000,
+            epochs=3000,
             batch_size=64,
             latent_dim=latent_dim
         )
@@ -560,6 +626,102 @@ def main():
 
     print(f"[INFO] Saved GAN generated samples: {path}")
 
+    # =========================
+    # STEP 2: CLASSIFIER EXPERIMENTS (GAN instead of augmentation)
+    # =========================
+
+    print("\n===== START CLASSIFIER EXPERIMENTS (GAN DATA) =====")
+
+    # Load test set (needed for evaluation)
+    _, _, x_test, y_test = load_mnist()
+
+    real_options = [350, 750, 1000]
+    gen_options = [0, 1000, 1500, 2000]
+
+    results = []
+
+    # Get labels for generated images ONCE
+    preds = classifier.predict(generated_images, verbose=0)
+    gen_labels = np.argmax(preds, axis=1)
+
+    for real_n in real_options:
+        for gen_n in gen_options:
+
+            print(f"\n===== {real_n} real + {gen_n} GAN =====")
+
+            # -------------------------
+            # 1. REAL DATA
+            # -------------------------
+            x_real, y_real = get_reduced_dataset(
+                x_train, y_train, real_n,
+                cache_name=f"real_{real_n}.npy"
+            )
+
+            # -------------------------
+            # 2. GAN DATA (balanced!)
+            # -------------------------
+            if gen_n > 0:
+                per_digit = gen_n // 10
+
+                x_fake_list = []
+                y_fake_list = []
+
+                for d in range(10):
+                    idx = np.where(gen_labels == d)[0]
+
+                    if len(idx) < per_digit:
+                        print(f"[WARNING] Not enough samples for digit {d}")
+                        continue
+
+                    chosen = np.random.choice(idx, per_digit, replace=True)
+                    
+                    x_fake_list.append(generated_images[chosen])
+                    y_fake_list.append(np.full(per_digit, d))
+                    
+                x_fake = np.concatenate(x_fake_list)
+                y_fake = np.concatenate(y_fake_list)
+
+                x_final = np.concatenate([x_real, x_fake])
+                y_final = np.concatenate([y_real, y_fake])
+
+            else:
+                x_final, y_final = x_real, y_real
+
+            # -------------------------
+            # 3. SHUFFLE
+            # -------------------------
+            x_final, y_final = shuffle_dataset(x_final, y_final)
+
+            # -------------------------
+            # 4. TRAIN CLASSIFIER
+            # -------------------------
+            model = build_lenet()
+
+            history = model.fit(
+                x_final, y_final,
+                epochs=30,
+                batch_size=64,
+                verbose=1
+            )
+
+            # -------------------------
+            # 5. EVALUATE
+            # -------------------------
+            loss, acc = model.evaluate(x_test, y_test, verbose=0)
+            print(f"[RESULT] Accuracy = {acc*100:.2f}%")
+
+            results.append([real_n, gen_n, acc])
+    
+    results_path = os.path.join(OUTPUT_DIR, "gan_results.csv")
+
+    with open(results_path, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Real per digit", "GAN per digit", "Accuracy"])
+        writer.writerows(results)
+
+    plot_results_from_csv(results_path)
+
+    print(f"[INFO] Results saved to: {results_path}")
     print("===== DONE =====")
     
 # =========================
