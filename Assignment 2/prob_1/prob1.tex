@@ -2,7 +2,6 @@
 \graphicspath{{../prob_1/Figures/}}
 
 % Problem 1: Feature extraction and MLP benchmark
-\section{Feature Extraction and MLP Benchmark}
 
 \subsection{Dataset and Preprocessing}
 The Reduced MNIST dataset was downloaded through \texttt{kagglehub} and already provided in labeled training and testing folders, one subdirectory per digit class. In our implementation, each image was loaded from disk, converted again to grayscale to ensure a single-channel input, and normalized to the range $[0,1]$ by dividing pixel intensities by $255$.

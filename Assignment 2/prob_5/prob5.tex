@@ -1,8 +1,6 @@
 \begingroup
 \graphicspath{{../prob_5}{../prob_5/Figures/}}
 
-\section{Data Augmentation}
-
 \subsection{Pipeline Overview}
 
 \begin{figure}[htbp]
@@ -116,13 +114,14 @@ Most errors occur in visually ambiguous digits such as 3, 5, and 8.
 
 This indicates that the model struggles with digits that have similar shapes.
 
-\begin{figure}[htbp]
+\begin{figure}[t]
 \centering
 \includegraphics[width=0.7\textwidth]{Figures/P5/mis_1000_2000.png}
 \caption{Misclassified test samples}
 \label{fig:p5_errors}
 \end{figure}
 
+\FloatBarrier
 \subsection{Results and Discussion}
 
 Figure~\ref{fig:p5_results} summarizes the performance of different configurations.
@@ -136,7 +135,7 @@ The best result achieved was:
 
 This demonstrates that data augmentation significantly improves performance when the amount of real data is limited.
 
-\begin{figure}[htbp]
+\begin{figure}[t]
 \centering
 \includegraphics[width=0.7\textwidth]{Figures/P5/results_plot.png}
 \caption{Accuracy vs number of augmented samples}
