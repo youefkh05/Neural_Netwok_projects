@@ -68,6 +68,47 @@ The final architecture is shown in Table~\ref{tab:p3_arch}.
 \end{tabular}
 \end{table}
 
+\subsubsection{Architecture Design Rationale}
+
+The LeNet5-inspired architecture was specifically adapted for mel-spectrogram classification of spoken digits. The design choices are justified as follows:
+
+\paragraph{Input Specification.}
+The baseline spectrogram input is resized to $64\times64$ pixels (compared to the standard $128\times128$ to balance computational efficiency with feature preservation). Each input has 3 channels (RGB-converted mel-spectrogram using the ``magma'' colormap), enabling the use of standard RGB-friendly weight initialisation.
+
+\paragraph{Convolutional Feature Extraction.}
+Three convolutional blocks progressively extract spectro-temporal features:
+\begin{itemize}
+    \item \textbf{Conv2d\_1}: 16 filters, $5\times5$ kernel, padding=2. This first layer captures low-level time-frequency patterns (formants, transitions) without shrinking spatial dimensions. The $5\times5$ receptive field balances locality with context.
+    \item \textbf{Conv2d\_2}: 32 filters, $5\times5$ kernel, padding=2. Doubling the filter count increases representational capacity to capture mid-level features (e.g., pitch contours, frication noise). Kernel size remains $5\times5$ for fine temporal resolution.
+    \item \textbf{Conv2d\_3}: 64 filters, $3\times3$ kernel, padding=1. The final convolutional layer doubles the channel count again to capture high-level, digit-specific patterns. The $3\times3$ kernel is smaller, reflecting the reduced spatial dimensions after pooling.
+\end{itemize}
+
+\paragraph{Average Pooling Strategy.}
+Average pooling with stride 2 is applied after each convolutional block. This reduces spatial dimensions by 50\% per block (from $64\to32\to16\to8$), reducing computational cost and encouraging translation invariance. Average pooling is preferred over max pooling for spectrograms as it better preserves the overall energy distribution across frequency bins, which is important for speech recognition.
+
+\paragraph{Flattening and Dense Layers.}
+After three pooling stages, the feature maps have spatial dimensions $8\times8$ with 64 channels, yielding $64\times8\times8 = 4096$ units. The flattening layer converts this to a 1D vector:
+\begin{itemize}
+    \item \textbf{Dense\_1 (256 units)}: Reduces the 4096-dimensional feature vector to 256 dimensions. This significant compression forces the network to learn a compact, task-relevant representation.
+    \item \textbf{Dropout (0.5)}: Applied immediately after Dense\_1 with a dropout rate of 0.5. This aggressive dropout prevents co-adaptation of neurons and reduces overfitting, which is critical given the relatively small training set (30 samples per digit in the test set).
+    \item \textbf{Dense\_2 (128 units)}: Further reduces dimensionality to 128, continuing the compression pattern.
+    \item \textbf{Dense\_3 (10 units)}: Final output layer maps to the 10 digit classes (0–9) via softmax activation (implicit in categorical cross-entropy loss).
+\end{itemize}
+
+\paragraph{Activation Functions.}
+ReLU (Rectified Linear Unit) activation is applied after each convolutional and the first two dense layers. ReLU introduces non-linearity, enabling the network to learn complex decision boundaries. It is computationally efficient and has been empirically validated for image and spectrogram classification tasks.
+
+\paragraph{Total Parameters.}
+The network contains approximately $1.12\times10^6$ trainable parameters. This size is deliberately moderate to balance expressive power with the small training set and computational constraints of CPU execution.
+
+\paragraph{Hyperparameter Configuration.}
+\begin{itemize}
+    \item \textbf{Learning rate ($\eta$)}: 0.001 (Adam optimizer default); a moderate value balancing convergence speed and stability.
+    \item \textbf{Batch size}: 32; a reasonable compromise between stochastic gradient descent (batch size 1) and full-batch training, improving gradient estimate stability.
+    \item \textbf{Number of epochs}: 10; sufficient for convergence on this dataset without excessive training time.
+    \item \textbf{SpecAugment mask sizes}: Frequency and time masks of size $F=T=12$ (approximately 10\% of the $64\times64$ spectrogram); these sizes were found to provide meaningful augmentation without destroying the discriminative patterns essential for digit recognition.
+\end{itemize}
+
 \subsubsection{Training}
 
 Adam optimiser ($\eta = 0.001$), batch size 32,

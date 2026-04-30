@@ -26,10 +26,8 @@ rich.traceback.install()
 console = Console()
 warnings.filterwarnings("ignore")
 
-# ─────────────────────────────────────────────────────────────────────────────
-# CONFIGURATION
-# ─────────────────────────────────────────────────────────────────────────────
-DATA_ROOT   = "audio-dataset"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_ROOT   = os.path.join(os.path.dirname(SCRIPT_DIR), "audio-dataset")
 TRAIN_DIR   = os.path.join(DATA_ROOT, "Train")
 TEST_DIR    = os.path.join(DATA_ROOT, "Test")
 
@@ -44,27 +42,21 @@ N_FFT = 1024
 HOP_LENGTH = 512
 N_MELS = 64
 
-# ── Speech augmentation rates ──────────────────────────────────────────────
 SPEED_UP_RATE   = 1.03
 SPEED_DOWN_RATE = 0.97
 NOISE_SNR_DB    = 15.0
 PITCH_SHIFT_STEPS = 2.0
 
-# ── Spectrum augmentation rates (FIX #2: stronger squeeze/expand ±12%) ─────
-SQUEEZE_RATE = 0.88   # was 0.97  → meaningful temporal compression
-EXPAND_RATE  = 1.12   # was 1.03  → meaningful temporal expansion
+SQUEEZE_RATE = 0.88
+EXPAND_RATE  = 1.12
 
-# ── SpecAugment mask sizes (FIX #4: larger masks for Part C/D) ──────────────
-SPEC_AUG_F = 12   # frequency mask width  (was 8)
-SPEC_AUG_T = 12   # time mask width       (was 8)
+SPEC_AUG_F = 12
+SPEC_AUG_T = 12
 
 SEED = 42
 torch.manual_seed(SEED); np.random.seed(SEED); random.seed(SEED)
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# ─────────────────────────────────────────────────────────────────────────────
-# SHARED VISUALS
-# ─────────────────────────────────────────────────────────────────────────────
 def print_banner(suffix, color, extra):
     banner = Text()
     banner.append("  Assignment 2  ", style="bold white on dark_blue")
@@ -102,9 +94,6 @@ def parse_label(fname):
 normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 train_transform = test_transform = transforms.Compose([normalize])
 
-# ─────────────────────────────────────────────────────────────────────────────
-# AUGMENTATION HELPERS
-# ─────────────────────────────────────────────────────────────────────────────
 def aug_speed(y, rate):       return librosa.effects.time_stretch(y, rate=rate)
 def aug_noise(y, snr=NOISE_SNR_DB):
     rms = np.sqrt(np.mean(y**2))
@@ -114,28 +103,21 @@ def aug_noise(y, snr=NOISE_SNR_DB):
 def aug_pitch(y, steps=PITCH_SHIFT_STEPS):
     return librosa.effects.pitch_shift(y, sr=SAMPLE_RATE, n_steps=steps)
 
-
-# FIX #4: larger default mask sizes (fs=12, ts=12 instead of 8, 8)
 def spec_augment(t, fs=SPEC_AUG_F, ts=SPEC_AUG_T):
     _, H, W = t.shape; t = t.clone()
     fs, ts = min(fs, H), min(ts, W)
-    if fs > 0:
-        f0 = random.randint(0, max(H - fs, 0)); t[:, f0:f0+fs, :] = 0
-    if ts > 0:
-        t0 = random.randint(0, max(W - ts, 0)); t[:, :, t0:t0+ts] = 0
+    if fs > 0: f0 = random.randint(0, max(H - fs, 0)); t[:, f0:f0+fs, :] = 0
+    if ts > 0: t0 = random.randint(0, max(W - ts, 0)); t[:, :, t0:t0+ts] = 0
     return t
-
 
 def add_image_noise(arr, amount=0.02):
     return np.clip(arr + np.random.normal(0, amount, arr.shape).astype(np.float32), 0, 1)
-
 
 def resize_spectrum(img, rate):
     nw = int(IMG_WIDTH * rate)
     resized = img.resize((nw, IMG_HEIGHT), Image.BILINEAR)
     out = Image.new("RGB", (IMG_WIDTH, IMG_HEIGHT))
-    if rate < 1.0:
-        out.paste(resized, ((IMG_WIDTH - nw) // 2, 0))
+    if rate < 1.0: out.paste(resized, ((IMG_WIDTH - nw) // 2, 0))
     else:
         left = (nw - IMG_WIDTH) // 2
         out = resized.crop((left, 0, left + IMG_WIDTH, IMG_HEIGHT))
@@ -145,7 +127,6 @@ def resize_spectrum(img, rate):
 SPEECH_VARIANTS = [None, "speed_up", "speed_down", "noise", "pitch"]
 SPEC_VARIANTS   = [None, "squeeze",  "expand",     "img_noise", "hybrid"]
 
-
 def apply_speech_aug(y, variant):
     if variant == "speed_up":   return aug_speed(y, SPEED_UP_RATE)
     if variant == "speed_down": return aug_speed(y, SPEED_DOWN_RATE)
@@ -153,23 +134,18 @@ def apply_speech_aug(y, variant):
     if variant == "pitch":      return aug_pitch(y)
     return y
 
-
-# FIX #3: stronger image noise (0.08 instead of 0.03)
 def apply_spec_aug(img, variant):
     if variant == "squeeze":    return resize_spectrum(img, SQUEEZE_RATE)
     if variant == "expand":     return resize_spectrum(img, EXPAND_RATE)
     if variant == "img_noise":
-        arr = add_image_noise(np.array(img, dtype=np.float32) / 255.0, 0.08)   # was 0.03
+        arr = add_image_noise(np.array(img, dtype=np.float32) / 255.0, 0.08)
         return Image.fromarray((arr * 255).astype(np.uint8))
     if variant == "hybrid":
         img = resize_spectrum(img, random.choice([SQUEEZE_RATE, EXPAND_RATE]))
-        arr = add_image_noise(np.array(img, dtype=np.float32) / 255.0, 0.05)   # was 0.02
+        arr = add_image_noise(np.array(img, dtype=np.float32) / 255.0, 0.05)
         return Image.fromarray((arr * 255).astype(np.uint8))
     return img
 
-# ─────────────────────────────────────────────────────────────────────────────
-# DATASETS
-# ─────────────────────────────────────────────────────────────────────────────
 def _scan_files(root):
     files = []
     for fname in sorted(os.listdir(root)):
@@ -181,32 +157,25 @@ def _scan_files(root):
 
 
 class SpeechSpectrogramDataset(Dataset):
-    """Part A — no augmentation (baseline)."""
     def __init__(self, root, transform=None):
         self.transform = transform
         self.samples = _scan_files(root)
         self.classes = sorted({l for _, l in self.samples})
-
     def __len__(self): return len(self.samples)
-
     def __getitem__(self, i):
         path, lbl = self.samples[i]
         t = torch.tensor(preprocess_spectrogram(audio_file_to_spectrogram(path))).permute(2,0,1)
         if self.transform: t = self.transform(t)
         return t, lbl
 
-
 class SpeechAugmentedDataset(Dataset):
-    """Part B — speech-level augmentation (5 variants) + SpecAugment."""
     def __init__(self, root, transform=None, aug=True):
-        self.transform = transform; self.aug = aug
+        self.transform, self.aug = transform, aug
         self._files = _scan_files(root)
         self.classes = sorted({l for _, l in self._files})
         nv = len(SPEECH_VARIANTS) if aug else 1
         self.samples = [(fi, vi) for fi in range(len(self._files)) for vi in range(nv)]
-
     def __len__(self): return len(self.samples)
-
     def __getitem__(self, i):
         fi, vi = self.samples[i]
         path, lbl = self._files[fi]
@@ -215,28 +184,17 @@ class SpeechAugmentedDataset(Dataset):
         spec = audio_array_to_spectrogram(y, sr)
         t = torch.tensor(preprocess_spectrogram(spec)).permute(2,0,1)
         if self.transform: t = self.transform(t)
-        if self.aug:       t = spec_augment(t)   # SpecAugment on top
+        if self.aug: t = spec_augment(t)
         return t, lbl
 
-
 class SpectrumAugmentedDataset(Dataset):
-    """
-    Part C — spectrum/image-level augmentation (5 variants).
-
-    FIX #1: spec_augment() is now called during training, matching Part B.
-    FIX #2: squeeze/expand rates are ±12% (stronger).
-    FIX #3: image noise amplitude raised to 0.08.
-    FIX #4: SpecAugment mask sizes raised to 12×12.
-    """
     def __init__(self, root, transform=None, aug=True):
-        self.transform = transform; self.aug = aug
+        self.transform, self.aug = transform, aug
         self._files = _scan_files(root)
         self.classes = sorted({l for _, l in self._files})
         nv = len(SPEC_VARIANTS) if aug else 1
         self.samples = [(fi, vi) for fi in range(len(self._files)) for vi in range(nv)]
-
     def __len__(self): return len(self.samples)
-
     def __getitem__(self, i):
         fi, vi = self.samples[i]
         path, lbl = self._files[fi]
@@ -247,29 +205,20 @@ class SpectrumAugmentedDataset(Dataset):
         arr = np.array(img, dtype=np.float32) / 255.0
         t = torch.tensor(arr).permute(2,0,1)
         if self.transform: t = self.transform(t)
-        if self.aug:       t = spec_augment(t)   # ← FIX #1: was missing entirely
+        if self.aug: t = spec_augment(t)
         return t, lbl
 
-
 class HybridAugmentedDataset(Dataset):
-    """
-    Part D — speech × spectrum augmentation (25 variants).
-    All four fixes inherited automatically.
-    """
     def __init__(self, root, transform=None, aug=True):
-        self.transform = transform; self.aug = aug
+        self.transform, self.aug = transform, aug
         self._files = _scan_files(root)
         self.classes = sorted({l for _, l in self._files})
         if aug:
-            self.samples = [(fi, sv, xv)
-                            for fi in range(len(self._files))
-                            for sv in range(len(SPEECH_VARIANTS))
-                            for xv in range(len(SPEC_VARIANTS))]
+            self.samples = [(fi, sv, xv) for fi in range(len(self._files))
+                            for sv in range(len(SPEECH_VARIANTS)) for xv in range(len(SPEC_VARIANTS))]
         else:
             self.samples = [(fi, 0, 0) for fi in range(len(self._files))]
-
     def __len__(self): return len(self.samples)
-
     def __getitem__(self, i):
         fi, sv, xv = self.samples[i]
         path, lbl = self._files[fi]
@@ -281,12 +230,8 @@ class HybridAugmentedDataset(Dataset):
         arr = np.array(img, dtype=np.float32) / 255.0
         t = torch.tensor(arr).permute(2,0,1)
         if self.transform: t = self.transform(t)
-        if self.aug:       t = spec_augment(t)
+        if self.aug: t = spec_augment(t)
         return t, lbl
-
-# ─────────────────────────────────────────────────────────────────────────────
-# MODEL
-# ─────────────────────────────────────────────────────────────────────────────
 class LeNet5Adapted(nn.Module):
     def __init__(self, num_classes=10):
         super().__init__()
@@ -343,9 +288,6 @@ def print_model_summary(model, part_label, rule_color, border_style, header_styl
                         title="[bold white]Parameter Summary[/bold white]", padding=(0,2)))
     console.print()
 
-# ─────────────────────────────────────────────────────────────────────────────
-# TRAINING / EVALUATION
-# ─────────────────────────────────────────────────────────────────────────────
 def train_one_epoch(model, loader, criterion, optimizer, device):
     model.train(); loss_sum = correct = total = 0
     for X, y in loader:
@@ -430,9 +372,6 @@ def print_classification_report(labels, preds, names, rule_color, border, title)
                         border_style=border, padding=(0,2)))
     return acc
 
-# ─────────────────────────────────────────────────────────────────────────────
-# PLOTS
-# ─────────────────────────────────────────────────────────────────────────────
 def plot_training_curves(tl, vl, ta, va, path, loss_title, acc_title,
                          train_color="royalblue", val_color="tomato"):
     fig, ax = plt.subplots(1,2,figsize=(14,5))
@@ -559,9 +498,6 @@ def plot_augmentation_comparison(orig_path, aug_variants, label, path="augmentat
     plt.tight_layout(); plt.savefig(path, dpi=150); plt.close()
     console.print(f"[dim][Saved] Augmentation examples → {path}[/dim]")
 
-# ─────────────────────────────────────────────────────────────────────────────
-# GENERIC PART RUNNER
-# ─────────────────────────────────────────────────────────────────────────────
 def run_part(label, color, train_ds_fn, test_ds_fn,
              extra_config, pre_train_hook=None, post_eval_hook=None,
              curves_path="training_curves.png", loss_title="Loss", acc_title="Acc",
@@ -630,9 +566,6 @@ def run_part(label, color, train_ds_fn, test_ds_fn,
     return {"model": model, "final_acc": acc, "training_time_ms": train_ms,
             "testing_time_ms": test_ms, "train_ds": train_ds, "test_ds": test_ds}
 
-# ─────────────────────────────────────────────────────────────────────────────
-# PART PIPELINES
-# ─────────────────────────────────────────────────────────────────────────────
 def run_part_a():
     return run_part(
         "Part A", "blue",
@@ -701,7 +634,6 @@ def run_part_b():
     res["train_samples"] = len(res["train_ds"])
     return res
 
-
 def run_part_c():
     def _post():
         try:
@@ -761,9 +693,6 @@ def run_part_d():
         report_title="Accuracy with hybrid (speech + spectrum) augmentation:",
     )
 
-# ─────────────────────────────────────────────────────────────────────────────
-# ENTRY POINT
-# ─────────────────────────────────────────────────────────────────────────────
 def validate_dirs():
     for d in [TRAIN_DIR, TEST_DIR]:
         if not os.path.isdir(d):
