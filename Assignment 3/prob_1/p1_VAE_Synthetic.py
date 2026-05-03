@@ -6,12 +6,14 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.datasets import mnist
 import matplotlib.pyplot as plt
+import time
+
 
 # =========================
 # CONFIG
 # =========================
 CACHE_DIR = "cache"
-OUTPUT_DIR = "outputs"
+OUTPUT_DIR = "Figures"
 
 os.makedirs(CACHE_DIR, exist_ok=True)
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -112,7 +114,8 @@ def load_mnist():
     print("[INFO] Downloading MNIST...")
 
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
-
+ 
+    # KEEP in [0,1] for VAE
     x_train = x_train.astype("float32") / 255.0
     x_test = x_test.astype("float32") / 255.0
 
@@ -148,7 +151,7 @@ def save_images_grid(images, labels, aug_types=None, filename="grid.png", n=10):
         plt.imshow(images[i].squeeze(), cmap='gray')
 
         if aug_types is not None:
-            title = f"{labels[i]}\n{aug_types[i]}"
+            title = f"{labels[i]}\n{aug_types[i][:25]}..."
         else:
             title = str(labels[i])
 
@@ -189,144 +192,96 @@ def get_reduced_dataset(x, y, samples_per_digit, cache_name=None):
 
     return x_small, y_small
 
-# =========================
-# Main function to get final dataset (reduced real + augmented)
-# =========================
-def get_final_dataset(x_train, y_train, real_n, aug_n):
-    cache_name = f"final_{real_n}_real_{aug_n}_aug.npy"
-
-    cached = load_cache(cache_name)
-    
-    if cached is not None:
-        return cached["x"], cached["y"]
-
-    # Step 1: reduced real data
-    x_real, y_real = get_reduced_dataset(
-        x_train, y_train,
-        real_n,
-        cache_name=f"real_{real_n}.npy"
-    )
-
-    # Step 2: augmentation
-    if aug_n > 0:
-        x_aug, y_aug, aug_types = augment_dataset(
-            x_real, y_real,
-            aug_n,
-            cache_name=f"aug_{real_n}_{aug_n}.npy"
-        )
-
-        x_final, y_final = build_final_dataset(x_real, y_real, x_aug, y_aug)
-    else:
-        x_final, y_final = x_real, y_real
-
-    save_cache(cache_name, {"x": x_final, "y": y_final})
-
-    return x_final, y_final
 
 # =========================
-# Data Augmentation Helper Functions   
+# AUGMENT DATASET (with cache + types)
 # =========================
-def rotate_image(img, angle):
-    img = img.squeeze()
-    h, w = img.shape
-    M = cv2.getRotationMatrix2D((w//2, h//2), angle, 1)
-    return cv2.warpAffine(img, M, (w, h))[..., None]
+def augment_dataset(x, y, factor=10, cache_name=None):
 
-
-def add_noise(img):
-    noise = np.random.normal(0, 0.1, img.shape)
-    noisy = img + noise
-    return np.clip(noisy, 0, 1)
-
-
-def shift_image(img, dx, dy):
-    img = img.squeeze()
-    M = np.float32([[1, 0, dx], [0, 1, dy]])
-    shifted = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
-    return shifted[..., None]
-
-# =========================
-# Data Augmentation Function
-# ========================= 
-def augment_dataset(x, y, num_generated_per_class, cache_name=None):
-    """
-    x: (N, 28, 28, 1)
-    y: (N,)
-    """
-
-    # ======================
-    # CACHE
-    # ======================
     if cache_name:
         cached = load_cache(cache_name)
         if cached is not None:
             return cached["x"], cached["y"], cached["aug_type"]
 
-    print("[INFO] Generating augmented dataset...")
+    print("[INFO] Augmenting dataset...")
 
     x_aug = []
     y_aug = []
     aug_types = []
 
-    for digit in range(10):
-        class_idx = np.where(y == digit)[0]
-        class_images = x[class_idx]
+    for i in range(len(x)):
+        img = x[i]
+        label = y[i]
 
-        generated = 0
+        for _ in range(factor):
 
-        while generated < num_generated_per_class:
-            img = class_images[np.random.randint(len(class_images))]
+            aug_desc = []
 
-            choice = np.random.choice(["rotate", "shift", "noise"])
+            # -------------------------
+            # ROTATION
+            # -------------------------
+            angle = np.random.uniform(-15, 15)
+            M = cv2.getRotationMatrix2D((14,14), angle, 1)
+            rotated = cv2.warpAffine(img.squeeze(), M, (28,28))
+            aug_desc.append(f"rot({angle:.1f})")
 
-            if choice == "rotate":
-                angle = np.random.choice([-10, -5, 5, 10])
-                new_img = rotate_image(img, angle)
-                aug_types.append(f"rot({angle})")
+            # -------------------------
+            # SHIFT
+            # -------------------------
+            tx = np.random.randint(-2, 3)
+            ty = np.random.randint(-2, 3)
+            M_shift = np.float32([[1,0,tx],[0,1,ty]])
+            shifted = cv2.warpAffine(rotated, M_shift, (28,28))
+            aug_desc.append(f"shift({tx},{ty})")
 
-            elif choice == "shift":
-                dx = np.random.randint(-2, 3)
-                dy = np.random.randint(-2, 3)
-                new_img = shift_image(img, dx, dy)
-                aug_types.append(f"shift({dx},{dy})")
+            # -------------------------
+            # SCALE
+            # -------------------------
+            scale = np.random.uniform(0.9, 1.1)
+            M_scale = cv2.getRotationMatrix2D((14,14), 0, scale)
+            scaled = cv2.warpAffine(shifted, M_scale, (28,28))
+            aug_desc.append(f"scale({scale:.2f})")
 
-            else:
-                new_img = add_noise(img)
-                aug_types.append("noise")
+            # -------------------------
+            # NOISE
+            # -------------------------
+            noise = np.random.normal(0, 0.03, (28,28))
+            final = np.clip(scaled + noise, 0, 1)
+            aug_desc.append("noise")
 
-            x_aug.append(new_img)
-            y_aug.append(digit)
-
-            generated += 1
-
-        print(f"[INFO] Digit {digit}: generated {num_generated_per_class}")
+            # Save
+            x_aug.append(final[..., None])
+            y_aug.append(label)
+            aug_types.append(" | ".join(aug_desc))
 
     x_aug = np.array(x_aug)
     y_aug = np.array(y_aug)
+    aug_types = np.array(aug_types)
 
-    # ======================
-    # CACHE SAVE
-    # ======================
+    print(f"[INFO] Augmented dataset: {x_aug.shape}")
+
     if cache_name:
         save_cache(cache_name, {
             "x": x_aug,
             "y": y_aug,
-            "aug_type": np.array(aug_types)
+            "aug_type": aug_types
         })
-        
+
     return x_aug, y_aug, aug_types
 
 # =========================
-# Combine real + augmented datasets
+# Split generated images by classifier confidence
 # =========================
-def build_final_dataset(x_real, y_real, x_aug, y_aug):
-    x_final = np.concatenate([x_real, x_aug], axis=0)
-    y_final = np.concatenate([y_real, y_aug], axis=0)
+def split_by_confidence(fake_imgs, classifier):
 
-    print("[INFO] Final dataset:", x_final.shape)
+    preds = classifier.predict(fake_imgs, verbose=0)
+    conf = np.max(preds, axis=1)
 
-    return x_final, y_final
+    set_A = fake_imgs
+    set_B = fake_imgs[conf >= 0.9]
+    set_C = fake_imgs[(conf >= 0.6) & (conf < 0.9)]
 
+    return set_A, set_B, set_C
 # =========================
 # Build a simple LeNet-like CNN
 # =========================
@@ -356,94 +311,6 @@ def build_lenet():
     return model
 
 # =========================
-# Visualize Model Predictions
-# =========================
-def visualize_predictions(model, x_test, y_test, filename="predictions.png", n=25):
-    idx = np.random.choice(len(x_test), n, replace=False)
-
-    images = x_test[idx]
-    labels = y_test[idx]
-
-    preds = model.predict(images, verbose=0)
-    pred_labels = np.argmax(preds, axis=1)
-    confidences = np.max(preds, axis=1)
-
-    plt.figure(figsize=(14,14))  # bigger
-
-    for i in range(n):
-        plt.subplot(5,5,i+1)
-        plt.imshow(images[i].squeeze(), cmap='gray')
-
-        title = f"T:{labels[i]} | P:{pred_labels[i]} ({confidences[i]:.2f})"
-        color = "green" if labels[i] == pred_labels[i] else "red"
-
-        plt.title(title, color=color, fontsize=9)  # bigger font
-        plt.axis('off')
-
-    plt.tight_layout(pad=2.0)  # spacing
-
-    path = os.path.join(OUTPUT_DIR, filename)
-    plt.savefig(path, dpi=300)
-    plt.close()
-
-    print(f"[INFO] Saved predictions: {path}")  
-
-# =========================
-# Visualize misclassified samples
-# =========================
-def visualize_misclassified(model, x_test, y_test, filename="misclassified.png", n=25):
-    preds = model.predict(x_test, verbose=0)
-    pred_labels = np.argmax(preds, axis=1)
-
-    wrong_idx = np.where(pred_labels != y_test)[0]
-
-    if len(wrong_idx) == 0:
-        print("[INFO] No misclassified samples!")
-        return
-
-    idx = np.random.choice(wrong_idx, min(n, len(wrong_idx)), replace=False)
-
-    plt.figure(figsize=(8,8))
-
-    for i, id_ in enumerate(idx):
-        plt.subplot(5,5,i+1)
-        plt.imshow(x_test[id_].squeeze(), cmap='gray')
-
-        title = f"T:{y_test[id_]} P:{pred_labels[id_]}"
-        plt.title(title, color="red", fontsize=8)
-        plt.axis('off')
-
-    path = os.path.join(OUTPUT_DIR, filename)
-    plt.savefig(path, dpi=300)
-    plt.close()
-
-    print(f"[INFO] Saved misclassified: {path}")
-
-# =========================
-# Plot Training Curves
-# =========================
-def plot_training_curves(history, filename="training_curves.png"):
-    hist = history.history
-
-    plt.figure(figsize=(10,4))
-
-    # -----------------
-    # Loss
-    # -----------------
-    plt.plot(hist["loss"], label="Train Loss")
-    plt.title("Loss")
-    plt.xlabel("Epoch")
-    plt.ylabel("Loss")
-    plt.legend()
-
-
-    path = os.path.join(OUTPUT_DIR, filename)
-    plt.savefig(path, dpi=300)
-    plt.close()
-
-    print(f"[INFO] Saved training curves: {path}") 
-
-# =========================
 # Plot Results from CSV
 # =========================
 def plot_results_from_csv(csv_path):
@@ -459,13 +326,13 @@ def plot_results_from_csv(csv_path):
         subset = df[df["Real per digit"] == real_n]
 
         plt.plot(
-            subset["Aug per digit"],
+            subset["GAN per digit"],
             subset["Accuracy"],
             marker='o',
             label=f"Real={real_n}"
         )
 
-    plt.title("Accuracy vs Augmentation")
+    plt.title("Accuracy vs VAE Generated Data")
     plt.xlabel("Generated Samples per Digit")
     plt.ylabel("Accuracy")
     plt.legend()
@@ -476,20 +343,20 @@ def plot_results_from_csv(csv_path):
     plt.close()
 
     print(f"[INFO] Saved results plot: {path}")
-                  
+  
+           
 # =========================
-# MAIN FUNCTION
+# MAIN FUNCTION (GAN)
 # =========================
 def main():
-    print("===== MNIST PIPELINE START =====")
+
+    print("===== VAE PIPELINE START =====")
 
     # =========================
-    # LOAD DATA
+    # LOAD DATA (cached)
     # =========================
-    x_train, y_train, x_test, y_test = load_mnist()
-
+    x_train, y_train, _, _ = load_mnist()
     print(f"[INFO] Train shape: {x_train.shape}")
-    print(f"[INFO] Test shape: {x_test.shape}")
 
     # =========================
     # QUICK VISUAL CHECK
@@ -500,132 +367,53 @@ def main():
         filename="MNIST_samples.png",
         n=10
     )
-
-    # =========================
-    # EXPERIMENT SETTINGS
-    # =========================
-    real_options = [350, 750, 1000]
-    aug_options = [0, 1000, 1500, 2000]
-
-    results = []
-    visualize_flag = True
-
-    # =========================
-    # LOOP OVER EXPERIMENTS
-    # =========================
-    for real_n in real_options:
-        for aug_n in aug_options:
-
-            print(f"\n===== {real_n} real + {aug_n} augmented =====")
-
-            # Build dataset (cached)
-            x_final, y_final = get_final_dataset(
-                x_train, y_train,
-                real_n, aug_n
-            )
-            
-            #  SHUFFLE HERE
-            x_final, y_final = shuffle_dataset(x_final, y_final)
-
-            #  OPTIONAL: visualize augmentation once
-            if aug_n > 0:
-                aug_data = load_cache(f"aug_{real_n}_{aug_n}.npy")
-
-                x_aug = aug_data["x"]
-                y_aug = aug_data["y"]
-                aug_types = aug_data["aug_type"]
-                
-                save_images_grid(
-                    x_aug[:10],
-                    y_aug[:10],
-                    aug_types=aug_types[:10],
-                    filename=f"aug_{real_n}_{aug_n}.png",
-                    n=10
-                )
-
-            # =========================
-            # TRAIN MODEL
-            # =========================
-
-            model = build_lenet()
-            
-            if visualize_flag == True:
-                visualize_flag = False  # only visualize the first setting to save time 
-                callback = PredictionVisualizationCallback(
-                    x_test,
-                    y_test,
-                    interval=5,
-                    prefix=f"{real_n}_{aug_n}"
-                )
-                
-                history =model.fit(
-                    x_final, y_final,
-                    epochs=30,   
-                    batch_size=64,
-                    verbose=1,
-                    callbacks=[callback]
-                )
-            else:
-                history =model.fit(
-                    x_final, y_final,
-                    epochs=30,   
-                    batch_size=64,
-                    verbose=1,
-                    )
-            
-            # =========================
-            # EVALUATE MODEL
-            # =========================
-            loss, acc = model.evaluate(x_test, y_test, verbose=0)
-
-
-            print(f"[RESULT] Accuracy = {acc*100:.2f}%")
-
-            results.append([real_n, aug_n, acc])
-
     
+
     # =========================
-    # FINAL PREDICTION VISUALIZATION the last trained model (on the last setting)
-    #  =========================
-    visualize_predictions(
-        model,
-        x_test,
-        y_test,
-        filename=f"final_pred_{real_n}_{aug_n}.png"
+    # REDUCE DATASET (350 per digit)
+    # =========================
+    real_n = 350
+
+    x_small, y_small = get_reduced_dataset(
+        x_train, y_train,
+        real_n,
+        cache_name=f"real_{real_n}.npy"
     )
-            
-    visualize_misclassified(
-        model,
-        x_test,
-        y_test,
-        filename=f"mis_{real_n}_{aug_n}.png"
-        )
-            
-    plot_training_curves(
-        history,
-        filename=f"curve_{real_n}_{aug_n}.png"
-        )
+
+    print(f"[INFO] Reduced dataset: {x_small.shape}")
+
     # =========================
-    # SAVE RESULTS TABLE
+    # AUGMENT DATA (Step 1)
     # =========================
+    x_aug, y_aug, aug_types = augment_dataset(
+        x_small,
+        y_small,
+        factor=10,
+        cache_name=f"aug_vae_{real_n}.npy"
+    )
     
-    # Save final best model
-    model.save(os.path.join(CACHE_DIR, "lenet_model.keras"))
-    print("[INFO] Final classifier saved!")
-    
-    results_path = os.path.join(OUTPUT_DIR, "results.csv")      
+    # Visualize some augmented samples
+    save_images_grid(
+        x_aug[:5],
+        y_aug[:5],
+        aug_types=aug_types[:5],
+        filename="vae_aug_samples.png",
+        n=10
+    )
 
-    with open(results_path, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["Real per digit", "Aug per digit", "Accuracy"])
-        writer.writerows(results)
-        
-    plot_results_from_csv(results_path)       
+    # Combine real + augmented
+    x_vae = np.concatenate([x_small, x_aug])
+    y_vae = np.concatenate([y_small, y_aug])
 
-    print(f"[INFO] Results saved to: {results_path}")
+    print(f"[INFO] VAE training dataset: {x_vae.shape}")
 
+
+
+    #plot_results_from_csv(results_path)
+
+    #print(f"[INFO] Results saved to: {results_path}")
     print("===== DONE =====")
-
+    
 # =========================
 # ENTRY POINT
 # =========================
