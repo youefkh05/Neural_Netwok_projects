@@ -343,7 +343,46 @@ def plot_results_from_csv(csv_path):
     plt.close()
 
     print(f"[INFO] Saved results plot: {path}")
-  
+
+# =========================
+#  Build Encoder (for VAE)
+# =========================
+def build_encoder(latent_dim=20):
+    x_input = tf.keras.Input(shape=(28,28,1))
+    y_input = tf.keras.Input(shape=(10,))
+
+    x = tf.keras.layers.Flatten()(x_input)
+    x = tf.keras.layers.Concatenate()([x, y_input])
+
+    x = tf.keras.layers.Dense(256, activation='relu')(x)
+
+    z_mean = tf.keras.layers.Dense(latent_dim)(x)
+    z_log_var = tf.keras.layers.Dense(latent_dim)(x)
+
+    return tf.keras.Model([x_input, y_input], [z_mean, z_log_var])
+
+# =========================
+# Build Sampling Layer (for VAE)
+# =========================
+def sampling(args):
+    z_mean, z_log_var = args
+    epsilon = tf.random.normal(shape=tf.shape(z_mean))
+    return z_mean + tf.exp(0.5 * z_log_var) * epsilon  
+
+# =========================
+# Build Decoder (for VAE)
+# =========================
+def build_decoder(latent_dim=20):
+    z_input = tf.keras.Input(shape=(latent_dim,))
+    y_input = tf.keras.Input(shape=(10,))
+
+    x = tf.keras.layers.Concatenate()([z_input, y_input])
+    x = tf.keras.layers.Dense(256, activation='relu')(x)
+    x = tf.keras.layers.Dense(28*28, activation='sigmoid')(x)
+
+    x = tf.keras.layers.Reshape((28,28,1))(x)
+
+    return tf.keras.Model([z_input, y_input], x)
            
 # =========================
 # MAIN FUNCTION (GAN)
@@ -408,10 +447,102 @@ def main():
     print(f"[INFO] VAE training dataset: {x_vae.shape}")
 
 
+    # =========================
+    # TRAIN OR LOAD VAE
+    # =========================
+    latent_dim = 20
 
-    #plot_results_from_csv(results_path)
+    encoder_path = os.path.join(CACHE_DIR, "vae_encoder.keras")
+    decoder_path = os.path.join(CACHE_DIR, "vae_decoder.keras")
 
-    #print(f"[INFO] Results saved to: {results_path}")
+    if os.path.exists(encoder_path) and os.path.exists(decoder_path):
+        print("[INFO] Loading cached VAE...")
+        encoder = tf.keras.models.load_model(encoder_path)
+        decoder = tf.keras.models.load_model(decoder_path)
+
+    else:
+        print("[INFO] Training VAE...")
+
+        # One-hot labels
+        y_vae_onehot = tf.keras.utils.to_categorical(y_vae, 10)
+
+        encoder = build_encoder(latent_dim)
+        decoder = build_decoder(latent_dim)
+
+        z_mean, z_log_var = encoder([x_vae, y_vae_onehot])
+        z = tf.keras.layers.Lambda(sampling)([z_mean, z_log_var])
+
+        reconstructed = decoder([z, y_vae_onehot])
+
+        vae = tf.keras.Model([x_vae, y_vae_onehot], reconstructed)
+
+        vae.compile(optimizer='adam', loss='mse')
+
+        start = time.time()
+
+        vae.fit(
+            [x_vae, y_vae_onehot],
+            x_vae,
+            epochs=30,
+            batch_size=128,
+            verbose=1
+        )
+
+        train_time = time.time() - start
+        print(f"[TIME] VAE training time: {train_time:.2f} sec")
+
+        encoder.save(encoder_path)
+        decoder.save(decoder_path)
+
+        print("[INFO] VAE models saved")
+        
+    # =========================
+    # GENERATE SYNTHETIC DATA
+    # =========================
+    samples_per_digit = 1000
+    latent_dim = 20
+
+    gen_path = "vae_generated.npy"
+    cached = load_cache(gen_path)
+
+    if cached is not None:
+        generated_images = cached["x"]
+        generated_labels = cached["y"]
+
+    else:
+        print("[INFO] Generating synthetic data...")
+
+        generated_images = []
+        generated_labels = []
+
+        for digit in range(10):
+
+            z = np.random.normal(0,1,(samples_per_digit, latent_dim))
+            labels = np.full(samples_per_digit, digit)
+            labels_onehot = tf.keras.utils.to_categorical(labels, 10)
+
+            imgs = decoder.predict([z, labels_onehot], verbose=0)
+
+            generated_images.append(imgs)
+            generated_labels.append(labels)
+
+        generated_images = np.concatenate(generated_images)
+        generated_labels = np.concatenate(generated_labels)
+
+        save_cache(gen_path, {
+            "x": generated_images,
+            "y": generated_labels
+        })
+
+    print(f"[INFO] Generated dataset: {generated_images.shape}")
+
+    # Visualize some generated samples
+    save_images_grid(
+        generated_images[:10],
+        generated_labels[:10],
+        filename="vae_generated_samples.png",
+        n=10
+    )
     print("===== DONE =====")
     
 # =========================
