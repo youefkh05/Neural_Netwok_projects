@@ -21,52 +21,53 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 # =========================
 # CALLBACK TO VISUALIZE PREDICTIONS DURING TRAINING
 # =========================
-class PredictionVisualizationCallback(tf.keras.callbacks.Callback):
-    def __init__(self, x_test, y_test, interval=2, prefix="train"):
+# =========================
+# VAE Visualization Callback
+# =========================
+class VAEVisualizationCallback(tf.keras.callbacks.Callback):
+
+    def __init__(self, decoder, latent_dim=20, interval=20):
         super().__init__()
-        self.x_test = x_test
-        self.y_test = y_test
+
+        self.decoder = decoder
+        self.latent_dim = latent_dim
         self.interval = interval
-        self.prefix = prefix
 
     def on_epoch_end(self, epoch, logs=None):
+
         if (epoch + 1) % self.interval != 0:
             return
 
-        idx = np.random.choice(len(self.x_test), 16, replace=False)
-        images = self.x_test[idx]
-        labels = self.y_test[idx]
+        plt.figure(figsize=(10,4))
 
-        preds = self.model.predict(images, verbose=0)
-        pred_labels = np.argmax(preds, axis=1)
-        confidences = np.max(preds, axis=1)
+        for digit in range(10):
 
-        plt.figure(figsize=(14,14))  # bigger
+            z = np.random.normal(0,1,(1,self.latent_dim))
 
-        for i in range(16):
-            plt.subplot(4,4,i+1)
-            plt.imshow(images[i].squeeze(), cmap='gray')
+            label = tf.keras.utils.to_categorical([digit], 10)
 
-            correct = labels[i] == pred_labels[i]
-            color = "green" if correct else "red"
+            img = self.decoder.predict(
+                [z, label],
+                verbose=0
+            )[0]
 
-            title = f"T:{labels[i]} | P:{pred_labels[i]} ({confidences[i]:.2f})"
-
-            plt.title(title, fontsize=10, color=color)  #  bigger font
+            plt.subplot(2,5,digit+1)
+            plt.imshow(img.squeeze(), cmap='gray')
+            plt.title(str(digit))
             plt.axis('off')
 
-        plt.tight_layout(pad=2.0)  #  spacing
+        plt.tight_layout()
 
         path = os.path.join(
             OUTPUT_DIR,
-            f"{self.prefix}_epoch_{epoch+1}.png"
+            f"vae_epoch_{epoch+1}.png"
         )
 
         plt.savefig(path, dpi=300)
         plt.close()
 
-        print(f"[INFO] Saved epoch visualization: {path}")
-                  
+        print(f"[INFO] Saved VAE visualization: {path}")
+                         
 # =========================
 # SAVE / LOAD CACHE
 # =========================
@@ -348,19 +349,25 @@ def plot_results_from_csv(csv_path):
 #  Build Encoder (for VAE)
 # =========================
 def build_encoder(latent_dim=20):
+
     x_input = tf.keras.Input(shape=(28,28,1))
     y_input = tf.keras.Input(shape=(10,))
 
     x = tf.keras.layers.Flatten()(x_input)
+
     x = tf.keras.layers.Concatenate()([x, y_input])
 
+    x = tf.keras.layers.Dense(512, activation='relu')(x)
     x = tf.keras.layers.Dense(256, activation='relu')(x)
 
     z_mean = tf.keras.layers.Dense(latent_dim)(x)
     z_log_var = tf.keras.layers.Dense(latent_dim)(x)
 
-    return tf.keras.Model([x_input, y_input], [z_mean, z_log_var])
-
+    return tf.keras.Model(
+        [x_input, y_input],
+        [z_mean, z_log_var]
+    )
+    
 # =========================
 # Build Sampling Layer (for VAE)
 # =========================
@@ -373,17 +380,24 @@ def sampling(args):
 # Build Decoder (for VAE)
 # =========================
 def build_decoder(latent_dim=20):
+
     z_input = tf.keras.Input(shape=(latent_dim,))
     y_input = tf.keras.Input(shape=(10,))
 
     x = tf.keras.layers.Concatenate()([z_input, y_input])
+
     x = tf.keras.layers.Dense(256, activation='relu')(x)
-    x = tf.keras.layers.Dense(28*28, activation='sigmoid')(x)
+    x = tf.keras.layers.Dense(512, activation='relu')(x)
+
+    x = tf.keras.layers.Dense(
+        28*28,
+        activation='sigmoid'
+    )(x)
 
     x = tf.keras.layers.Reshape((28,28,1))(x)
 
     return tf.keras.Model([z_input, y_input], x)
-           
+          
 # =========================
 # MAIN FUNCTION (GAN)
 # =========================
@@ -469,23 +483,51 @@ def main():
         encoder = build_encoder(latent_dim)
         decoder = build_decoder(latent_dim)
 
-        z_mean, z_log_var = encoder([x_vae, y_vae_onehot])
+        # ---------------------------------
+        # Functional API inputs
+        # ---------------------------------
+        x_input = tf.keras.Input(shape=(28,28,1))
+        y_input = tf.keras.Input(shape=(10,))
+
+        # ---------------------------------
+        # Encoder
+        # ---------------------------------
+        z_mean, z_log_var = encoder([x_input, y_input])
+
+        # Sampling
         z = tf.keras.layers.Lambda(sampling)([z_mean, z_log_var])
 
-        reconstructed = decoder([z, y_vae_onehot])
+        # Decoder
+        reconstructed = decoder([z, y_input])
 
-        vae = tf.keras.Model([x_vae, y_vae_onehot], reconstructed)
+        # ---------------------------------
+        # Build VAE
+        # ---------------------------------
+        vae = tf.keras.Model([x_input, y_input], reconstructed)
 
-        vae.compile(optimizer='adam', loss='mse')
+        vae.compile(
+            optimizer='adam',
+            loss='mse'
+        )
 
+        # ---------------------------------
+        # Train
+        # ---------------------------------
         start = time.time()
+
+        vae_callback = VAEVisualizationCallback(
+            decoder,
+            latent_dim=latent_dim,
+            interval=100
+        )
 
         vae.fit(
             [x_vae, y_vae_onehot],
             x_vae,
-            epochs=30,
+            epochs=1000,
             batch_size=128,
-            verbose=1
+            verbose=1,
+            callbacks=[vae_callback]
         )
 
         train_time = time.time() - start
