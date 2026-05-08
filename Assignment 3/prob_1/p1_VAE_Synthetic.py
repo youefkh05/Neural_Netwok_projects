@@ -4,6 +4,7 @@ import csv
 import pandas as pd
 import numpy as np
 import tensorflow as tf
+from keras import ops
 from tensorflow.keras.datasets import mnist
 import matplotlib.pyplot as plt
 import time
@@ -42,7 +43,7 @@ class VAEVisualizationCallback(tf.keras.callbacks.Callback):
 
         for digit in range(10):
 
-            z = np.random.normal(0,1,(1,self.latent_dim))
+            z = np.random.normal(0,0.3,(1,self.latent_dim))
 
             label = tf.keras.utils.to_categorical([digit], 10)
 
@@ -221,7 +222,7 @@ def augment_dataset(x, y, factor=10, cache_name=None):
             # -------------------------
             # ROTATION
             # -------------------------
-            angle = np.random.uniform(-15, 15)
+            angle = np.random.uniform(-8, 8)
             M = cv2.getRotationMatrix2D((14,14), angle, 1)
             rotated = cv2.warpAffine(img.squeeze(), M, (28,28))
             aug_desc.append(f"rot({angle:.1f})")
@@ -246,7 +247,7 @@ def augment_dataset(x, y, factor=10, cache_name=None):
             # -------------------------
             # NOISE
             # -------------------------
-            noise = np.random.normal(0, 0.03, (28,28))
+            noise = np.random.normal(0, 0.01, (28,28))
             final = np.clip(scaled + noise, 0, 1)
             aug_desc.append("noise")
 
@@ -353,12 +354,36 @@ def build_encoder(latent_dim=20):
     x_input = tf.keras.Input(shape=(28,28,1))
     y_input = tf.keras.Input(shape=(10,))
 
-    x = tf.keras.layers.Flatten()(x_input)
+    # label map
+    y_map = tf.keras.layers.Dense(28*28)(y_input)
+    y_map = tf.keras.layers.Reshape((28,28,1))(y_map)
 
-    x = tf.keras.layers.Concatenate()([x, y_input])
+    x = tf.keras.layers.Concatenate()([x_input, y_map])
 
-    x = tf.keras.layers.Dense(512, activation='relu')(x)
-    x = tf.keras.layers.Dense(256, activation='relu')(x)
+    # -------------------------
+    # Conv blocks
+    # -------------------------
+    x = tf.keras.layers.Conv2D(
+        32,
+        kernel_size=3,
+        strides=2,
+        padding='same'
+    )(x)
+
+    x = tf.keras.layers.ReLU()(x)
+
+    x = tf.keras.layers.Conv2D(
+        64,
+        kernel_size=3,
+        strides=2,
+        padding='same'
+    )(x)
+
+    x = tf.keras.layers.ReLU()(x)
+
+    x = tf.keras.layers.Flatten()(x)
+
+    x = tf.keras.layers.Dense(128, activation='relu')(x)
 
     z_mean = tf.keras.layers.Dense(latent_dim)(x)
     z_log_var = tf.keras.layers.Dense(latent_dim)(x)
@@ -367,7 +392,7 @@ def build_encoder(latent_dim=20):
         [x_input, y_input],
         [z_mean, z_log_var]
     )
-    
+  
 # =========================
 # Build Sampling Layer (for VAE)
 # =========================
@@ -386,20 +411,107 @@ def build_decoder(latent_dim=20):
 
     x = tf.keras.layers.Concatenate()([z_input, y_input])
 
-    x = tf.keras.layers.Dense(256, activation='relu')(x)
-    x = tf.keras.layers.Dense(512, activation='relu')(x)
+    # -------------------------
+    # Dense projection
+    # -------------------------
+    x = tf.keras.layers.Dense(7 * 7 * 64)(x)
+    x = tf.keras.layers.ReLU()(x)
 
-    x = tf.keras.layers.Dense(
-        28*28,
+    x = tf.keras.layers.Reshape((7,7,64))(x)
+
+    # -------------------------
+    # Upsample 7x7 -> 14x14
+    # -------------------------
+    x = tf.keras.layers.Conv2DTranspose(
+        64,
+        kernel_size=3,
+        strides=2,
+        padding='same'
+    )(x)
+
+    x = tf.keras.layers.BatchNormalization()(x)
+    x = tf.keras.layers.ReLU()(x)
+
+    # -------------------------
+    # Upsample 14x14 -> 28x28
+    # -------------------------
+    x = tf.keras.layers.Conv2DTranspose(
+        32,
+        kernel_size=3,
+        strides=2,
+        padding='same'
+    )(x)
+
+    x = tf.keras.layers.BatchNormalization()(x)
+    x = tf.keras.layers.ReLU()(x)
+
+    # -------------------------
+    # Final image
+    # -------------------------
+    x = tf.keras.layers.Conv2D(
+        1,
+        kernel_size=3,
+        padding='same',
         activation='sigmoid'
     )(x)
 
-    x = tf.keras.layers.Reshape((28,28,1))(x)
-
     return tf.keras.Model([z_input, y_input], x)
-          
+
+        
 # =========================
-# MAIN FUNCTION (GAN)
+# VAE Model Class
+# =========================
+class VAE(tf.keras.Model):
+    def __init__(self, encoder, decoder, **kwargs):
+        super(VAE, self).__init__(**kwargs)
+        self.encoder = encoder
+        self.decoder = decoder
+        self.total_loss_tracker = tf.keras.metrics.Mean(name="total_loss")
+        self.reconstruction_loss_tracker = tf.keras.metrics.Mean(
+            name="reconstruction_loss"
+        )
+        self.kl_loss_tracker = tf.keras.metrics.Mean(name="kl_loss")
+
+    @property
+    def metrics(self):
+        return [
+            self.total_loss_tracker,
+            self.reconstruction_loss_tracker,
+            self.kl_loss_tracker,
+        ]
+
+    def train_step(self, data):
+        (x, y), _ = data
+        with tf.GradientTape() as tape:
+            z_mean, z_log_var = self.encoder([x, y])
+            z = self.sampling(z_mean, z_log_var)
+            reconstruction = self.decoder([z, y])
+            reconstruction_loss = tf.reduce_mean(
+                tf.reduce_sum(
+                    tf.keras.losses.binary_crossentropy(x, reconstruction), axis=(1, 2)
+                )
+            )
+            kl_loss = -0.5 * tf.reduce_mean(
+                tf.reduce_sum(1 + z_log_var - tf.square(z_mean) - tf.exp(z_log_var), axis=1)
+            )
+            total_loss = reconstruction_loss + 0.0005 * kl_loss
+        grads = tape.gradient(total_loss, self.trainable_weights)
+        self.optimizer.apply_gradients(zip(grads, self.trainable_weights))
+        self.total_loss_tracker.update_state(total_loss)
+        self.reconstruction_loss_tracker.update_state(reconstruction_loss)
+        self.kl_loss_tracker.update_state(kl_loss)
+        return {
+            "loss": self.total_loss_tracker.result(),
+            "reconstruction_loss": self.reconstruction_loss_tracker.result(),
+            "kl_loss": self.kl_loss_tracker.result(),
+        }
+
+    def sampling(self, z_mean, z_log_var):
+        epsilon = tf.random.normal(shape=tf.shape(z_mean))
+        return z_mean + tf.exp(0.5 * z_log_var) * epsilon
+        
+# =========================
+# MAIN FUNCTION (VAE PIPELINE)
 # =========================
 def main():
 
@@ -464,7 +576,7 @@ def main():
     # =========================
     # TRAIN OR LOAD VAE
     # =========================
-    latent_dim = 20
+    latent_dim = 8
 
     encoder_path = os.path.join(CACHE_DIR, "vae_encoder.keras")
     decoder_path = os.path.join(CACHE_DIR, "vae_decoder.keras")
@@ -483,33 +595,9 @@ def main():
         encoder = build_encoder(latent_dim)
         decoder = build_decoder(latent_dim)
 
-        # ---------------------------------
-        # Functional API inputs
-        # ---------------------------------
-        x_input = tf.keras.Input(shape=(28,28,1))
-        y_input = tf.keras.Input(shape=(10,))
+        vae = VAE(encoder, decoder)
 
-        # ---------------------------------
-        # Encoder
-        # ---------------------------------
-        z_mean, z_log_var = encoder([x_input, y_input])
-
-        # Sampling
-        z = tf.keras.layers.Lambda(sampling)([z_mean, z_log_var])
-
-        # Decoder
-        reconstructed = decoder([z, y_input])
-
-        # ---------------------------------
-        # Build VAE
-        # ---------------------------------
-        vae = tf.keras.Model([x_input, y_input], reconstructed)
-
-        vae.compile(
-            optimizer='adam',
-            loss='mse'
-        )
-
+        vae.compile(optimizer=tf.keras.optimizers.Adam(1e-4))
         # ---------------------------------
         # Train
         # ---------------------------------
@@ -518,13 +606,13 @@ def main():
         vae_callback = VAEVisualizationCallback(
             decoder,
             latent_dim=latent_dim,
-            interval=100
+            interval=10
         )
 
         vae.fit(
             [x_vae, y_vae_onehot],
             x_vae,
-            epochs=1000,
+            epochs=100,
             batch_size=128,
             verbose=1,
             callbacks=[vae_callback]
@@ -542,7 +630,7 @@ def main():
     # GENERATE SYNTHETIC DATA
     # =========================
     samples_per_digit = 1000
-    latent_dim = 20
+    latent_dim = 8
 
     gen_path = "vae_generated.npy"
     cached = load_cache(gen_path)
@@ -560,6 +648,21 @@ def main():
         for digit in range(10):
 
             z = np.random.normal(0,1,(samples_per_digit, latent_dim))
+            idx = np.where(y_vae == digit)[0]
+
+            chosen = np.random.choice(idx, samples_per_digit)
+
+            real_imgs = x_vae[chosen]
+            real_labels = y_vae_onehot[chosen]
+
+            z_mean, z_log_var = encoder.predict(
+                [real_imgs, real_labels],
+                verbose=0
+            )
+
+            z = z_mean + np.exp(0.5 * z_log_var) * np.random.normal(
+                size=z_mean.shape
+            )
             labels = np.full(samples_per_digit, digit)
             labels_onehot = tf.keras.utils.to_categorical(labels, 10)
 
