@@ -355,7 +355,7 @@ def build_discriminator():
     )
 
     x = tf.keras.layers.Conv2D(
-        64,
+        32,
         3,
         strides=2,
         padding="same"
@@ -364,7 +364,7 @@ def build_discriminator():
     x = tf.keras.layers.LeakyReLU(0.2)(x)
 
     x = tf.keras.layers.Conv2D(
-        128,
+        64,
         3,
         strides=2,
         padding="same"
@@ -467,8 +467,7 @@ def train_cgan(
         real_imgs = x_train[idx]
         real_labels = y_train_onehot[idx]
 
-        real_y = np.ones((half_batch, 1))
-
+        real_y = np.ones((half_batch, 1)) * 0.9
         # -------------------------
         # FAKE IMAGES
         # -------------------------
@@ -541,10 +540,12 @@ def train_cgan(
         
         discriminator.trainable = False
 
-        g_loss = gan.train_on_batch(
-            [noise, sampled_labels],
-            valid_y
-        )
+        for _ in range(2):
+
+            g_loss = gan.train_on_batch(
+                [noise, sampled_labels],
+                valid_y
+            )
 
         # Save losses
         d_losses.append(d_loss[0])
@@ -617,6 +618,135 @@ def train_cgan(
 
     print(f"[INFO] Saved GAN loss curve: {path}")
 
+# =========================
+# SHOW DISCRIMINATOR MISTAKES
+# =========================
+def show_discriminator_mistakes(
+    generator,
+    discriminator,
+    real_imgs,
+    real_labels_int,
+    latent_dim=100,
+    n=100,
+    run_id=1
+):
+
+    # -------------------------
+    # Generate fake images
+    # -------------------------
+    noise = np.random.normal(
+        0,
+        1,
+        (n, latent_dim)
+    )
+
+    fake_digits = np.random.randint(
+        0,
+        10,
+        n
+    )
+
+    fake_labels = tf.keras.utils.to_categorical(
+        fake_digits,
+        10
+    )
+
+    fake_imgs = generator.predict(
+        [noise, fake_labels],
+        verbose=0
+    )
+
+    fake_scores = discriminator.predict(
+        [fake_imgs, fake_labels],
+        verbose=0
+    ).reshape(-1)
+
+    # Fake classified as real
+    fake_wrong_idx = np.where(
+        fake_scores > 0.7
+    )[0]
+
+    # -------------------------
+    # Real images
+    # -------------------------
+    idx = np.random.randint(
+        0,
+        real_imgs.shape[0],
+        n
+    )
+
+    real_sample = real_imgs[idx]
+
+    real_digits = real_labels_int[idx]
+
+    real_labels = tf.keras.utils.to_categorical(
+        real_digits,
+        10
+    )
+
+    real_scores = discriminator.predict(
+        [real_sample, real_labels],
+        verbose=0
+    ).reshape(-1)
+
+    # Real classified as fake
+    real_wrong_idx = np.where(
+        real_scores < 0.3
+    )[0]
+
+    # -------------------------
+    # Visualization
+    # -------------------------
+    plt.figure(figsize=(14,6))
+
+    # Fake mistakes
+    for i, id_ in enumerate(fake_wrong_idx[:8]):
+
+        plt.subplot(2,8,i+1)
+
+        plt.imshow(
+            fake_imgs[id_].squeeze(),
+            cmap='gray'
+        )
+
+        plt.title(
+            f"Fake→Real\n{fake_scores[id_]:.2f}",
+            fontsize=8,
+            color='green'
+        )
+
+        plt.axis('off')
+
+    # Real mistakes
+    for i, id_ in enumerate(real_wrong_idx[:8]):
+
+        plt.subplot(2,8,8+i+1)
+
+        plt.imshow(
+            real_sample[id_].squeeze(),
+            cmap='gray'
+        )
+
+        plt.title(
+            f"Real→Fake\n{real_scores[id_]:.2f}",
+            fontsize=8,
+            color='red'
+        )
+
+        plt.axis('off')
+
+    plt.tight_layout()
+
+    path = os.path.join(
+        OUTPUT_DIR,
+        f"gan_mistakes_run_{run_id}.png"
+    )
+
+    plt.savefig(path, dpi=300)
+    plt.close()
+
+    print(f"[INFO] Saved discriminator mistakes: {path}")
+    
 # =========================
 # TRAIN CLASSIFIER WITH GENERATED DATA
 # =========================
@@ -852,7 +982,7 @@ def main():
                     gan,
                     x_gan,
                     y_gan,
-                    epochs=2000,
+                    epochs=800,
                     batch_size=128,
                     latent_dim=latent_dim,
                     run_id=run+1
@@ -905,6 +1035,18 @@ def main():
                 run_labels[:10],
                 filename=f"gan_run_{run+1}.png",
                 n=10
+            )
+            
+            # -------------------------
+            # Discriminator Analysis
+            # -------------------------
+            show_discriminator_mistakes(
+                generator,
+                discriminator,
+                x_gan,
+                y_gan,
+                latent_dim=latent_dim,
+                run_id=run+1
             )
 
             generated_images.append(run_images)
