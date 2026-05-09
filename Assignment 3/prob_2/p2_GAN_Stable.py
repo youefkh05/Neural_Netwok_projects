@@ -67,9 +67,11 @@ def load_mnist():
 
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
  
-    # KEEP in [0,1] for GAN
-    x_train = x_train.astype("float32") / 255.0
-    x_test = x_test.astype("float32") / 255.0
+    # KEEP in [-1,1] for GAN
+
+    
+    x_train = (x_train.astype("float32") - 127.5) / 127.5
+    x_test = (x_test.astype("float32") - 127.5) / 127.5
 
     x_train = x_train[..., None]
     x_test = x_test[..., None]
@@ -100,7 +102,8 @@ def save_images_grid(images, labels, aug_types=None, filename="grid.png", n=10):
 
     for i in range(n):
         plt.subplot(1, n, i+1)
-        plt.imshow(images[i].squeeze(), cmap='gray')
+        img = (images[i].squeeze() + 1) / 2
+        plt.imshow(img, cmap='gray')
 
         if aug_types is not None:
             title = f"{labels[i]}\n{aug_types[i][:25]}..."
@@ -291,11 +294,11 @@ def build_generator(latent_dim=100):
         [z_input, label_input]
     )
 
-    x = tf.keras.layers.Dense(7*7*256)(x)
+    x = tf.keras.layers.Dense(7*7*512)(x)
     x = tf.keras.layers.BatchNormalization()(x)
     x = tf.keras.layers.ReLU()(x)
 
-    x = tf.keras.layers.Reshape((7,7,256))(x)
+    x = tf.keras.layers.Reshape((7,7,512))(x)
 
     x = tf.keras.layers.Conv2DTranspose(
         128,
@@ -321,7 +324,7 @@ def build_generator(latent_dim=100):
         1,
         3,
         padding="same",
-        activation="sigmoid"
+        activation="tanh"
     )(x)
 
     return tf.keras.Model(
@@ -374,7 +377,7 @@ def build_discriminator():
 
     x = tf.keras.layers.Flatten()(x)
 
-    x = tf.keras.layers.Dropout(0.3)(x)
+    x = tf.keras.layers.Dropout(0.1)(x)
 
     output = tf.keras.layers.Dense(
         1,
@@ -540,11 +543,16 @@ def train_cgan(
         
         discriminator.trainable = False
 
-        for _ in range(2):
-
+        if d_loss[1] > 80:
+            for _ in range(3):
+                g_loss = gan.train_on_batch(
+                    [noise, sampled_labels],
+                    valid_y
+                )
+        else:
             g_loss = gan.train_on_batch(
-                [noise, sampled_labels],
-                valid_y
+                    [noise, sampled_labels],
+                    valid_y
             )
 
         # Save losses
@@ -982,7 +990,7 @@ def main():
                     gan,
                     x_gan,
                     y_gan,
-                    epochs=800,
+                    epochs=1000,
                     batch_size=128,
                     latent_dim=latent_dim,
                     run_id=run+1
