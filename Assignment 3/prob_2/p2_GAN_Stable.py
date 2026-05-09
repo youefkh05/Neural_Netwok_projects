@@ -565,7 +565,7 @@ def train_cgan(
         # =====================================
         # VISUALIZATION
         # =====================================
-        if epoch % 20 == 0:
+        if epoch % 100 == 0:
 
             test_noise = np.random.normal(
                 0,
@@ -852,7 +852,7 @@ def main():
                     gan,
                     x_gan,
                     y_gan,
-                    epochs=200,
+                    epochs=2000,
                     batch_size=128,
                     latent_dim=latent_dim,
                     run_id=run+1
