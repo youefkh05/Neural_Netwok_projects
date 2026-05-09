@@ -4,7 +4,6 @@ import csv
 import pandas as pd
 import numpy as np
 import tensorflow as tf
-from keras import ops
 from tensorflow.keras.datasets import mnist
 import matplotlib.pyplot as plt
 import time
@@ -27,12 +26,13 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 # =========================
 class VAEVisualizationCallback(tf.keras.callbacks.Callback):
 
-    def __init__(self, decoder, latent_dim=20, interval=20):
+    def __init__(self, decoder, latent_dim=20, interval=20, run_id=1):
         super().__init__()
 
         self.decoder = decoder
         self.latent_dim = latent_dim
         self.interval = interval
+        self.run_id = run_id
 
     def on_epoch_end(self, epoch, logs=None):
 
@@ -61,7 +61,7 @@ class VAEVisualizationCallback(tf.keras.callbacks.Callback):
 
         path = os.path.join(
             OUTPUT_DIR,
-            f"vae_epoch_{epoch+1}.png"
+            f"vae_run_{self.run_id}_epoch_{epoch+1}.png"
         )
 
         plt.savefig(path, dpi=300)
@@ -271,19 +271,7 @@ def augment_dataset(x, y, factor=10, cache_name=None):
 
     return x_aug, y_aug, aug_types
 
-# =========================
-# Split generated images by classifier confidence
-# =========================
-def split_by_confidence(fake_imgs, classifier):
 
-    preds = classifier.predict(fake_imgs, verbose=0)
-    conf = np.max(preds, axis=1)
-
-    set_A = fake_imgs
-    set_B = fake_imgs[conf >= 0.9]
-    set_C = fake_imgs[(conf >= 0.6) & (conf < 0.9)]
-
-    return set_A, set_B, set_C
 # =========================
 # Build a simple LeNet-like CNN
 # =========================
@@ -321,30 +309,25 @@ def plot_results_from_csv(csv_path):
 
     plt.figure(figsize=(8,6))
 
-    # Unique real dataset sizes
-    real_values = sorted(df["Real per digit"].unique())
+    plt.bar(
+        df["Experiment"],
+        df["Accuracy"]
+    )
 
-    for real_n in real_values:
-        subset = df[df["Real per digit"] == real_n]
-
-        plt.plot(
-            subset["GAN per digit"],
-            subset["Accuracy"],
-            marker='o',
-            label=f"Real={real_n}"
-        )
-
-    plt.title("Accuracy vs VAE Generated Data")
-    plt.xlabel("Generated Samples per Digit")
     plt.ylabel("Accuracy")
-    plt.legend()
-    plt.grid(True)
+    plt.title("VAE Synthetic Data Results")
 
-    path = os.path.join(OUTPUT_DIR, "results_plot.png")
+    plt.xticks(rotation=20)
+
+    path = os.path.join(
+        OUTPUT_DIR,
+        "vae_results_plot.png"
+    )
+
     plt.savefig(path, dpi=300)
     plt.close()
 
-    print(f"[INFO] Saved results plot: {path}")
+    print(f"[INFO] Saved plot: {path}")
 
 # =========================
 #  Build Encoder (for VAE)
@@ -509,7 +492,44 @@ class VAE(tf.keras.Model):
     def sampling(self, z_mean, z_log_var):
         epsilon = tf.random.normal(shape=tf.shape(z_mean))
         return z_mean + tf.exp(0.5 * z_log_var) * epsilon
-        
+
+# =========================
+# Train classifier with real + generated data
+# ========================= 
+def train_classifier_with_generated(
+    x_real,
+    y_real,
+    x_fake,
+    y_fake,
+    x_test,
+    y_test,
+    name="set"
+):    
+
+    x_final = np.concatenate([x_real, x_fake])
+    y_final = np.concatenate([y_real, y_fake])
+
+    idx = np.random.permutation(len(x_final))
+
+    x_final = x_final[idx]
+    y_final = y_final[idx]
+
+    model = build_lenet()
+
+    history = model.fit(
+        x_final,
+        y_final,
+        epochs=30,
+        batch_size=64,
+        verbose=1
+    )
+
+    _, acc = model.evaluate(x_test, y_test, verbose=0)
+
+    print(f"[RESULT] {name} Accuracy = {acc*100:.2f}%")
+
+    return acc       
+
 # =========================
 # MAIN FUNCTION (VAE PIPELINE)
 # =========================
@@ -520,7 +540,7 @@ def main():
     # =========================
     # LOAD DATA (cached)
     # =========================
-    x_train, y_train, _, _ = load_mnist()
+    x_train, y_train, x_test, y_test = load_mnist()
     print(f"[INFO] Train shape: {x_train.shape}")
 
     # =========================
@@ -577,117 +597,403 @@ def main():
     # TRAIN OR LOAD VAE
     # =========================
     latent_dim = 8
-
-    encoder_path = os.path.join(CACHE_DIR, "vae_encoder.keras")
-    decoder_path = os.path.join(CACHE_DIR, "vae_decoder.keras")
-
-    if os.path.exists(encoder_path) and os.path.exists(decoder_path):
-        print("[INFO] Loading cached VAE...")
-        encoder = tf.keras.models.load_model(encoder_path)
-        decoder = tf.keras.models.load_model(decoder_path)
-
-    else:
-        print("[INFO] Training VAE...")
-
-        # One-hot labels
-        y_vae_onehot = tf.keras.utils.to_categorical(y_vae, 10)
-
-        encoder = build_encoder(latent_dim)
-        decoder = build_decoder(latent_dim)
-
-        vae = VAE(encoder, decoder)
-
-        vae.compile(optimizer=tf.keras.optimizers.Adam(1e-4))
-        # ---------------------------------
-        # Train
-        # ---------------------------------
-        start = time.time()
-
-        vae_callback = VAEVisualizationCallback(
-            decoder,
-            latent_dim=latent_dim,
-            interval=10
-        )
-
-        vae.fit(
-            [x_vae, y_vae_onehot],
-            x_vae,
-            epochs=100,
-            batch_size=128,
-            verbose=1,
-            callbacks=[vae_callback]
-        )
-
-        train_time = time.time() - start
-        print(f"[TIME] VAE training time: {train_time:.2f} sec")
-
-        encoder.save(encoder_path)
-        decoder.save(decoder_path)
-
-        print("[INFO] VAE models saved")
+    
+    y_vae_onehot = tf.keras.utils.to_categorical(y_vae, 10)
+      
         
     # =========================
     # GENERATE SYNTHETIC DATA
     # =========================
+
     samples_per_digit = 1000
     latent_dim = 8
+    num_runs = 5
 
-    gen_path = "vae_generated.npy"
+    gen_path = f"vae_generated_ld{latent_dim}_{num_runs}runs.npy"
+
     cached = load_cache(gen_path)
 
     if cached is not None:
+
         generated_images = cached["x"]
         generated_labels = cached["y"]
 
     else:
+
         print("[INFO] Generating synthetic data...")
 
         generated_images = []
         generated_labels = []
 
-        for digit in range(10):
-
-            z = np.random.normal(0,1,(samples_per_digit, latent_dim))
-            idx = np.where(y_vae == digit)[0]
-
-            chosen = np.random.choice(idx, samples_per_digit)
-
-            real_imgs = x_vae[chosen]
-            real_labels = y_vae_onehot[chosen]
-
-            z_mean, z_log_var = encoder.predict(
-                [real_imgs, real_labels],
-                verbose=0
+        # =========================================
+        # 5 DIFFERENT RUNS
+        # =========================================
+        
+        for run in range(num_runs):
+            
+            encoder_path = os.path.join(
+                CACHE_DIR,
+                f"vae_encoder_run_{run+1}.keras"
             )
 
-            z = z_mean + np.exp(0.5 * z_log_var) * np.random.normal(
-                size=z_mean.shape
+            decoder_path = os.path.join(
+                CACHE_DIR,
+                f"vae_decoder_run_{run+1}.keras"
             )
-            labels = np.full(samples_per_digit, digit)
-            labels_onehot = tf.keras.utils.to_categorical(labels, 10)
 
-            imgs = decoder.predict([z, labels_onehot], verbose=0)
 
-            generated_images.append(imgs)
-            generated_labels.append(labels)
+            # ---------------------------------
+            # LOAD OR TRAIN VAE
+            # ---------------------------------
+            if os.path.exists(encoder_path) and os.path.exists(decoder_path):
 
-        generated_images = np.concatenate(generated_images)
-        generated_labels = np.concatenate(generated_labels)
+                print(f"[INFO] Loading cached VAE Run {run+1}")
 
-        save_cache(gen_path, {
-            "x": generated_images,
-            "y": generated_labels
-        })
+                encoder = tf.keras.models.load_model(
+                    encoder_path
+                )
+
+                decoder = tf.keras.models.load_model(
+                    decoder_path
+                )
+
+            else:
+
+                print(f"[INFO] Training VAE Run {run+1}")
+
+                encoder = build_encoder(latent_dim)
+                decoder = build_decoder(latent_dim)
+
+                vae = VAE(encoder, decoder)
+
+                vae.compile(
+                    optimizer=tf.keras.optimizers.Adam(1e-4)
+                )
+
+                vae_callback = VAEVisualizationCallback(
+                    decoder,
+                    latent_dim=latent_dim,
+                    interval=25,
+                    run_id=run+1
+                )
+
+                vae.fit(
+                    [x_vae, y_vae_onehot],
+                    x_vae,
+                    epochs=100,
+                    batch_size=128,
+                    verbose=1,
+                    callbacks=[vae_callback]
+                )
+
+                encoder.save(encoder_path)
+                decoder.save(decoder_path)
+
+                print(f"[INFO] Saved VAE Run {run+1}")
+
+            # ---------------------------------
+            # TEMP STORAGE FOR CURRENT RUN
+            # ---------------------------------
+            run_images = []
+            run_labels = []
+
+            # ---------------------------------
+            # GENERATE 1000/digit
+            # ---------------------------------
+            for digit in range(10):
+
+                labels = np.full(samples_per_digit, digit)
+
+                labels_onehot = tf.keras.utils.to_categorical(
+                    labels,
+                    10
+                )
+
+                z = np.random.normal(
+                    0,
+                    1,
+                    (samples_per_digit, latent_dim)
+                )
+
+                imgs = decoder.predict(
+                    [z, labels_onehot],
+                    verbose=0
+                )
+
+                run_images.append(imgs)
+                run_labels.append(labels)
+
+            # ---------------------------------
+            # CONCAT CURRENT RUN
+            # ---------------------------------
+            run_images = np.concatenate(run_images)
+            run_labels = np.concatenate(run_labels)
+
+            # ---------------------------------
+            # SAVE VISUALIZATION OF THIS RUN
+            # ---------------------------------
+            save_images_grid(
+                run_images[:10],
+                run_labels[:10],
+                filename=f"vae_run_{run+1}.png",
+                n=10
+            )
+
+            print(f"[INFO] Saved VAE run {run+1} visualization")
+
+            # ---------------------------------
+            # ADD TO FINAL DATASET
+            # ---------------------------------
+            generated_images.append(run_images)
+            generated_labels.append(run_labels)
+        
+        # =========================================
+        # FINAL CONCATENATION
+        # =========================================
+        generated_images = np.concatenate(
+            generated_images
+        )
+
+        generated_labels = np.concatenate(
+            generated_labels
+        )
+
+        save_cache(
+            gen_path,
+            {
+                "x": generated_images,
+                "y": generated_labels
+            }
+        )
 
     print(f"[INFO] Generated dataset: {generated_images.shape}")
+  
+    
+    # =========================
+    # TRAIN / LOAD 350-ONLY CLASSIFIER
+    # =========================
 
-    # Visualize some generated samples
+    classifier_path = os.path.join(
+        CACHE_DIR,
+        "lenet_350_only.keras"
+    )
+
+    if os.path.exists(classifier_path):
+
+        print("[INFO] Loading cached 350-only classifier...")
+
+        classifier = tf.keras.models.load_model(
+            classifier_path
+        )
+
+    else:
+
+        print("[INFO] Training 350-only classifier...")
+
+        classifier = build_lenet()
+
+        classifier.fit(
+            x_small,
+            y_small,
+            epochs=30,
+            batch_size=64,
+            verbose=1
+        )
+
+        classifier.save(classifier_path)
+
+        print("[INFO] Saved 350-only classifier")
+        
+    # =========================
+    # CLASSIFY GENERATED DATA
+    # =========================
+
+    preds = classifier.predict(
+        generated_images,
+        verbose=0
+    )
+
+    confidence = np.max(preds, axis=1)
+
+    predicted_labels = np.argmax(preds, axis=1)
+
+    print(f"[INFO] Confidence stats:")
+    print(f"Min  = {confidence.min():.3f}")
+    print(f"Max  = {confidence.max():.3f}")
+    print(f"Mean = {confidence.mean():.3f}")    
+    
+    # =========================
+    # CREATE SYNTHETIC SETS
+    # =========================
+
+    # ---------- Set A ----------
+    x_setA = generated_images
+    y_setA = generated_labels
+
+    # ---------- Set B ----------
+    idx_B = (
+        (confidence >= 0.9) &
+        (predicted_labels == generated_labels)
+    )
+
+    x_setB = generated_images[idx_B]
+    y_setB = generated_labels[idx_B]
+
+    # ---------- Set C ----------
+    idx_C = (
+        (confidence >= 0.6) &
+        (confidence < 0.9) &
+        (predicted_labels == generated_labels)
+    )
+
+    x_setC = generated_images[idx_C]
+    y_setC = generated_labels[idx_C]
+
+    print(f"[INFO] Set A: {len(x_setA)}")
+    print(f"[INFO] Set B: {len(x_setB)}")
+    print(f"[INFO] Set C: {len(x_setC)}")
+    
+    # =========================
+    # VISUALIZE SYNTHETIC SETS
+    # =========================
+    
     save_images_grid(
-        generated_images[:10],
-        generated_labels[:10],
-        filename="vae_generated_samples.png",
+        x_setA[:10],
+        y_setA[:10],
+        filename="vae_setA.png",
         n=10
     )
+
+    save_images_grid(
+        x_setB[:10],
+        y_setB[:10],
+        filename="vae_setB.png",
+        n=10
+    )
+
+    save_images_grid(
+        x_setC[:10],
+        y_setC[:10],
+        filename="vae_setC.png",
+        n=10
+    )
+    
+    # =========================
+    # CLASSIFIER EXPERIMENTS
+    # =========================
+
+    results = []
+
+    # ----- Baseline 350 -----
+    baseline_model = build_lenet()
+
+    baseline_model.fit(
+        x_small,
+        y_small,
+        epochs=30,
+        batch_size=64,
+        verbose=1
+    )
+
+    _, baseline_acc = baseline_model.evaluate(
+        x_test,
+        y_test,
+        verbose=0
+    )
+
+    print(f"[BASELINE 350] {baseline_acc*100:.2f}%")
+
+    results.append(["350 Real", baseline_acc])
+
+    # ----- Set A -----
+    acc_A = train_classifier_with_generated(
+        x_small,
+        y_small,
+        x_setA,
+        y_setA,
+        x_test,
+        y_test,
+        "Set A"
+    )
+
+    results.append(["Set A", acc_A])
+
+    # ----- Set B -----
+    acc_B = train_classifier_with_generated(
+        x_small,
+        y_small,
+        x_setB,
+        y_setB,
+        x_test,
+        y_test,
+        "Set B"
+    )
+
+    results.append(["Set B", acc_B])
+
+    # ----- Set C -----
+    acc_C = train_classifier_with_generated(
+        x_small,
+        y_small,
+        x_setC,
+        y_setC,
+        x_test,
+        y_test,
+        "Set C"
+    )
+
+    results.append(["Set C", acc_C])
+    
+    # =========================
+    # BASELINE 1000 REAL
+    # =========================
+
+    x_1000, y_1000 = get_reduced_dataset(
+        x_train,
+        y_train,
+        1000,
+        cache_name="real_1000.npy"
+    )
+
+    model_1000 = build_lenet()
+
+    model_1000.fit(
+        x_1000,
+        y_1000,
+        epochs=30,
+        batch_size=64,
+        verbose=1
+    )
+
+    _, acc_1000 = model_1000.evaluate(
+        x_test,
+        y_test,
+        verbose=0
+    )
+
+    print(f"[BASELINE 1000] {acc_1000*100:.2f}%")
+
+    results.append(["1000 Real", acc_1000])
+        
+    print("\n===== FINAL RESULTS =====")
+
+    for name, acc in results:
+        print(f"{name}: {acc*100:.2f}%")
+    
+    df = pd.DataFrame(
+        results,
+        columns=["Experiment", "Accuracy"]
+    )
+
+    csv_path = os.path.join(
+        OUTPUT_DIR,
+        "vae_results.csv"
+    )
+
+    df.to_csv(csv_path, index=False)
+
+    print(f"[INFO] Saved results CSV: {csv_path}")    
+    
     print("===== DONE =====")
     
 # =========================
