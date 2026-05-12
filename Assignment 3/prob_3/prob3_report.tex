@@ -1,0 +1,756 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ────────────────────────────────────────────────────────────────
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{hypcap}
+\usepackage{bookmark}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{lmodern}
+\usepackage{cmap}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{colortbl}
+
+% Soft pastel colors for headings
+\definecolor{softblue}{HTML}{6B9AC4}
+\definecolor{softteal}{HTML}{7FB3B3}
+\definecolor{softpurple}{HTML}{B39EB5}
+\definecolor{low}{HTML}{F8E6E6}
+\definecolor{mid}{HTML}{E6F2F2}
+\definecolor{high}{HTML}{D6EAF8}
+\definecolor{best}{HTML}{A9CCE3}
+
+% Table and long table support
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{comment}
+\usepackage{chngcntr}
+\usepackage{placeins}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+
+% ── Hyperref setup ───────────────────────────────────────────────────────────
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    citecolor=black
+}
+
+% ── Section formatting ───────────────────────────────────────────────────────
+\titleformat{\section}{\large\bfseries\color{softblue}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% ── Header / Footer ──────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small Neural Networks -- Assignment 3}
+\lhead{\small Cairo University}
+\cfoot{\thepage}
+\setlength{\headheight}{14pt}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Column types ─────────────────────────────────────────────────────────────
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\graphicspath{{./}}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+
+% ── Title Page ───────────────────────────────────────────────────────────────
+\begin{titlepage}
+\centering
+\vspace*{0.5cm}
+
+{\Large\bfseries Cairo University\\}
+\vspace{0.2cm}
+{\large Faculty of Engineering\\}
+\vspace{0.2cm}
+{\normalsize Electronics and Electrical Communications Engineering\\}
+
+\vspace{1.2cm}
+\rule{0.8\textwidth}{1.5pt}\\[0.4cm]
+{\LARGE\bfseries Assignment 3}\\[0.3cm]
+{\large\bfseries ELC 4028 -- Artificial Neural Networks}\\[0.2cm]
+{\large\bfseries Problem 3: Impact of Attention Mechanisms}\\[0.2cm]
+\rule{0.8\textwidth}{1.5pt}
+
+\vspace{1.2cm}
+
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{ID} & \textbf{Section} & \textbf{Name} \\
+\hline
+9220399 & 2 & Shahd Gamal Mahmoud Hussein \\
+\hline
+9220411 & 2 & Salah El-Din Hassan Hassan Mohamed \\
+\hline
+9220984 & 4 & Yousef Khaled Omar Mahmoud \\
+\hline
+\end{tabular}
+
+\vspace{1.2cm}
+
+\textit{Supervised by:}\\[0.3cm]
+\textit{Dr.\ Mohsen Rashwan}\\
+\textit{Dr.\ Mohamed Motaz}
+
+\vfill
+\end{titlepage}
+
+% ── Table of Contents ────────────────────────────────────────────────────────
+\setcounter{tocdepth}{3}
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+\newpage
+
+% ══════════════════════════════════════════════════════════════════════════════
+%  PART (a)
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Part (a): CNN vs.\ Attention CNN on ReducedMNIST}
+
+\subsection{Introduction}
+
+This part builds two CNN classifiers on the ReducedMNIST dataset — a subset of
+the standard MNIST handwritten-digit benchmark — and measures the impact of
+inserting a spatial attention mechanism. The two models are:
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Baseline CNN} — a compact two-block convolutional network with no
+          attention, similar in spirit to LeNet-5.
+    \item \textbf{Attention CNN} — the same architecture augmented with a
+          \texttt{SpatialAttention} layer after each convolutional block.
+\end{enumerate}
+
+\subsection{Dataset}
+
+ReducedMNIST is a down-sampled version of MNIST consisting of 28$\times$28 greyscale
+images of handwritten digits (0--9). The dataset is split into training and validation
+sets, with inputs normalised to $[0,1]$.
+
+\subsection{Network Architectures}
+
+\subsubsection{Baseline CNN}
+
+The baseline model is a compact sequential network. Table~\ref{tab:a_baseline_arch}
+shows its layer structure extracted from the model summary.
+
+\begin{table}[H]
+\centering
+\caption{Baseline CNN architecture for ReducedMNIST}
+\label{tab:a_baseline_arch}
+\begin{tabular}{L{5cm} C{3.5cm} C{2.5cm}}
+\toprule
+\rowcolor{best}
+\textbf{Layer (type)} & \textbf{Output Shape} & \textbf{Param \#} \\
+\midrule
+Conv2D 3$\times$3, 4 filters, ReLU  & (None, 26, 26, 4)  & 40 \\
+\rowcolor{high}
+MaxPooling2D 2$\times$2              & (None, 13, 13, 4)  & 0 \\
+Conv2D 3$\times$3, 8 filters, ReLU  & (None, 11, 11, 8)  & 296 \\
+\rowcolor{high}
+MaxPooling2D 2$\times$2              & (None, 5, 5, 8)    & 0 \\
+Flatten                              & (None, 200)         & 0 \\
+\rowcolor{high}
+Dense (60, ReLU)                     & (None, 60)          & 12,060 \\
+Dense (10, Softmax)                  & (None, 10)          & 610 \\
+\midrule
+\rowcolor{best}
+\multicolumn{2}{l}{\textbf{Total trainable parameters}} & \textbf{13,006} \\
+\multicolumn{2}{l}{Non-trainable parameters} & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Spatial Attention Mechanism}
+
+The \texttt{SpatialAttention} layer generates a 2D attention mask from the feature
+map by applying average-pooling and max-pooling along the channel dimension,
+concatenating the results, and passing them through a $3\times3$ (or $7\times7$)
+sigmoid convolution:
+
+\begin{equation}
+    \mathbf{M} = \sigma\!\left(
+        \text{Conv}\!\left(
+            \left[\,\text{AvgPool}_{C}(\mathbf{F});\;
+                  \text{MaxPool}_{C}(\mathbf{F})\,\right]
+        \right)
+    \right), \qquad
+    \mathbf{F}' = \mathbf{F} \odot \mathbf{M}
+\end{equation}
+
+Each \texttt{SpatialAttention} module adds \textbf{19 parameters}:
+$(3\times3\times2)+1 = 19$.
+
+\subsubsection{Attention CNN}
+
+The attention model inserts a \texttt{SpatialAttention} layer immediately after
+each convolutional layer, before pooling. Table~\ref{tab:a_attention_arch} shows
+the full structure.
+
+\begin{table}[H]
+\centering
+\caption{Attention CNN architecture for ReducedMNIST}
+\label{tab:a_attention_arch}
+\begin{tabular}{L{5.5cm} C{3.5cm} C{2cm}}
+\toprule
+\rowcolor{best}
+\textbf{Layer (type)} & \textbf{Output Shape} & \textbf{Param \#} \\
+\midrule
+Conv2D 3$\times$3, 4 filters, ReLU        & (None, 26, 26, 4)  & 40 \\
+\rowcolor{mid}
+\textbf{SpatialAttention}                  & (None, 26, 26, 4)  & \textbf{19} \\
+MaxPooling2D 2$\times$2                    & (None, 13, 13, 4)  & 0 \\
+\rowcolor{high}
+Conv2D 3$\times$3, 8 filters, ReLU        & (None, 11, 11, 8)  & 296 \\
+\rowcolor{mid}
+\textbf{SpatialAttention}                  & (None, 11, 11, 8)  & \textbf{19} \\
+MaxPooling2D 2$\times$2                    & (None, 5, 5, 8)    & 0 \\
+\rowcolor{high}
+Flatten                                    & (None, 200)         & 0 \\
+Dense (60, ReLU)                           & (None, 60)          & 12,060 \\
+\rowcolor{high}
+Dense (10, Softmax)                        & (None, 10)          & 610 \\
+\midrule
+\rowcolor{best}
+\multicolumn{2}{l}{\textbf{Total trainable parameters}} & \textbf{13,044} \\
+\multicolumn{2}{l}{Non-trainable parameters} & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Parameter Overhead of Attention}
+
+Two \texttt{SpatialAttention} modules add $2 \times 19 = \mathbf{+38}$ parameters
+on top of 13,006 — an overhead of $\approx 0.29\%$.
+
+\subsection{Training Configuration}
+
+Both models are trained under identical conditions summarised in
+Table~\ref{tab:a_hyperparams}.
+
+\begin{table}[H]
+\centering
+\caption{Training hyperparameters for Part (a)}
+\label{tab:a_hyperparams}
+\begin{tabular}{L{5.5cm} C{5cm}}
+\toprule
+\rowcolor{best}
+\textbf{Hyperparameter} & \textbf{Value} \\
+\midrule
+Optimizer         & Adam \\
+\rowcolor{high}
+Loss function     & Sparse categorical cross-entropy \\
+Epochs            & 10 \\
+\rowcolor{high}
+Input image size  & 28 $\times$ 28 $\times$ 1 \\
+Number of classes & 10 (digits 0--9) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Training Logs}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{training_baseline_a.jpg}
+    \caption{Baseline CNN training log (ReducedMNIST).}
+    \label{fig:a_log_baseline}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{training_attention_a.jpg}
+    \caption{Attention CNN training log (ReducedMNIST).}
+    \label{fig:a_log_attention}
+\end{figure}
+
+\subsection{Results}
+
+\subsubsection{Training and Validation Curves}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{baseline_curves.png}
+    \caption{Baseline CNN accuracy and loss curves (ReducedMNIST).}
+    \label{fig:a_curves_baseline}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{attention_curves.png}
+    \caption{Attention CNN accuracy and loss curves (ReducedMNIST).}
+    \label{fig:a_curves_attention}
+\end{figure}
+
+\subsubsection{Quantitative Comparison}
+
+\begin{table}[H]
+\centering
+\caption{Final-epoch performance: Baseline vs.\ Attention CNN (ReducedMNIST)}
+\label{tab:a_results}
+\begin{tabular}{L{4.5cm} C{2.8cm} C{2.8cm} C{2.3cm}}
+\toprule
+\rowcolor{best}
+\textbf{Metric} & \textbf{Baseline CNN} & \textbf{Attention CNN} & \textbf{Difference} \\
+\midrule
+Train Accuracy (\%)    & 97.46 & 97.52 & \textcolor{softblue}{+0.06} \\
+\rowcolor{high}
+Test Accuracy (\%)     & 96.65 & 96.58 & $-$0.07 \\
+Train Loss             & 0.0832 & 0.0796 & \textcolor{softblue}{$-$0.0036} \\
+\rowcolor{high}
+Test Loss              & 0.1032 & 0.1166 & $+$0.0134 \\
+Training Time (s)      & 11.75 & 21.65 & $+$9.90 \\
+\rowcolor{high}
+Train-Test Acc.\ Gap   & 0.81\% & 0.94\% & $+$0.13 pp \\
+Model Parameters       & 13,006 & 13,044 & +38 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{results_a.jpg}
+    \caption{Terminal output of the comprehensive model comparison (ReducedMNIST).}
+    \label{fig:a_results_terminal}
+\end{figure}
+
+\subsubsection{Key Observations}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Near-identical accuracy:} Both models achieve $\approx$96.6\%
+          test accuracy. The difference ($-$0.07 pp) is negligible and likely within
+          run-to-run variance.
+    \item \textbf{Winner in test accuracy: Baseline} (96.65\% vs.\ 96.58\%).
+    \item \textbf{Winner in training time: Baseline} (11.75\,s vs.\ 21.65\,s) —
+          the attention module roughly doubles per-epoch cost on this small model.
+    \item \textbf{Generalisation gap:} Both models generalise well (gap $<1\%$),
+          indicating that ReducedMNIST is straightforward enough that attention
+          provides no regularisation benefit.
+    \item \textbf{Minimal parameter overhead:} Only +38 weights ($\approx0.29\%$),
+          yet the time cost is disproportionately high due to the extra conv operations
+          on every forward pass.
+\end{itemize}
+
+\subsection{Analysis}
+
+\subsubsection{Why Attention Makes Little Difference Here}
+
+MNIST digits are centred, well-segmented, and relatively noise-free. The background
+pixels carry almost no useful signal, and a simple CNN already learns to ignore them
+through weight sharing and pooling. Spatial attention, which is designed to
+\emph{suppress} uninformative regions, therefore finds little to improve upon —
+the baseline already focuses on the right pixels implicitly.
+
+\subsubsection{Convergence Behaviour}
+
+Both models converge smoothly within the first 2--3 epochs
+(Figures~\ref{fig:a_curves_baseline} and~\ref{fig:a_curves_attention}), with training
+and validation curves tracking each other closely throughout all 10 epochs. There is
+no sign of overfitting, which confirms that the dataset is not challenging enough to
+reveal a difference between the two architectures.
+
+\subsubsection{Training Time Overhead}
+
+The attention model takes $\approx$21.65\,s vs.\ 11.75\,s for the baseline — nearly
+double. This is because the \texttt{SpatialAttention} module performs two pooling
+operations and one additional convolution on every batch, which is relatively costly
+when the base model is already very lightweight (only 13,006 parameters).
+
+\subsection{Insights and Observations}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Attention is not universally beneficial.} On clean, centred datasets
+          like ReducedMNIST, the baseline already extracts sufficient features, and
+          attention adds complexity without improving accuracy.
+    \item \textbf{Dataset difficulty matters.} Attention mechanisms tend to shine on
+          harder tasks where informative regions are small, sparse, or mixed with
+          strong background noise.
+    \item \textbf{Parameter efficiency.} The 38-parameter overhead is tiny, but the
+          time cost is not — this illustrates that parameter count alone is not a
+          reliable proxy for computational cost.
+    \item \textbf{Both models generalise well.} Train-test gaps of $<1\%$ indicate
+          no meaningful overfitting on ReducedMNIST.
+\end{enumerate}
+
+\subsection{Suggestions for Future Improvements}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Test on harder datasets} (e.g.\ Fashion-MNIST or CIFAR-10) where
+          attention mechanisms are more likely to provide measurable gains.
+    \item \textbf{Channel attention (SE blocks):} On MNIST, selecting \emph{which
+          feature maps} to emphasise may be more useful than selecting spatial regions.
+    \item \textbf{More training epochs:} Both accuracy curves are still slightly
+          rising at epoch 10; extending to 20--30 epochs with early stopping may
+          reveal a difference.
+    \item \textbf{Lighter attention modules:} A $1\times1$ conv instead of $3\times3$
+          would reduce the time overhead while preserving the attention mechanism.
+\end{itemize}
+
+\newpage
+% ══════════════════════════════════════════════════════════════════════════════
+%  PART (b)
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Part (b): CNN vs.\ Attention CNN on Spoken Digits (FSDD)}
+
+\subsection{Introduction}
+
+This part revisits the spoken-digit classification task from Assignment~2. Two CNN
+architectures are trained on mel-spectrogram images of spoken digits from the Free
+Spoken Digit Dataset (FSDD):
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Baseline CNN} — a two-block convolutional classifier with no
+          attention mechanism.
+    \item \textbf{Attention CNN} — the same architecture augmented with a
+          \texttt{SpatialAttentionWithMask} layer after each convolutional block.
+\end{enumerate}
+
+\subsection{Dataset and Preprocessing}
+
+\subsubsection{Free Spoken Digit Dataset (FSDD)}
+
+The FSDD contains 3,000 audio recordings (300 per digit, 10 digits), recorded at
+8\,kHz by multiple speakers.
+
+\subsubsection{Spectrogram Generation}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item Audio loaded at $f_s = 8{,}000$\,Hz using \texttt{librosa}.
+    \item Mel-spectrogram: $N_\text{FFT}=512$, hop $= 256$, $n_\text{mels} = 64$.
+    \item Converted to dB: $S_\text{dB} = 10\log_{10}(S/S_\text{max})$.
+    \item Min-max normalised and resized to $64\times64$ pixels.
+    \item Channel dimension appended: final shape $(64,\,64,\,1)$.
+\end{enumerate}
+
+\subsubsection{Train/Test Split}
+
+A stratified 80/20 split (\texttt{random\_state = 42}) gives approximately
+2,400 training and 600 test samples, balanced across all ten digit classes.
+
+\subsection{Network Architectures}
+
+\subsubsection{Baseline CNN}
+
+\begin{table}[H]
+\centering
+\caption{Baseline CNN architecture for FSDD}
+\label{tab:b_baseline_arch}
+\begin{tabular}{L{5cm} C{3.5cm} C{2.5cm}}
+\toprule
+\rowcolor{best}
+\textbf{Layer (type)} & \textbf{Output Shape} & \textbf{Param \#} \\
+\midrule
+Conv2D 3$\times$3, 32 filters, ReLU & (None, 64, 64, 32) & 320 \\
+\rowcolor{high}
+BatchNormalization                   & (None, 64, 64, 32) & 128 \\
+MaxPooling2D 2$\times$2              & (None, 32, 32, 32) & 0 \\
+\rowcolor{high}
+Dropout (0.25)                       & (None, 32, 32, 32) & 0 \\
+Conv2D 3$\times$3, 64 filters, ReLU & (None, 32, 32, 64) & 18,496 \\
+\rowcolor{high}
+BatchNormalization                   & (None, 32, 32, 64) & 256 \\
+MaxPooling2D 2$\times$2              & (None, 16, 16, 64) & 0 \\
+\rowcolor{high}
+Dropout (0.30)                       & (None, 16, 16, 64) & 0 \\
+Flatten                              & (None, 16,384)      & 0 \\
+\rowcolor{high}
+Dense (256, ReLU)                    & (None, 256)         & 4,194,560 \\
+Dense (10, Softmax)                  & (None, 10)          & 2,570 \\
+\midrule
+\rowcolor{best}
+\multicolumn{2}{l}{\textbf{Total trainable parameters}} & \textbf{4,216,330} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Spatial Attention Mechanism}
+
+The \texttt{SpatialAttentionWithMask} layer computes:
+
+\begin{equation}
+    \mathbf{M} = \sigma\!\left(
+        \text{Conv}_{7\times 7}\!\left(
+            \left[\,\text{AvgPool}_{C}(\mathbf{F});\;
+                  \text{MaxPool}_{C}(\mathbf{F})\,\right]
+        \right)
+    \right), \qquad
+    \mathbf{F}' = \mathbf{F} \odot \mathbf{M}
+\end{equation}
+
+Each module uses a $7\times7$ Conv2D with 2 input channels and 1 output channel:
+$(7\times7\times2)+1 = \mathbf{99}$ parameters.
+
+\subsubsection{Attention CNN}
+
+\begin{table}[H]
+\centering
+\caption{Attention CNN architecture for FSDD}
+\label{tab:b_attention_arch}
+\begin{tabular}{L{5.5cm} C{3.8cm} C{2cm}}
+\toprule
+\rowcolor{best}
+\textbf{Layer (type)} & \textbf{Output Shape} & \textbf{Param \#} \\
+\midrule
+InputLayer                                       & (None, 64, 64, 1)  & 0 \\
+\rowcolor{high}
+Conv2D 3$\times$3, 32 filters, ReLU             & (None, 64, 64, 32) & 320 \\
+BatchNormalization                               & (None, 64, 64, 32) & 128 \\
+\rowcolor{mid}
+\textbf{SpatialAttentionWithMask (attn\_1)}      & [(None,64,64,32), (None,64,64,1)] & \textbf{99} \\
+MaxPooling2D 2$\times$2                          & (None, 32, 32, 32) & 0 \\
+\rowcolor{high}
+Conv2D 3$\times$3, 64 filters, ReLU             & (None, 32, 32, 64) & 18,496 \\
+BatchNormalization                               & (None, 32, 32, 64) & 256 \\
+\rowcolor{mid}
+\textbf{SpatialAttentionWithMask (attn\_2)}      & [(None,32,32,64), (None,32,32,1)] & \textbf{99} \\
+MaxPooling2D 2$\times$2                          & (None, 16, 16, 64) & 0 \\
+\rowcolor{high}
+Flatten                                          & (None, 16,384)      & 0 \\
+Dense (256, ReLU)                                & (None, 256)         & 4,194,560 \\
+\rowcolor{high}
+Dense (10, Softmax)                              & (None, 10)          & 2,570 \\
+\midrule
+\rowcolor{best}
+\multicolumn{2}{l}{\textbf{Total trainable parameters}} & \textbf{4,216,528} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Parameter Overhead of Attention}
+
+Two attention modules add $2\times99=+198$ parameters over the baseline, an
+increase of only $\approx 0.005\%$.
+
+\subsection{Training Configuration}
+
+\begin{table}[H]
+\centering
+\caption{Training hyperparameters for Part (b)}
+\label{tab:b_hyperparams}
+\begin{tabular}{L{5.5cm} C{5cm}}
+\toprule
+\rowcolor{best}
+\textbf{Hyperparameter} & \textbf{Value} \\
+\midrule
+Optimizer                       & Adam (lr = 0.001) \\
+\rowcolor{high}
+Loss function                   & Sparse categorical cross-entropy \\
+Batch size                      & 32 \\
+\rowcolor{high}
+Epochs                          & 10 \\
+Train / Test split              & 80\% / 20\% (stratified) \\
+\rowcolor{high}
+Input image size                & 64 $\times$ 64 $\times$ 1 \\
+Number of classes               & 10 (digits 0--9) \\
+\rowcolor{high}
+Sample rate                     & 8,000 Hz \\
+FFT window ($N_\text{FFT}$)     & 512 \\
+\rowcolor{high}
+Hop length                      & 256 \\
+Mel bins                        & 64 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Training Logs}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{training_baseline.jpg}
+    \caption{Baseline CNN training log (FSDD).}
+    \label{fig:b_log_baseline}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{training_attention.jpg}
+    \caption{Attention CNN training log (FSDD).}
+    \label{fig:b_log_attention}
+\end{figure}
+
+\subsection{Results}
+
+\subsubsection{Training and Validation Curves}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Figure_5.png}
+    \caption{Baseline CNN accuracy and loss curves (FSDD).}
+    \label{fig:b_curves_baseline}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Figure_6.png}
+    \caption{Attention CNN accuracy and loss curves (FSDD).}
+    \label{fig:b_curves_attention}
+\end{figure}
+
+\subsubsection{Quantitative Comparison}
+
+\begin{table}[H]
+\centering
+\caption{Final-epoch performance: Baseline vs.\ Attention CNN (FSDD)}
+\label{tab:b_results}
+\begin{tabular}{L{4.2cm} C{2.8cm} C{2.8cm} C{2.5cm}}
+\toprule
+\rowcolor{best}
+\textbf{Metric} & \textbf{Baseline CNN} & \textbf{Attention CNN} & \textbf{Difference} \\
+\midrule
+Train Accuracy (\%)   & 97.13 & 99.21 & \textcolor{softblue}{+2.08} \\
+\rowcolor{high}
+Test Accuracy (\%)    & 93.67 & 98.17 & \textcolor{softblue}{+4.50} \\
+Train Loss            & 0.1247 & 0.0260 & \textcolor{softblue}{$-$0.0988} \\
+\rowcolor{high}
+Test Loss             & 0.3967 & 0.0667 & \textcolor{softblue}{$-$0.3300} \\
+Generalisation Gap    & 3.46\% & 1.04\% & \textcolor{softblue}{$-$2.42 pp} \\
+\rowcolor{high}
+Model Parameters      & 4,216,330 & 4,216,528 & +198 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{results.jpg}
+    \caption{Terminal output of the comprehensive model comparison (FSDD).}
+    \label{fig:b_results_terminal}
+\end{figure}
+
+\subsubsection{Key Observations}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Better test accuracy:} Attention CNN achieves \textbf{98.17\%}
+          vs.\ 93.67\% — a gain of \textbf{4.50 pp}.
+    \item \textbf{Lower test loss:} Attention model test loss (0.0667) is nearly
+          \textbf{6$\times$} smaller than the baseline (0.3967).
+    \item \textbf{Better generalisation:} Train-test gap drops from 3.46\% to 1.04\%,
+          showing spatial attention acts as an implicit regulariser.
+    \item \textbf{Negligible overhead:} Only +198 parameters ($\approx 0.005\%$).
+\end{itemize}
+
+\subsection{Analysis}
+
+\subsubsection{Why Attention Helps on Spectrograms}
+
+Mel-spectrograms have a clear spatial structure — frequency on the vertical axis,
+time on the horizontal. Voiced speech occupies compact frequency bands (formants),
+while silence and noise fill the rest. The attention mask suppresses uninformative
+regions, focusing the model on discriminative time-frequency patches, which explains
+the much lower validation loss from the very first epoch.
+
+\subsubsection{Convergence Behaviour}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item The \textbf{baseline} validation loss spikes dramatically in epochs 1--3
+          ($\approx$63.5), indicating memorisation before generalisation.
+    \item The \textbf{attention} model's peak loss reaches only $\approx$10.7,
+          converging far more smoothly to a superior minimum.
+\end{itemize}
+
+\subsubsection{Generalisation Gap}
+
+The attention model's smaller train-test gap (1.04\% vs.\ 3.46\%) confirms reduced
+overfitting. The spatial mask performs feature selection in the spatial domain,
+acting analogously to Dropout but operating on feature-map positions rather than
+individual neurons.
+
+\subsubsection{Training Time}
+
+Per-step time is marginally higher for the attention model ($\sim$135--146\,ms/step
+vs.\ $\sim$106--113\,ms/step for the baseline), amounting to roughly 2--4 seconds
+per epoch — negligible given the accuracy gains.
+
+\subsection{Insights and Observations}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Spatial attention suits spectrogram inputs.} The grid-like structure
+          of mel-spectrograms with localised time-frequency information makes them
+          ideal for spatial attention.
+    \item \textbf{Two attention layers outperform one.} Applying attention after both
+          the 32-filter and 64-filter blocks allows refocusing at different abstraction
+          levels.
+    \item \textbf{BatchNorm complements attention.} Normalising feature distributions
+          while reweighting spatial positions yields both stable training and selective
+          focus.
+    \item \textbf{The Dense bottleneck dominates parameter count.} Over 99\% of
+          parameters reside in the first Dense layer; global average pooling would
+          remove this bottleneck.
+    \item \textbf{Variable-length audio mapped to fixed grids.} All recordings are
+          compressed to 64$\times$64; attention partially compensates by focusing on
+          the most informative temporal segments.
+\end{enumerate}
+
+\subsection{Suggestions for Future Improvements}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{CBAM:} Combines channel attention with spatial attention for
+          stronger feature selection.
+    \item \textbf{Self-attention / Transformer blocks:} Captures long-range
+          dependencies, useful for digits with similar formant patterns.
+    \item \textbf{Squeeze-and-Excitation (SE) networks:} Channel-wise recalibration
+          with minimal parameter overhead.
+    \item \textbf{Global Average Pooling (GAP):} Replace Flatten $\to$ Dense(256)
+          with GAP $\to$ Dense(10) to reduce parameters from 4.2M to $\sim$650.
+    \item \textbf{SpecAugment:} Masking random frequency bands and time steps to
+          improve robustness to speaker variability.
+    \item \textbf{More epochs with early stopping:} The attention accuracy curve
+          is still improving at epoch 10; 20--30 epochs with patience $= 5$ could
+          push test accuracy above 99\%.
+    \item \textbf{Speaker-independent cross-validation:} Leave-one-speaker-out
+          evaluation for a more realistic generalisation estimate.
+\end{itemize}
+
+% ══════════════════════════════════════════════════════════════════════════════
+%  CROSS-PART COMPARISON
+% ══════════════════════════════════════════════════════════════════════════════
+\section{Cross-Part Comparison: When Does Attention Help?}
+
+\begin{table}[H]
+\centering
+\caption{Summary comparison of attention impact across both parts}
+\label{tab:cross_comparison}
+\begin{tabular}{L{4cm} C{3cm} C{3cm} C{3cm}}
+\toprule
+\rowcolor{best}
+\textbf{Aspect} & \textbf{Part (a) MNIST} & \textbf{Part (b) FSDD} & \textbf{Winner} \\
+\midrule
+Dataset type            & Clean images   & Spectrograms   & -- \\
+\rowcolor{high}
+Attention benefit       & Negligible     & Significant    & Part (b) \\
+Test accuracy gain      & $-$0.07 pp     & +4.50 pp       & Part (b) \\
+\rowcolor{high}
+Generalisation improvement & Slight decrease & Large decrease & Part (b) \\
+Parameter overhead      & +38 (0.29\%)   & +198 (0.005\%) & Part (b) \\
+\rowcolor{high}
+Time overhead           & $+$9.9 s ($\times$1.8) & Minor ($\sim$2--4 s/ep) & Part (b) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The comparison reveals a clear pattern: \textbf{spatial attention provides the most
+benefit when the input contains localised, structured signal embedded in noise} —
+exactly the case for mel-spectrograms of spoken digits. On clean, centred images
+(ReducedMNIST), the baseline CNN is already sufficient and attention adds only
+time cost without accuracy gains.
+
+\end{document}
