@@ -8,9 +8,12 @@ Combines:
 
 Run:  python main.py
       Opens web UI at http://localhost:5010
+      
+      python main.py --report
+      Generates the output report and cleaned text for the assignment.
 """
 
-import os, re, sys, pickle, math, torch, subprocess, time
+import os, re, sys, pickle, math, torch, subprocess, time, argparse
 import numpy as np
 from pathlib import Path
 from collections import Counter
@@ -31,7 +34,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 BOOK_FILE = "./arabic_book.txt"
 OUTPUT_DIR = "./output"
 EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
-LLM_MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
+LLM_MODEL_ID = "Qwen/Qwen2.5-1.5B-Instruct"
 ENABLE_LLM = True
 WEB_UI_PORT = 5010
 
@@ -480,11 +483,96 @@ class SystemLoader:
 
 
 # ════════════════════════════════════════════════════════════════════════════════
+# REPORT GENERATOR
+# ════════════════════════════════════════════════════════════════════════════════
+
+def generate_report(loader):
+    """Generate the required Deliverables for the assignment."""
+    print("\n" + "=" * 80)
+    print("📝 GENERATING ASSIGNMENT REPORT OUTPUTS")
+    print("=" * 80)
+    
+    # 1. Output cleaned text chunks
+    cleaned_text_file = f"{loader.output_dir}/cleaned_arabic_book.txt"
+    with open(cleaned_text_file, "w", encoding="utf-8") as f:
+        for p in loader.paragraphs:
+            f.write(p + "\n\n")
+    print(f"✅ Cleaned text chunks saved to: {cleaned_text_file}")
+
+    # The 10 Queries spanning Direct, Indirect, and Hard
+    queries = [
+        "ما الذي كان يفعله الصبي بالنعال حول سيدنا في الكتاب؟",
+        "كيف كان سيدنا يمشي في طريقه إلى الكتاب؟",
+        "ماذا طلب سيدنا من الأسرة أجراً على ختم الصبي للقرآن؟",
+        "لماذا كان الصبي يكره عمه عند المائدة؟",
+        "وصف الكائنات الخرافية التي تعيش في القناة.",
+        "لماذا كان الطفل يخشى الليل والعفاريت في غرفته؟",
+        "كيف كانت علاقة الصبي بإخوته وأخواته؟",
+        "تأثير وباء الكوليرا ووفاة شقيق الكاتب طالب الطب.",
+        "موقف الصبي بعد نسيان القرآن أمام والده وصديقيه.",
+        "الفرق بين علماء الريف الرسميين وأصحاب العلم اللدني."
+    ]
+
+    report_path = f"{loader.output_dir}/assignment_report.md"
+    with open(report_path, "w", encoding="utf-8") as f:
+        f.write("# تقرير تسليم التكليف (Assignment Deliverables)\n\n")
+        
+        # --- Deliverable 1 summary ---
+        f.write("## 1. Description of the selected book\n")
+        f.write("* **Title and source:** الأيام لطه حسين (يجب التأكد أنه غير مستخدم العام الماضي)\n")
+        f.write("* **Text preprocessing and chunking method:**\n  * Cleaned text (removed newlines, spaces).\n")
+        f.write(f"  * Chunking by sentence completion, grouped into chunks of size {loader.metadata['chunk_size']} with overlap {loader.metadata['overlap']}.\n")
+        f.write(f"* **Embedding and indexing process:**\n  * Model: `{loader.metadata['embedding_model']}`\n")
+        f.write(f"  * Indexed using FAISS (IndexFlatIP), total {loader.metadata['total_paragraphs']} chunks indexed.\n\n")
+
+        # --- Deliverable 2 ---
+        f.write("## 2. Results from 10 Arabic queries (Classical vs Semantic)\n\n")
+        for i, q in enumerate(queries, 1):
+            f.write(f"### Query {i}: {q}\n")
+            # Classical
+            c_res = classical_search(q, loader.paragraphs, loader.bm25_data, top_k=5)
+            f.write("**Classical (BM25/TF-IDF) Top Results:**\n")
+            for r in c_res[:2]: # only writing top 2 to keep report concise
+                f.write(f"- [Score {r['score']}] {r['text'][:150]}...\n")
+            
+            # Semantic
+            s_res = semantic_search(q, loader.paragraphs, loader.embed_model, loader.faiss_index, top_k=5)
+            f.write("**Semantic (Embedding) Top Results:**\n")
+            for r in s_res[:2]:
+                f.write(f"- [Score {r['score']}] {r['text'][:150]}...\n")
+            f.write("\n")
+
+        # --- Deliverable 3 ---
+        f.write("## 3. Answers for 10 queries using (RAG vs LLM-only)\n\n")
+        print("🤖 Running RAG evaluation on 10 queries (this may take a while)...")
+        for i, q in enumerate(queries, 1):
+            print(f"   Processing Query {i}/10...")
+            f.write(f"### Query {i}: {q}\n")
+            ans = rag_answer(q, loader.paragraphs, loader.embed_model, loader.faiss_index, loader.llm_model, loader.tokenizer, top_k=5)
+            f.write(f"**RAG Answer:**\n{ans['rag_answer']}\n\n")
+            f.write(f"**LLM-only Answer:**\n{ans['llm_only_answer']}\n\n")
+            
+        # --- Deliverable 4 ---
+        f.write("## 4. Comparison and Reflection\n")
+        f.write("*(أكمل هذا الجزء بناءً على ملاحظاتك)*\n")
+        f.write("* **Which retrieval method produced more relevant results?**\n  * (اكتب أيهما كان أفضل، مثلاً البحث الدلالي كان أفضل في فهم المعاني)\n")
+        f.write("* **Whether retrieval improved LLM-generated answers?**\n  * (اكتب كيف حسّن RAG من دقة النموذج اللغوي وقلل من ההلوسة)\n")
+        f.write("* **Conclusions on the value of semantic retrieval and RAG for Arabic text:**\n  * (استنتاجك النهائي عن النظام)\n")
+
+    print(f"\n✅ Report generated successfully at: {report_path}")
+    print("   You can submit this markdown file (after filling section 4) for your deliverables!")
+
+
+# ════════════════════════════════════════════════════════════════════════════════
 # MAIN ENTRY POINT
 # ════════════════════════════════════════════════════════════════════════════════
 
 def main():
     """Main entry point."""
+    parser = argparse.ArgumentParser(description="Arabic Book RAG System")
+    parser.add_argument("--report", action="store_true", help="Generate the assignment output report and exit.")
+    args = parser.parse_args()
+
     print("\n" + "╔" + "═" * 78 + "╗")
     print("║" + " " * 78 + "║")
     print("║" + "  🌍 ARABIC BOOK RETRIEVAL & RAG SYSTEM".center(78) + "║")
@@ -501,19 +589,23 @@ def main():
     # Load all models
     loader = SystemLoader(OUTPUT_DIR)
     loader.load_all()
-    
-    # Start web UI
-    print("\n" + "─" * 80)
-    print("🚀 Starting Web UI...")
-    print("─" * 80)
-    
-    from web_ui import create_app
-    app = create_app(loader)
-    
-    print(f"\n✨ Web UI available at: http://localhost:{WEB_UI_PORT}")
-    print(f"   Press Ctrl+C to stop\n")
-    
-    app.run(debug=False, port=WEB_UI_PORT, use_reloader=False)
+
+    # Generate report or run web UI
+    if args.report:
+        generate_report(loader)
+    else:
+        # Start web UI
+        print("\n" + "─" * 80)
+        print("🚀 Starting Web UI...")
+        print("─" * 80)
+        
+        from web_ui import create_app
+        app = create_app(loader)
+        
+        print(f"\n✨ Web UI available at: http://localhost:{WEB_UI_PORT}")
+        print(f"   Press Ctrl+C to stop\n")
+        
+        app.run(debug=False, port=WEB_UI_PORT, use_reloader=False)
 
 
 if __name__ == '__main__':

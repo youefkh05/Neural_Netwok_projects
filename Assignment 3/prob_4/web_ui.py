@@ -386,6 +386,14 @@ HTML_TEMPLATE = r"""
     margin: 0 auto;
   }
   
+  mark.highlight {
+    background-color: rgba(108, 143, 255, 0.4);
+    color: var(--text);
+    padding: 0 4px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+  
   @media (max-width: 768px) {
     .columns { grid-template-columns: 1fr; }
     header { padding: 14px 20px; }
@@ -535,6 +543,22 @@ HTML_TEMPLATE = r"""
     event.target.classList.add('active');
   }
 
+  function highlightText(text, query) {
+    if (!query) return text;
+    // Split into words, excluding short common Arabic stop-words
+    const words = query.trim().split(/\s+/).filter(w => w.length > 2);
+    if (words.length === 0) return text;
+    
+    let highlighted = text;
+    words.forEach(word => {
+      // Escape special regex characters
+      const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(`(${escapedWord})`, 'gi');
+      highlighted = highlighted.replace(regex, '<mark class="highlight">$1</mark>');
+    });
+    return highlighted;
+  }
+
   function buildChips(queries, type, containerId) {
     const el = document.getElementById(containerId);
     queries.forEach(q => {
@@ -596,8 +620,8 @@ HTML_TEMPLATE = r"""
       document.getElementById('resultCount').textContent = `${data.classical.length} نتيجة من كل طريقة`;
 
       const allZero = data.classical.every(r => r.score === 0);
-      renderCards('classicalCards', data.classical, 'classical', allZero);
-      renderCards('semanticCards', data.semantic, 'semantic', false);
+      renderCards('classicalCards', data.classical, 'classical', allZero, query);
+      renderCards('semanticCards', data.semantic, 'semantic', false, query);
 
       document.getElementById('loadingSearch').style.display = 'none';
       document.getElementById('resultsSearch').style.display = 'block';
@@ -608,7 +632,7 @@ HTML_TEMPLATE = r"""
     }
   }
 
-  function renderCards(containerId, results, type, showZeroWarning) {
+  function renderCards(containerId, results, type, showZeroWarning, query = "") {
     const el = document.getElementById(containerId);
     el.innerHTML = '';
 
@@ -628,7 +652,7 @@ HTML_TEMPLATE = r"""
             <div class="rank-badge">#${r.rank}</div>
             <div class="score-badge">${label}: ${r.score}</div>
           </div>
-          <div class="result-text">${r.text}</div>
+          <div class="result-text">${highlightText(r.text, query)}</div>
         </div>`;
     });
   }
@@ -685,7 +709,7 @@ HTML_TEMPLATE = r"""
       document.getElementById('llmAnswer').innerText = data.llm_only_answer;
       
       const contextHtml = data.context.map((c, i) => 
-        `<div class="context-item"><strong>[نص ${i+1}]</strong><br>${c}</div>`
+        `<div class="context-item"><strong>[نص ${i+1}]</strong><br>${highlightText(c, query)}</div>`
       ).join('');
       document.getElementById('contextBox').innerHTML = contextHtml;
 
