@@ -6,6 +6,472 @@ const PROJECT = {
   briefPdf: 'assets/project-brief.pdf'
 };
 
+const RAG_EXPLAINER_STEPS = {
+  definition: {
+    title: 'Retrieval-Augmented Generation',
+    summary: 'RAG combines document retrieval with language generation so answers are grounded in external information instead of relying on model memory alone.',
+    metrics: [
+      { value: '2 layers', label: 'Retrieval + generation' },
+      { value: 'Less drift', label: 'Stronger factual grounding' },
+      { value: 'Fresh data', label: 'Knowledge updates without retraining' }
+    ],
+    notes: [
+      'Use RAG when the knowledge base changes often or needs citations.',
+      'The retrieval stage controls which evidence the model receives.',
+      'The generator then turns that evidence into a fluent answer.'
+    ],
+    tags: ['Retrieval', 'Embeddings', 'LLM'],
+    meter: 28,
+    activeNodes: ['query']
+  },
+  workflow: {
+    title: 'The RAG workflow',
+    summary: 'A user query is embedded, matched against a vector store, and then combined with the best passages before the model responds.',
+    metrics: [
+      { value: '3 stages', label: 'Query, search, answer' },
+      { value: 'Vector search', label: 'Semantic matching' },
+      { value: 'Prompt build', label: 'Context is assembled before generation' }
+    ],
+    notes: [
+      'The query is converted into a vector representation first.',
+      'Similarity search finds the closest document chunks.',
+      'Those chunks are appended to the prompt for the LLM.'
+    ],
+    tags: ['Query', 'Vector DB', 'Prompting'],
+    meter: 52,
+    activeNodes: ['query', 'retrieve']
+  },
+  retrieval: {
+    title: 'Retrieval is the grounding step',
+    summary: 'This stage determines which chunks are relevant enough to trust, so chunking quality and similarity scoring matter a lot.',
+    metrics: [
+      { value: 'Chunking', label: 'Smaller sections improve precision' },
+      { value: 'Similarity', label: 'Cosine scores rank evidence' },
+      { value: 'Top-k', label: 'Only the best matches are kept' }
+    ],
+    notes: [
+      'Good retrieval depends on clean preprocessing and sensible chunk sizes.',
+      'Embeddings capture meaning, not just exact keywords.',
+      'If the wrong passages are retrieved, the final answer suffers.'
+    ],
+    tags: ['Chunking', 'Cosine similarity', 'Top-k search'],
+    meter: 72,
+    activeNodes: ['retrieve']
+  },
+  generation: {
+    title: 'Generation turns evidence into an answer',
+    summary: 'Once context is attached, the language model can explain, summarize or synthesize a response that is more accurate and more useful.',
+    metrics: [
+      { value: 'Context-aware', label: 'Answer uses retrieved evidence' },
+      { value: 'Readable', label: 'Produces fluent prose' },
+      { value: 'Safer', label: 'Lower hallucination risk' }
+    ],
+    notes: [
+      'The model does not invent the knowledge base itself; it reasons over what was retrieved.',
+      'Prompt design affects how well the evidence is used.',
+      'This is where clarity, tone and final answer quality are decided.'
+    ],
+    tags: ['LLM', 'Augmentation', 'Answering'],
+    meter: 86,
+    activeNodes: ['query', 'retrieve', 'llm']
+  },
+  value: {
+    title: 'Why RAG matters in practice',
+    summary: 'RAG is useful because it keeps answers current, makes the system more explainable, and avoids the cost of retraining for every knowledge update.',
+    metrics: [
+      { value: 'Lower cost', label: 'No full fine-tuning cycle' },
+      { value: 'More control', label: 'Documents can be curated' },
+      { value: 'Better UX', label: 'Users see a grounded workflow' }
+    ],
+    notes: [
+      'It is especially strong for project demos, assistants and knowledge tools.',
+      'The tradeoff is that retrieval quality must be engineered carefully.',
+      'That is why this homepage links the report, quiz, slides and live demo together.'
+    ],
+    tags: ['Fresh knowledge', 'Explainability', 'Practical AI'],
+    meter: 94,
+    activeNodes: ['retrieve', 'llm']
+  }
+};
+
+const PROJECT_STORY_STEPS = {
+  architecture: {
+    title: 'RAG architecture',
+    summary: 'RAG combines a retriever and a generator. The retriever finds evidence, and the generator uses that evidence to produce a grounded answer.',
+    quote: 'Search first, then generate.',
+    metrics: [
+      { value: '2 parts', label: 'Retriever + generator' },
+      { value: 'Grounded', label: 'Answers rely on evidence' },
+      { value: 'Dynamic', label: 'Works with updated documents' }
+    ],
+    notes: [
+      'The key RAG idea is to attach relevant context before asking the LLM to answer.',
+      'This makes the system more accurate than pure generation on many knowledge tasks.',
+      'The architecture is simple, but the retrieval quality matters a lot.'
+    ],
+    tags: ['Retriever', 'Generator', 'Context'],
+    active: ['query', 'retrieve', 'llm']
+  },
+  retrieval: {
+    title: 'Retrieval layer',
+    summary: 'The retriever converts the query into a searchable representation, compares it with stored chunks, and returns the most relevant passages.',
+    quote: 'Retrieval quality decides how much useful evidence reaches the model.',
+    metrics: [
+      { value: 'Chunking', label: 'Documents are split into smaller pieces' },
+      { value: 'Embeddings', label: 'Text is represented as vectors' },
+      { value: 'Cosine similarity', label: 'Scores how closely query and chunk match' }
+    ],
+    notes: [
+      'Good retrieval usually depends on sensible chunk size and clean text preparation.',
+      'Semantic search lets the system find similar meaning rather than exact keywords.',
+      'If retrieval is weak, the generator receives the wrong context and the answer degrades.'
+    ],
+    tags: ['Chunking', 'Embeddings', 'Semantic search'],
+    active: ['query', 'retrieve']
+  },
+  generation: {
+    title: 'Augmentation and generation',
+    summary: 'Retrieved passages are appended to the prompt, giving the model the context it needs to produce a better answer.',
+    quote: 'The generator should synthesize evidence, not invent it.',
+    metrics: [
+      { value: 'Prompt build', label: 'Retrieved context is added to the input' },
+      { value: 'Better grounding', label: 'Reduces unsupported claims' },
+      { value: 'Readable output', label: 'Produces fluent final answers' }
+    ],
+    notes: [
+      'Prompt design affects how well the retrieved context is used.',
+      'The generator can summarize, explain or compose a response from the evidence.',
+      'This stage is where clarity and usefulness are decided.'
+    ],
+    tags: ['Prompt augmentation', 'LLM', 'Grounding'],
+    active: ['retrieve', 'llm']
+  },
+  tradeoffs: {
+    title: 'Strengths and limits',
+    summary: 'RAG improves freshness and reduces hallucination risk, but it still depends on strong retrieval, good chunking and careful prompt design.',
+    quote: 'RAG is a powerful pattern, but it is only as reliable as the evidence it retrieves.',
+    metrics: [
+      { value: 'Fresh knowledge', label: 'Documents can be updated without retraining' },
+      { value: 'Lower hallucination', label: 'Responses are more grounded' },
+      { value: 'Retrieval dependency', label: 'Bad search leads to bad answers' }
+    ],
+    notes: [
+      'RAG is especially useful when information changes often.',
+      'It does not remove all errors, because poor retrieval can still mislead the model.',
+      'That tradeoff is what makes RAG interesting and practical at the same time.'
+    ],
+    tags: ['Fresh data', 'Hallucination risk', 'Tradeoff'],
+    active: ['retrieve', 'llm']
+  }
+};
+
+const RAG_GLOSSARY = {
+  embeddings: {
+    title: 'Embeddings',
+    summary: 'Numerical vector representations of text that capture semantic meaning and relationships.',
+    metrics: [
+      { value: 'Text to vector', label: 'Turns language into math-friendly form' },
+      { value: 'Semantic meaning', label: 'Similar ideas get nearby vectors' },
+      { value: 'Retrieval input', label: 'Used to search the knowledge base' }
+    ],
+    notes: [
+      'Embeddings are the bridge between text and vector search.',
+      'They make it possible to compare a query with stored document chunks.',
+      'The project demo uses this idea through TF-IDF-style vectorization.'
+    ]
+  },
+  vector_database: {
+    title: 'Vector database',
+    summary: 'A database designed to store embeddings and perform semantic similarity search efficiently.',
+    metrics: [
+      { value: 'Fast search', label: 'Finds similar vectors quickly' },
+      { value: 'Top-k results', label: 'Returns the best matches' },
+      { value: 'RAG core', label: 'Holds the evidence for generation' }
+    ],
+    notes: [
+      'The MCQ sheet explicitly connects vector databases with RAG retrieval.',
+      'They are what allow the system to look beyond exact keyword matching.',
+      'Without them, the retrieval stage becomes much less useful.'
+    ]
+  },
+  cosine_similarity: {
+    title: 'Cosine similarity',
+    summary: 'A metric that measures angular similarity between embedding vectors and is commonly used for retrieval ranking.',
+    metrics: [
+      { value: 'Angular match', label: 'Compares direction, not just distance' },
+      { value: 'Ranking score', label: 'Orders candidate chunks' },
+      { value: 'Retrieval signal', label: 'Helps choose relevant evidence' }
+    ],
+    notes: [
+      'The demo uses cosine similarity to score documents against the query.',
+      'This is one of the easiest ways to show semantic retrieval in a classroom project.',
+      'The better the score, the more relevant the retrieved chunk should be.'
+    ]
+  },
+  chunking: {
+    title: 'Chunking',
+    summary: 'Splitting documents into smaller sections so retrieval becomes more precise and context is easier to manage.',
+    metrics: [
+      { value: 'Smaller pieces', label: 'Improves retrieval precision' },
+      { value: 'Context control', label: 'Keeps passages focused' },
+      { value: 'Tradeoff', label: 'Too small can lose meaning' }
+    ],
+    notes: [
+      'The MCQ and report both emphasize that chunk size matters.',
+      'Good chunking helps prevent overly broad or noisy retrieval results.',
+      'It is one of the main engineering decisions in a RAG pipeline.'
+    ]
+  },
+  semantic_search: {
+    title: 'Semantic search',
+    summary: 'Searching based on meaning and context rather than exact keyword matching.',
+    metrics: [
+      { value: 'Meaning-based', label: 'Finds related ideas even with different wording' },
+      { value: 'Query driven', label: 'Uses the user question as the anchor' },
+      { value: 'RAG friendly', label: 'Essential for evidence retrieval' }
+    ],
+    notes: [
+      'This is the retrieval behavior that makes RAG feel intelligent.',
+      'It helps the system find documents that answer the intent, not just the literal words.',
+      'That is why vector embeddings are paired with similarity search.'
+    ]
+  },
+  hallucination: {
+    title: 'Hallucination',
+    summary: 'Incorrect or invented output from a language model when it lacks grounded evidence.',
+    metrics: [
+      { value: 'Main risk', label: 'RAG is designed to reduce it' },
+      { value: 'Grounding', label: 'Retrieval supplies factual context' },
+      { value: 'Quality issue', label: 'Poor retrieval increases errors' }
+    ],
+    notes: [
+      'The MCQ file frames this as one of the key problems RAG helps reduce.',
+      'RAG does not magically remove hallucination, but it lowers the risk by grounding the answer.',
+      'This is one reason the project emphasizes retrieval quality so heavily.'
+    ]
+  },
+  fine_tuning: {
+    title: 'Fine-tuning vs RAG',
+    summary: 'Fine-tuning changes model weights, while RAG retrieves external knowledge dynamically for faster updates and lower cost.',
+    metrics: [
+      { value: 'Weight update', label: 'Fine-tuning retrains the model' },
+      { value: 'External data', label: 'RAG pulls from documents' },
+      { value: 'Update speed', label: 'RAG is easier to refresh' }
+    ],
+    notes: [
+      'The report notes that some AI explanations drifted too deeply into fine-tuning details.',
+      'This is why the homepage keeps the comparison short and practical.',
+      'For a project demo, RAG gives a clearer and more flexible workflow.'
+    ]
+  }
+};
+
+const RAG_SIMULATION_DOCS = [
+  'Diabetes symptoms include increased thirst, frequent urination, fatigue, and blurred vision.',
+  'Artificial Neural Networks are computational models inspired by biological neurons.',
+  'RAG stands for Retrieval-Augmented Generation and combines retrieval with text generation.',
+  'Vector databases store embeddings and perform semantic similarity search.',
+  'Transformers use self-attention mechanisms to process sequential data.',
+  'Fine-tuning modifies model weights while RAG retrieves external knowledge dynamically.',
+  'Machine learning enables systems to learn patterns from data.',
+  'Embeddings convert text into numerical vector representations.'
+];
+
+const RAG_SIMULATION_STEPS = {
+  query: {
+    title: 'Query understanding',
+    summary: 'The system reads the query and prepares it for semantic comparison with the knowledge base.',
+    tags: ['Input query', 'Text cleaning', 'Intent capture'],
+    detail: 'The input text is normalized and transformed into a small token set that captures the main semantic intent.',
+    why: 'If this step is noisy, retrieval quality drops immediately because the system starts searching with weak intent signals.'
+  },
+  embed: {
+    title: 'Embedding generation',
+    summary: 'Both the query and the documents are turned into vector space so similarity can be measured mathematically.',
+    tags: ['Vectors', 'Semantic space', 'Similarity ready'],
+    detail: 'Each text is converted into a numeric vector where dimensions represent learned semantic features or token weights.',
+    why: 'Embeddings make meaning computable. Without them, the system can only do shallow keyword matching.'
+  },
+  retrieve: {
+    title: 'Semantic retrieval',
+    summary: 'The system compares the query against the sample documents and returns the strongest matches.',
+    tags: ['Top-k search', 'Cosine scores', 'Relevant chunks'],
+    detail: 'Cosine similarity ranks the candidate chunks; the top-k highest scoring chunks are selected as supporting context.',
+    why: 'This is the grounding core of RAG. Better retrieval gives the generator better evidence and fewer hallucinations.'
+  },
+  generate: {
+    title: 'Augmented generation',
+    summary: 'The retrieved chunks are passed to the generator, which composes a grounded answer from the evidence.',
+    tags: ['Prompt augmentation', 'Grounded answer', 'LLM response'],
+    detail: 'The model receives the retrieved context together with the query, then synthesizes a final answer that references this context.',
+    why: 'Generation with context is more reliable than generation from memory only, especially for updated domain knowledge.'
+  }
+};
+
+const SIMULATION_QUESTION_TOKENS = {
+  diabetes: ['diabetes', 'symptoms', 'thirst', 'urination', 'fatigue', 'blurred', 'vision'],
+  rag: ['rag', 'retrieval', 'generation', 'vector', 'database', 'embeddings', 'similarity'],
+  vector: ['vector', 'database', 'search', 'similarity', 'embeddings']
+};
+
+function scoreDocument(queryTokens, document) {
+  const words = document.toLowerCase().match(/[a-z]+/g) || [];
+  const counts = new Map();
+  words.forEach(word => counts.set(word, (counts.get(word) || 0) + 1));
+  const docVector = new Map();
+  counts.forEach((count, word) => {
+    docVector.set(word, count);
+  });
+
+  let dot = 0;
+  let queryNorm = 0;
+  let docNorm = 0;
+
+  const queryCounts = new Map();
+  queryTokens.forEach(token => queryCounts.set(token, (queryCounts.get(token) || 0) + 1));
+
+  queryCounts.forEach((count, token) => {
+    queryNorm += count * count;
+    if (docVector.has(token)) {
+      dot += count * docVector.get(token);
+    }
+  });
+
+  docVector.forEach(count => {
+    docNorm += count * count;
+  });
+
+  if (!queryNorm || !docNorm) return 0;
+  return dot / (Math.sqrt(queryNorm) * Math.sqrt(docNorm));
+}
+
+function initRagSimulation() {
+  const root = document.querySelector('[data-rag-simulation]');
+  if (!root) return;
+
+  const queryInput = root.querySelector('[data-rag-query]');
+  const runButton = root.querySelector('[data-rag-run]');
+  const presetButtons = [...root.querySelectorAll('[data-query]')];
+  const stageButtons = [...root.querySelectorAll('[data-stage]')];
+  const titleEl = root.querySelector('[data-sim-title]');
+  const summaryEl = root.querySelector('[data-sim-summary]');
+  const tagsEl = root.querySelector('[data-sim-tags]');
+  const docsEl = root.querySelector('[data-sim-docs]');
+  const scoresEl = root.querySelector('[data-sim-scores]');
+  const resultsEl = root.querySelector('[data-sim-results]');
+  const answerEl = root.querySelector('[data-sim-answer]');
+  const querySummaryEl = root.querySelector('[data-sim-query-display]');
+  const topScoreEl = root.querySelector('[data-sim-top-score]');
+  const retrievedCountEl = root.querySelector('[data-sim-retrieved-count]');
+  const detailEl = root.querySelector('[data-sim-detail]');
+  const whyEl = root.querySelector('[data-sim-why]');
+  const detailWrapEl = root.querySelector('[data-sim-detail-wrap]');
+  const whyWrapEl = root.querySelector('[data-sim-why-wrap]');
+  const miniNodes = [...root.querySelectorAll('[data-mini-stage]')];
+
+  function tokenize(query) {
+    return (query.toLowerCase().match(/[a-z]+/g) || []).filter(Boolean);
+  }
+
+  function renderStage(stageKey) {
+    const step = RAG_SIMULATION_STEPS[stageKey] || RAG_SIMULATION_STEPS.query;
+    const currentIndex = ['query', 'embed', 'retrieve', 'generate'].indexOf(stageKey);
+    stageButtons.forEach(button => {
+      const index = ['query', 'embed', 'retrieve', 'generate'].indexOf(button.dataset.stage);
+      button.classList.toggle('is-active', button.dataset.stage === stageKey);
+      button.classList.toggle('is-complete', index > -1 && index < currentIndex);
+    });
+
+    miniNodes.forEach(node => {
+      const index = ['query', 'embed', 'retrieve', 'generate'].indexOf(node.dataset.miniStage);
+      node.classList.toggle('is-active', node.dataset.miniStage === stageKey);
+      node.classList.toggle('is-complete', index > -1 && index < currentIndex);
+    });
+
+    titleEl.textContent = step.title;
+    summaryEl.textContent = step.summary;
+    tagsEl.innerHTML = step.tags.map(tag => `<span class="pill">${tag}</span>`).join('');
+    detailEl.textContent = step.detail;
+    whyEl.textContent = step.why;
+
+    detailWrapEl.classList.remove('flash-in');
+    whyWrapEl.classList.remove('flash-in');
+    void detailWrapEl.offsetWidth;
+    detailWrapEl.classList.add('flash-in');
+    whyWrapEl.classList.add('flash-in');
+  }
+
+  function runSimulation(query) {
+    const queryText = query.trim() || 'What are diabetes symptoms?';
+    const tokens = tokenize(queryText);
+    const scores = RAG_SIMULATION_DOCS.map((document, index) => ({
+      index,
+      document,
+      score: scoreDocument(tokens, document)
+    })).sort((left, right) => right.score - left.score);
+
+    const topResults = scores.slice(0, 3);
+    const maxScore = Math.max(...scores.map(item => item.score), 0.0001);
+
+    querySummaryEl.textContent = queryText;
+    topScoreEl.textContent = topResults[0] ? topResults[0].score.toFixed(3) : '0.000';
+    retrievedCountEl.textContent = String(topResults.length);
+
+    docsEl.innerHTML = RAG_SIMULATION_DOCS.map((document, index) => `
+      <div class="simulation-doc ${topResults.some(result => result.index === index) ? 'is-retrieved' : ''}">
+        <strong>Document ${index + 1}${topResults.some(result => result.index === index) ? ' • retrieved' : ''}</strong>
+        <span>${document}</span>
+      </div>
+    `).join('');
+
+    scoresEl.innerHTML = scores.map(result => `
+      <div class="simulation-score-row ${topResults.some(match => match.index === result.index) ? 'is-top' : ''}">
+        <div>
+          <strong>Document ${result.index + 1}</strong>
+          <span>${result.document}</span>
+        </div>
+        <div class="simulation-score-meta">
+          <b>${result.score.toFixed(3)}</b>
+          <div class="simulation-score-bar"><span style="width:${Math.max(4, (result.score / maxScore) * 100)}%"></span></div>
+        </div>
+      </div>
+    `).join('');
+
+    resultsEl.innerHTML = topResults.map(result => `
+      <div class="simulation-result">
+        <strong>Document ${result.index + 1}</strong>
+        <p>${result.document}</p>
+      </div>
+    `).join('');
+
+    const joinedContext = topResults.map(result => result.document).join(' ');
+    answerEl.textContent = `Using the retrieved context, the model answers: ${joinedContext}`;
+
+    renderStage('query');
+  }
+
+  presetButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      queryInput.value = button.dataset.query;
+      presetButtons.forEach(item => item.classList.toggle('is-active', item === button));
+      runSimulation(queryInput.value);
+    });
+  });
+
+  stageButtons.forEach(button => {
+    button.addEventListener('click', () => renderStage(button.dataset.stage));
+  });
+
+  runButton.addEventListener('click', () => runSimulation(queryInput.value));
+  queryInput.addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
+      runSimulation(queryInput.value);
+    }
+  });
+
+  runSimulation(queryInput.value);
+}
+
 const REPORT_SECTIONS = [
   {
     title: 'Project Objective',
@@ -211,6 +677,129 @@ function initReveal() {
   nodes.forEach(node => observer.observe(node));
 }
 
+function initRagExplainer() {
+  const root = document.querySelector('[data-rag-explainer]');
+  if (!root) return;
+
+  const titleEl = root.querySelector('[data-rag-title]');
+  const summaryEl = root.querySelector('[data-rag-summary]');
+  const metricsEl = root.querySelector('[data-rag-metrics]');
+  const notesEl = root.querySelector('[data-rag-notes]');
+  const tagsEl = root.querySelector('[data-rag-tags]');
+  const meterEl = root.querySelector('[data-rag-meter]');
+  const tabButtons = [...root.querySelectorAll('[data-step]')];
+  const flowNodes = [...root.querySelectorAll('[data-flow-node]')];
+
+  function render(stepKey) {
+    const step = RAG_EXPLAINER_STEPS[stepKey] || RAG_EXPLAINER_STEPS.definition;
+
+    tabButtons.forEach(button => {
+      const isActive = button.dataset.step === stepKey;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-selected', String(isActive));
+    });
+
+    titleEl.textContent = step.title;
+    summaryEl.textContent = step.summary;
+    metricsEl.innerHTML = step.metrics.map(metric => `
+      <div class="explainer-metric">
+        <strong>${metric.value}</strong>
+        <span>${metric.label}</span>
+      </div>
+    `).join('');
+    notesEl.innerHTML = step.notes.map(note => `
+      <div class="explainer-note">${note}</div>
+    `).join('');
+    tagsEl.innerHTML = step.tags.map(tag => `<span class="pill">${tag}</span>`).join('');
+    meterEl.style.width = `${step.meter}%`;
+
+    flowNodes.forEach(node => {
+      node.classList.toggle('is-active', step.activeNodes.includes(node.dataset.flowNode));
+    });
+  }
+
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => render(button.dataset.step));
+  });
+
+  render('definition');
+}
+
+function initProjectStory() {
+  const root = document.querySelector('[data-project-story]');
+  if (!root) return;
+
+  const titleEl = root.querySelector('[data-project-title]');
+  const summaryEl = root.querySelector('[data-project-summary]');
+  const quoteEl = root.querySelector('[data-project-quote]');
+  const metricsEl = root.querySelector('[data-project-metrics]');
+  const notesEl = root.querySelector('[data-project-notes]');
+  const tagsEl = root.querySelector('[data-project-tags]');
+  const buttons = [...root.querySelectorAll('[data-project-step]')];
+
+  function render(stepKey) {
+    const step = PROJECT_STORY_STEPS[stepKey] || PROJECT_STORY_STEPS.architecture;
+    buttons.forEach(button => {
+      const isActive = button.dataset.projectStep === stepKey;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-selected', String(isActive));
+    });
+    titleEl.textContent = step.title;
+    summaryEl.textContent = step.summary;
+    quoteEl.textContent = step.quote;
+    metricsEl.innerHTML = step.metrics.map(metric => `
+      <div class="explainer-metric">
+        <strong>${metric.value}</strong>
+        <span>${metric.label}</span>
+      </div>
+    `).join('');
+    notesEl.innerHTML = step.notes.map(note => `<div class="explainer-note">${note}</div>`).join('');
+    tagsEl.innerHTML = step.tags.map(tag => `<span class="pill">${tag}</span>`).join('');
+  }
+
+  buttons.forEach(button => button.addEventListener('click', () => render(button.dataset.projectStep)));
+  render('architecture');
+}
+
+function initGlossary() {
+  const root = document.querySelector('.glossary-shell');
+  if (!root) return;
+
+  const navEl = root.querySelector('[data-glossary-nav]');
+  const titleEl = root.querySelector('[data-glossary-title]');
+  const summaryEl = root.querySelector('[data-glossary-summary]');
+  const metricsEl = root.querySelector('[data-glossary-metrics]');
+  const notesEl = root.querySelector('[data-glossary-notes]');
+
+  const entries = Object.entries(RAG_GLOSSARY);
+
+  function render(key) {
+    const entry = RAG_GLOSSARY[key] || RAG_GLOSSARY.embeddings;
+    [...navEl.children].forEach(child => child.classList.toggle('is-active', child.dataset.glossaryKey === key));
+    titleEl.textContent = entry.title;
+    summaryEl.textContent = entry.summary;
+    metricsEl.innerHTML = entry.metrics.map(metric => `
+      <div class="explainer-metric">
+        <strong>${metric.value}</strong>
+        <span>${metric.label}</span>
+      </div>
+    `).join('');
+    notesEl.innerHTML = entry.notes.map(note => `<div class="explainer-note">${note}</div>`).join('');
+  }
+
+  entries.forEach(([key, entry]) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'glossary-card';
+    button.dataset.glossaryKey = key;
+    button.innerHTML = `<strong>${entry.title}</strong><span>${entry.summary}</span>`;
+    button.addEventListener('click', () => render(key));
+    navEl.appendChild(button);
+  });
+
+  render('embeddings');
+}
+
 function initQuiz() {
   const root = document.querySelector('[data-quiz-root]');
   if (!root) return;
@@ -409,6 +998,10 @@ function initDeck() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initReveal();
+  initRagExplainer();
+  initProjectStory();
+  initGlossary();
+  initRagSimulation();
   initQuiz();
   initDeck();
 });
