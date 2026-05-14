@@ -1,7 +1,348 @@
 \begingroup
-\graphicspath{{../prob_5/Figures/}}
+\selectlanguage{english}
+\normalfont
+\graphicspath{{../prob_5/Figures/}{Figures/}}
+\providecommand{\yes}{\texttt{yes}}
+\providecommand{\no}{\texttt{no}}
 
-\subsection{Place holder for Problem 5}
+\subsection{Task Definition and Scope}
+Team 27 was assigned Topic 27: \textbf{Toxicity Detection}. The required task is to classify each Arabic sentence or comment as either toxic or non-toxic, using \textbf{F1} as the main metric. The assignment also requires the evaluation of ChatGPT, Gemini, ALLaM, Jais, and Fanar using the same inputs and the same prompt format, with a balanced mixture of Modern Standard Arabic (MSA), Classical Arabic, and Arabic dialects.
 
+In this benchmark, the toxic class means that the sentence contains a direct insult, abuse, hate, threat, harassment, hostile attack, humiliation, demeaning wording, or clearly offensive language. The non-toxic class means that the sentence is neutral, factual, friendly, religious/classical advice, ordinary emotion, or disagreement without a direct attack. The application domain is Arabic online moderation, where a deployed system must recognize hostile content across MSA, dialectal Arabic, and older classical styles.
 
+The task was kept binary because the assigned metric is F1 and the task row specifies 100 comments or sentences for toxicity detection. We treat the toxic class as the positive class. Therefore:
+\[
+F_1 = \frac{2TP}{2TP + FP + FN},
+\]
+where $TP$ is toxic text correctly predicted as toxic, $FP$ is non-toxic text incorrectly predicted as toxic, and $FN$ is toxic text incorrectly predicted as non-toxic. This is the standard F1 definition as the harmonic mean of precision and recall.\footnote{Scikit-learn F1 reference: \url{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html}.}
+
+\subsection{Dataset Creation and Cleaning}
+The final dataset contains exactly 100 Arabic samples. We rebuilt the dataset after noticing that the first generated file was not sufficiently balanced and contained duplicate or template-like examples. The final version is balanced by label, balanced by Arabic variety group, and has no duplicated text.
+
+\begin{table}[H]
+\centering
+\caption{Final dataset summary.}
+\begin{tabular}{lr}
+\toprule
+Property & Value \\
+\midrule
+Total samples & 100 \\
+Unique text strings & 100 \\
+Modern Standard Arabic samples & 34 \\
+Classical Arabic samples & 33 \\
+Dialect samples & 33 \\
+Toxic samples & 50 \\
+Non-toxic samples & 50 \\
+Remaining social-media mentions in text & 0 \\
+Duplicate sentences & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Source composition of the final dataset.}
+\begin{tabular}{lr}
+\toprule
+Source & Count \\
+\midrule
+MPOLD social-media benchmark & 67 \\
+Public-domain Classical Arabic non-toxic texts & 17 \\
+Public-domain Classical Arabic satire/hija' texts & 16 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Most of the dataset comes from the Arabic Offensive Comment Detection / MPOLD social-media benchmark. MPOLD consists of Arabic comments collected from Twitter, Facebook, and YouTube, with binary Offensive/Non-Offensive majority labels and an annotation procedure based on multiple judgments.\footnote{MPOLD GitHub repository: \url{https://github.com/shammur/Arabic-Offensive-Multi-Platform-SocialMedia-Comment-Dataset}. Hugging Face mirror used for convenient access: \url{https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection}.} Classical examples were taken from public-domain Classical Arabic religious, literary, and satire/hija' sources. The final file removes anonymized social-media handles such as \texttt{@User.IDX}, URL placeholders, duplicate rows, and noisy social-media fragments.
+
+Some highly offensive words were softened or removed from the visible report and from the final CSV where needed. After every edit, the gold label was checked again to make sure it still matched the final cleaned sentence. For ethical presentation, the printed report does not display the strongest offensive words. The full input text is still preserved in the submitted CSV and JSON logs for reproducibility.
+
+\begin{table}[H]
+\centering
+\caption{Final variety and label balance.}
+\begin{tabular}{lrrr}
+\toprule
+Variety group & Toxic & Non-toxic & Total \\
+\midrule
+MSA & 17 & 17 & 34 \\
+Classical Arabic & 17 & 16 & 33 \\
+Dialect Arabic & 16 & 17 & 33 \\
+\midrule
+Total & 50 & 50 & 100 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Annotation Process}
+Each row has two annotation columns, \texttt{annotator1} and \texttt{annotator2}, plus a final \texttt{gold\_label}. For MPOLD examples, the starting label came from the benchmark majority label, then the team manually checked the final cleaned text. Classical examples were manually labeled after reading the sentence as either harmless advice/literature or hostile satire/hija'. If a label became doubtful after cleaning, the sentence was reviewed again. The final submitted file has no remaining annotator disagreement.
+
+\begin{table}[H]
+\centering
+\caption{Inter-annotator agreement on the final reviewed dataset.}
+\begin{tabular}{lr}
+\toprule
+Agreement measure & Value \\
+\midrule
+Annotator 1 toxic / non-toxic counts & 50 / 50 \\
+Annotator 2 toxic / non-toxic counts & 50 / 50 \\
+Simple percent agreement & 100.0\% \\
+Cohen's $\kappa$ & 1.000 \\
+Remaining disagreements & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The manual review was important because toxicity is not a pure keyword task. Some sentences contain negative words but are actually calls for peace, while other sentences are toxic through sarcasm, humiliation, metaphor, or older literary wording. This manual checking step was time-consuming, but it made the final gold labels more defensible.
+
+\subsection{Evaluation Setup}
+All five models received the same 100 inputs and the same binary instruction. ChatGPT and Gemini were called through OpenRouter because paid API access was available there. ALLaM, Jais, and Fanar were run locally through Ollama. The final run took 89.7 minutes, which made the experiment time- and effort-consuming, especially because local models were slow and had to be tested carefully.
+
+\begin{table}[H]
+\centering
+\caption{Models and execution method.}
+\begin{tabular}{lll}
+\toprule
+Report name & Exact model id & Execution method \\
+\midrule
+ChatGPT & \texttt{openai/gpt-4o-mini} & OpenRouter API \\
+Gemini & \texttt{google/gemini-2.5-flash} & OpenRouter API \\
+ALLaM & \texttt{iKhalid/ALLaM:7b} & Ollama local run \\
+Jais & \texttt{jwnder/jais-adaptive:7b} & Ollama local run \\
+Fanar & \texttt{yasserrmd/Fanar-1-9B-Instruct} & Ollama local run \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The final prompt was intentionally strict because the first prompt allowed too much freedom. The system prompt defined toxicity and required the model to output exactly one lowercase English word only: \yes{} or \no{}. The user prompt was:
+
+\begin{quote}
+\small
+\texttt{Is the following Arabic text toxic?}\\
+\texttt{[Arabic text]}\\
+\texttt{Answer only yes or no:}
+\end{quote}
+
+For both API and local runs, the temperature was set to 0, the maximum output length was limited to 3 tokens, and the answer parser accepted only yes/no as valid. The final JSON log records one result per sample for each model.
+
+\subsubsection{Jais first-attempt failure and prompt correction}
+Jais caused a major problem in the first pilot run. With the earlier pseudo-JSON prompt, it frequently ignored the required output format and translated, paraphrased, repeated the sentence, or generated unrelated text. In that pilot output, Jais had 72/100 malformed or non-compliant outputs. This was not only a classification issue; it was a prompt-following failure.
+
+After switching to the strict yes/no prompt, Jais produced valid yes/no outputs for all 100 final samples, so it is kept in the final ranking. However, its first-attempt failure is important because it shows that weaker local models may need much more constrained prompts.
+
+\begin{table}[H]
+\centering
+\caption{Examples of Jais non-compliance in the first pilot run. Text is redacted to avoid displaying offensive wording.}
+\scriptsize
+\begin{tabular}{p{0.08\textwidth}p{0.35\textwidth}p{0.45\textwidth}}
+\toprule
+Pilot ID & Input type & Jais behavior in the pilot \\
+\midrule
+1 & Levantine toxic dialect sentence & Paraphrased the sentence instead of returning a label. \\
+2 & Gulf toxic dialect sentence & Repeated the input sentence instead of returning a label. \\
+3 & Gulf non-toxic sentence & Rewrote the sentence in MSA instead of returning a label. \\
+4 & Egyptian non-toxic greeting & Generated a greeting instead of returning a label. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Quantitative Results}
+Table~\ref{tab:problem5-overall-results} gives the final quantitative results over the full 100-case dataset. Gemini achieved the highest F1 score and accuracy. ChatGPT was second by F1, followed by ALLaM and Jais. Fanar was the most conservative model: it predicted non-toxic for many samples, which produced high precision but low recall.
+
+\begin{table}[H]
+\centering
+\caption{Overall final results for Arabic toxicity detection. Toxic is the positive class.}
+\label{tab:problem5-overall-results}
+\scriptsize
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrrrrrr}
+\toprule
+Model & Valid & Invalid & TP & TN & FP & FN & Precision & Recall & F1 & Accuracy \\
+\midrule
+ChatGPT & 100 & 0 & 36 & 49 & 1 & 14 & 0.973 & 0.720 & 0.828 & 0.850 \\
+Gemini & 100 & 0 & 40 & 50 & 0 & 10 & 1.000 & 0.800 & 0.889 & 0.900 \\
+ALLaM & 100 & 0 & 37 & 45 & 5 & 13 & 0.881 & 0.740 & 0.804 & 0.820 \\
+Jais & 100 & 0 & 40 & 38 & 12 & 10 & 0.769 & 0.800 & 0.784 & 0.780 \\
+Fanar & 100 & 0 & 24 & 49 & 1 & 26 & 0.960 & 0.480 & 0.640 & 0.730 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\textwidth]{problem5_f1_scores.png}
+\caption{F1 score comparison across the five evaluated LLMs.}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{F1 and accuracy by Arabic variety group.}
+\scriptsize
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrr}
+\toprule
+Model & MSA F1 & MSA Acc. & Classical F1 & Classical Acc. & Dialect F1 & Dialect Acc. \\
+\midrule
+ChatGPT & 0.875 & 0.882 & 0.815 & 0.848 & 0.786 & 0.818 \\
+Gemini & 1.000 & 1.000 & 0.769 & 0.818 & 0.867 & 0.879 \\
+ALLaM & 0.914 & 0.912 & 0.667 & 0.758 & 0.788 & 0.788 \\
+Jais & 0.789 & 0.765 & 0.769 & 0.818 & 0.789 & 0.758 \\
+Fanar & 0.759 & 0.794 & 0.316 & 0.606 & 0.741 & 0.788 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{problem5_f1_by_variety.png}
+\caption{F1 score by Arabic variety group.}
+\end{figure}
+
+\subsection{Selected Output Examples}
+Table~\ref{tab:problem5-selected-outputs} shows representative predictions from the final JSON log. To keep the printed report clean, the exact Arabic text is omitted here and can be found in the submitted CSV/JSON files. The examples include easy cases, false positives, false negatives, and cases where several models disagreed.
+
+\begin{table}[H]
+\centering
+\caption{Selected model outputs from the final run. Full Arabic inputs are in the submitted logs.}
+\label{tab:problem5-selected-outputs}
+\scriptsize
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrrrrl}
+\toprule
+ID & Gold & ChatGPT & Gemini & ALLaM & Jais & Fanar & Wrong models \\
+\midrule
+4 & non-toxic & no & no & no & no & no & none \\
+18 & toxic & yes & yes & yes & yes & yes & none \\
+5 & non-toxic & yes & no & yes & no & yes & ChatGPT, ALLaM, Fanar \\
+11 & non-toxic & no & no & yes & yes & no & ALLaM, Jais \\
+29 & toxic & no & yes & no & yes & no & ChatGPT, ALLaM, Fanar \\
+63 & toxic & no & no & no & no & no & ChatGPT, Gemini, ALLaM, Jais, Fanar \\
+85 & toxic & no & no & no & no & no & ChatGPT, Gemini, ALLaM, Jais, Fanar \\
+93 & toxic & yes & yes & no & no & no & ALLaM, Jais, Fanar \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+The selected outputs show that obvious toxicity is generally easy for all models, while indirect hostility, dialect slang, and Classical Arabic satire are much harder. The biggest repeated issue is false negatives: several models recognize explicit modern insults but miss softer, indirect, or older forms of attack.
+
+\subsection{Qualitative Observations}
+\textbf{Gemini} had the best overall result with F1 = 0.889. It made no false positives, so it was very safe about not accusing non-toxic text. Its remaining errors were false negatives, especially in Classical Arabic and subtle dialect examples.
+
+\textbf{ChatGPT} achieved F1 = 0.828. It had high precision (0.973) but lower recall (0.720), so it tended to miss toxic examples when the wording was indirect or literary.
+
+\textbf{ALLaM} achieved F1 = 0.804. It was strong on MSA, where its F1 was 0.914, but it was weaker on Classical Arabic and produced some false positives on neutral dialect comments.
+
+\textbf{Jais} achieved F1 = 0.784 in the final strict run. Its output format became valid, but it still produced many false positives. This means the strict prompt solved the first-attempt malfunction but did not fully solve the classification weakness.
+
+\textbf{Fanar} achieved F1 = 0.640. Its precision was high (0.960), but its recall was only 0.480. It predicted no very often, causing many toxic samples to be missed.
+
+\subsection{Error Analysis}
+The assignment requires at least three incorrect or weak outputs, at least three Arabic-specific challenges, and at least two difficult or borderline cases. The following table gives representative errors from the final run. Offensive words are not printed; the IDs refer to the submitted logs.
+
+\begin{longtable}{p{0.06\textwidth}p{0.15\textwidth}p{0.11\textwidth}p{0.28\textwidth}p{0.30\textwidth}}
+\caption{Representative incorrect or weak outputs. Text is summarized rather than quoted.}\\
+\toprule
+ID & Type & Gold & Model outputs & Explanation \\
+\midrule
+\endfirsthead
+\toprule
+ID & Type & Gold & Model outputs & Explanation \\
+\midrule
+\endhead
+5 & MSA, conflict-related wording & non-toxic & ChatGPT=yes, Gemini=no, ALLaM=yes, Jais=no, Fanar=yes & False positive caused by negative-topic words. The sentence asks for less division, so the intent is non-toxic. \\
+11 & MSA, sympathy statement & non-toxic & ChatGPT=no, Gemini=no, ALLaM=yes, Jais=yes, Fanar=no & Neutral sympathy about victims; ALLaM and Jais treated sadness and death-related vocabulary as toxicity. \\
+29 & MSA, indirect metaphorical attack & toxic & ChatGPT=no, Gemini=yes, ALLaM=no, Jais=yes, Fanar=no & Some models missed toxicity when it appeared as metaphorical and political language rather than a direct modern insult. \\
+51 & Gulf dialect, mixed affection and criticism & toxic & ChatGPT=no, Gemini=yes, ALLaM=yes, Jais=yes, Fanar=no & The sentence combines friendly wording with a redacted insult. ChatGPT and Fanar judged the overall tone as non-toxic. \\
+63 & Dialect/political sarcasm & toxic & ChatGPT=no, Gemini=no, ALLaM=no, Jais=no, Fanar=no & Subtle sarcastic attack; all five models missed it because the toxicity is pragmatic rather than explicit. \\
+85 & Classical Arabic satire/hija' & toxic & ChatGPT=no, Gemini=no, ALLaM=no, Jais=no, Fanar=no & Classical satire was treated as harmless literary text, although the intended function is hostile ridicule. \\
+93 & Classical humiliation & toxic & ChatGPT=yes, Gemini=yes, ALLaM=no, Jais=no, Fanar=no & The attack is expressed through old rhetorical style; local models especially missed the pragmatic humiliation. \\
+\bottomrule
+\end{longtable}
+
+\subsubsection{Arabic-specific challenge 1: dialect variation}
+Dialectal Arabic contains local words, spelling variation, and social-media shortcuts that are not equally represented in model pretraining. The final dataset includes Gulf, Egyptian, Levantine, Iraqi, and Maghrebi items inside the dialect group. Several models missed subtle Gulf sarcasm, while some local models treated harmless dialect laughter or casual statements as toxic.
+
+\subsubsection{Arabic-specific challenge 2: morphology and orthographic variation}
+Arabic words can carry meaning through roots, patterns, affixes, and plural forms. Toxicity may appear through a derived form rather than a direct dictionary word. Informal spelling, missing hamza, final ta marbuta variation, and non-standard social-media orthography make exact keyword matching unreliable.
+
+\subsubsection{Arabic-specific challenge 3: ambiguity and context dependence}
+Some comments contain negative vocabulary but are not attacks, while others are toxic through sarcasm without using a clear slur. Sentence 5 discusses conflict but asks people to stop increasing division, so it is non-toxic. Sentence 63 is toxic mostly because of sarcastic framing and political attack. This shows that Arabic toxicity detection requires pragmatic understanding, not only word spotting.
+
+\subsubsection{Arabic-specific challenge 4: Classical Arabic satire}
+The Classical Arabic section was difficult because older insults and hija' do not look like modern social-media abuse. Several models treated hostile literary lines as neutral because the style is poetic and archaic. Fanar was especially conservative on Classical Arabic, with Classical F1 = 0.316. This suggests that modern Arabic safety classifiers may not capture older rhetorical forms of humiliation.
+
+\subsection{Difficult and Borderline Cases}
+Some items were difficult even for humans because they depend on social-media context, sarcasm, or literary background. Table~\ref{tab:problem5-borderline} lists examples without printing the offensive text.
+
+\begin{table}[H]
+\centering
+\caption{Borderline or difficult cases.}
+\label{tab:problem5-borderline}
+\scriptsize
+\begin{tabular}{p{0.06\textwidth}p{0.20\textwidth}p{0.10\textwidth}p{0.10\textwidth}p{0.44\textwidth}}
+\toprule
+ID & Type & Gold & Wrong & Why it is difficult \\
+\midrule
+5 & MSA negative-topic wording & non-toxic & 3/5 & It contains words related to conflict, but the communicative intent is to reduce division. \\
+56 & Context-dependent social-media item & toxic & 4/5 & The final label follows the reviewed benchmark label, but the offensive signal is weak without the original thread context. \\
+63 & Dialect/political sarcasm & toxic & 5/5 & The wording is sarcastic rather than a direct insult; models that depend on obvious slur words miss it. \\
+85 & Classical satire/hija' & toxic & 5/5 & Classical hostile poetry is hard because the offensive force is literary and archaic, not modern slang. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Limitations}
+The benchmark is useful but still small. It contains 100 examples, so a few borderline labels can noticeably change the metric. The dataset is balanced across the three required variety groups, but dialects inside the dialect group are not equally represented because the priority was to keep the total at 100 while using real examples.
+
+A second limitation is context. Social-media toxicity often depends on previous comments, the target person, or a named group. Our inputs were single sentences or comments, so some cases lose context. This explains why a few original MPOLD labels look less obvious after cleaning and shortening.
+
+A third limitation is model access. ChatGPT and Gemini required paid API access, while ALLaM, Jais, and Fanar were run locally through Ollama. Local inference was slow and resource-limited. The team had to wait for long local model runs, pay for API calls, modify the prompt, rerun the benchmark, and manually inspect labels and outputs. This made the work very time- and effort-consuming. We tried our best, became tired during repeated runs and manual checking, and still documented the failures honestly.
+
+Finally, prompt format matters. Jais failed badly in the first attempt when the required answer format was less constrained. The final strict yes/no prompt improved compliance, but a different prompt or few-shot examples could change the classification results. Therefore, the results should be interpreted as a controlled zero-shot comparison under one strict prompt, not as a permanent ranking of the models.
+
+\subsection{Final Conclusions and Recommendations}
+Gemini was the best model in this benchmark, with F1 = 0.889 and accuracy = 0.900. ChatGPT came second, with very high precision but lower recall. Among local models, ALLaM was the strongest overall and performed especially well on MSA. Jais became format-compliant after the strict prompt but still made many false positives. Fanar was the most conservative model and missed many toxic examples, especially Classical Arabic attacks.
+
+The main recommendation is to use stricter output prompts for local LLM evaluation. A simple yes/no format was much more robust than pseudo-JSON for Jais. For future work, the dataset should be expanded beyond 100 samples, dialects should be balanced inside the dialect group, and ambiguous MPOLD examples should be reviewed with more annotators. A few-shot prompt with examples of dialect sarcasm and Classical Arabic hija' may also improve recall. For production moderation, a model should not rely only on binary zero-shot LLM outputs; it should combine LLM classification with annotation guidelines, confidence thresholds, and human review for borderline cases.
+
+\subsection{Checklist}
+\begin{longtable}{p{0.30\textwidth}p{0.18\textwidth}p{0.42\textwidth}}
+\caption{Problem 5 checklist.}\\
+\toprule
+Requirement & Status & Evidence in our work \\
+\midrule
+\endfirsthead
+\toprule
+Requirement & Status & Evidence in our work \\
+\midrule
+\endhead
+Task definition & Completed & Binary Arabic toxicity detection for Team 27 / Topic 27. \\
+Dataset size & Completed & 100 samples. \\
+Balanced Arabic varieties & Completed & 34 MSA, 33 Classical, 33 Dialect. \\
+Real data majority & Completed & MPOLD social-media comments plus public-domain Classical Arabic. \\
+Gold output for each sample & Completed & \texttt{gold\_label} column in the final CSV. \\
+At least two annotators & Completed & \texttt{annotator1} and \texttt{annotator2} included for every sample. \\
+IAA reported & Completed & Simple agreement = 100.0\%, Cohen's $\kappa$ = 1.000. \\
+Same prompt for all models & Completed & Strict yes/no prompt used for all five models. \\
+All five required models & Completed & ChatGPT, Gemini, ALLaM, Jais, and Fanar evaluated. \\
+Inputs, prompts, outputs logged & Completed & Final CSV and JSON evaluation logs are submitted with the report. \\
+Metric reported & Completed & F1, precision, recall, accuracy, and confusion counts. \\
+Comparison table & Completed & Table~\ref{tab:problem5-overall-results}. \\
+Visualization & Completed & F1 bar chart and variety-group F1 chart. \\
+Selected outputs & Completed & Table~\ref{tab:problem5-selected-outputs}. \\
+Error analysis & Completed & Representative errors, Arabic-specific challenges, and borderline cases included. \\
+Limitations and recommendations & Completed & Final sections discuss limitations and future improvements. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Submitted Files for Problem 5}
+The Problem 5 submission package should include the final dataset CSV, the final evaluation JSON log, the evaluation script/prompt used for the final run, this \texttt{prob5.tex} report section, and the generated figures. The important files are:
+\begin{itemize}
+    \item \texttt{to\_annotate.csv}: final 100-sample dataset with gold labels and annotator columns.
+    \item \texttt{evaluation.json}: final outputs for ChatGPT, Gemini, ALLaM, Jais, and Fanar.
+    \item \texttt{prob5.tex}: final report section.
+    \item \texttt{Figures/problem5\_f1\_scores.png} and \texttt{Figures/problem5\_f1\_by\_variety.png}: report visualizations.
+\end{itemize}
+
+\selectlanguage{english}
+\normalfont
 \endgroup
