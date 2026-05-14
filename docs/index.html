@@ -191,6 +191,122 @@
       </div>
     </section>
 
+    <section class="section" id="rag-full-coverage">
+      <div class="container">
+        <div class="section-header reveal visible">
+          <div>
+            <h2 class="section-title">RAG full coverage</h2>
+            <p class="section-subtitle">These extra layers complete the topic end to end: from preparing text and indexing it, to retrieving evidence, building the prompt, generating the answer, and checking quality.</p>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-report"/></svg></div>
+            <span class="slide-badge">1. Preparation</span>
+            <h3>Clean text before retrieval</h3>
+            <p>Explain preprocessing, chunking, overlap, and metadata so the documents are easier to search and the retrieved context stays precise.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-rag"/></svg></div>
+            <span class="slide-badge">2. Embeddings</span>
+            <h3>Turn text into vectors</h3>
+            <p>Show how embeddings convert words and passages into dense vectors that preserve meaning and make semantic comparison possible.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-sparkle"/></svg></div>
+            <span class="slide-badge">3. Vector store</span>
+            <h3>Search by similarity</h3>
+            <p>Describe the vector database, top-k retrieval, cosine similarity, and why fast nearest-neighbor search matters for grounded answers.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-rag"/></svg></div>
+            <span class="slide-badge">4. Prompt assembly</span>
+            <h3>Build the context window</h3>
+            <p>Explain how the query and retrieved chunks are merged into a prompt so the model uses evidence instead of guessing from memory.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-report"/></svg></div>
+            <span class="slide-badge">5. Generation</span>
+            <h3>Produce grounded answers</h3>
+            <p>Show the final answer step, how the LLM synthesizes the retrieved context, and how citations or references can improve trust.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-sparkle"/></svg></div>
+            <span class="slide-badge">6. Evaluation</span>
+            <h3>Measure quality and limits</h3>
+            <p>Add faithfulness, answer relevance, context relevance, hallucination risk, and advanced ideas such as reranking or query rewriting.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="rag-advanced-topics">
+      <div class="container">
+        <div class="section-header reveal visible">
+          <div>
+            <h2 class="section-title">Advanced RAG techniques</h2>
+            <p class="section-subtitle">These ideas go beyond the basic pipeline and show how real systems get better retrieval quality, more precise prompts, and more trustworthy answers.</p>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-sparkle"/></svg></div>
+            <span class="slide-badge">Query rewriting</span>
+            <h3>Improve the question before search</h3>
+            <p>A short user question can be rewritten into a clearer retrieval query so the search stage has more useful terms and less ambiguity.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-report"/></svg></div>
+            <span class="slide-badge">Hybrid retrieval</span>
+            <h3>Combine keyword and vector search</h3>
+            <p>Mixing lexical search with semantic search helps when exact terms matter as much as meaning, which makes retrieval more robust.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-quiz"/></svg></div>
+            <span class="slide-badge">Reranking</span>
+            <h3>Reorder candidates before answering</h3>
+            <p>A reranker can score the first batch of retrieved chunks again and move the strongest evidence to the top before generation.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-presentation"/></svg></div>
+            <span class="slide-badge">Multi-hop retrieval</span>
+            <h3>Follow several evidence paths</h3>
+            <p>Some questions need more than one document. Multi-hop retrieval chains evidence across passages until the answer becomes complete.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-demo"/></svg></div>
+            <span class="slide-badge">Context compression</span>
+            <h3>Trim retrieved text before prompting</h3>
+            <p>Compression removes noise from retrieved chunks so the prompt window stays focused on the most relevant facts and details.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-rag"/></svg></div>
+            <span class="slide-badge">Evaluation</span>
+            <h3>Check faithfulness and relevance</h3>
+            <p>Useful metrics include context relevance, answer relevance, and faithfulness, because a RAG system is only as good as its grounding.</p>
+          </article>
+        </div>
+
+        <div class="split-layout section-block">
+          <div class="report-card reveal visible">
+            <div class="kicker">Practical note</div>
+            <h3 style="margin:10px 0 8px">How the advanced pieces fit together</h3>
+            <p class="muted-small">A mature RAG system often rewrites the query, retrieves with more than one search method, reranks the results, compresses the context, and then evaluates whether the final response stayed faithful to the evidence.</p>
+          </div>
+          <div class="glass-panel reveal visible">
+            <div class="kicker">Why this is useful</div>
+            <div class="chapter-list">
+              <a href="#rag-simulation"><strong>Try the demo</strong><span>see the pipeline in action</span></a>
+              <a href="#concept-glossary"><strong>Review concepts</strong><span>jump back to key terms</span></a>
+              <a href="report.html"><strong>Read the report</strong><span>formal project explanation</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="rag-simulation">
       <div class="container">
         <div class="section-header reveal visible">
