@@ -266,6 +266,111 @@ const RAG_GLOSSARY = {
   }
 };
 
+const ADVANCED_RAG_TOPICS = {
+  rewrite: {
+    title: 'Improve the question before search',
+    summary: 'Query rewriting turns a short or vague user question into a clearer retrieval query so the search stage has more useful terms and less ambiguity.',
+    quote: 'Better search starts before search.',
+    flow: ['Question', 'Rewrite', 'Search', 'Evidence'],
+    metrics: [
+      { value: 'Clarified intent', label: 'Rewrites missing context into search-friendly wording' },
+      { value: 'Fewer misses', label: 'Reduces retrieval failures caused by vague phrasing' },
+      { value: 'Better recall', label: 'Exposes more useful terms for matching' }
+    ],
+    notes: [
+      'This is useful when users ask short or incomplete questions.',
+      'A rewritten query can include synonyms, entities or domain hints.',
+      'It often improves the first retrieval pass without changing the answer model.'
+    ],
+    tags: ['Query rewriting', 'Intent expansion', 'Recall']
+  },
+  hybrid: {
+    title: 'Combine keyword and vector search',
+    summary: 'Hybrid retrieval mixes lexical matching with semantic search so exact terms and meaning both contribute to ranking.',
+    quote: 'Exact words and meaning can work together.',
+    flow: ['Keyword', 'Vector', 'Merge', 'Rank'],
+    metrics: [
+      { value: 'Two signals', label: 'Keyword match plus semantic similarity' },
+      { value: 'More robust', label: 'Helps when one method misses the answer' },
+      { value: 'Flexible', label: 'Useful for technical and natural-language queries' }
+    ],
+    notes: [
+      'Some questions need exact terms, especially for names or codes.',
+      'Other questions are better solved by meaning-based search.',
+      'Hybrid retrieval balances both and often improves real-world performance.'
+    ],
+    tags: ['Hybrid retrieval', 'Lexical search', 'Semantic search']
+  },
+  rerank: {
+    title: 'Reorder candidates before answering',
+    summary: 'A reranker inspects the first retrieved chunks again and moves the strongest evidence to the top before generation.',
+    quote: 'The first search is not always the final ranking.',
+    flow: ['Retrieve', 'Re-score', 'Sort', 'Select'],
+    metrics: [
+      { value: 'Second pass', label: 'Re-scores the retrieved candidates' },
+      { value: 'Better precision', label: 'Pushes the most useful chunks upward' },
+      { value: 'Cleaner prompt', label: 'Reduces noisy evidence before generation' }
+    ],
+    notes: [
+      'A reranker is useful when retrieval returns many near-matches.',
+      'It helps the model receive a more focused context window.',
+      'This can noticeably improve answer quality in large document collections.'
+    ],
+    tags: ['Reranking', 'Precision', 'Prompt quality']
+  },
+  multihop: {
+    title: 'Follow several evidence paths',
+    summary: 'Multi-hop retrieval chains evidence across several passages when one chunk alone is not enough to answer the question.',
+    quote: 'Some answers live across multiple documents.',
+    flow: ['Chunk A', 'Chunk B', 'Chain', 'Answer'],
+    metrics: [
+      { value: 'Chain evidence', label: 'Uses several passages together' },
+      { value: 'Complex questions', label: 'Helpful when answers require reasoning over multiple facts' },
+      { value: 'Structured flow', label: 'Retrieval can be repeated in stages' }
+    ],
+    notes: [
+      'This matters for questions that combine definitions, examples and explanations.',
+      'The system may retrieve one chunk, then use it to search for a second chunk.',
+      'It is a stronger pattern than single-pass lookup for deeper reasoning tasks.'
+    ],
+    tags: ['Multi-hop', 'Reasoning', 'Evidence chaining']
+  },
+  compress: {
+    title: 'Trim retrieved text before prompting',
+    summary: 'Context compression removes noise from retrieved chunks so the prompt window stays focused on the most relevant facts and details.',
+    quote: 'Less noise leaves more room for the facts that matter.',
+    flow: ['Chunks', 'Compress', 'Focus', 'Prompt'],
+    metrics: [
+      { value: 'Shorter prompt', label: 'Keeps the context window under control' },
+      { value: 'Cleaner evidence', label: 'Removes repeated or weakly relevant text' },
+      { value: 'Lower cost', label: 'Can reduce model input size' }
+    ],
+    notes: [
+      'Compression is helpful when retrieved chunks are too long or repetitive.',
+      'It preserves the key facts while removing unnecessary padding.',
+      'That makes the generation step more focused and efficient.'
+    ],
+    tags: ['Compression', 'Context window', 'Noise reduction']
+  },
+  evaluate: {
+    title: 'Check faithfulness and relevance',
+    summary: 'Evaluation measures whether the answer is grounded, relevant to the query and consistent with the retrieved evidence.',
+    quote: 'A good RAG system is measured, not just shown.',
+    flow: ['Answer', 'Score', 'Review', 'Improve'],
+    metrics: [
+      { value: 'Faithfulness', label: 'Does the answer stay true to the evidence?' },
+      { value: 'Answer relevance', label: 'Does it actually answer the question?' },
+      { value: 'Context relevance', label: 'Were the retrieved chunks useful?' }
+    ],
+    notes: [
+      'Evaluation matters because good-looking answers can still be wrong.',
+      'These metrics help compare retrieval strategies and prompt designs.',
+      'They are essential if the system will be used beyond a demo.'
+    ],
+    tags: ['Faithfulness', 'Evaluation', 'Quality control']
+  }
+};
+
 const RAG_SIMULATION_DOCS = [
   'Diabetes symptoms include increased thirst, frequent urination, fatigue, and blurred vision.',
   'Artificial Neural Networks are computational models inspired by biological neurons.',
@@ -800,6 +905,47 @@ function initGlossary() {
   render('embeddings');
 }
 
+function initAdvancedRagTopics() {
+  const root = document.querySelector('[data-advanced-rag]');
+  if (!root) return;
+
+  const titleEl = root.querySelector('[data-advanced-title]');
+  const summaryEl = root.querySelector('[data-advanced-summary]');
+  const quoteEl = root.querySelector('[data-advanced-quote]');
+  const flowEl = root.querySelector('[data-advanced-flow]');
+  const metricsEl = root.querySelector('[data-advanced-metrics]');
+  const notesEl = root.querySelector('[data-advanced-notes]');
+  const tagsEl = root.querySelector('[data-advanced-tags]');
+  const buttons = [...root.querySelectorAll('[data-advanced-step]')];
+
+  function render(stepKey) {
+    const topic = ADVANCED_RAG_TOPICS[stepKey] || ADVANCED_RAG_TOPICS.rewrite;
+    buttons.forEach(button => {
+      const isActive = button.dataset.advancedStep === stepKey;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-selected', String(isActive));
+    });
+
+    titleEl.textContent = topic.title;
+    summaryEl.textContent = topic.summary;
+    quoteEl.textContent = topic.quote;
+    flowEl.innerHTML = topic.flow.map((step, index) => `
+      <span class="advanced-flow-step ${index === 0 ? 'is-active' : ''}">${step}</span>${index < topic.flow.length - 1 ? '<span class="advanced-flow-link">→</span>' : ''}
+    `).join('');
+    metricsEl.innerHTML = topic.metrics.map(metric => `
+      <div class="explainer-metric">
+        <strong>${metric.value}</strong>
+        <span>${metric.label}</span>
+      </div>
+    `).join('');
+    notesEl.innerHTML = topic.notes.map(note => `<div class="explainer-note">${note}</div>`).join('');
+    tagsEl.innerHTML = topic.tags.map(tag => `<span class="pill">${tag}</span>`).join('');
+  }
+
+  buttons.forEach(button => button.addEventListener('click', () => render(button.dataset.advancedStep)));
+  render('rewrite');
+}
+
 function initQuiz() {
   const root = document.querySelector('[data-quiz-root]');
   if (!root) return;
@@ -1001,6 +1147,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initRagExplainer();
   initProjectStory();
   initGlossary();
+  initAdvancedRagTopics();
   initRagSimulation();
   initQuiz();
   initDeck();
