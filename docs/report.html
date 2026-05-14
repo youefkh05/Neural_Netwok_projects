@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project Report • RAG</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <h1 class="logo">Report</h1>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a class="active" href="report.html">Report</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="presentation.html">Presentation</a>
+        <a href="https://neuralnetwokprojects-fspmceeeqzbjce4bxfnvj2.streamlit.app/" target="_blank" rel="noreferrer">Live Demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-panel reveal visible">
+          <span class="eyebrow">Written report • readable summary • PDF preview</span>
+          <h2 class="hero-title"><span class="gradient-text">Project report</span> with the main story distilled on the page.</h2>
+          <p class="hero-copy">The embedded PDF stays available for formal reading, while the page itself highlights the objective, the slide-design workflow, the main limitations and the public Streamlit demo.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="assets/final-project-report.pdf" target="_blank" rel="noreferrer">Open PDF</a>
+            <a class="btn btn-secondary" href="assets/project-brief.pdf" target="_blank" rel="noreferrer">Project brief</a>
+          </div>
+        </div>
+        <div class="glass-panel reveal visible">
+          <div class="kicker">Key takeaways</div>
+          <div class="chapter-list">
+            <a href="#objective"><strong>Objective</strong><span>why the project exists</span></a>
+            <a href="#workflow"><strong>Workflow</strong><span>slides and AI tools</span></a>
+            <a href="#limitations"><strong>Limitations</strong><span>what was difficult</span></a>
+            <a href="#demo-link"><strong>Demo link</strong><span>public Streamlit app</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="objective">
+      <div class="container card-grid">
+        <article class="feature-card reveal visible">
+          <span class="slide-badge">Objective</span>
+          <h3>Explain RAG through modern educational design</h3>
+          <p>The report frames RAG as a bridge between ANN concepts and practical LLM applications, turning a dense subject into a visual learning journey.</p>
+        </article>
+        <article class="feature-card reveal visible" id="workflow">
+          <span class="slide-badge">Workflow</span>
+          <h3>Use ChatGPT Pro and Gamma to shape the presentation</h3>
+          <p>The project describes prompt crafting, cinematic slide generation, and repeated refinement until the visuals were strong enough to match the concept.</p>
+        </article>
+        <article class="feature-card reveal visible" id="limitations">
+          <span class="slide-badge">Limitations</span>
+          <h3>Highlight the tradeoff between style and clarity</h3>
+          <p>The report discusses how some AI outputs drifted from the core topic or needed manual correction to stay technically accurate.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container split-layout">
+        <div class="pdf-panel reveal visible">
+          <div class="pdf-toolbar">
+            <div>
+              <h3>Embedded report preview</h3>
+              <p class="muted-small">The PDF is hosted directly in the site for instant viewing on GitHub Pages.</p>
+            </div>
+            <a class="btn btn-secondary" href="assets/final-project-report.pdf" target="_blank" rel="noreferrer">Download copy</a>
+          </div>
+          <object class="pdf-embed" data="assets/final-project-report.pdf" type="application/pdf">
+            <div class="pdf-fallback">
+              <p>Your browser could not display the PDF inline.</p>
+              <a class="btn btn-primary" href="assets/final-project-report.pdf" target="_blank" rel="noreferrer">Open report PDF</a>
+            </div>
+          </object>
+        </div>
+
+        <aside class="summary-panel reveal visible">
+          <div class="kicker">Report summary</div>
+          <h3 style="margin:10px 0 12px">The page version of the report</h3>
+          <ul class="report-summary">
+            <li>The report explains how RAG combines retrieval with generation to improve answer quality.</li>
+            <li>It describes how the team produced the slides and visuals using AI-assisted tools.</li>
+            <li>It notes the compromises made while balancing cinematic presentation and technical accuracy.</li>
+            <li>It documents the public Streamlit demonstration as the interactive companion to the written report.</li>
+          </ul>
+          <div class="section-block banner" id="demo-link">
+            <p>The live demo is hosted separately and linked here for easy access: <a href="https://neuralnetwokprojects-fspmceeeqzbjce4bxfnvj2.streamlit.app/" target="_blank" rel="noreferrer">open Streamlit demo</a>.</p>
+          </div>
+          <div class="section-block chapter-list">
+            <a href="assets/final-project-mcq.pdf" target="_blank" rel="noreferrer"><strong>MCQ PDF</strong><span>original question sheet</span></a>
+            <a href="quiz.html"><strong>Interactive quiz</strong><span>play the MCQ set here</span></a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-row">
+      <span class="muted-small">Project report preview and PDF hosting.</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="presentation.html">Presentation</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/site.js"></script>
+</body>
+</html>

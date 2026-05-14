@@ -2,87 +2,170 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>RAG — Interactive Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RAG Project Hub</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header class="site-header">
-    <div class="container">
-      <h1 class="logo">RAG — Visual Demo</h1>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#demo">Interactive Demo</a>
-        <a href="slides.html">Slides</a>
+    <div class="container header-row">
+      <h1 class="logo">ELC 4028 / Final Project Hub</h1>
+      <nav class="nav-links">
+        <a class="active" href="index.html">Home</a>
+        <a href="report.html">Report</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="presentation.html">Presentation</a>
+        <a href="https://neuralnetwokprojects-fspmceeeqzbjce4bxfnvj2.streamlit.app/" target="_blank" rel="noreferrer">Live Demo</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section id="hero" class="hero">
+    <section class="hero">
       <div class="container hero-grid">
-        <div class="hero-content">
-          <h2 class="gradient">Retrieval‑Augmented Generation <span class="muted">(RAG)</span></h2>
-          <p class="lead">A visual, interactive explanation and lightweight client-side demo demonstrating embeddings, retrieval and augmentation — perfect for GitHub Pages.</p>
-          <p><a class="btn" href="#demo">Try the Demo</a></p>
+        <div class="hero-panel reveal visible">
+          <span class="eyebrow">Retrieval-Augmented Generation • modern project showcase</span>
+          <h2 class="hero-title"><span class="gradient-text">RAG</span> visualized as a polished project experience.</h2>
+          <p class="hero-copy">This site turns the course final project into a curated digital presentation: the report is embedded, the MCQ file becomes an interactive quiz, the slide deck gets a creative preview, and the hosted Streamlit demo is one click away.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="report.html">Open report</a>
+            <a class="btn btn-secondary" href="quiz.html">Take quiz</a>
+            <a class="btn btn-ghost" href="presentation.html">Preview deck</a>
+          </div>
+          <div class="stat-grid">
+            <div class="stat"><strong>20</strong><span class="muted">quiz questions</span></div>
+            <div class="stat"><strong>22</strong><span class="muted">presentation slides</span></div>
+            <div class="stat"><strong>4</strong><span class="muted">report themes</span></div>
+            <div class="stat"><strong>1</strong><span class="muted">live demo link</span></div>
+          </div>
         </div>
-        <div class="hero-card">
-          <h3>What this site includes</h3>
-          <ul>
-            <li>Beautiful explainer UI and visuals</li>
-            <li>Browser-side TF‑IDF + semantic search demo</li>
-            <li>Extracted slides and summary</li>
-            <li>Static hosting friendly (GitHub Pages)</li>
-          </ul>
-        </div>
+
+        <aside class="hero-aside">
+          <div class="glass-panel reveal visible">
+            <div class="kicker">At a glance</div>
+            <h3 style="margin:10px 0 8px">What the project proves</h3>
+            <p class="muted-small">The work focuses on RAG as a practical ANN/LLM idea, then shows it through a report, an assessment quiz, slide storytelling and the separate hosted demo.</p>
+            <div class="tag-row">
+              <span class="tag">Report preview</span>
+              <span class="tag">Quiz interactivity</span>
+              <span class="tag">Slide gallery</span>
+              <span class="tag">Streamlit demo</span>
+            </div>
+          </div>
+          <div class="glass-panel reveal visible">
+            <div class="kicker">Quick links</div>
+            <div class="chapter-list">
+              <a href="report.html"><strong>Project report</strong><span>embedded PDF + summary</span></a>
+              <a href="quiz.html"><strong>MCQ quiz</strong><span>interactive practice mode</span></a>
+              <a href="presentation.html"><strong>PPTX preview</strong><span>deck navigation + download</span></a>
+              <a href="assets/final-project-report.pdf" target="_blank" rel="noreferrer"><strong>Download PDF</strong><span>original report file</span></a>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <section id="about" class="container section">
-      <h3>About the Project</h3>
-      <p>This website showcases the course final project: a visual, interactive explanation of Retrieval‑Augmented Generation (RAG). It is intentionally design-forward so it looks great on GitHub Pages while remaining lightweight and fully client-side.</p>
-      <div class="cards">
-        <div class="card">
-          <h4>Embeddings</h4>
-          <p>Converting text to vectors to allow semantic search.</p>
-        </div>
-        <div class="card">
-          <h4>Retrieval</h4>
-          <p>Find the most relevant chunks using cosine similarity.</p>
-        </div>
-        <div class="card">
-          <h4>Augmentation</h4>
-          <p>Pass retrieved context to a generator for better answers.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="demo" class="container section demo-section">
-      <h3>Interactive Demo</h3>
-      <div class="demo-grid">
-        <div class="panel">
-          <label for="query">Ask a question</label>
-          <input id="query" placeholder="e.g. What is RAG?" />
-          <button id="run">Retrieve & Generate</button>
-          <div id="explain" class="muted small"></div>
-        </div>
-        <div class="panel results">
-          <h4>Top Retrieved Chunks</h4>
-          <div id="results"></div>
-          <h4>Generated Response</h4>
-          <div id="answer" class="answer"></div>
-        </div>
-      </div>
-      <p class="note">This demo runs entirely in your browser using a simple TF‑IDF embedding and cosine similarity to demonstrate the RAG pipeline.</p>
-    </section>
-
-    <footer class="site-footer">
+    <section class="section">
       <div class="container">
-        <small>Neural Networks Course — Final Project • Static site for GitHub Pages</small>
+        <div class="section-header reveal visible">
+          <div>
+            <h2 class="section-title">A creative hub for every deliverable</h2>
+            <p class="section-subtitle">The site is built to feel more like a curated project exhibit than a plain assignment page. Each part is intentionally styled for a smooth, modern presentation on GitHub Pages.</p>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <article class="feature-card reveal visible">
+            <span class="slide-badge">Report</span>
+            <h3>Embedded project report</h3>
+            <p>The written work is presented with a clean PDF viewer and a distilled summary of the project objective, the slide-generation workflow, the limitations and the Streamlit demo.</p>
+            <div class="tag-row">
+              <span class="tag">PDF preview</span>
+              <span class="tag">Readable summary</span>
+            </div>
+          </article>
+          <article class="feature-card reveal visible">
+            <span class="slide-badge">Quiz</span>
+            <h3>MCQ turned into a real quiz</h3>
+            <p>Twenty questions from the project MCQ file are now playable in the browser with feedback, scoring and a final review of missed answers.</p>
+            <div class="tag-row">
+              <span class="tag">Scored</span>
+              <span class="tag">Interactive</span>
+            </div>
+          </article>
+          <article class="feature-card reveal visible">
+            <span class="slide-badge">Deck</span>
+            <h3>PPTX preview and download</h3>
+            <p>The presentation deck gets a slide-by-slide preview with navigation, and the original PPTX file is hosted alongside it for download.</p>
+            <div class="tag-row">
+              <span class="tag">Slide gallery</span>
+              <span class="tag">PPTX hosted</span>
+            </div>
+          </article>
+        </div>
       </div>
-    </footer>
+    </section>
+
+    <section class="section">
+      <div class="container split-layout">
+        <div class="report-card reveal visible">
+          <div class="section-header" style="margin-bottom:10px">
+            <div>
+              <h2 class="section-title" style="font-size:1.8rem">Report highlights</h2>
+              <p class="section-subtitle">These are the main ideas extracted from the report source and turned into a concise on-page narrative.</p>
+            </div>
+          </div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-index">01</div>
+              <div><strong>Project objective</strong><p>Explain RAG in a way that is visual, clear and easy to explore, while staying anchored to ANN and LLM concepts.</p></div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-index">02</div>
+              <div><strong>AI-assisted slide design</strong><p>Use prompt generation, cinematic slide styling and iterative refinement to build a presentation that feels modern and bold.</p></div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-index">03</div>
+              <div><strong>Challenges and lessons</strong><p>Balance visual intensity with readability, and keep technical explanations focused on RAG rather than drifting into side topics.</p></div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-index">04</div>
+              <div><strong>Interactive demo</strong><p>The separate hosted Streamlit app remains the live demo link, while this site becomes the polished project gallery.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel reveal visible">
+          <div class="kicker">Resources</div>
+          <h3 style="margin:10px 0 10px">Everything available from the hub</h3>
+          <div class="chapter-list">
+            <a href="report.html"><strong>Report viewer</strong><span>Open the embedded PDF</span></a>
+            <a href="quiz.html"><strong>Quiz arena</strong><span>Practice the MCQ set</span></a>
+            <a href="presentation.html"><strong>Presentation preview</strong><span>Navigate the deck and download PPTX</span></a>
+            <a href="assets/project-brief.pdf" target="_blank" rel="noreferrer"><strong>Project brief</strong><span>Original assignment PDF</span></a>
+            <a href="assets/final-project-mcq.pdf" target="_blank" rel="noreferrer"><strong>MCQ PDF</strong><span>Original question sheet</span></a>
+            <a href="https://neuralnetwokprojects-fspmceeeqzbjce4bxfnvj2.streamlit.app/" target="_blank" rel="noreferrer"><strong>Live Streamlit demo</strong><span>external hosted app</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <script src="js/demo.js"></script>
+  <footer class="footer">
+    <div class="container footer-row">
+      <div>
+        <strong style="display:block;margin-bottom:6px;color:#fff">Neural Networks Final Project</strong>
+        <span class="muted-small">RAG project hub hosted on GitHub Pages.</span>
+      </div>
+      <div class="footer-links">
+        <a href="report.html">Report</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="presentation.html">Presentation</a>
+        <a href="https://neuralnetwokprojects-fspmceeeqzbjce4bxfnvj2.streamlit.app/" target="_blank" rel="noreferrer">Live demo</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/site.js"></script>
 </body>
 </html>

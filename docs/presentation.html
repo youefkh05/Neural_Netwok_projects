@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RAG Presentation Preview</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <h1 class="logo">Presentation</h1>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="report.html">Report</a>
+        <a href="quiz.html">Quiz</a>
+        <a class="active" href="presentation.html">Presentation</a>
+        <a href="assets/rag-presentation.pptx">PPTX</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-panel reveal visible">
+          <span class="eyebrow">PPTX hosted • slide preview • interactive deck browsing</span>
+          <h2 class="hero-title"><span class="gradient-text">Presentation deck</span> turned into a browsable preview gallery.</h2>
+          <p class="hero-copy">Browsers cannot render the PPTX itself, so this page gives you a curated slide-by-slide preview and keeps the original file available for download.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="assets/rag-presentation.pptx" target="_blank" rel="noreferrer">Download PPTX</a>
+            <a class="btn btn-secondary" href="slides.html">Open slide alias</a>
+          </div>
+        </div>
+        <div class="glass-panel reveal visible">
+          <div class="kicker">Slide deck summary</div>
+          <p class="muted-small">The deck moves from the definition of RAG to architecture, building blocks, limitations and applications. Use the preview on the right to jump between slides.</p>
+          <div class="chapter-list">
+            <a href="#deck"><strong>Browse the deck</strong><span>22 slide preview</span></a>
+            <a href="assets/rag-presentation.pptx"><strong>Download the file</strong><span>original presentation</span></a>
+            <a href="index.html"><strong>Back to hub</strong><span>see all deliverables</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container deck-shell reveal visible" id="deck" data-deck-root>
+        <div class="deck-top">
+          <div>
+            <div class="kicker">Slide preview</div>
+            <h3 style="margin:8px 0 0">Creative preview of the PPTX</h3>
+          </div>
+          <div class="muted-small" data-slide-index>01 / 22</div>
+        </div>
+        <div class="progress-bar"><span data-slide-progress style="width:5%"></span></div>
+
+        <div class="section-block deck-stage">
+          <div class="slide-number">Preview slide</div>
+          <h2 class="slide-title" data-slide-title></h2>
+          <p class="muted-small" data-slide-subtitle></p>
+          <p class="slide-description" data-slide-summary></p>
+          <div class="deck-actions">
+            <button class="btn btn-secondary" type="button" data-slide-prev>Previous slide</button>
+            <button class="btn btn-primary" type="button" data-slide-next>Next slide</button>
+          </div>
+        </div>
+
+        <div class="section-block slide-grid" data-slide-list></div>
+        <p class="deck-note">The actual PPTX file is hosted here, while the preview gives a browser-friendly tour of the presentation structure and style.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-row">
+      <span class="muted-small">Original presentation hosted with an interactive preview.</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="report.html">Report</a>
+        <a href="quiz.html">Quiz</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RAG Quiz</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <h1 class="logo">Quiz</h1>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="report.html">Report</a>
+        <a class="active" href="quiz.html">Quiz</a>
+        <a href="presentation.html">Presentation</a>
+        <a href="assets/final-project-mcq.pdf" target="_blank" rel="noreferrer">MCQ PDF</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-panel reveal visible">
+          <span class="eyebrow">Interactive MCQ practice • scored review • teaching mode</span>
+          <h2 class="hero-title"><span class="gradient-text">Quiz mode</span> built from the project's MCQ file.</h2>
+          <p class="hero-copy">The quiz is not just a static list. It is a guided answer-checking flow with instant feedback, explanations, and a final review of every missed question.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="assets/final-project-mcq.pdf" target="_blank" rel="noreferrer">Open PDF</a>
+            <a class="btn btn-secondary" href="report.html">Back to report</a>
+          </div>
+        </div>
+        <div class="glass-panel reveal visible">
+          <div class="kicker">How it works</div>
+          <div class="chapter-list">
+            <a href="#quiz-app"><strong>Answer one by one</strong><span>check each response</span></a>
+            <a href="#quiz-app"><strong>Reveal explanations</strong><span>learn after each answer</span></a>
+            <a href="#quiz-app"><strong>See your score</strong><span>finish with a result card</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container quiz-shell reveal visible" id="quiz-app" data-quiz-root>
+        <div class="quiz-top">
+          <div>
+            <div class="kicker">RAG MCQ practice</div>
+            <h3 style="margin:8px 0 0">Final project quiz</h3>
+          </div>
+          <div class="muted-small"><span data-counter>1 / 20</span></div>
+        </div>
+        <div class="progress-bar"><span data-progress style="width:5%"></span></div>
+
+        <div class="section-block quiz-card">
+          <div data-question></div>
+          <div class="option-list" data-options></div>
+          <div class="feedback" data-feedback></div>
+          <div class="quiz-actions">
+            <button class="btn btn-secondary" type="button" data-prev>Previous</button>
+            <button class="btn btn-primary" type="button" data-action>Check answer</button>
+            <button class="btn btn-ghost" type="button" data-restart>Restart</button>
+          </div>
+        </div>
+
+        <div class="section-block" data-summary></div>
+        <div class="section-block" data-missed></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-row">
+      <span class="muted-small">Interactive quiz with explanations from the project MCQ file.</span>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="report.html">Report</a>
+        <a href="presentation.html">Presentation</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/site.js"></script>
+</body>
+</html>
