@@ -13,19 +13,20 @@
 }
 
 % Column widths
-\newlength{\tcw}\setlength{\tcw}{0.39\textwidth}
+\newlength{\tcw}\setlength{\tcw}{0.30\textwidth}
 \newlength{\rcw}\setlength{\rcw}{0.473\textwidth}
 
 % Side-by-side retrieval table header
 \newcommand{\retrievaltableheader}{%
-  \noindent\begin{tabular}{|c|c|p{\tcw}|c|c|p{\tcw}|}%
+      \begin{center}%
+      \begin{tabular}{|c|c|p{\tcw}|c|c|p{\tcw}|}%
   \hline%
   \multicolumn{3}{|c|}{\cellcolor{high}\textbf{Classical Retrieval (BM25)}}%
   &\multicolumn{3}{c|}{\cellcolor{mid}\textbf{Semantic Retrieval (Embeddings)}}\\\hline%
   \textbf{\#}&\textbf{Sc.}&\textbf{Passage}%
   &\textbf{\#}&\textbf{Sc.}&\textbf{Passage}\\\hline%
 }
-\newcommand{\retrievaltablefooter}{\hline\end{tabular}\vspace{0.6em}}
+\newcommand{\retrievaltablefooter}{\hline\end{tabular}\end{center}\vspace{0.6em}}
 
 % Row macro — Arabic text is passed directly (no \textarabic inside macro)
 \newcommand{\rrow}[6]{%
@@ -217,6 +218,30 @@ application built with Flask:
 The web application runs at \texttt{http://localhost:5010} and requires
 no configuration beyond having the pre-built FAISS index in
 \texttt{output/}.
+
+% ── Web UI Figures ────────────────────────────────────────────────────────────
+\subsubsection{Web UI Screenshots}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{web_ui_landing_page.png}
+  \caption{Landing Page --- Main Web UI Interface}
+  \label{fig:web_ui_landing}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{web_ui_classic_semantic_example.png}
+  \caption{Classical vs.\ Semantic Retrieval Example --- Side-by-Side Comparison}
+  \label{fig:web_ui_classic_semantic}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{web_ui_rag_llm_example.png}
+  \caption{RAG vs.\ LLM-only Example --- Grounded vs.\ Hallucinated Answers}
+  \label{fig:web_ui_rag_llm}
+\end{figure}
 
 % ── Retrieval Results ─────────────────────────────────────────────────────────
 \subsection{Results from 10 Arabic Queries (Classical vs.\ Semantic)}
