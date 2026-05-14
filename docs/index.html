@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RAG Project Hub</title>
+  <title>Neural Networks — Final Project (RAG)</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -77,53 +77,394 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="rag-explainer">
       <div class="container">
         <div class="section-header reveal visible">
           <div>
-            <h2 class="section-title">A creative hub for every deliverable</h2>
-            <p class="section-subtitle">The site is built to feel more like a curated project exhibit than a plain assignment page. Each part is intentionally styled for a smooth, modern presentation on GitHub Pages.</p>
+            <h2 class="section-title">RAG explained interactively</h2>
+            <p class="section-subtitle">Use the guided steps below to understand how retrieval, augmentation and generation work together in a practical AI pipeline.</p>
+          </div>
+        </div>
+
+        <div class="explainer-shell reveal visible" data-rag-explainer>
+          <div class="explainer-nav" role="tablist" aria-label="RAG explanation steps">
+            <button class="explainer-tab is-active" type="button" data-step="definition" aria-selected="true">1. Definition</button>
+            <button class="explainer-tab" type="button" data-step="workflow" aria-selected="false">2. Workflow</button>
+            <button class="explainer-tab" type="button" data-step="retrieval" aria-selected="false">3. Retrieval</button>
+            <button class="explainer-tab" type="button" data-step="generation" aria-selected="false">4. Generation</button>
+            <button class="explainer-tab" type="button" data-step="value" aria-selected="false">5. Why it matters</button>
+          </div>
+
+          <div class="explainer-panel">
+            <div class="explainer-copy">
+              <div class="kicker">Interactive guide</div>
+              <h3 data-rag-title>Retrieval-Augmented Generation</h3>
+              <p class="muted-small" data-rag-summary>RAG combines document retrieval with language generation so answers are grounded in external information instead of relying on model memory alone.</p>
+
+              <div class="explainer-metrics" data-rag-metrics></div>
+
+              <div class="explainer-notes" data-rag-notes></div>
+            </div>
+
+            <div class="explainer-visual">
+              <div class="explainer-flow">
+                <div class="flow-node flow-query" data-flow-node="query">User query</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-node flow-retrieve" data-flow-node="retrieve">Retrieve evidence</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-node flow-llm" data-flow-node="llm">LLM response</div>
+              </div>
+
+              <div class="explainer-meter">
+                <div class="explainer-meter-labels">
+                  <span>Grounded context</span>
+                  <span>Creative synthesis</span>
+                </div>
+                <div class="explainer-meter-track">
+                  <span data-rag-meter></span>
+                </div>
+              </div>
+
+              <div class="explainer-tags" data-rag-tags></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="project-story">
+      <div class="container">
+        <div class="section-header reveal visible">
+          <div>
+            <h2 class="section-title">RAG architecture in depth</h2>
+            <p class="section-subtitle">This section focuses on the RAG topic itself: retrieval, context assembly, generation, and the quality tradeoffs that shape the final answer.</p>
+          </div>
+        </div>
+
+        <div class="project-shell reveal visible" data-project-story>
+          <div class="project-nav" aria-label="RAG architecture steps">
+            <button class="project-step is-active" type="button" data-project-step="architecture">1. Architecture</button>
+            <button class="project-step" type="button" data-project-step="retrieval">2. Retrieval layer</button>
+            <button class="project-step" type="button" data-project-step="generation">3. Augmentation and generation</button>
+            <button class="project-step" type="button" data-project-step="tradeoffs">4. Strengths and limits</button>
+          </div>
+
+          <div class="project-panel">
+            <div class="project-copy">
+              <div class="kicker">RAG concept map</div>
+              <h3 data-project-title>RAG architecture</h3>
+              <p class="muted-small" data-project-summary>RAG combines a retriever and a generator. The retriever finds the best evidence, then the generator uses that evidence to answer with grounding instead of guesswork.</p>
+              <div class="explainer-metrics" data-project-metrics></div>
+              <div class="explainer-notes" data-project-notes></div>
+            </div>
+
+            <div class="project-aside">
+              <div class="project-quote" data-project-quote>
+                The core idea is simple: search first, then generate.
+              </div>
+              <div class="explainer-tags" data-project-tags></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="concept-glossary">
+      <div class="container">
+        <div class="section-header reveal visible">
+          <div>
+            <h2 class="section-title">RAG concept map</h2>
+            <p class="section-subtitle">Click a concept to see how it fits into the retrieval pipeline and why it matters for grounding the answer.</p>
+          </div>
+        </div>
+
+        <div class="glossary-shell reveal visible">
+          <div class="glossary-grid" data-glossary-nav></div>
+          <div class="glossary-detail">
+            <div class="kicker">Topic detail</div>
+            <h3 data-glossary-title>Embeddings</h3>
+            <p class="muted-small" data-glossary-summary>Numerical vector representations of text that capture semantic meaning and relationships.</p>
+            <div class="explainer-metrics" data-glossary-metrics></div>
+            <div class="explainer-notes" data-glossary-notes></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="rag-full-coverage">
+      <div class="container">
+        <div class="section-header reveal visible">
+          <div>
+            <h2 class="section-title">RAG full coverage</h2>
+            <p class="section-subtitle">These extra layers complete the topic end to end: from preparing text and indexing it, to retrieving evidence, building the prompt, generating the answer, and checking quality.</p>
           </div>
         </div>
 
         <div class="card-grid">
           <article class="feature-card reveal visible">
             <div class="card-icon"><svg><use href="assets/icons.svg#icon-report"/></svg></div>
-            <span class="slide-badge">Report</span>
-            <h3>Embedded project report</h3>
-            <p>The written work is presented with a clean PDF viewer and a distilled summary of the project objective, the slide-generation workflow, the limitations and the Streamlit demo.</p>
+            <span class="slide-badge">1. Preparation</span>
+            <h3>Clean text before retrieval</h3>
+            <p>Explain preprocessing, chunking, overlap, and metadata so the documents are easier to search and the retrieved context stays precise.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-rag"/></svg></div>
+            <span class="slide-badge">2. Embeddings</span>
+            <h3>Turn text into vectors</h3>
+            <p>Show how embeddings convert words and passages into dense vectors that preserve meaning and make semantic comparison possible.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-sparkle"/></svg></div>
+            <span class="slide-badge">3. Vector store</span>
+            <h3>Search by similarity</h3>
+            <p>Describe the vector database, top-k retrieval, cosine similarity, and why fast nearest-neighbor search matters for grounded answers.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-rag"/></svg></div>
+            <span class="slide-badge">4. Prompt assembly</span>
+            <h3>Build the context window</h3>
+            <p>Explain how the query and retrieved chunks are merged into a prompt so the model uses evidence instead of guessing from memory.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-report"/></svg></div>
+            <span class="slide-badge">5. Generation</span>
+            <h3>Produce grounded answers</h3>
+            <p>Show the final answer step, how the LLM synthesizes the retrieved context, and how citations or references can improve trust.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-sparkle"/></svg></div>
+            <span class="slide-badge">6. Evaluation</span>
+            <h3>Measure quality and limits</h3>
+            <p>Add faithfulness, answer relevance, context relevance, hallucination risk, and advanced ideas such as reranking or query rewriting.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="rag-advanced-topics">
+      <div class="container">
+        <div class="section-header reveal visible">
+          <div>
+            <h2 class="section-title">Advanced RAG techniques</h2>
+            <p class="section-subtitle">These ideas go beyond the basic pipeline and show how real systems get better retrieval quality, more precise prompts, and more trustworthy answers.</p>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-sparkle"/></svg></div>
+            <span class="slide-badge">Query rewriting</span>
+            <h3>Improve the question before search</h3>
+            <p>A short user question can be rewritten into a clearer retrieval query so the search stage has more useful terms and less ambiguity.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-report"/></svg></div>
+            <span class="slide-badge">Hybrid retrieval</span>
+            <h3>Combine keyword and vector search</h3>
+            <p>Mixing lexical search with semantic search helps when exact terms matter as much as meaning, which makes retrieval more robust.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-quiz"/></svg></div>
+            <span class="slide-badge">Reranking</span>
+            <h3>Reorder candidates before answering</h3>
+            <p>A reranker can score the first batch of retrieved chunks again and move the strongest evidence to the top before generation.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-presentation"/></svg></div>
+            <span class="slide-badge">Multi-hop retrieval</span>
+            <h3>Follow several evidence paths</h3>
+            <p>Some questions need more than one document. Multi-hop retrieval chains evidence across passages until the answer becomes complete.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-demo"/></svg></div>
+            <span class="slide-badge">Context compression</span>
+            <h3>Trim retrieved text before prompting</h3>
+            <p>Compression removes noise from retrieved chunks so the prompt window stays focused on the most relevant facts and details.</p>
+          </article>
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-rag"/></svg></div>
+            <span class="slide-badge">Evaluation</span>
+            <h3>Check faithfulness and relevance</h3>
+            <p>Useful metrics include context relevance, answer relevance, and faithfulness, because a RAG system is only as good as its grounding.</p>
+          </article>
+        </div>
+
+        <div class="split-layout section-block">
+          <div class="report-card reveal visible">
+            <div class="kicker">Practical note</div>
+            <h3 style="margin:10px 0 8px">How the advanced pieces fit together</h3>
+            <p class="muted-small">A mature RAG system often rewrites the query, retrieves with more than one search method, reranks the results, compresses the context, and then evaluates whether the final response stayed faithful to the evidence.</p>
+          </div>
+          <div class="glass-panel reveal visible">
+            <div class="kicker">Why this is useful</div>
+            <div class="chapter-list">
+              <a href="#rag-simulation"><strong>Try the demo</strong><span>see the pipeline in action</span></a>
+              <a href="#concept-glossary"><strong>Review concepts</strong><span>jump back to key terms</span></a>
+              <a href="report.html"><strong>Read the report</strong><span>formal project explanation</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="rag-simulation">
+      <div class="container">
+        <div class="section-header reveal visible">
+          <div>
+            <h2 class="section-title">RAG simulation by example</h2>
+            <p class="section-subtitle">Try a real query, then watch the full pipeline update step by step: query understanding, embedding, retrieval, and response generation.</p>
+          </div>
+        </div>
+
+        <div class="simulation-shell reveal visible" data-rag-simulation>
+          <div class="simulation-top">
+            <div>
+              <div class="kicker">Interactive example</div>
+              <h3>Use the sample knowledge base</h3>
+              <p class="muted-small">This simulation uses the same idea as the Streamlit demo: a small knowledge base, similarity scoring, retrieved chunks, and a grounded answer.</p>
+            </div>
+            <div class="simulation-presets">
+              <button class="simulation-preset is-active" type="button" data-query="What are diabetes symptoms?">Diabetes query</button>
+              <button class="simulation-preset" type="button" data-query="What is RAG?">RAG query</button>
+              <button class="simulation-preset" type="button" data-query="How does vector database search work?">Vector search query</button>
+            </div>
+          </div>
+
+          <div class="simulation-input-row">
+            <input class="simulation-input" type="text" value="What are diabetes symptoms?" placeholder="Ask a question about the sample knowledge base" data-rag-query />
+            <button class="btn btn-primary" type="button" data-rag-run>Run simulation</button>
+          </div>
+
+          <div class="simulation-summary-row" aria-live="polite">
+            <div class="simulation-summary-item">
+              <span>Current query</span>
+              <strong data-sim-query-display>What are diabetes symptoms?</strong>
+            </div>
+            <div class="simulation-summary-item">
+              <span>Top similarity</span>
+              <strong data-sim-top-score>0.000</strong>
+            </div>
+            <div class="simulation-summary-item">
+              <span>Retrieved chunks</span>
+              <strong data-sim-retrieved-count>3</strong>
+            </div>
+          </div>
+
+          <div class="simulation-stage-header">
+            <div class="kicker">Pipeline stages</div>
+            <p class="muted-small">Click a stage to focus its explanation, or run a new query to refresh all outputs.</p>
+            <div class="simulation-mini-flow" data-sim-mini-flow>
+              <span class="simulation-mini-node is-active" data-mini-stage="query">Query</span>
+              <span class="simulation-mini-link">→</span>
+              <span class="simulation-mini-node" data-mini-stage="embed">Embed</span>
+              <span class="simulation-mini-link">→</span>
+              <span class="simulation-mini-node" data-mini-stage="retrieve">Retrieve</span>
+              <span class="simulation-mini-link">→</span>
+              <span class="simulation-mini-node" data-mini-stage="generate">Generate</span>
+            </div>
+          </div>
+
+          <div class="simulation-stage-row">
+            <button class="simulation-stage is-active" type="button" data-stage="query">1. Query</button>
+            <button class="simulation-stage" type="button" data-stage="embed">2. Embedding</button>
+            <button class="simulation-stage" type="button" data-stage="retrieve">3. Retrieval</button>
+            <button class="simulation-stage" type="button" data-stage="generate">4. Generation</button>
+          </div>
+
+          <div class="simulation-grid">
+            <div class="simulation-main">
+              <div class="simulation-card">
+                <div class="kicker">Step view</div>
+                <h3 data-sim-title>Query understanding</h3>
+                <p class="muted-small" data-sim-summary>The system starts by reading the user query and preparing it for semantic comparison with the stored documents.</p>
+                <div class="simulation-badges" data-sim-tags></div>
+                <div class="simulation-explain-grid">
+                  <div class="simulation-explain-card" data-sim-detail-wrap>
+                    <span>What happens now</span>
+                    <p data-sim-detail>The query is cleaned, tokenized, and prepared for semantic comparison.</p>
+                  </div>
+                  <div class="simulation-explain-card" data-sim-why-wrap>
+                    <span>Why it matters</span>
+                    <p data-sim-why>Better query understanding improves retrieval quality and reduces irrelevant matches.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="simulation-card">
+                <div class="kicker">Knowledge base</div>
+                <div class="simulation-docs" data-sim-docs></div>
+              </div>
+            </div>
+
+            <div class="simulation-side">
+              <div class="simulation-card">
+                <div class="kicker">Similarity scores</div>
+                <div class="simulation-scores" data-sim-scores></div>
+              </div>
+
+              <div class="simulation-card">
+                <div class="kicker">Retrieved chunks</div>
+                <div class="simulation-results" data-sim-results></div>
+              </div>
+
+              <div class="simulation-card simulation-answer-card">
+                <div class="kicker">Generated answer</div>
+                <p class="simulation-answer" data-sim-answer></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header reveal visible">
+          <div>
+            <h2 class="section-title">Core ideas behind RAG</h2>
+            <p class="section-subtitle">These cards summarize the topic itself: embeddings, retrieval, augmentation, and the limits that shape real-world RAG systems.</p>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <article class="feature-card reveal visible">
+            <div class="card-icon"><svg><use href="assets/icons.svg#icon-report"/></svg></div>
+            <span class="slide-badge">Embeddings</span>
+            <h3>Text becomes vectors</h3>
+            <p>Embeddings convert text into numerical vectors so semantically similar passages can be compared in vector space.</p>
             <div class="tag-row">
-              <span class="tag">PDF preview</span>
-              <span class="tag">Readable summary</span>
+              <span class="tag">Semantic meaning</span>
+              <span class="tag">Vector space</span>
             </div>
           </article>
           <article class="feature-card reveal visible">
             <div class="card-icon"><svg><use href="assets/icons.svg#icon-quiz"/></svg></div>
-            <span class="slide-badge">Quiz</span>
-            <h3>MCQ turned into a real quiz</h3>
-            <p>Twenty questions from the project MCQ file are now playable in the browser with feedback, scoring and a final review of missed answers.</p>
+            <span class="slide-badge">Retrieval</span>
+            <h3>Find the best evidence</h3>
+            <p>The retriever ranks chunks by similarity and returns the passages most relevant to the user query.</p>
             <div class="tag-row">
-              <span class="tag">Scored</span>
-              <span class="tag">Interactive</span>
+              <span class="tag">Top-k search</span>
+              <span class="tag">Cosine similarity</span>
             </div>
           </article>
           <article class="feature-card reveal visible">
             <div class="card-icon"><svg><use href="assets/icons.svg#icon-presentation"/></svg></div>
-            <span class="slide-badge">Deck</span>
-            <h3>PPTX preview and download</h3>
-            <p>The presentation deck gets a slide-by-slide preview with navigation, and the original PPTX file is hosted alongside it for download.</p>
+            <span class="slide-badge">Augmentation</span>
+            <h3>Build the prompt with context</h3>
+            <p>Retrieved passages are added to the prompt so the language model can answer with grounded context instead of guessing.</p>
             <div class="tag-row">
-              <span class="tag">Slide gallery</span>
-              <span class="tag">PPTX hosted</span>
+              <span class="tag">Prompt assembly</span>
+              <span class="tag">Grounded answer</span>
             </div>
           </article>
           <article class="feature-card reveal visible">
             <div class="card-icon"><svg><use href="assets/icons.svg#icon-demo"/></svg></div>
-            <span class="slide-badge">Live</span>
-            <h3>Interactive demo</h3>
-            <p>Open the live Streamlit demonstration to try the retrieval and augmentation flow with real queries and visual feedback.</p>
+            <span class="slide-badge">Limits</span>
+            <h3>What RAG does not solve</h3>
+            <p>RAG still depends on chunk quality, retrieval quality and prompt design, so it improves generation but does not make it perfect.</p>
             <div class="tag-row">
-              <a class="link-inline" href="https://neuralnetwokprojects-fspmceeeqzbjce4bxfnvj2.streamlit.app/" target="_blank" rel="noreferrer">Open demo</a>
+              <span class="tag">Retrieval quality</span>
+              <span class="tag">Hallucination risk</span>
             </div>
           </article>
         </div>
@@ -135,26 +476,26 @@
         <div class="report-card reveal visible">
           <div class="section-header" style="margin-bottom:10px">
             <div>
-              <h2 class="section-title" style="font-size:1.8rem">Report highlights</h2>
-              <p class="section-subtitle">These are the main ideas extracted from the report source and turned into a concise on-page narrative.</p>
+                <h2 class="section-title" style="font-size:1.8rem">RAG in practice</h2>
+                <p class="section-subtitle">These points connect the theory to the actual use cases: grounded answers, semantic search, vector databases and lower hallucination risk.</p>
             </div>
           </div>
           <div class="timeline">
             <div class="timeline-item">
               <div class="timeline-index">01</div>
-              <div><strong>Project objective</strong><p>Explain RAG in a way that is visual, clear and easy to explore, while staying anchored to ANN and LLM concepts.</p></div>
+                <div><strong>Grounded answers</strong><p>RAG adds retrieved evidence to the prompt so the model can answer with support from external documents.</p></div>
             </div>
             <div class="timeline-item">
               <div class="timeline-index">02</div>
-              <div><strong>AI-assisted slide design</strong><p>Use prompt generation, cinematic slide styling and iterative refinement to build a presentation that feels modern and bold.</p></div>
+                <div><strong>Semantic retrieval</strong><p>Embeddings and cosine similarity help the system find passages based on meaning rather than exact keywords.</p></div>
             </div>
             <div class="timeline-item">
               <div class="timeline-index">03</div>
-              <div><strong>Challenges and lessons</strong><p>Balance visual intensity with readability, and keep technical explanations focused on RAG rather than drifting into side topics.</p></div>
+                <div><strong>Vector databases</strong><p>They store embeddings and make top-k similarity search efficient for the retrieval stage.</p></div>
             </div>
             <div class="timeline-item">
               <div class="timeline-index">04</div>
-              <div><strong>Interactive demo</strong><p>The separate hosted Streamlit app remains the live demo link, while this site becomes the polished project gallery.</p></div>
+                <div><strong>Limits and tradeoffs</strong><p>RAG still depends on good chunking, good retrieval and a carefully written prompt to produce reliable answers.</p></div>
             </div>
           </div>
         </div>
