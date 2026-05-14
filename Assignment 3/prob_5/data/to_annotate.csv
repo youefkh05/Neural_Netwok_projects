@@ -1,101 +1,101 @@
-﻿id,text,variety,annotator1,annotator2,gold_label
-1,شو هيدا كذاب اللي عم يحكي,levantine,1,1,1
-2,وش هذا تافه اللي يكلم,gulf,1,1,1
-3,الشغل وايد تعبان,gulf,0,0,0
-4,عامل إيه؟ من زمان عنك,egyptian,0,0,0
-5,تعتبر اللغة العربية من أقدم اللغات السامية وأكثرها انتشاراً في العالم,MSA,0,0,0
-6,من يرد الله به خيراً يفقهه في الدين,Classical,0,0,0
-7,الليل زوين بزاف,maghrebi,0,0,0
-8,البيت كبير بزاف,maghrebi,0,0,0
-9,واش كاين؟,maghrebi,0,0,0
-10,كيفاش حالك؟,maghrebi,0,0,0
-11,أنا تعيان اليوم,maghrebi,0,0,0
-12,هاد غبي وكتير خاين,levantine,1,1,1
-13,تتميز اللغة العربية بغناها بالمفردات والتراكيب البلاغية,MSA,0,0,0
-14,يعتبر الشعر العربي من أقدم أنواع الأدب في التاريخ,MSA,0,0,0
-15,طلب العلم فريضة على كل مسلم,Classical,0,0,0
-16,وش هذا حرامي اللي يكلم,gulf,1,1,1
-17,هؤلاء مجموعة من مجرم يجب محاسبتهم,MSA,1,1,1
-18,خلاص خلاص ما تشيل هم,gulf,0,0,0
-19,الشخص هذا كذاب وخاين,gulf,1,1,1
-20,ما تعمل هيك تاني,levantine,0,0,0
-21,إنما العلم بالتعلم والحلم بالتحلم,Classical,0,0,0
-22,عندي شغل كتير اليوم,levantine,0,0,0
-23,ما تصدقون هذا حرامي,gulf,1,1,1
-24,تتميز العمارة العربية بزخارفها الهندسية المعقدة,MSA,0,0,0
-25,تختلف اللهجات العربية من منطقة لأخرى,MSA,0,0,0
-26,تعد اللغة العربية لغة القرآن الكريم والحديث النبوي الشريف,MSA,0,0,0
-27,تستخدم اللغة العربية في العديد من الدول العربية والأفريقية,MSA,0,0,0
-28,ترجع جذور اللغة العربية إلى أكثر من ألف وخمسمائة سنة,MSA,0,0,0
-29,انا تعبان جداً النهاردة,egyptian,0,0,0
-30,ما تصدقون هذا كذاب,gulf,1,1,1
-31,ما تصدقوش ده حرامي,egyptian,1,1,1
-32,هذا حرامي وايد كذاب,gulf,1,1,1
-33,لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه,Classical,0,0,0
-34,الشخص هذا غبي وخاين,gulf,1,1,1
-35,هاد حقير وكتير خاين,levantine,1,1,1
-36,لا ضرر ولا ضرار,Classical,0,0,0
-37,ماذا يقول هذا كاذب في التلفزيون,MSA,1,1,1
-38,أثرت اللغة العربية في العديد من اللغات الأخرى,MSA,0,0,0
-39,إن الله لا ينظر إلى صوركم وأموالكم ولكن ينظر إلى قلوبكم وأعمالكم,Classical,0,0,0
-40,الدين النصيحة,Classical,0,0,0
-41,من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت,Classical,0,0,0
-42,ما تسمعوا لهيدا غبي,levantine,1,1,1
-43,المرء مع من أحب,Classical,0,0,0
-44,إنما الأعمال بالنيات وإنما لكل امرئ ما نوى,Classical,0,0,0
-45,تفرعت اللغة العربية إلى العديد من اللهجات المحلية,MSA,0,0,0
-46,وش هذا تافه اللي يكلم,gulf,1,1,1
-47,خيركم من تعلم القرآن وعلمه,Classical,0,0,0
-48,تتميز الموسيقى العربية بألحانها وإيقاعاتها المميزة,MSA,0,0,0
-49,الشخص هذا حرامي وخاين,maghrebi,1,1,1
-50,حنا غادي نمشيو,maghrebi,0,0,0
-51,ما تصدقوش ده تافه,egyptian,1,1,1
-52,هيدا المشروع مهم كتير,levantine,0,0,0
-53,ما تخافش كلش مزيان,maghrebi,0,0,0
-54,أنا مش عارف أعمل إيه,egyptian,0,0,0
-55,مين ده كذاب اللي بيكلم,egyptian,1,1,1
-56,بغيت أكل شي الحين,gulf,0,0,0
-57,خلاص بنروح الحين,gulf,0,0,0
-58,ما تعملش كده تاني,egyptian,0,0,0
-59,إحنا هنروح الساحل الصيف ده,egyptian,0,0,0
-60,واش هذا حرامي اللي كاين,maghrebi,1,1,1
-61,ما تشغلش بالك بالموضوع ده,egyptian,0,0,0
-62,بدنا نعمل حفلة بسيطة,levantine,0,0,0
-63,انتشرت اللغة العربية مع انتشار الإسلام في العالم,MSA,0,0,0
-64,الجو حار اليوم وايد,gulf,0,0,0
-65,الجو حلو النهاردة مش كده؟,egyptian,0,0,0
-66,تحتوي الموسوعة العربية على ملايين المقالات,MSA,0,0,0
-67,بدروح عالمحطة هلق,levantine,0,0,0
-68,ما تصدقوش ده تافه,egyptian,1,1,1
-69,تتميز الكتابة العربية باتصال حروفها وجمال خطها,MSA,0,0,0
-70,تحتوي اللغة العربية على ثمانية وعشرين حرفاً أصلياً,MSA,0,0,0
-71,العلماء ورثة الأنبياء,Classical,0,0,0
-72,المسلم من سلم المسلمون من لسانه ويده,Classical,0,0,0
-73,هذا تافه وايد كذاب,gulf,1,1,1
-74,ما عندي وقت الحين,gulf,0,0,0
-75,الشارع مليان ناس دلوقتي,egyptian,0,0,0
-76,ما نعرف واش ندير,maghrebi,0,0,0
-77,يتحدث العربية أكثر من أربعمائة مليون نسمة حول العالم,MSA,0,0,0
-78,تتميز اللغة العربية بغناها بالمفردات والتراكيب البلاغية,MSA,0,0,0
-79,السيارة وايد غالية,gulf,0,0,0
-80,الجو الليلة لطيف وايد,gulf,0,0,0
-81,يتحدث العربية أكثر من أربعمائة مليون نسمة حول العالم,MSA,0,0,0
-82,تعد اللغة العربية إحدى اللغات الرسمية في الأمم المتحدة,MSA,0,0,0
-83,لا تغضب ولك الجنة,Classical,0,0,0
-84,هؤلاء مجموعة من حقير يجب محاسبتهم,MSA,1,1,1
-85,الجو حلو اليوم مش هيك؟,levantine,0,0,0
-86,الشخص هذا تافه وخاين,gulf,1,1,1
-87,ما بعرف وين رايح,levantine,0,0,0
-88,تبسمك في وجه أخيك صدقة,Classical,0,0,0
-89,تطورت الأدب العربي عبر العصور ليشمل الشعر والنثر,MSA,0,0,0
-90,شو رأيك نروح عالسوق,levantine,0,0,0
-91,وش هذا غبي اللي يكلم,gulf,1,1,1
-92,البيت كبير ومريح جداً,egyptian,0,0,0
-93,الماكلة بنين بزاف,maghrebi,0,0,0
-94,ما تعبت من الشغل,gulf,0,0,0
-95,تعتبر اللغة العربية من أقدم اللغات السامية وأكثرها انتشاراً في العالم,MSA,0,0,0
-96,استحيوا من الله حق الحياء,Classical,0,0,0
-97,وش هذا حرامي اللي يكلم,gulf,1,1,1
-98,شلونك؟ شو أخبارك؟,levantine,0,0,0
-99,من سلك طريقاً يلتمس فيه علماً سهل الله له به طريقاً إلى الجنة,Classical,0,0,0
-100,من حسن إسلام المرء تركه ما لا يعنيه,Classical,0,0,0
+﻿id,text,variety,variety_group,annotator1,annotator2,gold_label,source,source_id,source_url,notes
+1,في فترة الصغر والمراهقة يكون من الصعب تقبل تعليقات الأصدقاء حول شعرك المجعد وهنا يأتي دور الوالدين في ادخال الثقة الى نفسية طفلهما لكن مع تقدم بالسن يصبح الأمر عاديا,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-1,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive; anonymized user mention removed during preprocessing
+2,يجب ان تذكروا ان لكل سنة ثيم للحفل وهو نوع من الحفلات التنكرية,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-3,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive; anonymized user mention removed during preprocessing
+3,خبتم وخاب مسعاكم نحن دعاة السلام ومهما حاولتم ان تطمسوا الحقائق فأن التاريخ سيشهد بذلك,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-9,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive; anonymized user mention removed during preprocessing
+4,الله سبحانه وتعالى أباح تعدد الزوجات ولم يقم بفرضه، ووضع قواعد للتعدد أبرزها العدل بين الزوجات,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-12,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive
+5,يعني مش ناقصه الوطن العربي فتنه وتشتت وانقسام بالله ترحمونا وزيادة البغضاء,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-20,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive
+6,رحمهم الله و غفر لهم و الهم ذويهم الصبر و السلوان. انا لله و انا اليه راجعون,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-22,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive; anonymized user mention removed during preprocessing
+7,سبحان من خلاه مطارد ومطلوب في العالم بعد ماكان يلاحق المصلحين,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-23,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive; anonymized user mention removed during preprocessing
+8,صدق سيد البشر قول يجب علينا الابتعاد عن المعاصي كي ينصرنا الله,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-31,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive; anonymized user mention removed during preprocessing
+9,المحتكر يموت ويتحاسب عند ربه وماله يتمتع به غيره,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-34,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive
+10,الرياح جند من جنود الله وربك يمهل ولا يهمل,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-43,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive
+11,للأسف الضحايا 360 الموضوع ليس العدد، المشكلة أن النفس البشرية أصبحت أرخص شيء,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-44,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive; anonymized user mention removed during preprocessing
+12,يمكن قصده شي ثاني وخانه التعبير، نتمنى التوضيح وشرح سبب قوله هذا الكلام,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-61,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive
+13,إلى يدعم فلسطين لايك,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-63,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive
+14,مشكور وجزاك الله خير، انا مريت بهالتجربة والحمدلله انجزنا المطلوب وشكرا,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-67,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive
+15,فلسطين حرة أبية بإذن الله الله يحميها يا حق,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-69,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive
+16,برنامج ولا اروع ربي يخاليكم و يحفظكم واصلوا الف تحية من الجزائر,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-76,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive
+17,في الحقيقة حتى اقتباس زيدزو منقوص ولم يرد فيه بالفعل أنه طلب عدم التصويت لها,MSA,MSA,0,0,0,MPOLD social-media benchmark,MPOLD-82,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Non-Offensive
+18,أجل بسبب تغريدة يسجن ويحاكم يا مرتزقة وأكاديمية التغيير غير الله عليكم,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-11,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+19,التاريخ هي أحداث الوجبه ولكن محاه العنز تميم باستقدامه للعلوج الأتراك,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-17,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+20,حكومة السراج وتنظيم الحمدين الإرهابي اللي في ليبيا تجند الصم والبكم وتزج بهم في ساحات القتال,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-18,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+21,والله ما عندكم سالفه يا قناة الجزيرة الشيطانية سوى البحث في شؤون لا تخصكم,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-29,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+22,كل شي الا الوطن تقطع ارجلهم وايديهم مهما كان صغير او كبير الوطن خط احمر,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-37,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+23,كذب ودجال هو ضامن أدلب وحماه والآن تحرق,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-51,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+24,عميلة للأتراك والإخوان، الإسلام لا يعترف بما تدعي خطوبة الإسلام يعترف بالزواج والإعلان,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-68,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+25,قناة الجزيرة الفتنة اشد من القتل حسبي الله عليها من قناة,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-75,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+26,هم يعرفون ان ابوظبي والرياض سوف يقومون بمناصرة عجوزهم كما يقومون بتحطيم اليمن,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-79,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+27,الاسلام وضع الولاية للرجل رغم أنف قناة الفتنة والفساد,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-80,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+28,لا يلمع أحد لمنسوبي داعش الارهابي الا ارهابي مثله تبا لكم,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-104,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+29,النابحين في سله واحده لذلك تجد هذه السلع الفاسده,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-114,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+30,لا ولن ترتقي حتى ينتصر الحق ولو تصيحون ليوم الدين فلن يسمع احد لكم يا الكلاب,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-116,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+31,هذه القبيحة الذي اشترت لها قطر جائزة نوبل والان هي تتسكع في تركيا,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-119,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+32,قناة الخنزيره واعلام الدويله يبي يعطي دروس لمن هم يدرسونه يا ضلاليه,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-89,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+33,كلمتان فقط تكفي: تباً للعرب,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-235,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+34,صاحبة التقرير شكلها عجوز شريرة تحب القتل والدمار,MSA,MSA,1,1,1,MPOLD social-media benchmark,MPOLD-257,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+35,بتعمل حلقة صغيرة عشان عندي امتحان بكرة ومتضيعليش اليوم الله عليك يا فخر اليوتيوب,egyptian,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-4,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+36,على طاري السطحيه مدري ليه تذكرت فيحان,gulf,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-5,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+37,جواب سؤالك ليش ما اخذت الصوابين حقت الفندق: لأنهم سوولك ترقية لحجزك,gulf,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-8,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+38,ههههههههههههههههههههه إياس ياسين تخيل أنا سهل أحطلك أي اشي بس إنت مستحيل تلاقي اشي بكرهه,levantine,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-10,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+39,وين من جد انتهى! تصدق يا عمر انو الفيديو حقك اثر فيني,gulf,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-13,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+40,كيف رح يصير سلام فالعالم لما في ناس بتتطلع عالجانب السلبي,levantine,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-14,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+41,اذا أردتم تعلم اللهجة المغربية بطريقة سهلة تعالوا الى قناتي,maghrebi,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-15,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+42,رشااا مأهضمك ومأطيب طبخاتك يعطيكي العافية يارب,levantine,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-16,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+43,هههه العراقين ماعدهم مشكله بهذا الشي,iraqi,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-19,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+44,بدنا تشرح لنا اسباب الازمة المالية بالسعودية والحلول,levantine,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-21,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+45,بعد التراويح هي نفسها قبل السحور,egyptian,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-28,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+46,قبل كنت اعرفه وكنت اذكر ايامه سعره اقل من مية دولار,gulf,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-32,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+47,يمكن كله بس حكي وما في منه,levantine,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-35,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+48,وربي انت احسن واحد من اول اتمنى احد يشرح الحاصل بتركيا في فيديو,gulf,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-36,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+49,من اكتر الحجات الى ديقتنى ان ازاى مبقتيش بتعملى فيديوهات فى القناه,egyptian,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-38,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+50,من قدك قابلت آريا ستارك الابتسامة شاقة وجهك شق في نهاية المقطع,gulf,Dialect,0,0,0,MPOLD social-media benchmark,MPOLD-45,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal social-media comment; original majority label: Non-Offensive
+51,عمر انا احبك لكن شف نفسك؟ بالاول حاط صوره وسخه وبعدين كلامك مو واضح,gulf,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-24,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive
+52,انا مش فاهم إيه الكوميدي فيك ومين اللي اختارك تبقى كوميدي,egyptian,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-25,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive
+53,زقو انتو والجامعه المعفنه هاي والله محد درابكم,levantine,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-27,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+54,ههههههه اهم شي اذا تورطت في الدندول الكبير,gulf,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-41,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive
+55,هذي مجرد أحداث شغب من فئة قليلة من الجرذان ذو العقلية المنيكة,gulf,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-48,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive
+56,احمد يعاني من مرض عضال نادر يشوش على مجاله العصبي,egyptian,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-50,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+57,الإضاءة بالاستديو ابو كلب يا شنب,gulf,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-103,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive
+58,هاذي لبنان أقسى من قلوبهم مافيش بلد عديمة الإنسانية,levantine,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-110,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive
+59,هبه مو اسرائيل جريئة لا حبيبي بس العراقيين عملاء,levantine,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-124,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive
+60,يي كلهم عيال حرام ولازم نحمي الاسلام,levantine,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-128,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive
+61,خلوا شريفه تنفعكم و الا العلج التركي,gulf,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-151,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+62,أه يا قناة وسخة ما فيهاش راجل,egyptian,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-212,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+63,وقطر عاملة الشريفة بقناتكم الظاهرة,gulf,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-246,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+64,الله يلعنكم شو الهدف من الزيارة غير تجميل اليهود,levantine,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-262,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+65,كيف علاقتنا مع الكلاب لسى ياخوك ماخوينا البشر,gulf,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-267,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+66,الي مقاطعينكم طبيعي التهجم بسبب حليب الحمير الي تشربونه,gulf,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-94,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+67,حلف البهائم وجواسيس الترك وجميع المرتزقه كلاب المال,gulf,Dialect,1,1,1,MPOLD social-media benchmark,MPOLD-97,https://huggingface.co/datasets/asas-ai/Arabic_Offensive_Comment_Detection,Real dialectal/mixed social-media comment; original majority label: Offensive; anonymized user mention removed during preprocessing
+68,إنما المؤمنون إخوة فأصلحوا بين أخويكم,Classical,Classical,0,0,0,Public-domain Classical Arabic,Quran-Hujurat-10,https://ar.wikisource.org/wiki/القرآن_الكريم_(حفص،_المدينة_النبوية)/سورة_الحجرات,Classical Arabic; manually marked non-toxic
+69,لا يسخر قوم من قوم عسى أن يكونوا خيرا منهم,Classical,Classical,0,0,0,Public-domain Classical Arabic,Quran-Hujurat-11,https://ar.wikisource.org/wiki/القرآن_الكريم_(حفص،_المدينة_النبوية)/سورة_الحجرات,Classical Arabic; manually marked non-toxic
+70,ولا تلمزوا أنفسكم ولا تنابزوا بالألقاب,Classical,Classical,0,0,0,Public-domain Classical Arabic,Quran-Hujurat-11,https://ar.wikisource.org/wiki/القرآن_الكريم_(حفص،_المدينة_النبوية)/سورة_الحجرات,Classical Arabic; manually marked non-toxic
+71,اجتنبوا كثيرا من الظن إن بعض الظن إثم,Classical,Classical,0,0,0,Public-domain Classical Arabic,Quran-Hujurat-12,https://ar.wikisource.org/wiki/القرآن_الكريم_(حفص،_المدينة_النبوية)/سورة_الحجرات,Classical Arabic; manually marked non-toxic
+72,ولا يغتب بعضكم بعضا,Classical,Classical,0,0,0,Public-domain Classical Arabic,Quran-Hujurat-12,https://ar.wikisource.org/wiki/القرآن_الكريم_(حفص،_المدينة_النبوية)/سورة_الحجرات,Classical Arabic; manually marked non-toxic
+73,وجعلناكم شعوبا وقبائل لتعارفوا,Classical,Classical,0,0,0,Public-domain Classical Arabic,Quran-Hujurat-13,https://ar.wikisource.org/wiki/القرآن_الكريم_(حفص،_المدينة_النبوية)/سورة_الحجرات,Classical Arabic; manually marked non-toxic
+74,من كان يؤمن بالله واليوم الآخر فليقل خيرا أو ليصمت,Classical,Classical,0,0,0,Public-domain Classical Arabic,Hadith-15,https://ar.wikisource.org/wiki/جامع_العلوم_والحكم/الحديث_الخامس_عشر,Classical Arabic; manually marked non-toxic
+75,من كان يؤمن بالله واليوم الآخر فليكرم جاره,Classical,Classical,0,0,0,Public-domain Classical Arabic,Hadith-15,https://ar.wikisource.org/wiki/جامع_العلوم_والحكم/الحديث_الخامس_عشر,Classical Arabic; manually marked non-toxic
+76,من كان يؤمن بالله واليوم الآخر فليكرم ضيفه,Classical,Classical,0,0,0,Public-domain Classical Arabic,Hadith-15,https://ar.wikisource.org/wiki/جامع_العلوم_والحكم/الحديث_الخامس_عشر,Classical Arabic; manually marked non-toxic
+77,إنما الأعمال بالنيات وإنما لكل امرئ ما نوى,Classical,Classical,0,0,0,Public-domain Classical Arabic,Classical-saying-1,https://ar.wikisource.org/wiki/جامع_العلوم_والحكم/الحديث_الخامس_عشر,Classical Arabic; manually marked non-toxic
+78,لا ضرر ولا ضرار,Classical,Classical,0,0,0,Public-domain Classical Arabic,Classical-saying-2,https://ar.wikisource.org/wiki/جامع_العلوم_والحكم/الحديث_الخامس_عشر,Classical Arabic; manually marked non-toxic
+79,تبسمك في وجه أخيك صدقة,Classical,Classical,0,0,0,Public-domain Classical Arabic,Classical-saying-3,https://ar.wikisource.org/wiki/جامع_العلوم_والحكم/الحديث_الخامس_عشر,Classical Arabic; manually marked non-toxic
+80,إن الله جميل يحب الجمال,Classical,Classical,0,0,0,Public-domain Classical Arabic,Classical-saying-4,https://ar.wikisource.org/wiki/جامع_العلوم_والحكم/الحديث_الخامس_عشر,Classical Arabic; manually marked non-toxic
+81,من حسن إسلام المرء تركه ما لا يعنيه,Classical,Classical,0,0,0,Public-domain Classical Arabic,Classical-saying-5,https://ar.wikisource.org/wiki/جامع_العلوم_والحكم/الحديث_الخامس_عشر,Classical Arabic; manually marked non-toxic
+82,لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه,Classical,Classical,0,0,0,Public-domain Classical Arabic,Classical-saying-6,https://ar.wikisource.org/wiki/جامع_العلوم_والحكم/الحديث_الخامس_عشر,Classical Arabic; manually marked non-toxic
+83,المسلم من سلم المسلمون من لسانه ويده,Classical,Classical,0,0,0,Public-domain Classical Arabic,Classical-saying-7,https://ar.wikisource.org/wiki/جامع_العلوم_والحكم/الحديث_الخامس_عشر,Classical Arabic; manually marked non-toxic
+84,الحلم سيد الأخلاق ومفتاح كل خير,Classical,Classical,0,0,0,Public-domain Classical Arabic,Classical-proverb-1,https://ar.wikisource.org/wiki/جامع_العلوم_والحكم/الحديث_الخامس_عشر,Classical Arabic; manually marked non-toxic
+85,أتاني كلام الجاهل ابن كيغلغ يجوب حزونا بيننا وسهولا,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Mutanabbi-1,https://ar.wikisource.org/wiki/أتاني_كلام_الجاهل_ابن_كيغلغ,Classical Arabic; manually marked toxic due to direct insult/hija'
+86,وليس جميلا عرضه فيصونه وليس جميلا أن يكون جميلا,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Mutanabbi-2,https://ar.wikisource.org/wiki/أتاني_كلام_الجاهل_ابن_كيغلغ,Classical Arabic; manually marked toxic due to direct insult/hija'
+87,ويكذب ما أذللته بهجائه لقد كان من قبل الهجاء ذليلا,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Mutanabbi-3,https://ar.wikisource.org/wiki/أتاني_كلام_الجاهل_ابن_كيغلغ,Classical Arabic; manually marked toxic due to direct insult/hija'
+88,كبيرهم وغد ومولودهم تلعنه من لؤمه القابلة,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Zahra-1,https://ar.wikisource.org/wiki/كتاب_الزهرة/الباب_الحادي_والسبعون_ذكر_من_هجي_بأصله_دون_ما_يظهر_من_فضله,Classical Arabic; manually marked toxic due to direct insult/hija'
+89,أيزيد أنك لم تزل بمذلة حتى لففت أباك في الأكفان,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Zahra-2,https://ar.wikisource.org/wiki/كتاب_الزهرة/الباب_الحادي_والسبعون_ذكر_من_هجي_بأصله_دون_ما_يظهر_من_فضله,Classical Arabic; manually marked toxic due to direct insult/hija'
+90,أيها المدعي سليما سفاهة لست منها ولا قلامة ظفر,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Zahra-3,https://ar.wikisource.org/wiki/كتاب_الزهرة/الباب_الحادي_والسبعون_ذكر_من_هجي_بأصله_دون_ما_يظهر_من_فضله,Classical Arabic; manually marked toxic due to direct insult/hija'
+91,انظر إليه وإلى حمقه كيف تطايا وهو منشور,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Zahra-4,https://ar.wikisource.org/wiki/كتاب_الزهرة/الباب_الحادي_والسبعون_ذكر_من_هجي_بأصله_دون_ما_يظهر_من_فضله,Classical Arabic; manually marked toxic due to direct insult/hija'
+92,ويلك من ألقاك في دعوة قلبك منها الدهر مذعور,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Zahra-5,https://ar.wikisource.org/wiki/كتاب_الزهرة/الباب_الحادي_والسبعون_ذكر_من_هجي_بأصله_دون_ما_يظهر_من_فضله,Classical Arabic; manually marked toxic due to direct insult/hija'
+93,فاذهب فأنت طليق عرضك إنه عرض عززت به وأنت ذليل,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Zahra-6,https://ar.wikisource.org/wiki/كتاب_الزهرة/الباب_الحادي_والسبعون_ذكر_من_هجي_بأصله_دون_ما_يظهر_من_فضله,Classical Arabic; manually marked toxic due to direct insult/hija'
+94,أعاتبه في عرضه ليصونه ولا علم لي أن الأمير لقيط,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Zahra-7,https://ar.wikisource.org/wiki/كتاب_الزهرة/الباب_الحادي_والسبعون_ذكر_من_هجي_بأصله_دون_ما_يظهر_من_فضله,Classical Arabic; manually marked toxic due to direct insult/hija'
+95,لا خير في صاعد فأذكره والخير يأتيك من يدي عمر,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Zahra-8,https://ar.wikisource.org/wiki/كتاب_الزهرة/الباب_الحادي_والسبعون_ذكر_من_هجي_بأصله_دون_ما_يظهر_من_فضله,Classical Arabic; manually marked toxic due to direct insult/hija'
+96,ليس له ما خلا اسمه نسب كأنه آدم أبو البشر,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Zahra-9,https://ar.wikisource.org/wiki/كتاب_الزهرة/الباب_الحادي_والسبعون_ذكر_من_هجي_بأصله_دون_ما_يظهر_من_فضله,Classical Arabic; manually marked toxic due to direct insult/hija'
+97,فته ما شئت إذ أنت بلا أصل ولا جد,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Zahra-10,https://ar.wikisource.org/wiki/كتاب_الزهرة/الباب_الحادي_والسبعون_ذكر_من_هجي_بأصله_دون_ما_يظهر_من_فضله,Classical Arabic; manually marked toxic due to direct insult/hija'
+98,وهان عليك سخطي حين تغدو بعرض ليس تأكله الكلاب,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Zahra-11,https://ar.wikisource.org/wiki/كتاب_الزهرة/الباب_الحادي_والسبعون_ذكر_من_هجي_بأصله_دون_ما_يظهر_من_فضله,Classical Arabic; manually marked toxic due to direct insult/hija'
+99,وهل يشفي السباب من ابن لؤم دنيء ليس يؤلمه السباب,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Zahra-12,https://ar.wikisource.org/wiki/كتاب_الزهرة/الباب_الحادي_والسبعون_ذكر_من_هجي_بأصله_دون_ما_يظهر_من_فضله,Classical Arabic; manually marked toxic due to direct insult/hija'
+100,كل من رام لي هجاء وقذفا بكتاب يبديه أو بلسان,Classical,Classical,1,1,1,Public-domain Classical Arabic satire/hija',Zahra-13,https://ar.wikisource.org/wiki/كتاب_الزهرة/الباب_الحادي_والسبعون_ذكر_من_هجي_بأصله_دون_ما_يظهر_من_فضله,Classical Arabic; manually marked toxic due to direct insult/hija'

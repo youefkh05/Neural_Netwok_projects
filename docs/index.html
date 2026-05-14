@@ -9,7 +9,10 @@
 <body>
   <header class="site-header">
     <div class="container header-row">
-      <h1 class="logo">ELC 4028 / Final Project Hub</h1>
+      <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none">
+        <img src="assets/logo.svg" alt="logo" class="brand-logo" />
+        <h1 class="logo">Neural Networks — Final Project</h1>
+      </a>
       <nav class="nav-links">
         <a class="active" href="index.html">Home</a>
         <a href="report.html">Report</a>
@@ -24,19 +27,28 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-panel reveal visible">
-          <span class="eyebrow">Retrieval-Augmented Generation • modern project showcase</span>
-          <h2 class="hero-title"><span class="gradient-text">RAG</span> visualized as a polished project experience.</h2>
-          <p class="hero-copy">This site turns the course final project into a curated digital presentation: the report is embedded, the MCQ file becomes an interactive quiz, the slide deck gets a creative preview, and the hosted Streamlit demo is one click away.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="report.html">Open report</a>
-            <a class="btn btn-secondary" href="quiz.html">Take quiz</a>
-            <a class="btn btn-ghost" href="presentation.html">Preview deck</a>
+          <div class="hero-content-left">
+            <span class="eyebrow">Retrieval-Augmented Generation • project showcase</span>
+            <h2 class="hero-title"><span class="gradient-text">RAG</span> made clear — concise, visual, and ready to present.</h2>
+            <p class="hero-copy">Browse the report, practice with the MCQ quiz, preview the slide deck, or open the live demo. The site is designed for quick review and clear reading.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="report.html">Open report</a>
+              <a class="btn btn-secondary" href="quiz.html">Take quiz</a>
+              <a class="btn btn-ghost" href="presentation.html">Preview deck</a>
+            </div>
+            <div class="stat-grid">
+              <div class="stat"><strong>20</strong><span class="muted">quiz questions</span></div>
+              <div class="stat"><strong>22</strong><span class="muted">presentation slides</span></div>
+              <div class="stat"><strong>4</strong><span class="muted">report themes</span></div>
+              <div class="stat"><strong>1</strong><span class="muted">live demo link</span></div>
+            </div>
           </div>
-          <div class="stat-grid">
-            <div class="stat"><strong>20</strong><span class="muted">quiz questions</span></div>
-            <div class="stat"><strong>22</strong><span class="muted">presentation slides</span></div>
-            <div class="stat"><strong>4</strong><span class="muted">report themes</span></div>
-            <div class="stat"><strong>1</strong><span class="muted">live demo link</span></div>
+          <div class="hero-visual reveal visible">
+            <img src="assets/hero-illustration.svg" alt="visual"/>
+            <div class="badge-row">
+              <!-- RAG session ribbon -->
+              <div class="session-ribbon">Live RAG session</div>
+            </div>
           </div>
         </div>
 
@@ -100,6 +112,14 @@
             <div class="tag-row">
               <span class="tag">Slide gallery</span>
               <span class="tag">PPTX hosted</span>
+            </div>
+          </article>
+          <article class="feature-card reveal visible">
+            <span class="slide-badge">Live</span>
+            <h3>Interactive demo</h3>
+            <p>Open the live Streamlit demonstration to try the retrieval and augmentation flow with real queries and visual feedback.</p>
+            <div class="tag-row">
+              <a class="link-inline" href="https://neuralnetwokprojects-fspmceeeqzbjce4bxfnvj2.streamlit.app/" target="_blank" rel="noreferrer">Open demo</a>
             </div>
           </article>
         </div>
@@ -167,5 +187,6 @@
   </footer>
 
   <script src="js/site.js"></script>
+  <script src="js/visuals.js"></script>
 </body>
 </html>

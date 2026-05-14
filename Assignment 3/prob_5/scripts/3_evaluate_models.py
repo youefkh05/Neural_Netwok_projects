@@ -26,9 +26,35 @@ OUTPUT_FILE = LOGS_DIR / "evaluation.json"
 MAX_ITEMS = int(os.environ.get("MAX_ITEMS", "100"))
 OLLAMA_TIMEOUT = 180
 
-SYSTEM_PROMPT = "You are an Arabic toxicity detector. Analyze the following text. Is the text toxic, hostile, or offensive? Your ENTIRE response MUST be ONLY a single JSON object: {is_toxic: yes} or {is_toxic: no}. Do not output any other text, explanation, or conversational filler."
+SYSTEM_PROMPT = """You are a strict binary classifier for Arabic toxicity detection.
 
-USER_PROMPT = 'Text: "{text}"'
+Task:
+Decide whether the Arabic text is toxic.
+
+Definition:
+Toxic = direct insult, abuse, hate, threat, harassment, hostile attack, humiliating language, demeaning language, or clearly offensive wording.
+Non-toxic = neutral, factual, friendly, religious/classical advice, ordinary emotion, or disagreement without insult or attack.
+
+Output rule:
+Respond with exactly one lowercase English word only:
+yes
+or
+no
+
+Important:
+Do not use Arabic in the answer.
+Do not translate the text.
+Do not rewrite the text.
+Do not explain your decision.
+Do not output JSON.
+Do not add punctuation.
+If your answer contains anything except yes or no, it is invalid."""
+
+USER_PROMPT = """Is the following Arabic text toxic?
+
+{text}
+
+Answer only yes or no:"""
 
 OPENROUTER_MODELS = {
     "chatgpt": "openai/gpt-4o-mini",
@@ -54,21 +80,18 @@ def load_data():
 def parse_toxicity_output(text: str) -> dict:
     import re
     
-    try:
-        match = re.search(r'{"is_toxic"[^}]*}', text, re.DOTALL)
-        if match:
-            return json.loads(match.group())
-    except json.JSONDecodeError:
-        pass
-    
     text_lower = text.lower().strip()
     
-    if 'yes' in text_lower or 'نعم' in text_lower:
+    # Remove any punctuation and extra whitespace
+    text_clean = re.sub(r'[^\w\s]', '', text_lower).strip()
+    
+    if text_clean == 'yes' or 'yes' in text_lower:
         return {"is_toxic": "yes"}
     
-    if 'no' in text_lower or 'لا' in text_lower:
+    if text_clean == 'no' or 'no' in text_lower:
         return {"is_toxic": "no"}
     
+    # If neither yes nor no found, return error
     return {"is_toxic": "parse_error", "raw": text}
 
 

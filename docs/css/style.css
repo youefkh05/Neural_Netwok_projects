@@ -59,6 +59,36 @@ a{color:inherit}
   text-transform:uppercase;
   color:var(--accent);
 }
+/* Brand logo image next to site title */
+.brand-logo{width:36px;height:36px;display:inline-block;vertical-align:middle;border-radius:6px;box-shadow:0 8px 30px rgba(13,24,40,0.6)}
+
+/* Hero visual column */
+.hero-panel{display:flex;gap:22px;align-items:center;padding:28px}
+.hero-content-left{flex:1}
+.hero-visual{width:360px;flex:0 0 360px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.hero-visual img{width:100%;height:auto;border-radius:14px;transform:translateY(0);transition:transform .9s cubic-bezier(.2,.8,.2,1);box-shadow:0 20px 60px rgba(6,17,31,0.6);}
+.hero-visual img:hover{transform:translateY(-6px) scale(1.01)}
+.badge-row{margin-top:12px}
+.badge-row img{width:54px;height:54px}
+/* RAG session ribbon */
+.session-ribbon{
+  margin-top:12px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:#02101c;font-weight:700;font-size:0.92rem;box-shadow:0 12px 30px rgba(13,24,40,0.6);
+}
+
+/* Accent motion */
+.gradient-text{background:linear-gradient(90deg, #f7fbff 0%, #93f0ff 38%, #8d7bff 76%, #ffb5c8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 5s linear infinite}
+@keyframes shimmer{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+
+/* Subtle card hover lift */
+.feature-card:hover{transform:translateY(-10px) rotate(-0.2deg);box-shadow:0 30px 80px rgba(8,18,34,0.6)}
+
+/* Make stat numbers bolder and colored */
+.stat strong{color:var(--accent);font-size:1.5rem}
+
 .nav-links{
   display:flex;
   flex-wrap:wrap;

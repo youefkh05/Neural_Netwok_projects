@@ -24,12 +24,13 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-panel reveal visible">
-          <span class="eyebrow">PPTX hosted • slide preview • interactive deck browsing</span>
-          <h2 class="hero-title"><span class="gradient-text">Presentation deck</span> turned into a browsable preview gallery.</h2>
-          <p class="hero-copy">Browsers cannot render the PPTX itself, so this page gives you a curated slide-by-slide preview and keeps the original file available for download.</p>
+          <span class="eyebrow">Presentation • PDF preview • direct viewer</span>
+          <h2 class="hero-title"><span class="gradient-text">Presentation deck</span> — view the PDF inline or download the original file.</h2>
+          <p class="hero-copy">The deck is available as a high-quality PDF for quick review inside the browser. Use the controls to jump pages or download the source PPTX if you need to edit.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="assets/rag-presentation.pptx" target="_blank" rel="noreferrer">Download PPTX</a>
-            <a class="btn btn-secondary" href="slides.html">Open slide alias</a>
+            <a class="btn btn-primary" href="assets/rag-presentation.pdf" target="_blank" rel="noreferrer">Open PDF</a>
+            <a class="btn btn-secondary" href="assets/rag-presentation.pptx" target="_blank" rel="noreferrer">Download PPTX</a>
+            <a class="btn btn-ghost" href="https://neuralnetwokprojects-fspmceeeqzbjce4bxfnvj2.streamlit.app/" target="_blank" rel="noreferrer">Open Live Demo</a>
           </div>
         </div>
         <div class="glass-panel reveal visible">
@@ -45,29 +46,17 @@
     </section>
 
     <section class="section">
-      <div class="container deck-shell reveal visible" id="deck" data-deck-root>
-        <div class="deck-top">
-          <div>
-            <div class="kicker">Slide preview</div>
-            <h3 style="margin:8px 0 0">Creative preview of the PPTX</h3>
-          </div>
-          <div class="muted-small" data-slide-index>01 / 22</div>
+      <div class="container reveal visible" id="pdf-viewer">
+        <div class="section-block pdf-viewer-container">
+          <object data="assets/rag-presentation.pdf" type="application/pdf" width="100%" height="880px">
+            <p class="muted-small">
+              Your browser does not support PDF viewing. 
+              <a href="assets/rag-presentation.pdf" target="_blank">Download the PDF</a> or 
+              <a href="assets/rag-presentation.pptx" target="_blank">download the PPTX</a> instead.
+            </p>
+          </object>
         </div>
-        <div class="progress-bar"><span data-slide-progress style="width:5%"></span></div>
-
-        <div class="section-block deck-stage">
-          <div class="slide-number">Preview slide</div>
-          <h2 class="slide-title" data-slide-title></h2>
-          <p class="muted-small" data-slide-subtitle></p>
-          <p class="slide-description" data-slide-summary></p>
-          <div class="deck-actions">
-            <button class="btn btn-secondary" type="button" data-slide-prev>Previous slide</button>
-            <button class="btn btn-primary" type="button" data-slide-next>Next slide</button>
-          </div>
-        </div>
-
-        <div class="section-block slide-grid" data-slide-list></div>
-        <p class="deck-note">The actual PPTX file is hosted here, while the preview gives a browser-friendly tour of the presentation structure and style.</p>
+        <p class="deck-note">Use the embedded viewer above to flip through the slides. The live demo is available from the header or the button above.</p>
       </div>
     </section>
   </main>

@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "start_time": "2026-05-14T14:30:46.364045",
+    "start_time": "2026-05-14T21:58:20.960229",
     "total_items": 100,
     "models": {
       "openrouter": {
@@ -12,63 +12,60 @@
         "jwnder/jais-adaptive:7b",
         "yasserrmd/Fanar-1-9B-Instruct"
       ]
-    },
-    "end_time": "2026-05-14T16:15:29.263340"
+    }
   },
   "results": [
     {
       "id": "1",
-      "text": "شو هيدا كذاب اللي عم يحكي",
-      "variety": "levantine",
-      "timestamp": "2026-05-14T14:30:46.364410",
+      "text": "في فترة الصغر والمراهقة يكون من الصعب تقبل تعليقات الأصدقاء حول شعرك المجعد وهنا يأتي دور الوالدين في ادخال الثقة الى نفسية طفلهما لكن مع تقدم بالسن يصبح الأمر عاديا",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T21:58:20.960288",
       "outputs": {
         "chatgpt": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "gemini": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " \"هو كاذب من يقول هذا\""
+          "is_toxic": "no"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         }
       }
     },
     {
       "id": "2",
-      "text": "وش هذا تافه اللي يكلم",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T14:31:45.707875",
+      "text": "يجب ان تذكروا ان لكل سنة ثيم للحفل وهو نوع من الحفلات التنكرية",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T21:59:24.099622",
       "outputs": {
         "chatgpt": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "gemini": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " وش هذا تافه اللي يكلم"
+          "is_toxic": "no"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         }
       }
     },
     {
       "id": "3",
-      "text": "الشغل وايد تعبان",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T14:32:39.323458",
+      "text": "خبتم وخاب مسعاكم نحن دعاة السلام ومهما حاولتم ان تطمسوا الحقائق فأن التاريخ سيشهد بذلك",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:00:20.976935",
       "outputs": {
         "chatgpt": {
           "is_toxic": "no"
@@ -80,8 +77,7 @@
           "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " شغل العمل متعب"
+          "is_toxic": "no"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -90,9 +86,9 @@
     },
     {
       "id": "4",
-      "text": "عامل إيه؟ من زمان عنك",
-      "variety": "egyptian",
-      "timestamp": "2026-05-14T14:33:36.898305",
+      "text": "الله سبحانه وتعالى أباح تعدد الزوجات ولم يقم بفرضه، ووضع قواعد للتعدد أبرزها العدل بين الزوجات",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:01:18.240805",
       "outputs": {
         "chatgpt": {
           "is_toxic": "no"
@@ -104,8 +100,7 @@
           "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " مرحبا يا عزيزي كيف حالك?"
+          "is_toxic": "no"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -114,33 +109,32 @@
     },
     {
       "id": "5",
-      "text": "تعتبر اللغة العربية من أقدم اللغات السامية وأكثرها انتشاراً في العالم",
+      "text": "يعني مش ناقصه الوطن العربي فتنه وتشتت وانقسام بالله ترحمونا وزيادة البغضاء",
       "variety": "MSA",
-      "timestamp": "2026-05-14T14:35:11.202397",
+      "timestamp": "2026-05-14T22:02:23.125608",
       "outputs": {
         "chatgpt": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "gemini": {
           "is_toxic": "no"
         },
         "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " تعتبر اللغة العربية من أقدم اللغات السامية وأكثرها انتشارا في العالم."
+          "is_toxic": "no"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         }
       }
     },
     {
       "id": "6",
-      "text": "من يرد الله به خيراً يفقهه في الدين",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T14:36:04.796606",
+      "text": "رحمهم الله و غفر لهم و الهم ذويهم الصبر و السلوان. انا لله و انا اليه راجعون",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:03:20.267431",
       "outputs": {
         "chatgpt": {
           "is_toxic": "no"
@@ -152,8 +146,7 @@
           "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " من يرغب الله به خيرا يعلمه دينه"
+          "is_toxic": "no"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -162,9 +155,9 @@
     },
     {
       "id": "7",
-      "text": "الليل زوين بزاف",
-      "variety": "maghrebi",
-      "timestamp": "2026-05-14T14:37:02.049674",
+      "text": "سبحان من خلاه مطارد ومطلوب في العالم بعد ماكان يلاحق المصلحين",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:04:27.330958",
       "outputs": {
         "chatgpt": {
           "is_toxic": "no"
@@ -176,8 +169,7 @@
           "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " It is a beautiful night"
+          "is_toxic": "yes"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -186,9 +178,9 @@
     },
     {
       "id": "8",
-      "text": "البيت كبير بزاف",
-      "variety": "maghrebi",
-      "timestamp": "2026-05-14T14:38:08.125744",
+      "text": "صدق سيد البشر قول يجب علينا الابتعاد عن المعاصي كي ينصرنا الله",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:05:36.954274",
       "outputs": {
         "chatgpt": {
           "is_toxic": "no"
@@ -200,8 +192,7 @@
           "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " The house is very large."
+          "is_toxic": "no"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -210,9 +201,9 @@
     },
     {
       "id": "9",
-      "text": "واش كاين؟",
-      "variety": "maghrebi",
-      "timestamp": "2026-05-14T14:39:09.930409",
+      "text": "المحتكر يموت ويتحاسب عند ربه وماله يتمتع به غيره",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:06:35.118742",
       "outputs": {
         "chatgpt": {
           "is_toxic": "no"
@@ -224,8 +215,7 @@
           "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " واش كاينا?"
+          "is_toxic": "no"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -234,9 +224,9 @@
     },
     {
       "id": "10",
-      "text": "كيفاش حالك؟",
-      "variety": "maghrebi",
-      "timestamp": "2026-05-14T14:39:53.421056",
+      "text": "الرياح جند من جنود الله وربك يمهل ولا يهمل",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:07:36.708134",
       "outputs": {
         "chatgpt": {
           "is_toxic": "no"
@@ -248,8 +238,7 @@
           "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " مرحبا! كيف حالك?"
+          "is_toxic": "no"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -258,9 +247,9 @@
     },
     {
       "id": "11",
-      "text": "أنا تعيان اليوم",
-      "variety": "maghrebi",
-      "timestamp": "2026-05-14T14:41:23.832185",
+      "text": "للأسف الضحايا 360 الموضوع ليس العدد، المشكلة أن النفس البشرية أصبحت أرخص شيء",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:08:32.241168",
       "outputs": {
         "chatgpt": {
           "is_toxic": "no"
@@ -269,11 +258,10 @@
           "is_toxic": "no"
         },
         "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " أنا أعاني من الألم اليوم"
+          "is_toxic": "yes"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -282,33 +270,32 @@
     },
     {
       "id": "12",
-      "text": "هاد غبي وكتير خاين",
-      "variety": "levantine",
-      "timestamp": "2026-05-14T14:42:15.088248",
+      "text": "يمكن قصده شي ثاني وخانه التعبير، نتمنى التوضيح وشرح سبب قوله هذا الكلام",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:09:23.371935",
       "outputs": {
         "chatgpt": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "gemini": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " Had a big mistake and many pain"
+          "is_toxic": "yes"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         }
       }
     },
     {
       "id": "13",
-      "text": "تتميز اللغة العربية بغناها بالمفردات والتراكيب البلاغية",
+      "text": "إلى يدعم فلسطين لايك",
       "variety": "MSA",
-      "timestamp": "2026-05-14T14:43:32.963373",
+      "timestamp": "2026-05-14T22:10:15.800807",
       "outputs": {
         "chatgpt": {
           "is_toxic": "no"
@@ -320,8 +307,7 @@
           "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " اللغة العربية غنية بمفرداتها وتراكيبها اللغوية."
+          "is_toxic": "yes"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -330,9 +316,9 @@
     },
     {
       "id": "14",
-      "text": "يعتبر الشعر العربي من أقدم أنواع الأدب في التاريخ",
+      "text": "مشكور وجزاك الله خير، انا مريت بهالتجربة والحمدلله انجزنا المطلوب وشكرا",
       "variety": "MSA",
-      "timestamp": "2026-05-14T14:44:23.031417",
+      "timestamp": "2026-05-14T22:11:18.122838",
       "outputs": {
         "chatgpt": {
           "is_toxic": "no"
@@ -344,8 +330,7 @@
           "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " العربية"
+          "is_toxic": "yes"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -354,9 +339,9 @@
     },
     {
       "id": "15",
-      "text": "طلب العلم فريضة على كل مسلم",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T14:45:10.308487",
+      "text": "فلسطين حرة أبية بإذن الله الله يحميها يا حق",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:12:16.862509",
       "outputs": {
         "chatgpt": {
           "is_toxic": "no"
@@ -368,8 +353,7 @@
           "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " سؤال"
+          "is_toxic": "yes"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -378,46 +362,44 @@
     },
     {
       "id": "16",
-      "text": "وش هذا حرامي اللي يكلم",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T14:46:55.806128",
+      "text": "برنامج ولا اروع ربي يخاليكم و يحفظكم واصلوا الف تحية من الجزائر",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:13:10.216488",
       "outputs": {
         "chatgpt": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "gemini": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " وش هذا حرامي اللي يكلم"
+          "is_toxic": "no"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         }
       }
     },
     {
       "id": "17",
-      "text": "هؤلاء مجموعة من مجرم يجب محاسبتهم",
+      "text": "في الحقيقة حتى اقتباس زيدزو منقوص ولم يرد فيه بالفعل أنه طلب عدم التصويت لها",
       "variety": "MSA",
-      "timestamp": "2026-05-14T14:47:42.013132",
+      "timestamp": "2026-05-14T22:14:06.875492",
       "outputs": {
         "chatgpt": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "gemini": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " These individuals should be held accountable for their actions."
+          "is_toxic": "no"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -426,32 +408,32 @@
     },
     {
       "id": "18",
-      "text": "خلاص خلاص ما تشيل هم",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T14:48:27.094766",
+      "text": "أجل بسبب تغريدة يسجن ويحاكم يا مرتزقة وأكاديمية التغيير غير الله عليكم",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:15:08.441647",
       "outputs": {
         "chatgpt": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "gemini": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         }
       }
     },
     {
       "id": "19",
-      "text": "الشخص هذا كذاب وخاين",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T14:49:17.287971",
+      "text": "التاريخ هي أحداث الوجبه ولكن محاه العنز تميم باستقدامه للعلوج الأتراك",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:16:03.435783",
       "outputs": {
         "chatgpt": {
           "is_toxic": "yes"
@@ -463,78 +445,76 @@
           "is_toxic": "yes"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " الشخص هذا كاذب وخائن"
+          "is_toxic": "no"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
+          "is_toxic": "no"
         }
       }
     },
     {
       "id": "20",
-      "text": "ما تعمل هيك تاني",
-      "variety": "levantine",
-      "timestamp": "2026-05-14T14:50:01.189193",
+      "text": "حكومة السراج وتنظيم الحمدين الإرهابي اللي في ليبيا تجند الصم والبكم وتزج بهم في ساحات القتال",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:17:09.086905",
       "outputs": {
         "chatgpt": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "gemini": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         }
       }
     },
     {
       "id": "21",
-      "text": "إنما العلم بالتعلم والحلم بالتحلم",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T14:50:47.125085",
+      "text": "والله ما عندكم سالفه يا قناة الجزيرة الشيطانية سوى البحث في شؤون لا تخصكم",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:18:03.766235",
       "outputs": {
         "chatgpt": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "gemini": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         }
       }
     },
     {
       "id": "22",
-      "text": "عندي شغل كتير اليوم",
-      "variety": "levantine",
-      "timestamp": "2026-05-14T14:52:06.134101",
+      "text": "كل شي الا الوطن تقطع ارجلهم وايديهم مهما كان صغير او كبير الوطن خط احمر",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:19:00.942604",
       "outputs": {
         "chatgpt": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "gemini": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " هل لديك الكثير من العمل للقيام به اليوم?"
+          "is_toxic": "yes"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -543,9 +523,9 @@
     },
     {
       "id": "23",
-      "text": "ما تصدقون هذا حرامي",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T14:52:56.321922",
+      "text": "كذب ودجال هو ضامن أدلب وحماه والآن تحرق",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:19:56.507709",
       "outputs": {
         "chatgpt": {
           "is_toxic": "yes"
@@ -557,32 +537,30 @@
           "is_toxic": "yes"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " I'm sorry, but I don't have any information on that. If you could provide me with more context or details, I would be happy to help you find the information you need."
+          "is_toxic": "no"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         }
       }
     },
     {
       "id": "24",
-      "text": "تتميز العمارة العربية بزخارفها الهندسية المعقدة",
+      "text": "عميلة للأتراك والإخوان، الإسلام لا يعترف بما تدعي خطوبة الإسلام يعترف بالزواج والإعلان",
       "variety": "MSA",
-      "timestamp": "2026-05-14T14:53:55.107277",
+      "timestamp": "2026-05-14T22:21:00.950261",
       "outputs": {
         "chatgpt": {
           "is_toxic": "no"
         },
         "gemini": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " \"The Arabic architecture is distinguished by its complex geometric motifs.\""
+          "is_toxic": "yes"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -591,22 +569,21 @@
     },
     {
       "id": "25",
-      "text": "تختلف اللهجات العربية من منطقة لأخرى",
+      "text": "قناة الجزيرة الفتنة اشد من القتل حسبي الله عليها من قناة",
       "variety": "MSA",
-      "timestamp": "2026-05-14T14:54:41.751630",
+      "timestamp": "2026-05-14T22:22:08.023521",
       "outputs": {
         "chatgpt": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "gemini": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
+          "is_toxic": "yes"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " واللهجة هي النسخة الخاصة لمنطقة معينة من اللغة العربية. وتختلف اللهجات العربية من منطقة لأخرى."
+          "is_toxic": "yes"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
@@ -615,1776 +592,24 @@
     },
     {
       "id": "26",
-      "text": "تعد اللغة العربية لغة القرآن الكريم والحديث النبوي الشريف",
+      "text": "هم يعرفون ان ابوظبي والرياض سوف يقومون بمناصرة عجوزهم كما يقومون بتحطيم اليمن",
       "variety": "MSA",
-      "timestamp": "2026-05-14T14:55:35.315235",
+      "timestamp": "2026-05-14T22:23:26.153650",
       "outputs": {
         "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " \"تعد اللغة العربية لغة القرآن الكريم والحديث النبوي الشريف\""
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "27",
-      "text": "تستخدم اللغة العربية في العديد من الدول العربية والأفريقية",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T14:56:21.040197",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "28",
-      "text": "ترجع جذور اللغة العربية إلى أكثر من ألف وخمسمائة سنة",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T14:57:25.330192",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " ترجع جذور اللغة العربية إلى أكثر من الألف وخمسمائة عام"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "29",
-      "text": "انا تعبان جداً النهاردة",
-      "variety": "egyptian",
-      "timestamp": "2026-05-14T14:58:44.915371",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": "  أنا متعب جدا اليوم"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "30",
-      "text": "ما تصدقون هذا كذاب",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T15:00:12.554413",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " False"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "31",
-      "text": "ما تصدقوش ده حرامي",
-      "variety": "egyptian",
-      "timestamp": "2026-05-14T15:01:03.285230",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
-        }
-      }
-    },
-    {
-      "id": "32",
-      "text": "هذا حرامي وايد كذاب",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T15:02:08.781778",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
-        }
-      }
-    },
-    {
-      "id": "33",
-      "text": "لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T15:03:07.477722",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "34",
-      "text": "الشخص هذا غبي وخاين",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T15:04:21.660403",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "yes"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
-        }
-      }
-    },
-    {
-      "id": "35",
-      "text": "هاد حقير وكتير خاين",
-      "variety": "levantine",
-      "timestamp": "2026-05-14T15:05:08.286707",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " هذا حقي الخاص والكثير من الخيانة"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
-        }
-      }
-    },
-    {
-      "id": "36",
-      "text": "لا ضرر ولا ضرار",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T15:06:09.911355",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "37",
-      "text": "ماذا يقول هذا كاذب في التلفزيون",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T15:06:55.106076",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " What does this mean in television"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "38",
-      "text": "أثرت اللغة العربية في العديد من اللغات الأخرى",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T15:08:24.185945",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " أثرت اللغة العربية بشكل كبير على العديد من اللغات الأخرى."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "39",
-      "text": "إن الله لا ينظر إلى صوركم وأموالكم ولكن ينظر إلى قلوبكم وأعمالكم",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T15:09:10.033612",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "40",
-      "text": "الدين النصيحة",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T15:10:54.513613",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " The most important thing is to be honest with yourself and others. It's also helpful to remember that you can always ask for help when needed, and don't feel bad about it!"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "41",
-      "text": "من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T15:11:57.624312",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "42",
-      "text": "ما تسمعوا لهيدا غبي",
-      "variety": "levantine",
-      "timestamp": "2026-05-14T15:13:23.078207",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
-        }
-      }
-    },
-    {
-      "id": "43",
-      "text": "المرء مع من أحب",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T15:14:18.539203",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " man with his family"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "44",
-      "text": "إنما الأعمال بالنيات وإنما لكل امرئ ما نوى",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T15:15:12.948238",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " إنما الأعمال بالنوايا وإنما لكل أمرك ما نوى"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "45",
-      "text": "تفرعت اللغة العربية إلى العديد من اللهجات المحلية",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T15:15:59.241222",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " split()\\n[['تفروع', 'اللغة', 'العربية'], ['إلى', 'العديد', 'من', 'اللهجات', 'المحلية']]"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "46",
-      "text": "وش هذا تافه اللي يكلم",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T15:17:30.351478",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " يا إلهي, ما الذي يجعل الشخص يتحدث عن شيء بهذه السخافة?"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
-        }
-      }
-    },
-    {
-      "id": "47",
-      "text": "خيركم من تعلم القرآن وعلمه",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T15:18:18.219086",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " \"A good person is one who has learned and taught the Quran.\""
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "48",
-      "text": "تتميز الموسيقى العربية بألحانها وإيقاعاتها المميزة",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T15:19:38.606079",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "49",
-      "text": "الشخص هذا حرامي وخاين",
-      "variety": "maghrebi",
-      "timestamp": "2026-05-14T15:20:33.146079",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " \"الشخص هذا شخص جيد وموثوق به\""
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
-        }
-      }
-    },
-    {
-      "id": "50",
-      "text": "حنا غادي نمشيو",
-      "variety": "maghrebi",
-      "timestamp": "2026-05-14T15:21:22.207979",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " Hana gadi namiyo"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "51",
-      "text": "ما تصدقوش ده تافه",
-      "variety": "egyptian",
-      "timestamp": "2026-05-14T15:22:09.187173",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "52",
-      "text": "هيدا المشروع مهم كتير",
-      "variety": "levantine",
-      "timestamp": "2026-05-14T15:23:02.066190",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " Hide the project is very important"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "53",
-      "text": "ما تخافش كلش مزيان",
-      "variety": "maghrebi",
-      "timestamp": "2026-05-14T15:23:47.725969",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "54",
-      "text": "أنا مش عارف أعمل إيه",
-      "variety": "egyptian",
-      "timestamp": "2026-05-14T15:24:30.630760",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " Can you please clarify your question?"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "55",
-      "text": "مين ده كذاب اللي بيكلم",
-      "variety": "egyptian",
-      "timestamp": "2026-05-14T15:25:46.630471",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " مين ده كذاب اللي بيكلم"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
-        }
-      }
-    },
-    {
-      "id": "56",
-      "text": "بغيت أكل شي الحين",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T15:26:31.917320",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " تريد أن تأكل شيئا الآن"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "57",
-      "text": "خلاص بنروح الحين",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T15:27:14.758103",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "58",
-      "text": "ما تعملش كده تاني",
-      "variety": "egyptian",
-      "timestamp": "2026-05-14T15:28:02.088978",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": "  I'm sorry, but you have exceeded your daily word limit of 100 words. Please try again tomorrow!"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "59",
-      "text": "إحنا هنروح الساحل الصيف ده",
-      "variety": "egyptian",
-      "timestamp": "2026-05-14T15:28:51.736635",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " We are going to the beach this summer."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "60",
-      "text": "واش هذا حرامي اللي كاين",
-      "variety": "maghrebi",
-      "timestamp": "2026-05-14T15:29:36.285329",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " واش هادا حرامي لي كاينا"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "61",
-      "text": "ما تشغلش بالك بالموضوع ده",
-      "variety": "egyptian",
-      "timestamp": "2026-05-14T15:30:20.614268",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "62",
-      "text": "بدنا نعمل حفلة بسيطة",
-      "variety": "levantine",
-      "timestamp": "2026-05-14T15:31:13.990706",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " We should have a small party."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "63",
-      "text": "انتشرت اللغة العربية مع انتشار الإسلام في العالم",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T15:32:01.235243",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "64",
-      "text": "الجو حار اليوم وايد",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T15:33:15.529165",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " The weather is hot today and humid."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "65",
-      "text": "الجو حلو النهاردة مش كده؟",
-      "variety": "egyptian",
-      "timestamp": "2026-05-14T15:33:59.896277",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "66",
-      "text": "تحتوي الموسوعة العربية على ملايين المقالات",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T15:34:44.597458",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "67",
-      "text": "بدروح عالمحطة هلق",
-      "variety": "levantine",
-      "timestamp": "2026-05-14T15:35:42.082418",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " A doughnut hole is a small disc-shaped piece of doughnut that is left over after a larger portion has been eaten from the center."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "68",
-      "text": "ما تصدقوش ده تافه",
-      "variety": "egyptian",
-      "timestamp": "2026-05-14T15:36:53.736128",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "69",
-      "text": "تتميز الكتابة العربية باتصال حروفها وجمال خطها",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T15:37:47.717376",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " تكتب اللغة العربية بخط الثلث, والذي يتميز بجماله وجاذبيته. هذا الخط هو المفضل للكتابة باللغة العربية, ويتميز بربط الحروف مع بعضها البعض بطريقة جميلة وأنيقة. كما أنه يستخدم أيضا في العديد من الأعمال الفنية الحديثة, مثل اللوحات والأعمال الخشبية والنحت, حيث يمكن استخدام الخطوط العربية لإضافة لمسة من الجمال والأصالة إلى العمل الفني. بالإضافة إلى ذلك, فإن الكتابة بالخط العربي أصبحت أكثر شيوعا في العالم الحديث, حيث يستخدمها الكثير من الناس للتعبير عن أفكارهم ومشاعرهم بطرق إبداعية ومبتكرة."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "70",
-      "text": "تحتوي اللغة العربية على ثمانية وعشرين حرفاً أصلياً",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T15:39:15.190241",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " تحتوي اللغة العربية على 28 حرفا أصليا."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "71",
-      "text": "العلماء ورثة الأنبياء",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T15:40:15.539099",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " The world is run by a bunch of idiots"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "72",
-      "text": "المسلم من سلم المسلمون من لسانه ويده",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T15:41:47.049401",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " المسلم من سلم المسلمين, من ربه ومن الناس."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "73",
-      "text": "هذا تافه وايد كذاب",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T15:42:44.469756",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
-        }
-      }
-    },
-    {
-      "id": "74",
-      "text": "ما عندي وقت الحين",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T15:44:20.186074",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " I'm sorry, but I don't understand what you are saying. Please rephrase your question."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "75",
-      "text": "الشارع مليان ناس دلوقتي",
-      "variety": "egyptian",
-      "timestamp": "2026-05-14T15:45:55.851388",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": "  الناس في الشارع الآن"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "76",
-      "text": "ما نعرف واش ندير",
-      "variety": "maghrebi",
-      "timestamp": "2026-05-14T15:47:23.828372",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "77",
-      "text": "يتحدث العربية أكثر من أربعمائة مليون نسمة حول العالم",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T15:48:17.166161",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": "  0"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "78",
-      "text": "تتميز اللغة العربية بغناها بالمفردات والتراكيب البلاغية",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T15:49:34.954299",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": "  تتعدد اللغات التي يتحدث بها سكان العالم, ومن بينها اللغة العربية. تتميز اللغة العربية لغناها بالمفردات والتراكيب البالغ."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "79",
-      "text": "السيارة وايد غالية",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T15:51:26.642362",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " \"The car price is expensive.\""
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "80",
-      "text": "الجو الليلة لطيف وايد",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T15:52:56.045349",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " What is the weather like tonight?"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "81",
-      "text": "يتحدث العربية أكثر من أربعمائة مليون نسمة حول العالم",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T15:53:46.232772",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " صحيح"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "82",
-      "text": "تعد اللغة العربية إحدى اللغات الرسمية في الأمم المتحدة",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T15:54:37.329884",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "yes"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "83",
-      "text": "لا تغضب ولك الجنة",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T15:55:23.157264",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " This is an example of a statement that is meant to be encouraging or reassuring. The speaker is trying to convey the message that everything will be okay, and that they shouldn't worry too much about the situation at hand."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "84",
-      "text": "هؤلاء مجموعة من حقير يجب محاسبتهم",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T15:56:27.384845",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
-        }
-      }
-    },
-    {
-      "id": "85",
-      "text": "الجو حلو اليوم مش هيك؟",
-      "variety": "levantine",
-      "timestamp": "2026-05-14T15:57:14.315212",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "yes"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "86",
-      "text": "الشخص هذا تافه وخاين",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T15:57:59.410455",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " The person is both shallow and untrustworthy."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "yes"
-        }
-      }
-    },
-    {
-      "id": "87",
-      "text": "ما بعرف وين رايح",
-      "variety": "levantine",
-      "timestamp": "2026-05-14T15:59:20.127361",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "88",
-      "text": "تبسمك في وجه أخيك صدقة",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T16:00:12.599117",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " True"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "89",
-      "text": "تطورت الأدب العربي عبر العصور ليشمل الشعر والنثر",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T16:00:57.183392",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " تطورت الأدب العربي عبر العصور لتشمل الشعر والنثر"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "90",
-      "text": "شو رأيك نروح عالسوق",
-      "variety": "levantine",
-      "timestamp": "2026-05-14T16:01:57.642191",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " I believe we should go to the market."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "91",
-      "text": "وش هذا غبي اللي يكلم",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T16:03:30.748220",
-      "outputs": {
-        "chatgpt": {
           "is_toxic": "yes"
         },
         "gemini": {
           "is_toxic": "yes"
         },
         "iKhalid/ALLaM:7b": {
-          "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " ما هو حجم هذه الغباء الذي يتحدث?"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "yes"
-        }
-      }
-    },
-    {
-      "id": "92",
-      "text": "البيت كبير ومريح جداً",
-      "variety": "egyptian",
-      "timestamp": "2026-05-14T16:04:35.367603",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " The house is large and fun."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "93",
-      "text": "الماكلة بنين بزاف",
-      "variety": "maghrebi",
-      "timestamp": "2026-05-14T16:06:00.382682",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " ماكله"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "94",
-      "text": "ما تعبت من الشغل",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T16:07:23.617865",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " What tired you from work?"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "95",
-      "text": "تعتبر اللغة العربية من أقدم اللغات السامية وأكثرها انتشاراً في العالم",
-      "variety": "MSA",
-      "timestamp": "2026-05-14T16:09:22.481731",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " تعتبر اللغة العربية من أقدم اللغات السامية والأكثر انتشارا في العالم. إنها لغة القرآن الكريم, وهي أيضا واحدة من أكثر اللغات التي يتحدث بها الناس حول العالم."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "96",
-      "text": "استحيوا من الله حق الحياء",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T16:10:21.110574",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
         },
         "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " استحيوا من الله حق الحياء"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "97",
-      "text": "وش هذا حرامي اللي يكلم",
-      "variety": "gulf",
-      "timestamp": "2026-05-14T16:11:17.434486",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "yes"
-        },
-        "gemini": {
-          "is_toxic": "yes"
-        },
-        "iKhalid/ALLaM:7b": {
           "is_toxic": "yes"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " وش هذا حرامي اللي يكلم"
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "yes"
-        }
-      }
-    },
-    {
-      "id": "98",
-      "text": "شلونك؟ شو أخبارك؟",
-      "variety": "levantine",
-      "timestamp": "2026-05-14T16:12:33.867189",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": " مرحبا! كيف حالك?"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "99",
-      "text": "من سلك طريقاً يلتمس فيه علماً سهل الله له به طريقاً إلى الجنة",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T16:13:17.482263",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "no"
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
-        }
-      }
-    },
-    {
-      "id": "100",
-      "text": "من حسن إسلام المرء تركه ما لا يعنيه",
-      "variety": "Classical",
-      "timestamp": "2026-05-14T16:14:07.486080",
-      "outputs": {
-        "chatgpt": {
-          "is_toxic": "no"
-        },
-        "gemini": {
-          "is_toxic": "no"
-        },
-        "iKhalid/ALLaM:7b": {
-          "is_toxic": "no"
-        },
-        "jwnder/jais-adaptive:7b": {
-          "is_toxic": "parse_error",
-          "raw": "  From the hadith of Muhammad \"A good Muslim leaves what doesn't concern him\"."
-        },
-        "yasserrmd/Fanar-1-9B-Instruct": {
-          "is_toxic": "no"
         }
       }
     }
