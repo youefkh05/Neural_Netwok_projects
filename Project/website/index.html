@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RAG — Interactive Project</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="logo">RAG — Visual Demo</h1>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#demo">Interactive Demo</a>
+        <a href="slides.html">Slides</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <h2 class="gradient">Retrieval‑Augmented Generation <span class="muted">(RAG)</span></h2>
+          <p class="lead">A visual, interactive explanation and lightweight client-side demo demonstrating embeddings, retrieval and augmentation — perfect for GitHub Pages.</p>
+          <p><a class="btn" href="#demo">Try the Demo</a></p>
+        </div>
+        <div class="hero-card">
+          <h3>What this site includes</h3>
+          <ul>
+            <li>Beautiful explainer UI and visuals</li>
+            <li>Browser-side TF‑IDF + semantic search demo</li>
+            <li>Extracted slides and summary</li>
+            <li>Static hosting friendly (GitHub Pages)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="container section">
+      <h3>About the Project</h3>
+      <p>This website showcases the course final project: a visual, interactive explanation of Retrieval‑Augmented Generation (RAG). It is intentionally design-forward so it looks great on GitHub Pages while remaining lightweight and fully client-side.</p>
+      <div class="cards">
+        <div class="card">
+          <h4>Embeddings</h4>
+          <p>Converting text to vectors to allow semantic search.</p>
+        </div>
+        <div class="card">
+          <h4>Retrieval</h4>
+          <p>Find the most relevant chunks using cosine similarity.</p>
+        </div>
+        <div class="card">
+          <h4>Augmentation</h4>
+          <p>Pass retrieved context to a generator for better answers.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="container section demo-section">
+      <h3>Interactive Demo</h3>
+      <div class="demo-grid">
+        <div class="panel">
+          <label for="query">Ask a question</label>
+          <input id="query" placeholder="e.g. What is RAG?" />
+          <button id="run">Retrieve & Generate</button>
+          <div id="explain" class="muted small"></div>
+        </div>
+        <div class="panel results">
+          <h4>Top Retrieved Chunks</h4>
+          <div id="results"></div>
+          <h4>Generated Response</h4>
+          <div id="answer" class="answer"></div>
+        </div>
+      </div>
+      <p class="note">This demo runs entirely in your browser using a simple TF‑IDF embedding and cosine similarity to demonstrate the RAG pipeline.</p>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small>Neural Networks Course — Final Project • Static site for GitHub Pages</small>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/demo.js"></script>
+</body>
+</html>
