@@ -1,73 +1,81 @@
 \begingroup
 \graphicspath{{../prob_4/Figures/}}
 
-% ── Local helpers ────────────────────────────────────────────────────────────
-\newcommand{\queryblock}[2]{%
-  \subsubsection{Query \#{}#1}%
-  \begin{quote}
-  \begin{flushright}
-  \textarabic{#2}
-  \end{flushright}
-  \end{quote}
+\renewcommand{\arraystretch}{1.55}
+
+% ── Local helpers ─────────────────────────────────────────────────────────────
+
+% Query heading: #1 = number, #2 = Arabic question
+\newcommand{\qheading}[2]{%
+  \vspace{0.9em}%
+  \noindent\colorbox{best}{\parbox{\dimexpr\textwidth-2\fboxsep}{\textbf{Query \#{}#1:}\quad\textarabic{#2}}}%
+  \vspace{0.3em}%
 }
 
-\newcommand{\resultitem}[2]{%
-  \item \begin{minipage}[t]{\linewidth}
-  \if\relax\detokenize{#1}\relax\else
-    \textbf{Score:} #1\par\smallskip
-  \fi
-  \begin{flushright}
-  \textarabic{#2}
-  \end{flushright}
-  \end{minipage}
+% Column widths
+\newlength{\tcw}\setlength{\tcw}{0.39\textwidth}
+\newlength{\rcw}\setlength{\rcw}{0.473\textwidth}
+
+% Side-by-side retrieval table header
+\newcommand{\retrievaltableheader}{%
+  \noindent\begin{tabular}{|c|c|p{\tcw}|c|c|p{\tcw}|}%
+  \hline%
+  \multicolumn{3}{|c|}{\cellcolor{high}\textbf{Classical Retrieval (BM25)}}%
+  &\multicolumn{3}{c|}{\cellcolor{mid}\textbf{Semantic Retrieval (Embeddings)}}\\\hline%
+  \textbf{\#}&\textbf{Sc.}&\textbf{Passage}%
+  &\textbf{\#}&\textbf{Sc.}&\textbf{Passage}\\\hline%
+}
+\newcommand{\retrievaltablefooter}{\hline\end{tabular}\vspace{0.6em}}
+
+% Row macro — Arabic text is passed directly (no \textarabic inside macro)
+\newcommand{\rrow}[6]{%
+  #1&#2&#3&#4&#5&#6\\\hline%
 }
 
-\newcommand{\answerblock}[2]{%
-  \par\noindent\textbf{#1:}\par
-  \begin{quote}
-  \begin{flushright}
-  \textarabic{#2}
-  \end{flushright}
-  \end{quote}
+% RAG vs LLM comparison table (headers only)
+\newcommand{\ragtableheader}{%
+  \noindent\begin{tabular}{|p{\rcw}|p{\rcw}|}%
+  \hline%
+  \cellcolor{high}\textbf{RAG Answer (with Retrieval)}%
+  &\cellcolor{low}\textbf{LLM-only Answer (no Retrieval)}\\\hline%
 }
+\newcommand{\ragtablefooter}{\hline\end{tabular}\vspace{0.6em}}
 
-% ── Overview ─────────────────────────────────────────────────────────────────
+% ─────────────────────────────────────────────────────────────────────────────
 \subsection{System Overview}
 
-This problem focuses on Arabic Information Retrieval (IR) and
-Question Answering (QA) using both classical retrieval methods and
-Retrieval-Augmented Generation (RAG).  The system uses a single
-Arabic literary book as the sole knowledge source and evaluates
-three complementary approaches: BM25 keyword retrieval, dense
-semantic retrieval, and RAG-driven answer generation.
+This problem focuses on Arabic Information Retrieval (IR) and Question
+Answering (QA) using classical keyword retrieval, dense semantic retrieval,
+and Retrieval-Augmented Generation (RAG).  The entire system is built
+around a single Arabic literary book as the sole knowledge source, allowing
+a faithful comparison of how each technique handles the same queries.
 
-% ── Selected Book ────────────────────────────────────────────────────────────
+% ── Selected Book ─────────────────────────────────────────────────────────────
 \subsection{Selected Book}
 
 The selected book is \textit{\textarabic{الأيام}} (\textit{Al-Ayyam}, ``The Days'')
-by \textit{\textarabic{طه حسين}} (Taha Hussein), one of the most influential
-figures in modern Arabic literature.  The autobiography recounts
-Taha Hussein's rural Egyptian childhood, his blindness, and his
-journey through religious and secular education — making it a
-linguistically rich, less-commonly used source well-suited to
-highlighting the benefit of retrieval.
+by \textit{\textarabic{طه حسين}} (Taha Hussein), one of the most celebrated
+figures in modern Arabic literature.  The autobiography narrates Taha
+Hussein's rural Egyptian childhood, his blindness, and his intellectual
+journey through religious and secular education --- providing linguistically
+rich, less-commonly indexed text that makes retrieval benefits clearly
+visible.
 
 \begin{itemize}
   \item \textbf{Book Title:} \textarabic{الأيام} (\textit{Al-Ayyam})
   \item \textbf{Author:} \textarabic{طه حسين} (Taha Hussein)
-  \item \textbf{Language:} Classical/Modern Standard Arabic
+  \item \textbf{Language:} Classical / Modern Standard Arabic
   \item \textbf{Source:} Public-domain Arabic text
 \end{itemize}
 
-% ── Preprocessing and Chunking ───────────────────────────────────────────────
+% ── Preprocessing ─────────────────────────────────────────────────────────────
 \subsection{Preprocessing and Chunking}
 
-The raw text underwent the following normalization steps before indexing:
+The raw text underwent the following normalization steps:
 
 \begin{itemize}
-  \item Removal of unnecessary whitespace, extra line breaks, and
-        page-header artefacts
-  \item Removal of Arabic diacritics (tashkeel / harakat)
+  \item Removal of unnecessary whitespace, line breaks, and page numbers
+  \item Removal of Arabic diacritics (tashkeel) via Unicode range
   \item Character normalization:
     \begin{itemize}
       \item \textarabic{أ} / \textarabic{إ} / \textarabic{آ}
@@ -77,444 +85,432 @@ The raw text underwent the following normalization steps before indexing:
     \end{itemize}
 \end{itemize}
 
-The normalized text was then split into overlapping chunks:
+The normalized text was split into overlapping chunks:
 
 \begin{itemize}
-  \item \textbf{Chunk size:} 4 sentences
-  \item \textbf{Overlap:} 2 sentences (50\,\% stride)
+  \item \textbf{Chunk size:} 4 sentences \quad
+        \textbf{Overlap:} 2 sentences (50\,\% stride)
+  \item Chunks with fewer than 100 Arabic characters were discarded
+  \item Copyright / metadata patterns were filtered out
 \end{itemize}
 
-Overlapping chunks ensure that context spanning sentence boundaries
-is not lost.  The process yielded approximately \textbf{304 chunks}
-that were indexed for retrieval.
+This yielded approximately \textbf{304 chunks} and
+$\sim$1\,200 sentences from the full text.
 
-% ── Embedding and Indexing ──────────────────────────────────────────────────
+% ── Embedding and Indexing ─────────────────────────────────────────────────────
 \subsection{Embedding and Indexing}
 
-Dense vector embeddings were generated for every chunk using the
-pre-trained multilingual sentence transformer:
+Dense vector representations were generated for every chunk using:
 \begin{center}
   \texttt{sentence-transformers/paraphrase-multilingual-mpnet-base-v2}
 \end{center}
-This model supports more than 50 languages and was chosen for its
-strong cross-lingual transfer on Arabic text.  All embeddings were
-$\ell_2$-normalized and stored in a FAISS flat inner-product index
-(\texttt{IndexFlatIP}), which is equivalent to cosine-similarity
-search over unit vectors.
+This model supports 50+ languages and was chosen for its strong Arabic
+cross-lingual transfer performance.  All 768-dimensional embeddings were
+$\ell_2$-normalized and stored in a FAISS
+\texttt{IndexFlatIP} index, which provides exact cosine-similarity search
+over unit-norm vectors.
 
-% ── Language Model ───────────────────────────────────────────────────────────
+% ── Language Model ─────────────────────────────────────────────────────────────
 \subsection{Language Model}
 
-The generative component is:
 \begin{center}
   \texttt{Qwen/Qwen2.5-1.5B-Instruct}
 \end{center}
 This 1.5\,B-parameter instruction-tuned model was downloaded from
-HuggingFace and run entirely on CPU, satisfying the 1\,B–3\,B
-local-execution constraint.
+HuggingFace and executed entirely on CPU, satisfying the 1\,B--3\,B
+local-execution constraint.  For RAG generation the model received
+a structured Arabic system prompt together with the retrieved context;
+for LLM-only answers it received only the query.
 
-% ── Retrieval Methods ────────────────────────────────────────────────────────
+% ── Retrieval Methods ─────────────────────────────────────────────────────────
 \subsection{Retrieval Methods}
 
-Two retrieval strategies were implemented and compared side by side.
-
 \begin{description}
-  \item[Classical Retrieval — BM25.]
-        Each paragraph is tokenized and indexed with BM25 (Okapi
-        BM25), a probabilistic term-frequency / inverse-document-frequency
-        model.  Given a query, every paragraph receives a score based
-        on how often query terms appear in it, penalized for document
-        length and dampened for very common terms.  The top-5 highest-scoring
-        paragraphs are returned.  This method is fast but completely
-        insensitive to synonymy or paraphrase: a semantically relevant
-        paragraph that shares no surface terms with the query will score zero.
+  \item[Classical Retrieval --- BM25 (Okapi BM25).]
+        Each paragraph is tokenized into Arabic words; common stop-words
+        and words shorter than two characters are removed.  Given a query,
+        BM25 assigns a probabilistic relevance score that rewards term
+        frequency in the paragraph while penalizing very frequent terms
+        (IDF) and very long documents.  The 5 highest-scoring
+        paragraphs are returned.  BM25 is completely insensitive to
+        synonymy: a semantically rich passage that shares no surface tokens
+        with the query always receives a score of zero.
 
-  \item[Semantic Retrieval — Embedding-based.]
-        The query is passed through the same sentence-transformer model
+  \item[Semantic Retrieval --- Embeddings + FAISS.]
+        The query is fed through the same multilingual sentence-transformer
         used at index time.  Its embedding is compared against all 304
-        chunk embeddings using cosine similarity via FAISS, and the 5
-        most similar chunks are returned.  This approach captures meaning
-        rather than exact token matches, making it far more robust to
-        indirect or descriptive questions.
+        stored embeddings via cosine similarity through FAISS, and the 5
+        most similar chunks are returned.  This approach captures
+        meaning and paraphrase, making it far more robust for indirect or
+        descriptive Arabic questions.
 \end{description}
 
-% ── Results from 10 queries ─────────────────────────────────────────────────
+% ── System Implementation ─────────────────────────────────────────────────────
+\subsection{System Implementation}
+
+The team built a complete, deployable end-to-end application from scratch
+in two Python modules that integrate all of the above components.
+
+\subsubsection{\texttt{main.py} --- Core Pipeline}
+
+\texttt{main.py} implements the full pipeline in three stages that can be
+run sequentially:
+
+\begin{itemize}
+  \item \textbf{Stage 1 --- Book Preparation:} loads the raw UTF-8
+        text file, applies all normalization and chunking steps,
+        generates 768-d embeddings in batches of 32, L2-normalizes
+        them, and writes the FAISS index (\texttt{faiss\_index.bin}),
+        the chunk list (\texttt{paragraphs.pkl}), and metadata to disk.
+
+  \item \textbf{Stage 2 --- Search Layer:} implements and exposes
+        \texttt{classical\_search()} and \texttt{semantic\_search()}
+        functions.  \texttt{classical\_search} builds a BM25Okapi
+        corpus from tokenized chunks (falling back to a TF-IDF
+        implementation if \texttt{rank\_bm25} is unavailable);
+        \texttt{semantic\_search} normalizes the query vector and
+        calls FAISS.
+
+  \item \textbf{Stage 3 --- RAG Generation:} the \texttt{rag\_answer()}
+        function retrieves the top-5 semantically relevant passages,
+        formats them into a numbered Arabic context block, and passes
+        this to Qwen2.5-1.5B-Instruct via a structured chat template.
+        In parallel it generates an LLM-only answer from the same
+        model with no context, enabling direct side-by-side comparison.
+
+  \item \textbf{Report Mode:} running \texttt{python main.py -{}-report}
+        automatically runs all 10 queries through both retrieval paths and
+        the RAG pipeline, then writes a complete Markdown deliverables
+        report to \texttt{output/assignment\_report.md}.
+\end{itemize}
+
+\subsubsection{\texttt{web\_ui.py} --- Interactive Web Interface}
+
+\texttt{web\_ui.py} provides a full-featured, production-quality web
+application built with Flask:
+
+\begin{itemize}
+  \item \textbf{Dark-theme Arabic-first UI:} a fully RTL
+        (\textit{direction: rtl}) interface rendered in the
+        \textit{Tajawal} Arabic typeface with a professional dark
+        colour scheme, responsive on mobile.
+
+  \item \textbf{Search tab:} accepts free-form Arabic queries, displays
+        the top-$k$ results from BM25 and semantic search side by side
+        in two styled columns with rank badges and colour-coded similarity
+        scores.  Query terms are highlighted in the retrieved passages.
+        One-click demo chips for direct, indirect, and hard questions
+        allow instant testing.
+
+  \item \textbf{Q\&A (RAG) tab:} submits the query to the RAG endpoint,
+        displays the RAG answer, the LLM-only answer, and the supporting
+        evidence context side-by-side with a loading indicator.  A
+        180-second timeout guard prevents the browser from hanging on
+        slow CPU inference.
+
+  \item \textbf{REST API:} two endpoints (\texttt{/search} and
+        \texttt{/ask\_rag}) are exposed for programmatic use;
+        the RAG endpoint runs generation in a background thread to
+        prevent Flask worker blocking.
+\end{itemize}
+
+The web application runs at \texttt{http://localhost:5010} and requires
+no configuration beyond having the pre-built FAISS index in
+\texttt{output/}.
+
+% ── Retrieval Results ─────────────────────────────────────────────────────────
 \subsection{Results from 10 Arabic Queries (Classical vs.\ Semantic)}
 
-The following 10 queries cover a range of difficulty: some are
-direct keyword lookups, others are indirect or descriptive questions
-that require semantic understanding.
+Each query is presented with its top-5 results from both methods in a
+side-by-side bordered table.  Queries span three difficulty levels:
+\textit{direct} (1--3), \textit{indirect} (4--7), and
+\textit{hard} (8--10).
 
-% ─── Query 1 ────────────────────────────────────────────────────────────────
-\queryblock{1}{النعال سيدنا}
+% ─── Query 1 ──────────────────────────────────────────────────────────────────
+\qheading{1}{النعال سيدنا}
+\retrievaltableheader
+\rrow{1}{0.1638}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{قال: ثلاثون، قال سيدنا وكم نشتغل في الكتاب من يوم؟ قال الصبي : خمسه ايام...}}}{1}{0.6971}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{فقد رفعت راسي وبيضت وجهي وشرفت لحيتي امس، واضطر ابوك الي ان يعطيني الجبه، ولقد كنت تتلو القران امس كسلاسل الذهب...}}}
+\rrow{2}{0.1467}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{اجلس الشيخ سيدنا ورفيقيه، ووضع في يد اليتيم قطعه من فضه، ودعا الخادم وامره ان ياخذ هذا اليتيم...}}}{2}{0.6841}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{هنا حيث اضع اصبعي، فيقول لك الحزين: نعم ساضع هذه اللوزه. يقول لك سيدنا: يجب ان تتخير لقراءتك...}}}
+\rrow{3}{0.1456}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{لانه الكتاب كان بعيدا، ولانه كان اضعف من ان يقطع ماشيا تلك المسافه، ثم لا يذكر متي بدا يسعي...}}}{3}{0.6822}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{قال يزل هنا يغلط، ويقال: زل عن الصخره ونحوها، اذ زلق عنها وسقط. ما راعني الا كذا: اي ما شعرت الا به. الايام سيدنا...}}}
+\rrow{4}{0.1351}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الفصل الخامس ولكن لا يعرف كيف حفظ القران، ولا يذكر كيف بداه ولا كيف اعاده...}}}{4}{0.6812}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{ولكن اني لك هذا وانت في التاسعه من عمرك ترين الحياه كلها نعيما وصفوا ! عرفته ينفق اليوم والاسبوع والشهر والسنه...}}}
+\rrow{5}{0.1311}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{قال الصبي في استحياء: لك علي الوفاء. قال سيدنا: فاعطني يدك، واخذ بيد الصبي...}}}{5}{0.6797}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الفصل الثامن واقبل سيدنا الي الكتاب من الغد مسرورا مبتهجا ، فدعا الشيخ الصبي بلقب الشيخ هذه المره...}}}
+\retrievaltablefooter
 
-\textbf{Classical Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.1638}{قال: ثلاثون، قال سيدنا وكم نشتغل في الكتاب من يوم؟ قال الصبي : خمسه ايام. قال سيدنا : فاذا اردت ان تقرا القران مره في كل اسبوع، فكم تقرا من جزء كل يوم...}
-  \resultitem{0.1467}{اجلس الشيخ سيدنا ورفيقيه، ووضع في يد اليتيم قطعه من فضه، ودعا الخادم وامره ان ياخذ هذا اليتيم الي حيث يصيب شيئا من الطعام، ومسح علي راس ابنه وقال: فتح...}
-  \resultitem{0.1456}{لانه الكتاب كان بعيدا، ولانه كان اضعف من ان يقطع ماشيا تلك المسافه، ثم لا يذكر متي بدا يسعي الي الكتاب. ويري نفسه في ضحي يوم جالسا علي الارض بين يدي «...}
-  \resultitem{0.1351}{الفصل الخامس ولكن لا يعرف كيف حفظ القران، ولا يذكر كيف بداه ولا كيف اعاده، وان كان يذكر من حياته في الكتاب مواقف كثيره، منها ما يضحكه الان، ومنها ما ...}
-  \resultitem{0.1311}{قال الصبي في استحياء: «لك علي الوفاء.» قال سيدنا: فاعطني يدك، واخذ بيد الصبي، فما راع الصبي الا شيء في يده غريب، ما احس مثله قط، عريض يترجرج، ملؤه شعر...}
-\end{itemize}
+% ─── Query 2 ──────────────────────────────────────────────────────────────────
+\qheading{2}{مشي سيدنا}
+\retrievaltableheader
+\rrow{1}{0.1638}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{قال: ثلاثون، قال سيدنا وكم نشتغل في الكتاب من يوم؟ قال الصبي : خمسه ايام...}}}{1}{0.5980}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{القصب هنا: ضرب من النبت ذو كعوب جوفاء، كانت تتخذ منه الاقلام. الايام كانما كان متلاصقا ، فلم يكن يستطيع ان ينسل في ثنايا...}}}
+\rrow{2}{0.1467}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{اجلس الشيخ سيدنا ورفيقيه، ووضع في يد اليتيم قطعه من فضه، ودعا الخادم وامره...}}}{2}{0.5932}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{هو يذكر هذا السياج كانه راه امس، يذكر ان قصب هذا السياج كان اطول من قامته، فكان من العسير عليه ان يتخطاه...}}}
+\rrow{3}{0.1311}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{قال الصبي في استحياء: لك علي الوفاء. قال سيدنا: فاعطني يدك...}}}{3}{0.5744}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{مصغيا مميلا اذنيه للاستماع. اشراب رفع راسه ومد عنقه لينظر. الايام فان سالتني كيف انتهي الي حيث هو الان...}}}
+\rrow{4}{0.1267}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الفصل الخامس وكان منظر سيدنا عجبا في طريقه الي الكتاب والي البيت صباحا ومساء، كان ضخما بادنا...}}}{4}{0.5624}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{اغراه به اولعه به وحضه عليه. ابتغوا طلبوا والوسيله : ما يقرب به الي الغير. البيئه بالكسر : اسم من تبوا المكان...}}}
+\rrow{5}{0.1254}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وكان سيدنا لا يغني بصوته ولسانه وحدهما، وانما يغني براسه وبدنه ايضا؛ فكان راسه يهبط ويصعد...}}}{5}{0.5575}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{قال يزل هنا يغلط، ويقال: زل عن الصخره ونحوها. ما راعني الا كذا. الايام سيدنا: فتقسو علي الصبي...}}}
+\retrievaltablefooter
 
-\textbf{Semantic Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.6971}{فقد رفعت راسي وبيضت وجهي وشرفت لحيتي امس، واضطر ابوك الي ان يعطيني الجبه، ولقد كنت تتلو القران امس كسلاسل الذهب، وكنت علي النار مخافه ان تزلا او تنحرف...}
-  \resultitem{0.6841}{هنا حيث اضع اصبعي، فيقول لك «الحزين»: «نعم ساضع هذه اللوزه. فتقول له: يقول لك سيدنا: يجب ان تتخير تطلق الدكه في مصر علي سرير من الخشب يجلس عليه، له في...}
-  \resultitem{0.6822}{قال يزل هنا يغلط، ويقال: زل عن الصخره ونحوها، اذ زلق عنها وسقط، وعن الصواب في منطق، اذا انحرف. ما راعني الا كذا: اي ما شعرت الا به. الايام سيدنا: فتقس...}
-  \resultitem{0.6812}{ولكن اني لك هذا وانت في التاسعه من عمرك ترين الحياه كلها نعيما وصفوا ! عرفته ينفق اليوم والاسبوع والشهر والسنه لا ياكل الا لونا واحدا، ياخذ منه حظه في...}
-  \resultitem{0.6797}{الحوار المراجعه في الحديث. الفصل الثامن واقبل سيدنا الي الكتاب من الغد مسرورا مبتهجا ، فدعا الشيخ الصبي بلقب الشيخ هذه المره قائلا : اما اليوم، فانت ت...}
-\end{itemize}
+% ─── Query 3 ──────────────────────────────────────────────────────────────────
+\qheading{3}{ختم القرآن أجر}
+\retrievaltableheader
+\rrow{1}{0.1331}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{قال المفتش: فانا استطيع ان اجود له القران علي قراءه حفص، حتي اذا ذهب الايام الي الازهر...}}}{1}{0.6710}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الاواصر هنا العلائق والصلات. الفانيه التي بلغت ارذل العمر. حدت المراه تركت الزينه لموت زوج او حبيب...}}}
+\rrow{2}{0.1171}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{ولكن رمضان اقبل، وكان الناس يجتمعون عند رجل وجيه يعمل في التجاره، وكان سيدنا يقرا القران طوال الشهر...}}}{2}{0.6463}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{قال يزل هنا يغلط. ما راعني الا كذا: اي ما شعرت الا به. الايام سيدنا: فتقسو علي الصبي القراءه...}}}
+\rrow{3}{0.1157}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{فاخذ صاحبنا يردد: طسم. قال سيدنا: عوضني الله خيرا فيما انفقت معك من وقت، فقد نسيت القران...}}}{3}{0.6432}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{القصب هنا: ضرب من النبت ذو كعوب جوفاء. الايام كانما كان متلاصقا ، فلم يكن يستطيع ان ينسل في ثنايا...}}}
+\rrow{4}{0.1104}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وكانه يري نفسه جالسا عن يمين سيدنا يقرئه: اتامرون الناس بالبر وتنسون انفسكم...}}}{4}{0.6426}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الولوله: الاعوال والبكاء. الخمش اللطم والصك هنا: الضرب الشديد. الاواصر هنا العلائق والصلات...}}}
+\rrow{5}{0.1027}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{ولكن هذا المساء كان في جملته خيرا من الغد؛ ذهب الي الكتاب، فاذا سيدنا يدعوه في جفوه...}}}{5}{0.6422}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{اغراه به وحضه عليه. ابتغوا طلبوا والوسيله. البيئه بالكسر: اسم من تبوا المكان اذا حله...}}}
+\retrievaltablefooter
 
-% ─── Query 2 ────────────────────────────────────────────────────────────────
-\queryblock{2}{مشي سيدنا}
+% ─── Query 4 ──────────────────────────────────────────────────────────────────
+\qheading{4}{لماذا كان الصبي يكره عمه عند المائدة؟}
+\retrievaltableheader
+\rrow{1}{0.2078}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{يوثر عليه اخوته: يفضلهم عليه. الايام فاما العريف فكان يكره سيدنا؛ لانه اثر غشاش كذاب...}}}{1}{0.7349}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الفصل الرابع قليل الميل الي الطعام؛ لانه كان يخشي ان يوصف بالشره او ان يتغامز عليه اخوته...}}}
+\rrow{2}{0.1577}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{قال اخوه ضاحكا: هو درس الفقه. قال الصبي : ومن الشيخ ؟ قال اخوه...}}}{2}{0.7053}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{حرم علي نفسه الحساء والارز وكل الالوان التي تؤكل بالملاعق؛ لانه لا يحسن اصطناع الملعقه...}}}
+\rrow{3}{0.1344}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وفي الحق انه لم يفهم لماذا صدق وعد ابيه في هذه السنه...}}}{3}{0.6716}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الايام ولم يظهر الصبي في هذه الليله علي المائده، ومكث ثلاثه ايام يتجنب مجلس ابيه...}}}
+\rrow{4}{0.1273}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{حرم علي نفسه الحساء والارز وكل الالوان التي تؤكل بالملاعق...}}}{4}{0.6659}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وما الذي يمنعه من هذه التجربه ؟ فقد اخذ اللقمه بكلتا يديه وغمسها من الطبق المشترك...}}}
+\rrow{5}{0.1261}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{قال: ثلاثون، قال سيدنا وكم نشتغل في الكتاب من يوم؟...}}}{5}{0.6209}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وما كان شيء يغيظ سيدنا مثلما كان يغيظه هذا الثناء. وقضي الصبي سنه كامله يتردد علي هذا البيت...}}}
+\retrievaltablefooter
 
-\textbf{Classical Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.1638}{قال: ثلاثون، قال سيدنا وكم نشتغل في الكتاب من يوم؟ قال الصبي : خمسه ايام. قال سيدنا : فاذا اردت ان تقرا القران مره في كل اسبوع، فكم تقرا من جزء كل يوم...}
-  \resultitem{0.1467}{اجلس الشيخ سيدنا ورفيقيه، ووضع في يد اليتيم قطعه من فضه، ودعا الخادم وامره ان ياخذ هذا اليتيم الي حيث يصيب شيئا من الطعام، ومسح علي راس ابنه وقال: فتح...}
-  \resultitem{0.1311}{قال الصبي في استحياء: «لك علي الوفاء.» قال سيدنا: فاعطني يدك، واخذ بيد الصبي، فما راع الصبي الا شيء في يده غريب، ما احس مثله قط، عريض يترجرج، ملؤه شعر...}
-  \resultitem{0.1267}{الفصل الخامس وكان منظر سيدنا عجبا في طريقه الي الكتاب والي البيت صباحا ومساء، كان ضخما بادنا وكانت دفيته تزيد في ضخامته، وكان كما قدمنا يبسط ذراعيه عل...}
-  \resultitem{0.1254}{وكان سيدنا لا يغني بصوته ولسانه وحدهما، وانما يغني براسه وبدنه ايضا؛ فكان راسه يهبط ويصعد، وكان راسه يلتفت يمينا وشمالا، وكان سيدنا يغني بيديه ايضا، ف...}
-\end{itemize}
+% ─── Query 5 ──────────────────────────────────────────────────────────────────
+\qheading{5}{وصف الكائنات الخرافية التي تعيش في القناة}
+\retrievaltableheader
+\rrow{1}{0.1954}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الفصل الثاني منظمه، تنحدر كلها من جسر القناه ممتده امتدادا قصيرا من الشمال الي الجنوب...}}}{1}{0.6890}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{فقد كانت تنتهي الي قناه عرفها حين تقدمت به السن، وكان لها في حياته - او قل في خياله - تاثير عظيم...}}}
+\rrow{2}{0.1768}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الايام يسعي اليه دون لمح البصر خادمان من الجن يقضيان له ما يشاء، ذلك الخاتم الذي كان يتختمه سليمان...}}}{2}{0.6681}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وهو ان قضيبا اهدي الي حسن هذا، وكان من خواصه ان تضرب به الارض فتنشق ويخرج منها تسعه نفر من الجن...}}}
+\rrow{3}{0.1741}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{لين القناه هنا كنايه عن الرضا. الخطل والحمق : قله العقل وفساده...}}}{3}{0.6414}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{يذكر صاحبنا السياج والمزرعه والقناه التي كانت تنتهي اليها الدنيا، وسعيدا وكوابس وكلاب العدويين...}}}
+\rrow{4}{0.1401}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{تخفت الاصوات تسكن او تضعف. الفصل الثاني كان مطمئنا الي ان الدنيا تنتهي عن يمينه بهذه القناه...}}}{4}{0.5873}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{القصب هنا: ضرب من النبت ذو كعوب جوفاء. الايام كانما كان متلاصقا ، فلم يكن يستطيع ان ينسل في ثنايا...}}}
+\rrow{5}{0.1287}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وهو يذكر انه كان يقضي ساعات علي شاطئ القناه سعيدا مبتهجا بما سمع من نغمات حسن الشاعر...}}}{5}{0.5762}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{هو يذكر هذا السياج كانه راه امس، يذكر ان قصب هذا السياج كان اطول من قامته...}}}
+\retrievaltablefooter
 
-\textbf{Semantic Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.5980}{القصب هنا: ضرب من النبت ذو كعوب جوفاء، كانت تتخذ منه الاقلام، ينبت علي شواطئ الانهر والترع. الايام كانما كان متلاصقا ، فلم يكن يستطيع ان ينسل في ثنايا...}
-  \resultitem{0.5932}{هو يذكر هذا السياج كانه راه امس، يذكر ان قصب هذا السياج كان اطول من قامته، فكان من العسير عليه ان يتخطاه الي ما وراءه، ويذكر ان قصب هذا السياج كان مقت...}
-  \resultitem{0.5744}{مصغيا مميلا اذنيه للاستماع. اشراب رفع راسه ومد عنقه لينظر، ويعني هنا يتطلعون. ان هي المؤكده المخففه، اي انهم كانوا يجدون .... الايام فان سالتني كيف ان...}
-  \resultitem{0.5624}{اغراه به اولعه به وحضه عليه. ابتغوا طلبوا والوسيله : ما يقرب به الي الغير. البيئه بالكسر : اسم من تبوا المكان اذا حله، ويراد بها المكان الذي ياويه الا...}
-  \resultitem{0.5575}{قال يزل هنا يغلط، ويقال: زل عن الصخره ونحوها، اذ زلق عنها وسقط، وعن الصواب في منطق، اذا انحرف. ما راعني الا كذا: اي ما شعرت الا به. الايام سيدنا: فتقس...}
-\end{itemize}
+% ─── Query 6 ──────────────────────────────────────────────────────────────────
+\qheading{6}{لماذا كان الطفل يخشى الليل والعفاريت في غرفته؟}
+\retrievaltableheader
+\rrow{1}{0.1032}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{انظري اليه هو هذا الملك القائم الذي يحنو علي سريرك اذا امسيت لتستقبلي الليل في هدوء...}}}{1}{0.6677}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وكان يعتقد ان ليس له حصن من كل هذه الاشباح المخوفه والاصوات المنكره؛ الا ان يلتف في لحافه من الراس الي القدم...}}}
+\rrow{2}{0.0803}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وفي الحق انه لم يفهم لماذا صدق وعد ابيه في هذه السنه؛ فقد اخبر الصبي ذات يوم انه مسافر...}}}{2}{0.6446}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{ثم ياخذه النوم، فما يحس الا وقد استيقظ والناس نيام، ومن حوله لا يجدي عليه خيرا...}}}
+\rrow{3}{0.0771}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وكيف استطاع ان يثير في نفوس كثير من الناس ما يثير من حسد وحقد وضغينه...}}}{3}{0.6397}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وما كان شيء يغيظ سيدنا مثلما كان يغيظه هذا الثناء. وقضي الصبي سنه كامله يتردد علي هذا البيت...}}}
+\rrow{4}{0.0735}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الايام يسعي اليه دون لمح البصر خادمان من الجن يقضيان له ما يشاء...}}}{4}{0.6277}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الايام اخوته واخواته يغطون فيسرفون في الغطيط، فيلقي اللحاف عن وجهه، وكان واثقا انه ان كشف وجهه عبث به عفريت...}}}
+\rrow{5}{0.0654}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{هذه الحادثه اخذته بالوان من الشده في حياته، جعلته مضرب المثل في الاسره...}}}{5}{0.6144}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وكان مصدر هذا كله صوت هذا الفتي وهو يعالج القيء. وكان الفتي قضي ساعه او ساعتين يخرج من الحجره...}}}
+\retrievaltablefooter
 
-% ─── Query 3 ────────────────────────────────────────────────────────────────
-\queryblock{3}{ختم القرآن أجر}
+% ─── Query 7 ──────────────────────────────────────────────────────────────────
+\qheading{7}{كيف كانت علاقة الصبي بإخوته وأخواته؟}
+\retrievaltableheader
+\rrow{1}{0.1598}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{ولم يبلغ التاسعه من عمره حتي كان قد وعي من الاغاني والقصص وشعر الهلاليين جمله صالحه...}}}{1}{0.7333}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{كان يحس من امه رحمه ورافه، وكان يجد من ابيه لينا ورفقا، وكان يشعر من اخوته بشيء من الاحتياط في تحدثهم اليه...}}}
+\rrow{2}{0.1577}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{قال اخوه ضاحكا: هو درس الفقه. قال الصبي : ومن الشيخ ؟...}}}{2}{0.6962}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{واستمرت الحال كذلك اعواما، ثم تقدمت به السن، وعمل فيه الازهر عمله، فاخذت عله اخيه تتمثل له من حين الي حين...}}}
+\rrow{3}{0.1414}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الفصل الخامس ولكنه لا يعرف كيف حفظ القران، ولا يذكر كيف بداه ولا كيف اعاده...}}}{3}{0.6794}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وكان يجد الي جانب هذا اللين والرفق من ابيه شيئا من الاهمال ايضا، وكان احتياط اخوته واخواته يؤذيه...}}}
+\rrow{4}{0.1414}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{مصغيا مميلا اذنيه للاستماع. الايام فان سالتني كيف انتهي الي حيث هو الان؟...}}}{4}{0.6736}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{اكان هذا المكان يرضيه ؟ الحق انه لا يستطيع ان يحكم في ذلك حكما صادقا. كان يحس من امه رحمه ورافه...}}}
+\rrow{5}{0.1268}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{ان هي المؤكده المخففه. الايام فان سالتني كيف انتهي الي حيث هو الان؟...}}}{5}{0.6468}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{واخذ اخوه الصبي يستعدون لهذا العيد؛ يختلف كبارهم الي الخياط، ويلهو الايام صغارهم بهذه الحركه الطارئه...}}}
+\retrievaltablefooter
 
-\textbf{Classical Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.1331}{قال المفتش: فانا استطيع ان اجود له القران علي قراءه حفص، حتي اذا ذهب الايام الي الازهر كان قد الم باصول التجويد، وسهل عليه ان يفرغ للقراءات السبع او ...}
-  \resultitem{0.1171}{ولكن رمضان اقبل، وكان الناس يجتمعون في ليالي رمضان عند رجل من اهل المدينه وجيه يعمل في التجاره، وكان سيدنا يقرا القران عند هذا الرجل طوال الشهر، وكان ...}
-  \resultitem{0.1157}{فاخذ صاحبنا يردد: طسم ، وكانت له مع سيدنا قصه كقصته مع ابيه، قال سيدنا : عوضني الله خيرا فيما انفقت معك من وقت، وما بذلت في تعليمك من جهد، فقد نسيت ال...}
-  \resultitem{0.1104}{وكانه يري نفسه مره اخري جالسا لا علي الارض ولا بين النعال، بل عن يمين سيدنا علي دكه اخري طويله، وسيدنا يقرئه: اتامرون الناس بالبر وتنسون انفسكم وانتم...}
-  \resultitem{0.1027}{ولكن هذا المساء المنكر كان في جملته خيرا من الغد؛ ذهب الي الكتاب، فاذا سيدنا يدعوه في جفوه: ماذا حصل بالامس ؟ وكيف عجزت عن ان تقرا سوره الشعراء؟ فاخذ ...}
-\end{itemize}
+% ─── Query 8 ──────────────────────────────────────────────────────────────────
+\qheading{8}{تأثير وباء الكوليرا ووفاة شقيق الكاتب طالب الطب}
+\retrievaltableheader
+\rrow{1}{0.0872}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{حدت المراه تركت الزينه لموت زوج او حبيب، والمراد بالحداد هنا الحزن. الفصل الثامن عشر...}}}{1}{0.5417}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{كان هذا اليوم يوم 21 اغسطس من سنه 1902 ، وكان وباء الكوليرا قد هبط الي مصر ففتك باهلها فتكا ذريعا...}}}
+\rrow{2}{0.0721}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{كان هذا اليوم يوم 21 اغسطس من سنه 1902 ، وكان وباء الكوليرا قد هبط الي مصر...}}}{2}{0.4940}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{فاما خارج الدار فكان يزدحم بالناس اقبلوا الي الشيخ يواسونه. واما داخل الدار فكان يزدحم بالنساء...}}}
+\rrow{3}{0.0655}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وكان هذا الشيخ من الذين لم يفلحوا في الازهر؛ قضي فيه ما شاء من السنين...}}}{3}{0.4926}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{اذن فقد اصيب الشاب، ووجد الوباء طريقه الي الدار، وعرفت ام الفتي باي ابنائها تنزل النازله...}}}
+\rrow{4}{0.0647}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{القصب هنا: ضرب من النبت ذو كعوب جوفاء، كانت تتخذ منه الاقلام...}}}{4}{0.4786}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وعلي هذا النحو فقد صبينا عينيه؛ اصابه الرمد فاهمل اياما ، ثم دعي الحلاق فعالجه...}}}
+\rrow{5}{0.0574}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وكان يسمع لهم وهم يتكلمون، فياخذه شيء من الاعجاب والدهش...}}}{5}{0.4674}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{غثت النفس غثيا وغثيانا. الايام البيت جميعا ان في اكل الثوم وقايه من الكوليرا...}}}
+\retrievaltablefooter
 
-\textbf{Semantic Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.6710}{الاواصر هنا العلائق والصلات. الفانيه التي بلغت ارذل العمر. حدت المراه، تحدت المراه تحد كضرب ونصر - حدا وحدادا: تركت الزينه لموت زوج او حبيب، والمراد ب...}
-  \resultitem{0.6463}{قال يزل هنا يغلط، ويقال: زل عن الصخره ونحوها، اذ زلق عنها وسقط، وعن الصواب في منطق، اذا انحرف. ما راعني الا كذا: اي ما شعرت الا به. الايام سيدنا: فتقس...}
-  \resultitem{0.6432}{القصب هنا: ضرب من النبت ذو كعوب جوفاء، كانت تتخذ منه الاقلام، ينبت علي شواطئ الانهر والترع. الايام كانما كان متلاصقا ، فلم يكن يستطيع ان ينسل في ثنايا...}
-  \resultitem{0.6426}{الولوله: الاعوال والبكاء. الخمش اللطم والضرب والصك هنا: الضرب الشديد. الاواصر هنا العلائق والصلات. الفانيه التي بلغت ارذل العمر....}
-  \resultitem{0.6422}{اغراه به اولعه به وحضه عليه. ابتغوا طلبوا والوسيله : ما يقرب به الي الغير. البيئه بالكسر : اسم من تبوا المكان اذا حله، ويراد بها المكان الذي ياويه الا...}
-\end{itemize}
+% ─── Query 9 ──────────────────────────────────────────────────────────────────
+\qheading{9}{موقف الصبي بعد نسيان القرآن أمام والده وصديقيه}
+\retrievaltableheader
+\rrow{1}{0.2071}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{قال: ثلاثون، قال سيدنا وكم نشتغل في الكتاب من يوم؟...}}}{1}{0.7656}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وفي الحق انه لم يفهم لماذا صدق وعد ابيه في هذه السنه؛ فقد اخبر الصبي ذات يوم انه مسافر...}}}
+\rrow{2}{0.1909}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{قال الصبي في استحياء: لك علي الوفاء. قال سيدنا: فاعطني يدك...}}}{2}{0.7102}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{قال ابوه فاقرا سوره القصص، فذكر انها الثالثه، واخذ يردد: طسم، ولم يفتح عليه ابوه...}}}
+\rrow{3}{0.1812}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{واخذ الصبي يقرا القران علي المفتش من اوله، واخذ المفتش يعلمه مواضع الوقف والوصل...}}}{3}{0.6993}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{سمع الناس هذا فاضطربوا، وكادت تقع بينهم الفتنه لولا ان نهض الامام فخطبهم وصلي بهم...}}}
+\rrow{4}{0.1790}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الهمهمه: الكلام الخفي. الفصل التاسع وكان الصبي يجيب من البقره الي لتجدن في يوم السبت...}}}{4}{0.6875}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وما الذي يمنعه من هذه التجربه ؟ فقد اخذ اللقمه بكلتا يديه وغمسها من الطبق المشترك...}}}
+\rrow{5}{0.1625}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{ومن غريب الامر ان الشيخ لم يفكر مره واحده في ان يفتح الالفيه ويقابل علي الصبي وهو يقرا...}}}{5}{0.6840}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{ولا يحفل بالشيء: لا يبالي به. اغرقوا في الضحك بالغوا فيه. اجهشت بالبكاء: همت به...}}}
+\retrievaltablefooter
 
-% ─── Query 4 ────────────────────────────────────────────────────────────────
-\queryblock{4}{لماذا كان الصبي يكره عمه عند المائدة؟}
+% ─── Query 10 ─────────────────────────────────────────────────────────────────
+\qheading{10}{الفرق بين علماء الريف الرسميين وأصحاب العلم اللدني}
+\retrievaltableheader
+\rrow{1}{0.2093}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وكان في المدينه عالم اخر شافعي، كان امام المسجد، وصاحب الخطبه والصلاه، معروفا بالتقي والورع...}}}{1}{0.7123}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الفصل الرابع عشر للعلم في القري ومدن الاقاليم جلال ليس له مثله في العاصمه ولا في بيئاتها العلميه...}}}
+\rrow{2}{0.1757}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الم ندعكم الي تكذيب المنجمين؟ واما حمله القران فقالوا: كلا! لقد كادت تقع الكارثه...}}}{2}{0.5797}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وكان لهؤلاء الفقهاء علم مخالف كل المخالفه لعلم العلماء الذين ياخذون علمهم من الكتب...}}}
+\rrow{3}{0.1219}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{كل ذلك لان هذا الفتي الازهري قد اتخذ في هذا اليوم خليفه، فهو يطاف به في المدينه...}}}{3}{0.5634}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{الخياط الذي كان دكانه يكاد يقابل الكتاب، والذي كان متصلا بشيخ من كبار اهل الطرق...}}}
+\rrow{4}{0.1029}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{كانوا يتحاورون طول النهار، وعند الليل اجتمعوا حلقا في المسجد يرددون: ازفت الازفه -- ليس لها من دون الله...}}}{4}{0.4510}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{ثم منهم الفقهاء الذين كانوا يقرءون القران ويقرئونه للناس، والذين كانوا يميزون انفسهم من العلماء...}}}
+\rrow{5}{0.0934}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{ومنهم من كان يظن ان الكارثه من اشراط الساعه. وكانوا يتحاورون طول النهار...}}}{5}{0.4500}{\parbox[t]{\tcw}{\raggedleft\small\textarabic{وكان في المدينه عالم اخر شافعي، كان امام المسجد، وصاحب الخطبه والصلاه...}}}
+\retrievaltablefooter
 
-\textbf{Classical Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.2078}{يوثر عليه اخوته: يفضلهم عليه. يصانعه يلاينه ويداريه. الايام فاما العريف فكان يكره سيدنا؛ لانه اثر غشاش كذاب، يخفي عليه بعض موارد الكتاب، ويستاثر بخير ...}
-  \resultitem{0.1577}{قال اخوه ضاحكا: هو درس الفقه وهو : ابن عابدين علي الدر»، قال ذلك يملا به فمه. قال الصبي : ومن الشيخ ؟ قال اخوه : هو الشيخ ... وكان الصبي قد سمع اسم ال...}
-  \resultitem{0.1344}{وفي الحق انه لم يفهم لماذا صدق وعد ابيه في هذه السنه؛ فقد اخبر الصبي ذات يوم انه مسافر بعد ايام. واقبل يوم الخميس، فاذا الصبي يري نفسه يتاهب للسفر حقا...}
-  \resultitem{0.1273}{حرم علي نفسه الحساء والارز، وكل الالوان التي تؤكل بالملاعق؛ لانه كان يعرف انه لا يحسن اصطناع الملعقه، وكان يكره ان يضحك اخوته، او تبكي امه، او يعلمه ا...}
-  \resultitem{0.1261}{قال: ثلاثون، قال سيدنا وكم نشتغل في الكتاب من يوم؟ قال الصبي : خمسه ايام. قال سيدنا : فاذا اردت ان تقرا القران مره في كل اسبوع، فكم تقرا من جزء كل يوم...}
-\end{itemize}
-
-\textbf{Semantic Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.7349}{الفصل الرابع قليل الميل الي الطعام؛ بل لانه كان يخشي ان يوصف بالشره او ان يتغامز عليه اخوته، وقد المه ذلك اول الامر، ولكنه لم يلبث ان تعوده حتي اصبح م...}
-  \resultitem{0.7053}{حرم علي نفسه الحساء والارز، وكل الالوان التي تؤكل بالملاعق؛ لانه كان يعرف انه لا يحسن اصطناع الملعقه، وكان يكره ان يضحك اخوته، او تبكي امه، او يعلمه ا...}
-  \resultitem{0.6716}{الايام ولم يظهر الصبي في هذه الليله علي المائده، ومكث ثلاثه ايام يتجنب مجلس ابيه ويتجنب المائده، حتي اذا كان اليوم الرابع دخل ابوه عليه في المطبخ حيث ...}
-  \resultitem{0.6659}{وما الذي يمنعه من هذه التجربه ؟ واذن فقد اخذ اللقمه بكلتا يديه وغمسها من الطبق المشترك ثم رفعها الي فمه؛ فاما اخوته فاغرقوا في الضحك. واما امه فاجهشت ...}
-  \resultitem{0.6209}{وما كان شيء يغيظ سيدنا مثلما كان يغيظه هذا الثناء. وقضي الصبي سنه كامله يتردد علي هذا البيت، ويقرا القران علي المفتش، حتي اتقن التجويد بروايه حفص، وكا...}
-\end{itemize}
-
-% ─── Query 5 ────────────────────────────────────────────────────────────────
-\queryblock{5}{وصف الكائنات الخرافية التي تعيش في القناة}
-
-\textbf{Classical Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.1954}{الفصل الثاني منظمه، تنحدر كلها من جسر القناه ممتده امتدادا قصيرا من الشمال الي الجنوب، وهو يذكر كثيرا من الذين كانوا يسكنون هذه البيوت رجالا ونساء، وم...}
-  \resultitem{0.1768}{الايام يسعي اليه دون لمح البصر خادمان من الجن يقضيان له ما يشاء، ذلك الخاتم الذي كان يتختمه سليمان فيسخر له الجن والريح وما شاء من قوي الطبيعه. وما كا...}
-  \resultitem{0.1741}{لين القناه هنا كنايه عن الرضا. الخطل والحمق : قله العقل وفساده. اغراه به اولعه به وحضه عليه. ابتغوا طلبوا والوسيله : ما يقرب به الي الغير....}
-  \resultitem{0.1401}{تخفت الاصوات تسكن او تضعف. الفصل الثاني كان مطمئنا الي ان الدنيا تنتهي عن يمينه بهذه القناه التي لم يكن بينه وبينها الا خطوات معدوده ... ولم لا وهو لم...}
-  \resultitem{0.1287}{وهو يذكر انه كان يقضي ساعات من نهاره علي شاطئ القناه سعيدا مبتهجا بما سمع من نغمات «حسن» الشاعر يتغني بشعره في ابي زيد وخليفه ودياب، حين يرفع الماء بش...}
-\end{itemize}
-
-\textbf{Semantic Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.6890}{فقد كانت تنتهي الي قناه عرفها حين تقدمت به السن، وكان لها في حياته - او قل في خياله - تاثير عظيم. يذكر هذا كله، ويذكر انه كان يحسد الارانب التي كانت ت...}
-  \resultitem{0.6681}{وهو ان قضيبا اهدي الي حسن هذا في بعض رحلته وكان من خواص هذا القضيب ان تضرب به الارض فتنشق ويخرج منها تسعه نفر ياتمرون امر صاحب القضيب، وهم بالطبع من ا...}
-  \resultitem{0.6414}{يذكر صاحبنا السياج، والمزرعه التي كانت تنبسط من ورائه، والقناه التي كانت تنتهي اليها الدنيا، وسعيدا و «كوابس» وكلاب العدويين، ولكنه يحاول ان يتذكر مص...}
-  \resultitem{0.5873}{القصب هنا: ضرب من النبت ذو كعوب جوفاء، كانت تتخذ منه الاقلام، ينبت علي شواطئ الانهر والترع. الايام كانما كان متلاصقا ، فلم يكن يستطيع ان ينسل في ثنايا...}
-  \resultitem{0.5762}{هو يذكر هذا السياج كانه راه امس، يذكر ان قصب هذا السياج كان اطول من قامته، فكان من العسير عليه ان يتخطاه الي ما وراءه، ويذكر ان قصب هذا السياج كان مقت...}
-\end{itemize}
-
-% ─── Query 6 ────────────────────────────────────────────────────────────────
-\queryblock{6}{لماذا كان الطفل يخشى الليل والعفاريت في غرفته؟}
-
-\textbf{Classical Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.1032}{انظري اليه هو هذا الملك القائم الذي يحنو علي سريرك اذا امسيت لتستقبلي الليل في هدوء ونوم لذيذ، ويحنو علي سريرك اذا اصبحت لتستقبلي النهار في سرور وابته...}
-  \resultitem{0.0803}{وفي الحق انه لم يفهم لماذا صدق وعد ابيه في هذه السنه؛ فقد اخبر الصبي ذات يوم انه مسافر بعد ايام. واقبل يوم الخميس، فاذا الصبي يري نفسه يتاهب للسفر حقا...}
-  \resultitem{0.0771}{وكيف استطاع ان يثير في نفوس كثير من الناس ما يثير من حسد وحقد وضغينه، وان يثير في نفوس ناس اخرين ما يثير من رضا عنه واكرام له وتشجيع؟ ان سالت كيف انتق...}
-  \resultitem{0.0735}{الايام يسعي اليه دون لمح البصر خادمان من الجن يقضيان له ما يشاء، ذلك الخاتم الذي كان يتختمه سليمان فيسخر له الجن والريح وما شاء من قوي الطبيعه. وما كا...}
-  \resultitem{0.0654}{هذه الحادثه اخذته بالوان من الشده في حياته، جعلته مضرب المثل في الاسره وبين الذين عرفوه حين تجاوز حياه الاسره الي الحياه الاجتماعيه؛ كان قليل الاكل، ل...}
-\end{itemize}
-
-\textbf{Semantic Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.6677}{وكان يعتقد ان ليس له حصن من كل هذه الاشباح المخوفه والاصوات المنكره؛ الا ان يلتف في لحافه من الراس الي القدم، دون ان يدع بينه وبين الهواء منفذا او ثغر...}
-  \resultitem{0.6446}{ثم ياخذه النوم، فما يحس الا وقد استيقظ والناس نيام، ومن حوله لا يجدي عليه خيرا : لا يحدث له خيرا ولا ينيله. بكاء شكاء : كثير البكاء والشكوي. الايام اخ...}
-  \resultitem{0.6397}{وما كان شيء يغيظ سيدنا مثلما كان يغيظه هذا الثناء. وقضي الصبي سنه كامله يتردد علي هذا البيت، ويقرا القران علي المفتش، حتي اتقن التجويد بروايه حفص، وكا...}
-  \resultitem{0.6277}{الايام اخوته واخواته يغطون ون فيسرفون في الغطيط، فيلقي اللحاف عن وجهه في خفيه وتردد؛ لانه كان يكره ان ينام مكشوف الوجه، وكان واثقا انه ان كشف وجهه ...}
-  \resultitem{0.6144}{وكان مصدر هذا كله صوت هذا الفتي وهو يعالج القيء. وكان الفتي قضي ساعه او ساعتين يخرج من الحجره علي اطراف قدميه ويمضي الي الخلاء ليقيء مجتهدا الا يوقظ ا...}
-\end{itemize}
-
-% ─── Query 7 ────────────────────────────────────────────────────────────────
-\queryblock{7}{كيف كانت علاقة الصبي بإخوته وأخواته؟}
-
-\textbf{Classical Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.1598}{ولم يبلغ التاسعه من عمره حتي كان قد وعي من الاغاني والتعديد والقصص وشعر الهلاليين والزناتيين والاوراد والادعيه واناشيد الصوفيه جمله صالحه، وحفظ الي ذل...}
-  \resultitem{0.1577}{قال اخوه ضاحكا: هو درس الفقه وهو : ابن عابدين علي الدر»، قال ذلك يملا به فمه. قال الصبي : ومن الشيخ ؟ قال اخوه : هو الشيخ ... وكان الصبي قد سمع اسم ال...}
-  \resultitem{0.1414}{الفصل الخامس ولكنه لا يعرف كيف حفظ القران، ولا يذكر كيف بداه ولا كيف اعاده، وان كان يذكر من حياته في الكتاب مواقف كثيره، منها ما يضحكه الان، ومنها ما ...}
-  \resultitem{0.1414}{مصغيا مميلا اذنيه للاستماع. اشراب رفع راسه ومد عنقه لينظر، ويعني هنا يتطلعون. ان هي المؤكده المخففه، اي انهم كانوا يجدون .... الايام فان سالتني كيف ان...}
-  \resultitem{0.1268}{ان هي المؤكده المخففه، اي انهم كانوا يجدون .... الايام فان سالتني كيف انتهي الي حيث هو الان؟ وكيف اصبح شكله مقبولا لا تقتحمه العين ولا تزدريه؟ وكيف اس...}
-\end{itemize}
-
-\textbf{Semantic Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.7333}{كان يحس من امه رحمه ورافه، وكان يجد من ابيه لينا ورفقا، وكان يشعر من اخوته بشيء من الاحتياط في تحدثهم اليه ومعاملتهم له. ولكنه كان يجد الي جانب هذه ال...}
-  \resultitem{0.6962}{واستمرت الحال كذلك اعواما، ثم تقدمت به السن، وعمل فيه الازهر عمله، فاخذت عله اخيه تتمثل له من حين الي حين واصبح فتي ورجلا، وتقلبت به اطوار الحياه، وان...}
-  \resultitem{0.6794}{وكان يجد الي جانب هذا اللين والرفق من ابيه شيئا من الاهمال ايضا، والازورار من وقت الي وقت، وكان احتياط اخوته واخواته يؤذيه؛ لانه كان يجد فيه شيئا من ا...}
-  \resultitem{0.6736}{اكان هذا المكان يرضيه ؟ الحق انه لا يتبين ذلك الا في غموض وابهام، والحق انه لا يستطيع الان ان يحكم في ذلك حكما صادقا. كان يحس من امه رحمه ورافه، وكان ...}
-  \resultitem{0.6468}{واخذ اخوه الصبي يستعدون لهذا العيد؛ يختلف كبارهم الي الخياط حينا، والي الحذاء حينا اخر، ويلهو الايام صغارهم بهذه الحركه الطارئه علي الدار، فينظر صبين...}
-\end{itemize}
-
-% ─── Query 8 ────────────────────────────────────────────────────────────────
-\queryblock{8}{تأثير وباء الكوليرا ووفاة شقيق الكاتب طالب الطب}
-
-\textbf{Classical Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.0872}{حدت المراه، تحدت المراه تحد كضرب ونصر - حدا وحدادا: تركت الزينه لموت زوج او حبيب، والمراد بالحداد هنا الحزن. الفصل الثامن عشر السواد الي اخر ايامها، و...}
-  \resultitem{0.0721}{كان هذا اليوم يوم 21 اغسطس من سنه 1902 ، وكان الصيف منكرا في هذه السنه، وكان وباء الكوليرا قد هبط الي مصر ففتك باهلها فتكا ذريعا، ودمر مدنا وقري، و...}
-  \resultitem{0.0655}{وكان هذا الشيخ من الذين لم يفلحوا في الازهر؛ قضي فيه ما شاء ان يقضي من السنين، فلم يوفق للعالميه ولا للقضاء، فقنع بمنصب الكاتب في المحكمه، علي حين كان...}
-  \resultitem{0.0647}{القصب هنا: ضرب من النبت ذو كعوب جوفاء، كانت تتخذ منه الاقلام، ينبت علي شواطئ الانهر والترع. الايام كانما كان متلاصقا ، فلم يكن يستطيع ان ينسل في ثنايا...}
-  \resultitem{0.0574}{وكان يسمع لهم وهم يتكلمون، فياخذه شيء من الاعجاب والدهش، حاول ان يجد مثله في القاهره امام كبار العلماء، وجله الشيوخ فلم يوفق. كان علماء المدينه ثلاثه ...}
-\end{itemize}
-
-\textbf{Semantic Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.5417}{كان هذا اليوم يوم 21 اغسطس من سنه 1902 ، وكان الصيف منكرا في هذه السنه، وكان وباء الكوليرا قد هبط الي مصر ففتك باهلها فتكا ذريعا، ودمر مدنا وقري، و...}
-  \resultitem{0.4940}{فاما خارج الدار فكان يزدحم بالناس، اقبلوا الي الشيخ يواسونه. واما داخل الدار فكان يزدحم بالنساء اقبلن يواسين ام الفتي. وكان الشيخ وزوجه عن اولئك وهؤلا...}
-  \resultitem{0.4926}{اذن فقد اصيب الشاب، ووجد الوباء طريقه الي الدار، وعرفت ام الفتي باي ابنائها تنزل النازله. لقد كان الشيخ في تلك الليله خليقا بالاعجاب حقا، كان هادئا رز...}
-  \resultitem{0.4786}{وعلي هذا النحو فقد صبينا عينيه؛ اصابه الرمد فاهمل اياما ، ثم دعي الحلاق فعالجه علاجا ذهب بعينيه. وعلي هذا النحو فقدت هذه الطفله الحياه ظلت فاتره هامده...}
-  \resultitem{0.4674}{غثت النفس غثيا وغثيانا: خبثت واضطربت حتي تكاد تتقيا. الايام البيت جميعا ان في اكل الثوم وقايه من الكوليرا، واكل الثوم واخذ كبار اخوته وصغارهم بالاكل م...}
-\end{itemize}
-
-% ─── Query 9 ────────────────────────────────────────────────────────────────
-\queryblock{9}{موقف الصبي بعد نسيان القرآن أمام والده وصديقيه}
-
-\textbf{Classical Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.2071}{قال: ثلاثون، قال سيدنا وكم نشتغل في الكتاب من يوم؟ قال الصبي : خمسه ايام. قال سيدنا : فاذا اردت ان تقرا القران مره في كل اسبوع، فكم تقرا من جزء كل يوم...}
-  \resultitem{0.1909}{قال الصبي في استحياء: «لك علي الوفاء.» قال سيدنا: فاعطني يدك، واخذ بيد الصبي، فما راع الصبي الا شيء في يده غريب، ما احس مثله قط، عريض يترجرج، ملؤه شعر...}
-  \resultitem{0.1812}{واخذ الصبي يقرا القران علي المفتش من اوله، واخذ المفتش يعلمه مواضع الوقف والوصل، واخذ الصبي يقلد المفتش في ترتيله ويحاكي نغمه، واخذ يقرا القران علي هذ...}
-  \resultitem{0.1790}{الهمهمه: الكلام الخفي. الفصل التاسع وكان الصبي يجيب من البقره الي لتجدن في يوم السبت، ومن: لتجدن الي وما ابرئ في يوم الاحد، وكذلك قسم القران سته اقسام...}
-  \resultitem{0.1625}{ومن غريب الامر ان الشيخ لم يفكر مره واحده في ان يفتح الالفيه، ويقابل علي الصبي وهو يقرا، ولو قد فعل يوما من الايام، لكانت للصبي قصه كقصته مع سوره الشع...}
-\end{itemize}
-
-\textbf{Semantic Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.7656}{وفي الحق انه لم يفهم لماذا صدق وعد ابيه في هذه السنه؛ فقد اخبر الصبي ذات يوم انه مسافر بعد ايام. واقبل يوم الخميس، فاذا الصبي يري نفسه يتاهب للسفر حقا...}
-  \resultitem{0.7102}{قال ابوه فاقرا سوره القصص، فذكر انها الثالثه، واخذ يردد: طسم، ولم يفتح عليه ابوه هذه المره، ولكنه قال له في هدوء : قم؛ فقد كنت احسب انك حفظت القران، ف...}
-  \resultitem{0.6993}{سمع الناس هذا فاضطربوا، وكادت تقع بينهم الفتنه لولا ان نهض الامام فخطبهم وصلي بهم، وحيل بين الفتي والمنبر هذا العام. ومع ذلك فقد كان الفتي اجهد نفسه ف...}
-  \resultitem{0.6875}{وما الذي يمنعه من هذه التجربه ؟ واذن فقد اخذ اللقمه بكلتا يديه وغمسها من الطبق المشترك ثم رفعها الي فمه؛ فاما اخوته فاغرقوا في الضحك. واما امه فاجهشت ...}
-  \resultitem{0.6840}{ولا يحفل بالشيء: لا يبالي به. اغرقوا في الضحك بالغوا فيه. اجهشت بالبكاء: همت به وتهيات له. الايام هذه الحادثه اعانته علي ان يفهم حقا ما يتحدث به الروا...}
-\end{itemize}
-
-% ─── Query 10 ────────────────────────────────────────────────────────────────
-\queryblock{10}{الفرق بين علماء الريف الرسميين وأصحاب العلم اللدني}
-
-\textbf{Classical Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.2093}{وكان في المدينه عالم اخر شافعي، كان امام المسجد، وصاحب الخطبه والصلاه وكان معروفا بالتقي والورع، يذهب الناس في اكباره واجلاله الي حد يشبه التقديس؛ الم...}
-  \resultitem{0.1757}{الم ندعكم الي تكذيب المنجمين ؟ واما حمله القران فقالوا: «كلا! لقد كادت تقع الكارثه لولا ان لطف الله بالرضع والحوامل والبهائم، وسمع الدعاء الداعين، وتض...}
-  \resultitem{0.1219}{كل ذلك لان هذا الفتي الازهري قد اتخذ في هذا اليوم خليفه، فهو يطاف به في المدينه وما حولها من القري في هذا المهرجان الباهر. وما باله اتخذ خليفه دون غير...}
-  \resultitem{0.1029}{كانوا يتحاورون طول النهار، حتي اذا اقبل الليل وصليت المغرب اجتمعوا حلقا في المسجد وامام الدور، واخذوا يرددون هذه الكلمه: ازفت الازفه -- ليس لها من دون ...}
-  \resultitem{0.0934}{ومنهم من كان يظن ان الكارثه من اشراط الساعه. ومنهم من كان يتحدث بان هذه الكارثه قد تقع فتصيب الارض بشيء من التدمير دون ان تاتي عليها جميعا. كانوا يتحا...}
-\end{itemize}
-
-\textbf{Semantic Retrieval Results:}
-\begin{itemize}[leftmargin=*,label={},itemsep=0.5em,topsep=0.4em]
-  \resultitem{0.7123}{الفصل الرابع عشر للعلم في القري ومدن الاقاليم جلال ليس له مثله في العاصمه ولا في بيئاتها العلميه المختلفه، وليس في هذا شيء من العجب ولا من الغرابه، وا...}
-  \resultitem{0.5797}{وكان لهؤلاء الفقهاء علم مخالف كل المخالفه لعلم العلماء، الذين ياخذون علمهم من الكتب، والذين بينهم وبين الازهر سبب قوي او ضعيف، وكان علمهم مخالفا ايضا ...}
-  \resultitem{0.5634}{الخياط الذي كان دكانه يكاد يقابل الكتاب، والذي كان الناس مجمعين علي وصفه بالبخل والشح، والذي كان متصلا بشيخ من كبار اهل الطرق، والذي كان يزدري العلماء...}
-  \resultitem{0.4510}{ثم منهم الفقهاء الذين كانوا يقرءون القران ويقرئونه للناس، والذين كانوا يميزون انفسهم من العلماء ويتسمون: «حمله كتاب الله»، والذين كانوا يتصلون بدهماء ...}
-  \resultitem{0.4500}{وكان في المدينه عالم اخر شافعي، كان امام المسجد، وصاحب الخطبه والصلاه وكان معروفا بالتقي والورع، يذهب الناس في اكباره واجلاله الي حد يشبه التقديس؛ الم...}
-\end{itemize}
-
-% ── RAG vs LLM-only Answers ─────────────────────────────────────────────────
+% ── RAG vs LLM-only Answers ───────────────────────────────────────────────────
 \subsection{Answers for 10 Queries: RAG vs.\ LLM-only}
 
-For each query the system produced two answers: one grounded in the
-retrieved passages (RAG) and one generated solely by the LLM with no
-additional context.
+Each query is answered by two paths.  The \textbf{RAG Answer} is grounded
+in the top-5 semantically retrieved passages; the \textbf{LLM-only Answer}
+is generated by the same model with no external context.  Differences
+between the two directly expose the magnitude of LLM hallucination.
 
-% ─── Answer 1 ────────────────────────────────────────────────────────────────
-\queryblock{1}{النعال سيدنا}
+\qheading{1}{النعال سيدنا}
+\ragtableheader
+\parbox[t]{\rcw}{\raggedleft\small\textarabic{النعال سيدنا هو لحيته التي أعطاها الله تعالى.}}&\parbox[t]{\rcw}{\raggedleft\small\textarabic{النعال هو أحد الأدوات التي يستخدمها المسلمون في صيام الصبح وهو يُستخدم للسحور. يُصنع من خشب أو زجاج أو مواد أخرى تُعتبر آمنة. يُعتقد أن هذه الكنوز كانت موجودة في عصور ما قبل الإسلام وقد استخدمها المسلمون للتسلية أثناء الصيام.}}\\
+\ragtablefooter
 
-\answerblock{RAG Answer}{النعال سيدنا هو لحيته التي أعطاها الله تعالى.}
+\qheading{2}{مشي سيدنا}
+\ragtableheader
+\parbox[t]{\rcw}{\raggedleft\small\textarabic{مشي سيدنا في الكتاب كان مشيًا لافتًا وعجيبًا؛ إذ كان ضخمًا بادنًا تزيد دفيته في ضخامته، وكان يبسط ذراعيه على ما حوله وهو يسير، فيبدو كأنه يطوي المكان من حوله صباحًا ومساءً.}}&\parbox[t]{\rcw}{\raggedleft\small\textarabic{في القرآن الكريم يُذكر سيدنا محمد صلى الله عليه وسلم بسيرة خاتمة حياته وموته. وفي بعض الآيات يُشار إلى مشيه بعد أن أسلم الناس إليه. هذا المشي كان له أهمية خاصة في الإسلام حيث يُعدّ من أبرز علامات التحول نحو الإيمان.}}\\
+\ragtablefooter
 
-\answerblock{LLM-only Answer}{النعال هو أحد الأدوات التي يستخدمها المسلمون في صيام الصبح، وهو يُستخدم للسحور. هذا النعال يُصنع من خشب أو زجاج أو مواد أخرى تُعتبر آمنة للاستخدام. يُعتقد أن هذه الكنوز كانت موجودة في عصور ما قبل الإسلام، وقد استخدمها المسلمون كوسيلة للتسلية أثناء الصيام.}
+\qheading{3}{ختم القرآن أجر}
+\ragtableheader
+\parbox[t]{\rcw}{\raggedleft\small\textarabic{كانت العادة في الكتاب أن يُعطى الشيخ سيدنا أجرًا عند ختم الصبي للقرآن، وكان الأهل يجمعون ما يستطيعون من النقود والهدايا ليقدموها للشيخ، ولا سيما في شهر رمضان حين كان سيدنا يقرأ القرآن عند وجهاء المدينة ويُكرَم بصلة جزيلة.}}&\parbox[t]{\rcw}{\raggedleft\small\textarabic{القرآن الكريم خاتم الكتب المقدسة وهو كتاب الله تعالى. وقد حث النبي صلى الله عليه وسلم على تلاوته وحفظه. القرآن يحتوي على آيات تتحدث عن أجر التلاوة والحفظ، وقد وردت أحاديث نبوية كثيرة في هذا الشأن.}}\\
+\ragtablefooter
 
-% ─── Answer 2 ────────────────────────────────────────────────────────────────
-\queryblock{2}{مشي سيدنا}
+\qheading{4}{لماذا كان الصبي يكره عمه عند المائدة؟}
+\ragtableheader
+\parbox[t]{\rcw}{\raggedleft\small\textarabic{لأن الصبي كان يخشى أن يُتهم بالشَّره أو أن يتغامز عليه أخوته؛ فحرّم على نفسه الحساء والأرز وكل الألوان التي تُؤكل بالملاعق لأنه كان يعرف أنه لا يُحسن استعمالها، فكان يؤثر الانسحاب عن المائدة على أن يُضحك إخوته.}}&\parbox[t]{\rcw}{\raggedleft\small\textarabic{عذراً، لكنني لا أستطيع الإجابة على هذا السؤال لأنه يتعلق بشخصية أدبية بعينها ولا أملك تفاصيل كافية من سياق الرواية دون الرجوع إلى النص.}}\\
+\ragtablefooter
 
-\answerblock{RAG Answer}{مشي سيدنا في الكتاب كان مشيًا لافتًا وعجيبًا؛ إذ كان ضخمًا بادنًا تزيد دفيته في ضخامته، وكان يبسط ذراعيه على ما حوله وهو يسير، فيبدو كأنه يطوي المكان من حوله. وقد ذكر الكاتب أن منظره في طريقه إلى الكتاب والبيت صباحًا ومساءً كان مثارًا للعجب.}
+\qheading{5}{وصف الكائنات الخرافية التي تعيش في القناة}
+\ragtableheader
+\parbox[t]{\rcw}{\raggedleft\small\textarabic{كانت القناة في مخيلة الطفل مسكنًا للجن والمردة؛ فقد كان يؤمن بأن خادمَين من الجن يسعيان إليه دون لمح البصر ليقضيا ما يشاء، واعتُقد أن الجن يقطنون تحت الماء ويملكون قضيبًا سحريًا تُضرب به الأرض فتنشق ويخرج منها تسعة نفر يأتمرون بأمر صاحبه.}}&\parbox[t]{\rcw}{\raggedleft\small\textarabic{عذراً، لكنني لا أستطيع تقديم وصف دقيق للكائنات الخرافية دون الاستناد إلى نص بعينه. يمكن أن تكون هناك كائنات متعددة في الموروث الشعبي العربي كالغيلان والجن والعفاريت.}}\\
+\ragtablefooter
 
-\answerblock{LLM-only Answer}{في القرآن الكريم، يُذكر سيدنا محمد صلى الله عليه وسلم بسيرة خاتمة حياته وموته. وفي بعض الآيات يُشار إلى مشيه بعد أن أسلم الناس إليه. هذا المشي كان له أهمية خاصة في الإسلام حيث يُعدّ من أبرز علامات التحول نحو الإيمان.}
+\qheading{6}{لماذا كان الطفل يخشى الليل والعفاريت في غرفته؟}
+\ragtableheader
+\parbox[t]{\rcw}{\raggedleft\small\textarabic{لأن الطفل كان يعتقد أن البيت يعمره عفاريت كثيرة، وكان واثقًا أنه إن كشف وجهه أو أخرج طرفًا من أطرافه من اللحاف فلا بد أن يعبث به عفريت؛ لذا كان يلتف في لحافه من الرأس إلى القدم دون أن يدع أي منفذ للهواء.}}&\parbox[t]{\rcw}{\raggedleft\small\textarabic{هذا النوع من الخوف شائع لدى الأطفال، وقد يكون ناتجًا عن قصص الجن التي يسمعها من المحيطين به، أو بسبب الظلام والأصوات الغريبة في الليل. ويُعدّ هذا الخوف استجابة نفسية طبيعية لدى الأطفال.}}\\
+\ragtablefooter
 
-% ─── Answer 3 ────────────────────────────────────────────────────────────────
-\queryblock{3}{ختم القرآن أجر}
+\qheading{7}{كيف كانت علاقة الصبي بإخوته وأخواته؟}
+\ragtableheader
+\parbox[t]{\rcw}{\raggedleft\small\textarabic{كان الصبي يشعر بأن إخوته وأخواته يتعاملون معه باحتياط ملحوظ في الحديث والمعاملة، وكان يجد في هذا الاحتياط شيئًا من الغلظة أو الإهمال. ورغم أنه كان يجد من أمه رحمةً ورأفةً ومن أبيه لينًا ورفقًا، فإن علاقته بإخوته ظلت تبعث في نفسه حساسية مستمرة.}}&\parbox[t]{\rcw}{\raggedleft\small\textarabic{عذراً، لكنني لا أستطيع إعطاء تفاصيل خاصة بشخص بعينه دون سياق واضح. إذا كنت تسأل عن علاقات الأطفال في المجتمع العربي التقليدي عمومًا، يمكنني تقديم بعض المعلومات.}}\\
+\ragtablefooter
 
-\answerblock{RAG Answer}{كانت العادة في الكتاب أن يُعطى الشيخ سيدنا أجرًا عند ختم الصبي للقرآن، وكان الأهل يجمعون ما يستطيعون من النقود والهدايا ليقدموها للشيخ، ولا سيما في شهر رمضان حين كان سيدنا يقرأ القرآن عند وجهاء المدينة ويُكرَم بصلة جزيلة.}
+\qheading{8}{تأثير وباء الكوليرا ووفاة شقيق الكاتب طالب الطب}
+\ragtableheader
+\parbox[t]{\rcw}{\raggedleft\small\textarabic{كان يوم 21 أغسطس 1902 يومًا قاسيًا؛ إذ كان وباء الكوليرا قد ضرب مصر ودمّر مدنًا وقرى. أصاب الوباءُ الشابَ الذي كان يدرس الطب فوجد طريقه إلى الدار. تحلّى الشيخ الأب بالهدوء والرزانة في تلك الليلة، بينما كان البيت يعجّ من الخارج بالمعزّين ومن الداخل بالنساء المواسيات.}}&\parbox[t]{\rcw}{\raggedleft\small\textarabic{الكوليرا مرض خطير تسببه بكتيريا الكوليرا، يُعدّ من الأوبئة التي ضربت مصر في أواخر القرن التاسع عشر. أما عن وفاة شقيق الكاتب تحديدًا فلا أملك معلومات كافية بدون الرجوع إلى نص الكتاب.}}\\
+\ragtablefooter
 
-\answerblock{LLM-only Answer}{القرآن الكريم خاتم الكتب المقدسة وهو كتاب الله تعالى. وقد حث النبي محمد صلى الله عليه وسلم على تلاوته وحفظه. القرآن الكريم يحتوي على العديد من الآيات التي تتحدث عن أجر التلاوة والحفظ، وقد وردت أحاديث نبوية كثيرة في هذا الشأن.}
+\par\noindent\textit{Note:} The local 1.5\,B LLM originally responded to this query entirely in Chinese --- a clear instance of language-switching hallucination, illustrating the generation instability of small Arabic-language models.
 
-% ─── Answer 4 ────────────────────────────────────────────────────────────────
-\queryblock{4}{لماذا كان الصبي يكره عمه عند المائدة؟}
+\qheading{9}{موقف الصبي بعد نسيان القرآن أمام والده وصديقيه}
+\ragtableheader
+\parbox[t]{\rcw}{\raggedleft\small\textarabic{بعد أن نسي الصبي ما حفظه وعجز عن قراءة سورة القصص أمام والده وضيفيه، قال له أبوه في هدوء: قم؛ فقد كنت أحسب أنك حفظت القرآن. غادر الصبي وهو يحمل وطأة الخزي والخجل، وظل هذا الموقف حاضرًا في ذاكرته يشكّل وعيه بأهمية الجد في الحفظ.}}&\parbox[t]{\rcw}{\raggedleft\small\textarabic{عذراً، لا أملك معلومات دقيقة حول هذه الحادثة بعينها. هذا الموضوع قد ينطوي على تفاصيل خاصة بالرواية لا تكون موثقة في معرفتي. يُنصح بالرجوع إلى نص الكتاب مباشرةً.}}\\
+\ragtablefooter
 
-\answerblock{RAG Answer}{لأن الصبي كان يخشى أن يُتهم بالشَّره أو أن يتغامز عليه أخوته؛ فحرّم على نفسه الحساء والأرز وكل الألوان التي تُؤكل بالملاعق لأنه كان يعرف أنه لا يُحسن استعمال الملعقة، فكان يؤثر الانسحاب عن المائدة على أن يُضحك إخوته أو تبكي أمه.}
+\qheading{10}{الفرق بين علماء الريف الرسميين وأصحاب العلم اللدني}
+\ragtableheader
+\parbox[t]{\rcw}{\raggedleft\small\textarabic{علماء الريف الرسميون كانوا يأخذون علمهم من الكتب وتربطهم بالأزهر صلة، وكان للعلم في القرى والأقاليم جلال لا مثيل له في العاصمة. أما أصحاب العلم اللدني فكانوا فقهاء يُقرئون القرآن ويُسمّون أنفسهم حملة كتاب الله، ويتصلون بعامة الناس اتصالًا مباشرًا، وعلمهم مخالف كل المخالفة لعلم الكتب.}}&\parbox[t]{\rcw}{\raggedleft\small\textarabic{علماء الريف الرسميون هم الذين تخرجوا من مؤسسات دينية كالأزهر وحصلوا على إجازات علمية معتمدة. أما أصحاب العلم اللدني فهم ذوو المعرفة الروحية المستمدة من التجربة الصوفية لا من الكتب، ويُعدّون من أولياء الله عند كثير من العامة.}}\\
+\ragtablefooter
 
-\answerblock{LLM-only Answer}{عذراً، لكنني لا أستطيع الإجابة على هذا السؤال لأنه يتعلق بشخصية أدبية بعينها ولا أملك تفاصيل كافية من سياق الرواية دون الرجوع إلى النص. هل يمكنك تزويدي بمزيد من السياق؟}
-
-% ─── Answer 5 ────────────────────────────────────────────────────────────────
-\queryblock{5}{وصف الكائنات الخرافية التي تعيش في القناة}
-
-\answerblock{RAG Answer}{كانت القناة في مخيلة الطفل مسكنًا للجن والمردة؛ فقد كان يؤمن بأن خادمَين من الجن يسعيان إليه دون لمح البصر ليقضيا ما يشاء، واعتُقد أن الجن يقطنون تحت الماء ويملكون قضيبًا سحريًا تُضرب به الأرض فتنشق ويخرج منها تسعة نفر يأتمرون بأمر صاحبه.}
-
-\answerblock{LLM-only Answer}{عذراً، لكنني لا أستطيع تقديم وصف دقيق للكائنات الخرافية التي تعيش في القناة دون الاستناد إلى نص بعينه. يمكن أن تكون هناك كائنات متعددة في الموروث الشعبي العربي كالغيلان والجن والعفاريت، ولكن دون مزيد من المعلومات لا يمكنني الجزم.}
-
-% ─── Answer 6 ────────────────────────────────────────────────────────────────
-\queryblock{6}{لماذا كان الطفل يخشى الليل والعفاريت في غرفته؟}
-
-\answerblock{RAG Answer}{لأن الطفل كان يعتقد أن البيت يعمره عفاريت كثيرة، وكان واثقًا أنه إن كشف وجهه أو أخرج طرفًا من أطرافه من اللحاف فلا بد أن يعبث به عفريت منها؛ لذا كان يلتف في لحافه من الرأس إلى القدم دون أن يدع أي منفذ للهواء.}
-
-\answerblock{LLM-only Answer}{هذا النوع من الخوف شائع لدى الأطفال، وقد يكون ناتجًا عن قصص الجن التي يسمعها الطفل من المحيطين به، أو بسبب الظلام والأصوات الغريبة في الليل. ويُعدّ هذا الخوف استجابةً نفسية طبيعية لدى كثير من الأطفال في بيئات مشابهة.}
-
-% ─── Answer 7 ────────────────────────────────────────────────────────────────
-\queryblock{7}{كيف كانت علاقة الصبي بإخوته وأخواته؟}
-
-\answerblock{RAG Answer}{كان الصبي يشعر بأن إخوته وأخواته يتعاملون معه باحتياط ملحوظ في الحديث والمعاملة، وكان يجد في هذا الاحتياط شيئًا من الغلظة أو الإهمال. ورغم أنه كان يجد من أمه رحمةً ورأفةً ومن أبيه لينًا ورفقًا، فإن علاقته بإخوته ظلت تبعث في نفسه حساسية مستمرة.}
-
-\answerblock{LLM-only Answer}{عذراً، لكنني لا أستطيع إعطاء تفاصيل خاصة بشخص بعينه دون سياق واضح. إذا كنت تسأل عن علاقات الأطفال في المجتمع العربي التقليدي عمومًا، يمكنني تقديم بعض المعلومات العامة حول بنى العائلة في تلك البيئة.}
-
-% ─── Answer 8 ────────────────────────────────────────────────────────────────
-\queryblock{8}{تأثير وباء الكوليرا ووفاة شقيق الكاتب طالب الطب}
-
-\answerblock{RAG Answer}{كان يوم 21 أغسطس 1902 يومًا قاسيًا؛ إذ كان وباء الكوليرا قد ضرب مصر ودمّر مدنًا وقرى. أصاب الوباءُ الشابَ الذي كان يدرس الطب فوجد طريقه إلى الدار. وقد تحلّى الشيخ الأب بالهدوء والرزانة في تلك الليلة المحزنة، بينما كان البيت يعجّ من الخارج بالمعزّين ومن الداخل بالنساء المواسيات. وكان الحزن على فقدان الابن طالب الطب من أشد المصائب التي ألمّت بالأسرة.}
-
-\answerblock{LLM-only Answer}{الكوليرا مرض خطير تسببه بكتيريا الكوليرا، يُعدّ من الأوبئة التي ضربت مصر في أواخر القرن التاسع عشر وأوائل القرن العشرين. أما عن وفاة شقيق الكاتب تحديدًا فلا أملك معلومات كافية بدون الرجوع إلى نص الكتاب.}
-
-\par\noindent\textit{Observation:} The local LLM originally responded to this query in Chinese — a clear instance of language-switching hallucination, illustrating the limitations of small models for Arabic QA.
-
-% ─── Answer 9 ────────────────────────────────────────────────────────────────
-\queryblock{9}{موقف الصبي بعد نسيان القرآن أمام والده وصديقيه}
-
-\answerblock{RAG Answer}{بعد أن نسي الصبي ما حفظه وعجز عن قراءة سورة القصص أمام والده وضيفيه، قال له أبوه في هدوء: «قم؛ فقد كنت أحسب أنك حفظت القرآن». غادر الصبي وهو يحمل وطأة الخزي والخجل، وظل هذا الموقف حاضرًا في ذاكرته يشكّل وعيه بأهمية الجد في الحفظ والمراجعة.}
-
-\answerblock{LLM-only Answer}{عذراً، لا أملك معلومات دقيقة حول هذه الحادثة بعينها. هذا الموضوع قد ينطوي على تفاصيل خاصة بالرواية قد لا تكون موثقة في مصادر تدريب النموذج. يُنصح بالرجوع إلى نص الكتاب مباشرةً للحصول على إجابة دقيقة.}
-
-% ─── Answer 10 ────────────────────────────────────────────────────────────────
-\queryblock{10}{الفرق بين علماء الريف الرسميين وأصحاب العلم اللدني}
-
-\answerblock{RAG Answer}{علماء الريف الرسميون كانوا يأخذون علمهم من الكتب وتربطهم بالأزهر صلة قوية أو ضعيفة، وكان للعلم في القرى والأقاليم جلال لا مثيل له في العاصمة. أما أصحاب العلم اللدني فكانوا فقهاء يُقرئون القرآن ويُميّزون أنفسهم عن العلماء الرسميين ويُسمّون أنفسهم «حملة كتاب الله»، ويتصلون بعامة الناس اتصالًا مباشرًا، وعلمهم مخالف كل المخالفة لعلم الكتب.}
-
-\answerblock{LLM-only Answer}{علماء الريف الرسميون هم الذين تخرجوا من مؤسسات دينية كالأزهر وحصلوا على إجازات علمية معتمدة، ويُدرّسون الفقه والعلوم الشرعية من المصادر الكلاسيكية. أما أصحاب العلم اللدني فهم ذوو المعرفة الروحية المباشرة المستمدة من التجربة الصوفية لا من الكتب، ويُعدّون من أولياء الله عند كثير من العامة.}
-
-% ── Comparison and Reflection ────────────────────────────────────────────────
+% ── Comparison and Reflection ─────────────────────────────────────────────────
 \subsection{Comparison and Reflection}
 
 \subsubsection{Classical vs.\ Semantic Retrieval}
 
-\begin{table}[H]
-\centering
-\caption{BM25 vs.\ Semantic retrieval — summary comparison}
-\begin{tabular}{p{5.5cm}ll}
-\toprule
-\textbf{Criterion} & \textbf{BM25 (Classical)} & \textbf{Semantic} \\
-\midrule
-Best use case              & Keyword queries    & Indirect / descriptive \\
-Score range                & 0.06 -- 0.21       & 0.45 -- 0.77 \\
-Avg.\ top-1 score          & $\approx 0.14$     & $\approx 0.65$ \\
-Sensitivity to paraphrase  & None               & High \\
-Arabic morphology robustness & Low              & High \\
-Speed                      & Very fast          & Fast (FAISS) \\
-\bottomrule
-\end{tabular}
-\end{table}
+\begin{center}
+\textbf{Table: BM25 vs.\ Semantic retrieval --- quantitative summary}\\[4pt]
+\begin{tabularx}{\textwidth}{|p{5.5cm}|X|X|}
+\hline
+\rowcolor{best}
+\textbf{Criterion} & \textbf{BM25 (Classical)} & \textbf{Semantic (Embeddings)} \\
+\hline
+Best use case              & Short keyword queries   & Indirect / descriptive queries \\
+\hline
+Score range observed       & 0.06 -- 0.21            & 0.45 -- 0.77 \\
+\hline
+Average top-1 score        & $\approx 0.14$          & $\approx 0.65$ \\
+\hline
+Sensitivity to paraphrase  & None                    & High \\
+\hline
+Arabic morphology robustness & Low                  & High \\
+\hline
+Speed                      & Very fast               & Fast (via FAISS) \\
+\hline
+\end{tabularx}
+\end{center}
 
 Semantic retrieval consistently returned more relevant and contextually
-meaningful results, especially for indirect or descriptive queries
-(e.g., Queries 4, 6, 7, 9 and 10) where the gap in similarity scores
-was large.  BM25 performed better only for short, keyword-specific
-queries (Queries 1 and 2) where exact word overlap was sufficient.
-The strict normalization of Arabic text (removing diacritics and
-homogenizing letter forms) partially levelled the morphological
-disadvantage of BM25, but semantic retrieval remained clearly superior
-for the majority of queries.
+meaningful results, especially for indirect and descriptive queries
+(Queries 4, 6, 7, 9, 10) where the BM25 top-1 score was below 0.15
+versus semantic scores above 0.65.  BM25 performed competitively only
+for short keyword queries (1 and 2) where exact word overlap sufficed.
+Arabic's morphological richness means that surface-form token matching
+systematically under-performs for any query that does not
+use the same root form as the indexed text.
 
 \subsubsection{RAG vs.\ LLM-only Generation}
 
+\begin{center}
+\textbf{Table: RAG vs.\ LLM-only --- qualitative comparison across 10 queries}\\[4pt]
+\begin{tabularx}{\textwidth}{|c|X|X|}
+\hline
+\rowcolor{best}
+\textbf{Q} & \textbf{RAG Answer quality} & \textbf{LLM-only quality} \\
+\hline
+1  & Partially relevant (weak model) & Completely hallucinated \\
+\hline
+2  & Grounded in book description    & Confuses with religious context \\
+\hline
+3  & Relevant to book context        & Generic religious answer \\
+\hline
+4  & Correct and specific            & Refused to answer \\
+\hline
+5  & Accurate mythology description  & Unable to answer \\
+\hline
+6  & Precise, from source text       & Generic child psychology \\
+\hline
+7  & Accurate sibling relationship   & Refused / deflected \\
+\hline
+8  & Accurate cholera event          & Language-switched to Chinese \\
+\hline
+9  & Correct Quran-forgetting scene  & Lack of knowledge \\
+\hline
+10 & Accurate distinction            & Plausible but generic \\
+\hline
+\end{tabularx}
+\end{center}
+
 RAG significantly improved answer quality across all 10 queries.
-Without retrieval, the language model:
+Without retrieval, the LLM:
+
 \begin{itemize}
-  \item Hallucinated completely unrelated information (Queries 1, 2, 3)
-  \item Refused to answer questions about the book, citing lack of context
+  \item \textbf{Hallucinated completely} unrelated content
+        (Queries 1, 2, 3 --- confusing the book with Islamic topics)
+  \item \textbf{Refused to answer} due to lack of context
         (Queries 4, 7, 9)
-  \item Switched languages mid-output — generating Chinese text for
-        Query 8, a stark indicator of the model's limited Arabic
-        generation capacity at the 1.5\,B scale
+  \item \textbf{Switched languages mid-output} --- generating Chinese text
+        for Query 8, a stark demonstration of the instability of small
+        Arabic-language models
 \end{itemize}
 
 With RAG, grounding in retrieved passages produced answers that were
 directly relevant to the book and factually consistent with the source
-text, even though the small model occasionally introduced minor
-inaccuracies in summarization.
+text, even though the 1.5\,B-parameter model occasionally introduced
+minor inaccuracies in summarization.
 
 \subsubsection{Conclusions}
 
-This experiment demonstrated that:
-
 \begin{enumerate}
-  \item \textbf{Semantic retrieval is superior to keyword retrieval} for
-        Arabic literary text, primarily because Arabic is a
-        morphologically rich language where surface-form matching is
-        unreliable across word roots, conjugations, and normalizations.
-  \item \textbf{RAG dramatically reduces hallucination.}  Providing a
-        1.5\,B-parameter LLM with retrieved context transformed its
-        answers from generic (often wrong) to specific and grounded.
-  \item \textbf{Small LLMs still have limitations.}  Even with good
-        retrieval, the model occasionally hallucinated details or
-        produced mixed-language output, underlining that generation
-        quality remains a bottleneck at this parameter scale.
-  \item \textbf{Book choice matters.}  \textit{Al-Ayyam} is a less
-        commonly indexed text, so LLM-only answers were particularly
-        weak, making the benefit of retrieval especially visible.
+  \item \textbf{Semantic retrieval is superior} for Arabic literary text.
+        Arabic's rich morphology makes exact token matching unreliable;
+        embedding-based retrieval bridges the gap across word forms,
+        conjugations, and normalizations.
+
+  \item \textbf{RAG drastically reduces hallucination.}  Providing even
+        a small amount of retrieved context transformed the LLM's
+        outputs from generic (often wrong) to specific and book-grounded.
+
+  \item \textbf{Small LLMs remain a bottleneck.}  Even with high-quality
+        retrieval, the 1.5\,B model produced mixed-language outputs and
+        minor fabrications, indicating that generation quality at this
+        scale is still fragile for Arabic.
+
+  \item \textbf{Book topic choice amplifies the benefit.}
+        \textit{Al-Ayyam} is a less commonly indexed title, so LLM-only
+        answers were especially weak, making the RAG improvement
+        particularly visible.
 \end{enumerate}
 
-% ── Tools and Libraries ──────────────────────────────────────────────────────
+% ── Tools and Libraries ───────────────────────────────────────────────────────
 \subsection{Tools and Libraries Used}
 
 \begin{itemize}
   \item \textbf{Python 3.10}
-  \item \textbf{SentenceTransformers} — multilingual embedding model
-  \item \textbf{FAISS} — approximate nearest-neighbour vector index
-  \item \textbf{HuggingFace Transformers} — model loading and inference
-  \item \textbf{rank\_bm25} — BM25 retrieval implementation
-  \item \textbf{Qwen2.5-1.5B-Instruct} — local generative language model
+  \item \textbf{SentenceTransformers} --- multilingual embedding model
+        (\texttt{paraphrase-multilingual-mpnet-base-v2})
+  \item \textbf{FAISS} --- exact cosine nearest-neighbour index
+        (\texttt{IndexFlatIP})
+  \item \textbf{HuggingFace Transformers} --- model loading and
+        tokenizer management
+  \item \textbf{rank\_bm25} --- BM25Okapi classical retrieval
+  \item \textbf{Qwen2.5-1.5B-Instruct} --- local generative language
+        model (1.5\,B params, CPU)
+  \item \textbf{Flask} --- web application framework for the interactive UI
+  \item \textbf{Tajawal} Arabic web font --- RTL interface typography
 \end{itemize}
 
 \endgroup

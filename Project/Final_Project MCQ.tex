@@ -1,0 +1,461 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ────────────────────────────────────────────────────────────────
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{hypcap}
+\usepackage{bookmark}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{lmodern}
+\usepackage{cmap}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+\usepackage{float}
+\usepackage{colortbl}
+
+
+% Soft pastel colors for headings
+\definecolor{softblue}{HTML}{6B9AC4}
+\definecolor{softteal}{HTML}{7FB3B3}
+\definecolor{softpurple}{HTML}{B39EB5}
+\definecolor{low}{HTML}{F8E6E6}
+\definecolor{mid}{HTML}{E6F2F2}
+\definecolor{high}{HTML}{D6EAF8}
+\definecolor{best}{HTML}{A9CCE3}
+% Table and long table support for large result tables
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{comment}
+\usepackage{lmodern}
+\usepackage{cmap}
+\usepackage{chngcntr}
+\usepackage{placeins}
+\usepackage{tcolorbox}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+
+
+% ── Hyperref setup ───────────────────────────────────────────────────────────
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=black,
+	citecolor=black
+}
+
+% ── Section formatting (matches PDF style) ───────────────────────────────────
+\titleformat{\section}{\large\bfseries\color{softblue}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% ── Header / Footer ──────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small Neural Networks -- Final Project MCQ}
+\lhead{\small Cairo University}
+\cfoot{\thepage}
+\setlength{\headheight}{14pt}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Graphics path ────────────────────────────────────────────────────────────
+\graphicspath{
+    {Figures/}
+    {../prob_1/Figures/}
+	{../prob_2/Figures/}
+	{../prob_3/Figures/}
+	{../prob_4/Figures/}
+	{../prob_5/Figures/}
+	{../prob_6/Figures/}
+}
+\begin{document}
+
+% ── Title Page ───────────────────────────────────────────────────────────────
+\begin{titlepage}
+\centering
+\vspace*{0.5cm}
+
+\makebox[\textwidth][c]{%
+\raisebox{-0.4cm}{\includegraphics[width=0.25\textwidth]{Figures/image1.png}}\hspace{2.5cm}%
+\includegraphics[width=0.17\textwidth]{Figures/image2.png}%
+}
+
+\vspace{0.5cm}
+{\Large\bfseries Cairo University\\}
+\vspace{0.2cm}
+{\large Faculty of Engineering\\}
+\vspace{0.2cm}
+{\normalsize Electronics and Electrical Communications Engineering\\}
+
+\vspace{1.2cm}
+\rule{0.8\textwidth}{1.5pt}\\[0.4cm]
+{\LARGE\bfseries Final Project MCQ}\\[0.3cm]
+{\large\bfseries ELC 4028 -- Artificial Neural Networks}\\[0.2cm]
+\rule{0.8\textwidth}{1.5pt}
+
+\vspace{1.2cm}
+
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{ID} & \textbf{Section} & \textbf{Name} \\
+\hline
+9220399 & 2 & Shahd Gamal Mahmoud Hussein \\
+\hline
+9220411 & 2 & Salah El-Din Hassan Hassan Mohamed \\
+\hline
+9220984 & 4 & Yousef Khaled Omar Mahmoud \\
+\hline
+\end{tabular}
+
+\vspace{1.2cm}
+
+\textit{Supervised by:}\\[0.3cm]
+\textit{Dr.\ Mohsen Rashwan}\\
+\textit{Dr.\ Mohamed Motaz}
+
+\vfill
+\end{titlepage}
+
+
+
+% =====================================================
+% Project Workflow Diagram
+% =====================================================
+
+\definecolor{softblue}{RGB}{173,216,230}
+\definecolor{softgreen}{RGB}{190,230,200}
+\definecolor{softpurple}{RGB}{220,210,255}
+\definecolor{softorange}{RGB}{255,220,180}
+\definecolor{softred}{RGB}{255,200,200}
+
+\subsection*{Q1. What does RAG stand for?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Retrieval-Augmented Generation
+\item Random Attention Generator
+\item Retrieval Artificial Graph
+\item Recursive Augmented Graph
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+A. Retrieval-Augmented Generation
+
+RAG combines information retrieval systems with language generation models to improve answer quality and reduce hallucinations.
+\end{tcolorbox}
+
+
+\subsection*{Q2. What is the main purpose of RAG systems?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Compress neural networks
+\item Retrieve external knowledge before generation
+\item Replace transformers completely
+\item Reduce dataset size
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+B. Retrieve external knowledge before generation
+
+RAG systems first retrieve relevant documents and then use them to generate context-aware responses.
+\end{tcolorbox}
+
+
+\subsection*{Q3. Which problem does RAG primarily help reduce?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Overfitting
+\item Vanishing gradients
+\item Hallucination
+\item Image noise
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+C. Hallucination
+
+RAG reduces hallucinations by grounding responses using retrieved external information.
+\end{tcolorbox}
+
+
+\subsection*{Q4. What are embeddings in RAG systems?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Image compression algorithms
+\item Numerical vector representations of text
+\item Audio processing layers
+\item Database encryption methods
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+B. Numerical vector representations of text
+
+Embeddings convert text into vectors that capture semantic meaning and relationships.
+\end{tcolorbox}
+
+
+\subsection*{Q5. Which database type is commonly used in RAG systems?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Relational database
+\item Vector database
+\item Blockchain database
+\item Graphical database
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+B. Vector database
+
+Vector databases store embeddings and perform semantic similarity search efficiently.
+\end{tcolorbox}
+
+
+\subsection*{Q6. Which similarity metric is commonly used for retrieval?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Euclidean sorting
+\item Binary matching
+\item Cosine similarity
+\item Histogram equalization
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+C. Cosine similarity
+
+Cosine similarity measures the angular similarity between embedding vectors.
+\end{tcolorbox}
+
+
+\subsection*{Q7. What happens during the retrieval phase in RAG?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Model weights are retrained
+\item Relevant document chunks are searched
+\item Images are generated
+\item Audio signals are filtered
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+B. Relevant document chunks are searched
+
+The retrieval stage identifies semantically similar documents related to the user query.
+\end{tcolorbox}
+
+
+\subsection*{Q8. What is chunking in RAG systems?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Compressing neural weights
+\item Splitting documents into smaller sections
+\item Removing embeddings
+\item Encrypting text files
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+B. Splitting documents into smaller sections
+
+Large documents are divided into smaller chunks to improve retrieval accuracy.
+\end{tcolorbox}
+
+
+\subsection*{Q9. Which of the following is an advantage of RAG compared to fine-tuning?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Requires retraining for every update
+\item Easier knowledge updates
+\item Uses no embeddings
+\item Removes transformers completely
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+B. Easier knowledge updates
+
+RAG allows updating external documents without retraining the entire model.
+\end{tcolorbox}
+
+
+\subsection*{Q10. Which ANN-related concept is strongly connected to RAG?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Backpropagation only
+\item Embeddings and transformers
+\item Edge detection only
+\item Fourier transforms
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+B. Embeddings and transformers
+
+RAG relies heavily on transformer-based models and semantic vector embeddings.
+\end{tcolorbox}
+
+
+\subsection*{Q11. What is semantic search?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Searching by exact keyword only
+\item Searching based on meaning and context
+\item Searching image colors
+\item Searching file size
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+B. Searching based on meaning and context
+
+Semantic search retrieves information using contextual meaning rather than exact keyword matching.
+\end{tcolorbox}
+
+
+\subsection*{Q12. Why are vector databases important in RAG systems?}
+
+\begin{enumerate}[label=\Alph*.]
+\item They store operating systems
+\item They perform fast similarity search
+\item They replace embeddings
+\item They generate neural networks
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+B. They perform fast similarity search
+
+Vector databases efficiently retrieve semantically similar embeddings during the retrieval phase.
+\end{tcolorbox}
+
+\subsection*{Q13. What is the role of the embedding model in RAG systems?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Generate images from text
+\item Convert text into vector representations
+\item Compress the database
+\item Remove irrelevant documents
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+B. Convert text into vector representations
+
+Embedding models transform text into numerical vectors that capture semantic meaning for similarity search.
+\end{tcolorbox}
+
+
+\subsection*{Q14. Which component generates the final response in a RAG pipeline?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Vector database
+\item Embedding layer
+\item Large Language Model (LLM)
+\item Data loader
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+C. Large Language Model (LLM)
+
+After retrieval, the LLM uses the retrieved context to generate the final answer.
+\end{tcolorbox}
+
+
+\subsection*{Q15. What is one limitation of RAG systems?}
+
+\begin{enumerate}[label=\Alph*.]
+\item They cannot use transformers
+\item Poor retrieval can produce incorrect answers
+\item They completely eliminate latency
+\item They require no storage
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+B. Poor retrieval can produce incorrect answers
+
+If irrelevant or incorrect chunks are retrieved, the generated response quality decreases significantly.
+\end{tcolorbox}
+
+
+\subsection*{Q16. Which of the following tools is commonly used for vector similarity search?}
+
+\begin{enumerate}[label=\Alph*.]
+\item FAISS
+\item Photoshop
+\item AutoCAD
+\item MySQL Workbench
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+A. FAISS
+
+FAISS is a popular library developed for efficient vector similarity search and retrieval.
+\end{tcolorbox}
+
+
+\subsection*{Q17. Why is chunk size important in RAG systems?}
+
+\begin{enumerate}[label=\Alph*.]
+\item It controls internet speed
+\item It affects retrieval quality and context understanding
+\item It changes GPU temperature
+\item It removes embeddings
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+B. It affects retrieval quality and context understanding
+
+Very small chunks may lose context, while very large chunks may reduce retrieval precision.
+\end{tcolorbox}
+
+
+\subsection*{Q18. Which type of search is performed in vector databases?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Lexical search only
+\item Semantic similarity search
+\item Binary search only
+\item Pixel-based search
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+B. Semantic similarity search
+
+Vector databases retrieve information based on semantic meaning rather than exact word matching.
+\end{tcolorbox}
+
+
+\subsection*{Q19. What is prompt augmentation in RAG systems?}
+
+\begin{enumerate}[label=\Alph*.]
+\item Reducing prompt size
+\item Adding retrieved context to the prompt
+\item Encrypting the prompt
+\item Removing user queries
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+B. Adding retrieved context to the prompt
+
+Retrieved documents are appended to the user query to improve answer accuracy.
+\end{tcolorbox}
+
+
+\subsection*{Q20. Why are RAG systems considered useful for modern AI applications?}
+
+\begin{enumerate}[label=\Alph*.]
+\item They allow AI systems to use updated external knowledge
+\item They completely replace neural networks
+\item They remove the need for databases
+\item They eliminate all AI errors
+\end{enumerate}
+
+\begin{tcolorbox}[colback=mid,colframe=softblue,title=Correct Answer]
+A. They allow AI systems to use updated external knowledge
+
+RAG systems improve reliability by integrating external and dynamically updated information sources.
+\end{tcolorbox}
+
+
+\end{document}

@@ -1,0 +1,371 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ────────────────────────────────────────────────────────────────
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{hypcap}
+\usepackage{bookmark}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{lmodern}
+\usepackage{cmap}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+\usepackage{float}
+\usepackage{colortbl}
+
+
+% Soft pastel colors for headings
+\definecolor{softblue}{HTML}{6B9AC4}
+\definecolor{softteal}{HTML}{7FB3B3}
+\definecolor{softpurple}{HTML}{B39EB5}
+\definecolor{low}{HTML}{F8E6E6}
+\definecolor{mid}{HTML}{E6F2F2}
+\definecolor{high}{HTML}{D6EAF8}
+\definecolor{best}{HTML}{A9CCE3}
+% Table and long table support for large result tables
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{comment}
+\usepackage{lmodern}
+\usepackage{cmap}
+\usepackage{chngcntr}
+\usepackage{placeins}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+
+
+% ── Hyperref setup ───────────────────────────────────────────────────────────
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=black,
+	citecolor=black
+}
+
+% ── Section formatting (matches PDF style) ───────────────────────────────────
+\titleformat{\section}{\large\bfseries\color{softblue}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% ── Header / Footer ──────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small Neural Networks -- Final Project}
+\lhead{\small Cairo University}
+\cfoot{\thepage}
+\setlength{\headheight}{14pt}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Graphics path ────────────────────────────────────────────────────────────
+\graphicspath{
+    {Figures/}
+    {../prob_1/Figures/}
+	{../prob_2/Figures/}
+	{../prob_3/Figures/}
+	{../prob_4/Figures/}
+	{../prob_5/Figures/}
+	{../prob_6/Figures/}
+}
+\begin{document}
+
+% ── Title Page ───────────────────────────────────────────────────────────────
+\begin{titlepage}
+\centering
+\vspace*{0.5cm}
+
+\makebox[\textwidth][c]{%
+\raisebox{-0.4cm}{\includegraphics[width=0.25\textwidth]{Figures/image1.png}}\hspace{2.5cm}%
+\includegraphics[width=0.17\textwidth]{Figures/image2.png}%
+}
+
+\vspace{0.5cm}
+{\Large\bfseries Cairo University\\}
+\vspace{0.2cm}
+{\large Faculty of Engineering\\}
+\vspace{0.2cm}
+{\normalsize Electronics and Electrical Communications Engineering\\}
+
+\vspace{1.2cm}
+\rule{0.8\textwidth}{1.5pt}\\[0.4cm]
+{\LARGE\bfseries Final Project}\\[0.3cm]
+{\large\bfseries ELC 4028 -- Artificial Neural Networks}\\[0.2cm]
+\rule{0.8\textwidth}{1.5pt}
+
+\vspace{1.2cm}
+
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{ID} & \textbf{Section} & \textbf{Name} \\
+\hline
+9220399 & 2 & Shahd Gamal Mahmoud Hussein \\
+\hline
+9220411 & 2 & Salah El-Din Hassan Hassan Mohamed \\
+\hline
+9220984 & 4 & Yousef Khaled Omar Mahmoud \\
+\hline
+\end{tabular}
+
+\vspace{1.2cm}
+
+\textit{Supervised by:}\\[0.3cm]
+\textit{Dr.\ Mohsen Rashwan}\\
+\textit{Dr.\ Mohamed Motaz}
+
+\vfill
+\end{titlepage}
+
+% ── Table of Contents ────────────────────────────────────────────────────────
+\setcounter{tocdepth}{3}
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+
+% =====================================================
+% Project Workflow Diagram
+% =====================================================
+
+\definecolor{softblue}{RGB}{173,216,230}
+\definecolor{softgreen}{RGB}{190,230,200}
+\definecolor{softpurple}{RGB}{220,210,255}
+\definecolor{softorange}{RGB}{255,220,180}
+\definecolor{softred}{RGB}{255,200,200}
+
+\begin{figure}[H]
+\centering
+
+\begin{tikzpicture}[
+node distance=2.1cm,
+every node/.style={
+align=center,
+minimum width=4.6cm,
+minimum height=1cm,
+font=\small
+},
+arrow/.style={->, thick}
+]
+
+% =====================================================
+% Styles
+% =====================================================
+
+\tikzstyle{input} =
+[rectangle, rounded corners,
+fill=softblue!50,
+draw=blue!70,
+thick]
+
+\tikzstyle{process} =
+[rectangle, rounded corners,
+fill=softgreen!50,
+draw=green!60!black,
+thick]
+
+\tikzstyle{model} =
+[rectangle, rounded corners,
+fill=softpurple!60,
+draw=purple!70,
+thick]
+
+\tikzstyle{filter} =
+[rectangle, rounded corners,
+fill=softorange!70,
+draw=orange!80!black,
+thick]
+
+\tikzstyle{output} =
+[rectangle, rounded corners,
+fill=softred!50,
+draw=red!70!black,
+thick]
+
+% =====================================================
+% Nodes
+% =====================================================
+
+\node (topics) [input]
+{Research ANN and\\LLM Topics};
+
+\node (select) [process, below of=topics]
+{Select RAG Concept\\for the Project};
+
+\node (study) [process, below of=select]
+{Study Retrieval-Augmented\\Generation (RAG)};
+
+\node (prompt) [model, below of=study]
+{Use ChatGPT Pro\\to Generate and\\Tune Prompts};
+
+\node (gamma) [model, below of=prompt]
+{Generate Presentation\\Slides Using Gamma};
+
+\node (visuals) [process, below of=gamma]
+{Improve Visual Style\\and Block Diagrams};
+
+\node (simulation) [model, below of=visuals]
+{Create RAG Simulation\\and Demonstration};
+
+\node (evaluation) [filter, below of=simulation]
+{Evaluate Results\\and Limitations};
+
+\node (report) [output, below of=evaluation]
+{Write Final Report\\and Conclusions};
+
+% =====================================================
+% Arrows
+% =====================================================
+
+\draw [arrow] (topics) -- (select);
+
+\draw [arrow] (select) -- (study);
+
+\draw [arrow] (study) -- (prompt);
+
+\draw [arrow] (prompt) -- (gamma);
+
+\draw [arrow] (gamma) -- (visuals);
+
+\draw [arrow] (visuals) -- (simulation);
+
+\draw [arrow] (simulation) -- (evaluation);
+
+\draw [arrow] (evaluation) -- (report);
+
+\end{tikzpicture}
+
+\caption{Overall workflow of the AI-assisted RAG project development process.}
+
+\label{fig:project_pipeline}
+
+\end{figure}
+
+
+\section{Project Objective}
+
+The objective of this project is to explain the concept of Retrieval-Augmented Generation (RAG) using modern AI-assisted educational methods.
+
+The project aims to transform a complex ANN and LLM concept into a visually clear and interactive educational experience through the use of presentation design, simulations, workflow diagrams, and AI-generated visualizations.
+
+Another important objective is demonstrating the effective use of AI tools such as ChatGPT Pro and Gamma to assist in technical explanation, presentation generation, and educational content creation while maintaining full understanding of the produced material.
+
+\section{Presentation and Slides Generation}
+
+One of the main objectives of the project was to create a visually clear and engaging presentation that explains the concept of Retrieval-Augmented Generation (RAG) in an understandable and modern way.
+
+The team first researched several concepts related to Artificial Neural Networks (ANNs) and Large Language Models (LLMs). After evaluating multiple ideas, the RAG concept was selected because it combines neural-network concepts such as embeddings, transformers, semantic search, and vector representations with practical real-world AI applications.
+
+To generate the presentation slides, ChatGPT Pro was used extensively to assist in:
+\begin{itemize}
+    \item Structuring the presentation flow
+    \item Explaining technical concepts clearly
+    \item Improving slide organization
+    \item Generating detailed prompts for Gamma
+    \item Refining the visual and cinematic design style
+\end{itemize}
+
+The generated prompts were then provided to Gamma to create a modern AI-themed presentation. Several iterations were performed to improve the final visual quality of the slides.
+
+The presentation design focused on:
+\begin{itemize}
+    \item Minimal text and visual storytelling
+    \item Dark futuristic user interfaces
+    \item Blue glowing AI aesthetics
+    \item Cinematic transitions and layouts
+    \item Large system block diagrams
+    \item Retrieval and embedding visualizations
+\end{itemize}
+
+Special attention was given to making the slides resemble modern AI conference presentations and technical keynote demonstrations rather than traditional classroom slides.
+
+The final presentation successfully illustrated the RAG workflow, retrieval pipeline, vector databases, embeddings, semantic search, and the generation process in a visually engaging and technically accurate manner.
+
+\section{Challenges, Failure Cases, and Limitations}
+
+During the development process, several challenges and limitations were encountered while using AI tools for content generation and explanation.
+
+One of the experimented tools was NoteLLM. Although the tool was capable of generating detailed explanations, it sometimes focused excessively on secondary topics instead of concentrating on the core RAG concept.
+
+For example, when comparing RAG with fine-tuning approaches, the generated explanations occasionally expanded deeply into the details of fine-tuning itself before returning to explain why RAG may be preferable in certain applications. This caused unnecessary complexity and occasionally distracted from the main educational objective of the project.
+
+Additionally, some AI-generated diagrams lacked technical accuracy and required manual refinement to correctly represent the RAG pipeline and retrieval workflow.
+
+Another challenge was balancing visual quality with technical clarity. Highly cinematic slide designs occasionally reduced readability, requiring multiple prompt iterations and visual adjustments.
+
+Despite these limitations, AI-assisted tools significantly accelerated the presentation design process and helped generate modern educational content efficiently.
+
+\section{Interactive RAG Demonstration}
+
+To further simplify the understanding of Retrieval-Augmented Generation (RAG), an interactive demonstration was developed using Python and Streamlit. The goal of the demo was to visually explain the internal workflow of a RAG system rather than only displaying the final generated response.
+
+The development process started locally using a Python virtual environment. Several libraries were used to implement the interactive simulation, including:
+\begin{itemize}
+    \item Streamlit for the graphical web interface
+    \item Scikit-learn for TF-IDF vectorization and similarity search
+    \item Pandas for displaying retrieval results
+    \item NumPy for numerical operations
+\end{itemize}
+
+The interactive demo allows users to:
+\begin{itemize}
+    \item Enter custom queries
+    \item Generate vector embeddings
+    \item Perform semantic similarity retrieval
+    \item Display retrieved document chunks
+    \item Visualize the augmented generation process
+\end{itemize}
+
+The system demonstrates the main RAG pipeline including:
+\begin{enumerate}
+    \item User query processing
+    \item Embedding generation
+    \item Similarity search
+    \item Retrieval of relevant chunks
+    \item Context-augmented response generation
+\end{enumerate}
+
+After testing the application locally, the project was deployed publicly using Streamlit Community Cloud to make the demonstration accessible online. This deployment transformed the project from a local prototype into a fully interactive educational web application that can be accessed by students and instructors directly through a browser.
+
+The final deployed application is available at:
+
+\begin{center}
+\url{https://neuralnetwokprojects-fspmceeeqzbjce4bxfnvj2.streamlit.app/}
+\end{center}
+
+The complete project source code and implementation files are also available on GitHub:
+
+\begin{center}
+\url{https://github.com/youefkh05/Neural_Netwok_projects}
+\end{center}
+
+
+\section{References}
+
+\begin{enumerate}
+
+\item Streamlit RAG Demonstration Application:\\
+\url{https://neuralnetwokprojects-fspmceeeqzbjce4bxfnvj2.streamlit.app/}
+
+\item Project GitHub Repository:\\
+\url{https://github.com/youefkh05/Neural_Netwok_projects}
+
+\item Gamma Presentation Platform:\\
+\url{https://gamma.app}
+
+\item OpenAI ChatGPT:\\
+\url{https://chat.openai.com}
+
+\end{enumerate}
+
+
+\end{document}

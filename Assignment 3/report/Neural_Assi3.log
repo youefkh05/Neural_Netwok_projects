@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2026.4.9)  14 MAY 2026 14:52
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2026.4.9)  14 MAY 2026 15:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1518,9 +1518,6 @@ LaTeX Info: Redefining \ttfamily on input line 56.
 LaTeX Info: Redefining \rmfamily on input line 58.
 LaTeX Info: Redefining \sffamily on input line 58.
 LaTeX Info: Redefining \ttfamily on input line 58.
-LaTeX Info: Redefining \rmfamily on input line 59.
-LaTeX Info: Redefining \sffamily on input line 59.
-LaTeX Info: Redefining \ttfamily on input line 59.
 )
 \tf@lof=\write6
 \openout6 = `Neural_Assi3.lof'.
@@ -1593,15 +1590,9 @@ File: ../prob_2/Figures//GAN_results_plot.png Graphic file (type bmp)
 <../prob_2/Figures//GAN_results_plot.png>
  [21] [22]) [23] (../prob_3/prob3.tex) [24]
 (../prob_4/prob4.tex
+\tcw=\skip78
+\rcw=\skip79
 LaTeX Font Info:    Font shape `TU/NotoSansArabic(0)/m/it' will be
-(Font)              scaled to size 9.64929pt on input line 47.
-LaTeX Info: Redefining \rmfamily on input line 47.
-LaTeX Info: Redefining \sffamily on input line 47.
-LaTeX Info: Redefining \ttfamily on input line 47.
-LaTeX Info: Redefining \rmfamily on input line 48.
-LaTeX Info: Redefining \sffamily on input line 48.
-LaTeX Info: Redefining \ttfamily on input line 48.
-LaTeX Font Info:    Font shape `TU/NotoSansArabic(0)/m/n' will be
 (Font)              scaled to size 9.64929pt on input line 56.
 LaTeX Info: Redefining \rmfamily on input line 56.
 LaTeX Info: Redefining \sffamily on input line 56.
@@ -1609,466 +1600,593 @@ LaTeX Info: Redefining \ttfamily on input line 56.
 LaTeX Info: Redefining \rmfamily on input line 57.
 LaTeX Info: Redefining \sffamily on input line 57.
 LaTeX Info: Redefining \ttfamily on input line 57.
-LaTeX Info: Redefining \rmfamily on input line 73.
-LaTeX Info: Redefining \sffamily on input line 73.
-LaTeX Info: Redefining \ttfamily on input line 73.
-LaTeX Info: Redefining \rmfamily on input line 73.
-LaTeX Info: Redefining \sffamily on input line 73.
-LaTeX Info: Redefining \ttfamily on input line 73.
-LaTeX Info: Redefining \rmfamily on input line 73.
-LaTeX Info: Redefining \sffamily on input line 73.
-LaTeX Info: Redefining \ttfamily on input line 73.
-LaTeX Info: Redefining \rmfamily on input line 74.
-LaTeX Info: Redefining \sffamily on input line 74.
-LaTeX Info: Redefining \ttfamily on input line 74.
-LaTeX Info: Redefining \rmfamily on input line 75.
-LaTeX Info: Redefining \sffamily on input line 75.
-LaTeX Info: Redefining \ttfamily on input line 75.
-LaTeX Info: Redefining \rmfamily on input line 75.
-LaTeX Info: Redefining \sffamily on input line 75.
-LaTeX Info: Redefining \ttfamily on input line 75.
-LaTeX Info: Redefining \rmfamily on input line 76.
-LaTeX Info: Redefining \sffamily on input line 76.
-LaTeX Info: Redefining \ttfamily on input line 76.
-LaTeX Info: Redefining \rmfamily on input line 76.
-LaTeX Info: Redefining \sffamily on input line 76.
-LaTeX Info: Redefining \ttfamily on input line 76.
+LaTeX Font Info:    Font shape `TU/NotoSansArabic(0)/m/n' will be
+(Font)              scaled to size 9.64929pt on input line 65.
+LaTeX Info: Redefining \rmfamily on input line 65.
+LaTeX Info: Redefining \sffamily on input line 65.
+LaTeX Info: Redefining \ttfamily on input line 65.
+LaTeX Info: Redefining \rmfamily on input line 66.
+LaTeX Info: Redefining \sffamily on input line 66.
+LaTeX Info: Redefining \ttfamily on input line 66.
+LaTeX Info: Redefining \rmfamily on input line 81.
+LaTeX Info: Redefining \sffamily on input line 81.
+LaTeX Info: Redefining \ttfamily on input line 81.
+LaTeX Info: Redefining \rmfamily on input line 81.
+LaTeX Info: Redefining \sffamily on input line 81.
+LaTeX Info: Redefining \ttfamily on input line 81.
+LaTeX Info: Redefining \rmfamily on input line 81.
+LaTeX Info: Redefining \sffamily on input line 81.
+LaTeX Info: Redefining \ttfamily on input line 81.
+LaTeX Info: Redefining \rmfamily on input line 82.
+LaTeX Info: Redefining \sffamily on input line 82.
+LaTeX Info: Redefining \ttfamily on input line 82.
+LaTeX Info: Redefining \rmfamily on input line 83.
+LaTeX Info: Redefining \sffamily on input line 83.
+LaTeX Info: Redefining \ttfamily on input line 83.
+LaTeX Info: Redefining \rmfamily on input line 83.
+LaTeX Info: Redefining \sffamily on input line 83.
+LaTeX Info: Redefining \ttfamily on input line 83.
+LaTeX Info: Redefining \rmfamily on input line 84.
+LaTeX Info: Redefining \sffamily on input line 84.
+LaTeX Info: Redefining \ttfamily on input line 84.
+LaTeX Info: Redefining \rmfamily on input line 84.
+LaTeX Info: Redefining \sffamily on input line 84.
+LaTeX Info: Redefining \ttfamily on input line 84.
  [25]
-LaTeX Info: Redefining \rmfamily on input line 149.
-LaTeX Info: Redefining \sffamily on input line 149.
-LaTeX Info: Redefining \ttfamily on input line 149.
-LaTeX Info: Redefining \rmfamily on input line 153.
-LaTeX Info: Redefining \sffamily on input line 153.
-LaTeX Info: Redefining \ttfamily on input line 153.
-LaTeX Info: Redefining \rmfamily on input line 154.
-LaTeX Info: Redefining \sffamily on input line 154.
-LaTeX Info: Redefining \ttfamily on input line 154.
- [26]
-LaTeX Info: Redefining \rmfamily on input line 155.
-LaTeX Info: Redefining \sffamily on input line 155.
-LaTeX Info: Redefining \ttfamily on input line 155.
-LaTeX Info: Redefining \rmfamily on input line 156.
-LaTeX Info: Redefining \sffamily on input line 156.
-LaTeX Info: Redefining \ttfamily on input line 156.
-LaTeX Info: Redefining \rmfamily on input line 157.
-LaTeX Info: Redefining \sffamily on input line 157.
-LaTeX Info: Redefining \ttfamily on input line 157.
-LaTeX Info: Redefining \rmfamily on input line 162.
-LaTeX Info: Redefining \sffamily on input line 162.
-LaTeX Info: Redefining \ttfamily on input line 162.
-LaTeX Info: Redefining \rmfamily on input line 163.
-LaTeX Info: Redefining \sffamily on input line 163.
-LaTeX Info: Redefining \ttfamily on input line 163.
-LaTeX Info: Redefining \rmfamily on input line 164.
-LaTeX Info: Redefining \sffamily on input line 164.
-LaTeX Info: Redefining \ttfamily on input line 164.
-LaTeX Info: Redefining \rmfamily on input line 165.
-LaTeX Info: Redefining \sffamily on input line 165.
-LaTeX Info: Redefining \ttfamily on input line 165.
-LaTeX Info: Redefining \rmfamily on input line 166.
-LaTeX Info: Redefining \sffamily on input line 166.
-LaTeX Info: Redefining \ttfamily on input line 166.
-LaTeX Info: Redefining \rmfamily on input line 170.
-LaTeX Info: Redefining \sffamily on input line 170.
-LaTeX Info: Redefining \ttfamily on input line 170.
-LaTeX Info: Redefining \rmfamily on input line 174.
-LaTeX Info: Redefining \sffamily on input line 174.
-LaTeX Info: Redefining \ttfamily on input line 174.
-LaTeX Info: Redefining \rmfamily on input line 175.
-LaTeX Info: Redefining \sffamily on input line 175.
-LaTeX Info: Redefining \ttfamily on input line 175.
- [27]
-LaTeX Info: Redefining \rmfamily on input line 176.
-LaTeX Info: Redefining \sffamily on input line 176.
-LaTeX Info: Redefining \ttfamily on input line 176.
-LaTeX Info: Redefining \rmfamily on input line 177.
-LaTeX Info: Redefining \sffamily on input line 177.
-LaTeX Info: Redefining \ttfamily on input line 177.
-LaTeX Info: Redefining \rmfamily on input line 178.
-LaTeX Info: Redefining \sffamily on input line 178.
-LaTeX Info: Redefining \ttfamily on input line 178.
-LaTeX Info: Redefining \rmfamily on input line 183.
-LaTeX Info: Redefining \sffamily on input line 183.
-LaTeX Info: Redefining \ttfamily on input line 183.
-LaTeX Info: Redefining \rmfamily on input line 184.
-LaTeX Info: Redefining \sffamily on input line 184.
-LaTeX Info: Redefining \ttfamily on input line 184.
-LaTeX Info: Redefining \rmfamily on input line 185.
-LaTeX Info: Redefining \sffamily on input line 185.
-LaTeX Info: Redefining \ttfamily on input line 185.
-LaTeX Info: Redefining \rmfamily on input line 186.
-LaTeX Info: Redefining \sffamily on input line 186.
-LaTeX Info: Redefining \ttfamily on input line 186.
-LaTeX Info: Redefining \rmfamily on input line 187.
-LaTeX Info: Redefining \sffamily on input line 187.
-LaTeX Info: Redefining \ttfamily on input line 187.
-LaTeX Info: Redefining \rmfamily on input line 191.
-LaTeX Info: Redefining \sffamily on input line 191.
-LaTeX Info: Redefining \ttfamily on input line 191.
-LaTeX Info: Redefining \rmfamily on input line 195.
-LaTeX Info: Redefining \sffamily on input line 195.
-LaTeX Info: Redefining \ttfamily on input line 195.
-LaTeX Info: Redefining \rmfamily on input line 196.
-LaTeX Info: Redefining \sffamily on input line 196.
-LaTeX Info: Redefining \ttfamily on input line 196.
- [28]
-LaTeX Info: Redefining \rmfamily on input line 197.
-LaTeX Info: Redefining \sffamily on input line 197.
-LaTeX Info: Redefining \ttfamily on input line 197.
-LaTeX Info: Redefining \rmfamily on input line 198.
-LaTeX Info: Redefining \sffamily on input line 198.
-LaTeX Info: Redefining \ttfamily on input line 198.
-LaTeX Info: Redefining \rmfamily on input line 199.
-LaTeX Info: Redefining \sffamily on input line 199.
-LaTeX Info: Redefining \ttfamily on input line 199.
-LaTeX Info: Redefining \rmfamily on input line 204.
-LaTeX Info: Redefining \sffamily on input line 204.
-LaTeX Info: Redefining \ttfamily on input line 204.
-LaTeX Info: Redefining \rmfamily on input line 205.
-LaTeX Info: Redefining \sffamily on input line 205.
-LaTeX Info: Redefining \ttfamily on input line 205.
-LaTeX Info: Redefining \rmfamily on input line 206.
-LaTeX Info: Redefining \sffamily on input line 206.
-LaTeX Info: Redefining \ttfamily on input line 206.
-LaTeX Info: Redefining \rmfamily on input line 207.
-LaTeX Info: Redefining \sffamily on input line 207.
-LaTeX Info: Redefining \ttfamily on input line 207.
-LaTeX Info: Redefining \rmfamily on input line 208.
-LaTeX Info: Redefining \sffamily on input line 208.
-LaTeX Info: Redefining \ttfamily on input line 208.
-LaTeX Info: Redefining \rmfamily on input line 212.
-LaTeX Info: Redefining \sffamily on input line 212.
-LaTeX Info: Redefining \ttfamily on input line 212.
-LaTeX Info: Redefining \rmfamily on input line 216.
-LaTeX Info: Redefining \sffamily on input line 216.
-LaTeX Info: Redefining \ttfamily on input line 216.
-LaTeX Info: Redefining \rmfamily on input line 217.
-LaTeX Info: Redefining \sffamily on input line 217.
-LaTeX Info: Redefining \ttfamily on input line 217.
- [29]
-LaTeX Info: Redefining \rmfamily on input line 218.
-LaTeX Info: Redefining \sffamily on input line 218.
-LaTeX Info: Redefining \ttfamily on input line 218.
-LaTeX Info: Redefining \rmfamily on input line 219.
-LaTeX Info: Redefining \sffamily on input line 219.
-LaTeX Info: Redefining \ttfamily on input line 219.
-LaTeX Info: Redefining \rmfamily on input line 220.
-LaTeX Info: Redefining \sffamily on input line 220.
-LaTeX Info: Redefining \ttfamily on input line 220.
-LaTeX Info: Redefining \rmfamily on input line 225.
-LaTeX Info: Redefining \sffamily on input line 225.
-LaTeX Info: Redefining \ttfamily on input line 225.
-LaTeX Info: Redefining \rmfamily on input line 226.
-LaTeX Info: Redefining \sffamily on input line 226.
-LaTeX Info: Redefining \ttfamily on input line 226.
-LaTeX Info: Redefining \rmfamily on input line 227.
-LaTeX Info: Redefining \sffamily on input line 227.
-LaTeX Info: Redefining \ttfamily on input line 227.
-LaTeX Info: Redefining \rmfamily on input line 228.
-LaTeX Info: Redefining \sffamily on input line 228.
-LaTeX Info: Redefining \ttfamily on input line 228.
-LaTeX Info: Redefining \rmfamily on input line 229.
-LaTeX Info: Redefining \sffamily on input line 229.
-LaTeX Info: Redefining \ttfamily on input line 229.
+Overfull \hbox (2.23991pt too wide) in paragraph at lines 130--138
+[][]\TU/lmr/m/n/12 Each paragraph is tokenized into Ara-[]
+ []
+
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 154.
+[26]
+LaTeX Info: Redefining \rmfamily on input line 230.
+LaTeX Info: Redefining \sffamily on input line 230.
+LaTeX Info: Redefining \ttfamily on input line 230.
+LaTeX Font Info:    Font shape `TU/NotoSansArabic(0)/m/n' will be
+(Font)              scaled to size 8.80496pt on input line 232.
+LaTeX Info: Redefining \rmfamily on input line 232.
+LaTeX Info: Redefining \sffamily on input line 232.
+LaTeX Info: Redefining \ttfamily on input line 232.
+LaTeX Info: Redefining \rmfamily on input line 232.
+LaTeX Info: Redefining \sffamily on input line 232.
+LaTeX Info: Redefining \ttfamily on input line 232.
 LaTeX Info: Redefining \rmfamily on input line 233.
 LaTeX Info: Redefining \sffamily on input line 233.
 LaTeX Info: Redefining \ttfamily on input line 233.
-LaTeX Info: Redefining \rmfamily on input line 237.
-LaTeX Info: Redefining \sffamily on input line 237.
-LaTeX Info: Redefining \ttfamily on input line 237.
-LaTeX Info: Redefining \rmfamily on input line 238.
-LaTeX Info: Redefining \sffamily on input line 238.
-LaTeX Info: Redefining \ttfamily on input line 238.
- [30]
-LaTeX Info: Redefining \rmfamily on input line 239.
-LaTeX Info: Redefining \sffamily on input line 239.
-LaTeX Info: Redefining \ttfamily on input line 239.
+LaTeX Info: Redefining \rmfamily on input line 233.
+LaTeX Info: Redefining \sffamily on input line 233.
+LaTeX Info: Redefining \ttfamily on input line 233.
+LaTeX Info: Redefining \rmfamily on input line 234.
+LaTeX Info: Redefining \sffamily on input line 234.
+LaTeX Info: Redefining \ttfamily on input line 234.
+LaTeX Info: Redefining \rmfamily on input line 234.
+LaTeX Info: Redefining \sffamily on input line 234.
+LaTeX Info: Redefining \ttfamily on input line 234.
+LaTeX Info: Redefining \rmfamily on input line 235.
+LaTeX Info: Redefining \sffamily on input line 235.
+LaTeX Info: Redefining \ttfamily on input line 235.
+LaTeX Info: Redefining \rmfamily on input line 235.
+LaTeX Info: Redefining \sffamily on input line 235.
+LaTeX Info: Redefining \ttfamily on input line 235.
+LaTeX Info: Redefining \rmfamily on input line 236.
+LaTeX Info: Redefining \sffamily on input line 236.
+LaTeX Info: Redefining \ttfamily on input line 236.
+LaTeX Info: Redefining \rmfamily on input line 236.
+LaTeX Info: Redefining \sffamily on input line 236.
+LaTeX Info: Redefining \ttfamily on input line 236.
+
+Overfull \hbox (62.48569pt too wide) in paragraph at lines 230--238
+[][] []
+ []
+
+[27]
 LaTeX Info: Redefining \rmfamily on input line 240.
 LaTeX Info: Redefining \sffamily on input line 240.
 LaTeX Info: Redefining \ttfamily on input line 240.
-LaTeX Info: Redefining \rmfamily on input line 241.
-LaTeX Info: Redefining \sffamily on input line 241.
-LaTeX Info: Redefining \ttfamily on input line 241.
+LaTeX Info: Redefining \rmfamily on input line 242.
+LaTeX Info: Redefining \sffamily on input line 242.
+LaTeX Info: Redefining \ttfamily on input line 242.
+LaTeX Info: Redefining \rmfamily on input line 242.
+LaTeX Info: Redefining \sffamily on input line 242.
+LaTeX Info: Redefining \ttfamily on input line 242.
+LaTeX Info: Redefining \rmfamily on input line 243.
+LaTeX Info: Redefining \sffamily on input line 243.
+LaTeX Info: Redefining \ttfamily on input line 243.
+LaTeX Info: Redefining \rmfamily on input line 243.
+LaTeX Info: Redefining \sffamily on input line 243.
+LaTeX Info: Redefining \ttfamily on input line 243.
+LaTeX Info: Redefining \rmfamily on input line 244.
+LaTeX Info: Redefining \sffamily on input line 244.
+LaTeX Info: Redefining \ttfamily on input line 244.
+LaTeX Info: Redefining \rmfamily on input line 244.
+LaTeX Info: Redefining \sffamily on input line 244.
+LaTeX Info: Redefining \ttfamily on input line 244.
+LaTeX Info: Redefining \rmfamily on input line 245.
+LaTeX Info: Redefining \sffamily on input line 245.
+LaTeX Info: Redefining \ttfamily on input line 245.
+LaTeX Info: Redefining \rmfamily on input line 245.
+LaTeX Info: Redefining \sffamily on input line 245.
+LaTeX Info: Redefining \ttfamily on input line 245.
 LaTeX Info: Redefining \rmfamily on input line 246.
 LaTeX Info: Redefining \sffamily on input line 246.
 LaTeX Info: Redefining \ttfamily on input line 246.
-LaTeX Info: Redefining \rmfamily on input line 247.
-LaTeX Info: Redefining \sffamily on input line 247.
-LaTeX Info: Redefining \ttfamily on input line 247.
-LaTeX Info: Redefining \rmfamily on input line 248.
-LaTeX Info: Redefining \sffamily on input line 248.
-LaTeX Info: Redefining \ttfamily on input line 248.
-LaTeX Info: Redefining \rmfamily on input line 249.
-LaTeX Info: Redefining \sffamily on input line 249.
-LaTeX Info: Redefining \ttfamily on input line 249.
+LaTeX Info: Redefining \rmfamily on input line 246.
+LaTeX Info: Redefining \sffamily on input line 246.
+LaTeX Info: Redefining \ttfamily on input line 246.
+
+Overfull \hbox (62.48569pt too wide) in paragraph at lines 240--248
+[][] []
+ []
+
 LaTeX Info: Redefining \rmfamily on input line 250.
 LaTeX Info: Redefining \sffamily on input line 250.
 LaTeX Info: Redefining \ttfamily on input line 250.
+LaTeX Info: Redefining \rmfamily on input line 252.
+LaTeX Info: Redefining \sffamily on input line 252.
+LaTeX Info: Redefining \ttfamily on input line 252.
+LaTeX Info: Redefining \rmfamily on input line 252.
+LaTeX Info: Redefining \sffamily on input line 252.
+LaTeX Info: Redefining \ttfamily on input line 252.
+LaTeX Info: Redefining \rmfamily on input line 253.
+LaTeX Info: Redefining \sffamily on input line 253.
+LaTeX Info: Redefining \ttfamily on input line 253.
+LaTeX Info: Redefining \rmfamily on input line 253.
+LaTeX Info: Redefining \sffamily on input line 253.
+LaTeX Info: Redefining \ttfamily on input line 253.
 LaTeX Info: Redefining \rmfamily on input line 254.
 LaTeX Info: Redefining \sffamily on input line 254.
 LaTeX Info: Redefining \ttfamily on input line 254.
-LaTeX Info: Redefining \rmfamily on input line 258.
-LaTeX Info: Redefining \sffamily on input line 258.
-LaTeX Info: Redefining \ttfamily on input line 258.
-LaTeX Info: Redefining \rmfamily on input line 259.
-LaTeX Info: Redefining \sffamily on input line 259.
-LaTeX Info: Redefining \ttfamily on input line 259.
- [31]
+LaTeX Info: Redefining \rmfamily on input line 254.
+LaTeX Info: Redefining \sffamily on input line 254.
+LaTeX Info: Redefining \ttfamily on input line 254.
+LaTeX Info: Redefining \rmfamily on input line 255.
+LaTeX Info: Redefining \sffamily on input line 255.
+LaTeX Info: Redefining \ttfamily on input line 255.
+LaTeX Info: Redefining \rmfamily on input line 255.
+LaTeX Info: Redefining \sffamily on input line 255.
+LaTeX Info: Redefining \ttfamily on input line 255.
+LaTeX Info: Redefining \rmfamily on input line 256.
+LaTeX Info: Redefining \sffamily on input line 256.
+LaTeX Info: Redefining \ttfamily on input line 256.
+LaTeX Info: Redefining \rmfamily on input line 256.
+LaTeX Info: Redefining \sffamily on input line 256.
+LaTeX Info: Redefining \ttfamily on input line 256.
+
+Overfull \hbox (62.48569pt too wide) in paragraph at lines 250--258
+[][] []
+ []
+
+[28]
 LaTeX Info: Redefining \rmfamily on input line 260.
 LaTeX Info: Redefining \sffamily on input line 260.
 LaTeX Info: Redefining \ttfamily on input line 260.
-LaTeX Info: Redefining \rmfamily on input line 261.
-LaTeX Info: Redefining \sffamily on input line 261.
-LaTeX Info: Redefining \ttfamily on input line 261.
 LaTeX Info: Redefining \rmfamily on input line 262.
 LaTeX Info: Redefining \sffamily on input line 262.
 LaTeX Info: Redefining \ttfamily on input line 262.
-LaTeX Info: Redefining \rmfamily on input line 267.
-LaTeX Info: Redefining \sffamily on input line 267.
-LaTeX Info: Redefining \ttfamily on input line 267.
-LaTeX Info: Redefining \rmfamily on input line 268.
-LaTeX Info: Redefining \sffamily on input line 268.
-LaTeX Info: Redefining \ttfamily on input line 268.
-LaTeX Info: Redefining \rmfamily on input line 269.
-LaTeX Info: Redefining \sffamily on input line 269.
-LaTeX Info: Redefining \ttfamily on input line 269.
+LaTeX Info: Redefining \rmfamily on input line 262.
+LaTeX Info: Redefining \sffamily on input line 262.
+LaTeX Info: Redefining \ttfamily on input line 262.
+LaTeX Info: Redefining \rmfamily on input line 263.
+LaTeX Info: Redefining \sffamily on input line 263.
+LaTeX Info: Redefining \ttfamily on input line 263.
+LaTeX Info: Redefining \rmfamily on input line 263.
+LaTeX Info: Redefining \sffamily on input line 263.
+LaTeX Info: Redefining \ttfamily on input line 263.
+LaTeX Info: Redefining \rmfamily on input line 264.
+LaTeX Info: Redefining \sffamily on input line 264.
+LaTeX Info: Redefining \ttfamily on input line 264.
+LaTeX Info: Redefining \rmfamily on input line 264.
+LaTeX Info: Redefining \sffamily on input line 264.
+LaTeX Info: Redefining \ttfamily on input line 264.
+LaTeX Info: Redefining \rmfamily on input line 265.
+LaTeX Info: Redefining \sffamily on input line 265.
+LaTeX Info: Redefining \ttfamily on input line 265.
+LaTeX Info: Redefining \rmfamily on input line 265.
+LaTeX Info: Redefining \sffamily on input line 265.
+LaTeX Info: Redefining \ttfamily on input line 265.
+LaTeX Info: Redefining \rmfamily on input line 266.
+LaTeX Info: Redefining \sffamily on input line 266.
+LaTeX Info: Redefining \ttfamily on input line 266.
+LaTeX Info: Redefining \rmfamily on input line 266.
+LaTeX Info: Redefining \sffamily on input line 266.
+LaTeX Info: Redefining \ttfamily on input line 266.
+
+Overfull \hbox (62.48569pt too wide) in paragraph at lines 260--268
+[][] []
+ []
+
 LaTeX Info: Redefining \rmfamily on input line 270.
 LaTeX Info: Redefining \sffamily on input line 270.
 LaTeX Info: Redefining \ttfamily on input line 270.
-LaTeX Info: Redefining \rmfamily on input line 271.
-LaTeX Info: Redefining \sffamily on input line 271.
-LaTeX Info: Redefining \ttfamily on input line 271.
+LaTeX Info: Redefining \rmfamily on input line 272.
+LaTeX Info: Redefining \sffamily on input line 272.
+LaTeX Info: Redefining \ttfamily on input line 272.
+LaTeX Info: Redefining \rmfamily on input line 272.
+LaTeX Info: Redefining \sffamily on input line 272.
+LaTeX Info: Redefining \ttfamily on input line 272.
+LaTeX Info: Redefining \rmfamily on input line 273.
+LaTeX Info: Redefining \sffamily on input line 273.
+LaTeX Info: Redefining \ttfamily on input line 273.
+LaTeX Info: Redefining \rmfamily on input line 273.
+LaTeX Info: Redefining \sffamily on input line 273.
+LaTeX Info: Redefining \ttfamily on input line 273.
+LaTeX Info: Redefining \rmfamily on input line 274.
+LaTeX Info: Redefining \sffamily on input line 274.
+LaTeX Info: Redefining \ttfamily on input line 274.
+LaTeX Info: Redefining \rmfamily on input line 274.
+LaTeX Info: Redefining \sffamily on input line 274.
+LaTeX Info: Redefining \ttfamily on input line 274.
 LaTeX Info: Redefining \rmfamily on input line 275.
 LaTeX Info: Redefining \sffamily on input line 275.
 LaTeX Info: Redefining \ttfamily on input line 275.
-LaTeX Info: Redefining \rmfamily on input line 279.
-LaTeX Info: Redefining \sffamily on input line 279.
-LaTeX Info: Redefining \ttfamily on input line 279.
+LaTeX Info: Redefining \rmfamily on input line 275.
+LaTeX Info: Redefining \sffamily on input line 275.
+LaTeX Info: Redefining \ttfamily on input line 275.
+LaTeX Info: Redefining \rmfamily on input line 276.
+LaTeX Info: Redefining \sffamily on input line 276.
+LaTeX Info: Redefining \ttfamily on input line 276.
+LaTeX Info: Redefining \rmfamily on input line 276.
+LaTeX Info: Redefining \sffamily on input line 276.
+LaTeX Info: Redefining \ttfamily on input line 276.
+
+Overfull \hbox (62.48569pt too wide) in paragraph at lines 270--278
+[][] []
+ []
+
+[29]
 LaTeX Info: Redefining \rmfamily on input line 280.
 LaTeX Info: Redefining \sffamily on input line 280.
 LaTeX Info: Redefining \ttfamily on input line 280.
- [32]
-LaTeX Info: Redefining \rmfamily on input line 281.
-LaTeX Info: Redefining \sffamily on input line 281.
-LaTeX Info: Redefining \ttfamily on input line 281.
+LaTeX Info: Redefining \rmfamily on input line 282.
+LaTeX Info: Redefining \sffamily on input line 282.
+LaTeX Info: Redefining \ttfamily on input line 282.
 LaTeX Info: Redefining \rmfamily on input line 282.
 LaTeX Info: Redefining \sffamily on input line 282.
 LaTeX Info: Redefining \ttfamily on input line 282.
 LaTeX Info: Redefining \rmfamily on input line 283.
 LaTeX Info: Redefining \sffamily on input line 283.
 LaTeX Info: Redefining \ttfamily on input line 283.
-LaTeX Info: Redefining \rmfamily on input line 288.
-LaTeX Info: Redefining \sffamily on input line 288.
-LaTeX Info: Redefining \ttfamily on input line 288.
-LaTeX Info: Redefining \rmfamily on input line 289.
-LaTeX Info: Redefining \sffamily on input line 289.
-LaTeX Info: Redefining \ttfamily on input line 289.
+LaTeX Info: Redefining \rmfamily on input line 283.
+LaTeX Info: Redefining \sffamily on input line 283.
+LaTeX Info: Redefining \ttfamily on input line 283.
+LaTeX Info: Redefining \rmfamily on input line 284.
+LaTeX Info: Redefining \sffamily on input line 284.
+LaTeX Info: Redefining \ttfamily on input line 284.
+LaTeX Info: Redefining \rmfamily on input line 284.
+LaTeX Info: Redefining \sffamily on input line 284.
+LaTeX Info: Redefining \ttfamily on input line 284.
+LaTeX Info: Redefining \rmfamily on input line 285.
+LaTeX Info: Redefining \sffamily on input line 285.
+LaTeX Info: Redefining \ttfamily on input line 285.
+LaTeX Info: Redefining \rmfamily on input line 285.
+LaTeX Info: Redefining \sffamily on input line 285.
+LaTeX Info: Redefining \ttfamily on input line 285.
+LaTeX Info: Redefining \rmfamily on input line 286.
+LaTeX Info: Redefining \sffamily on input line 286.
+LaTeX Info: Redefining \ttfamily on input line 286.
+LaTeX Info: Redefining \rmfamily on input line 286.
+LaTeX Info: Redefining \sffamily on input line 286.
+LaTeX Info: Redefining \ttfamily on input line 286.
+
+Overfull \hbox (62.48569pt too wide) in paragraph at lines 280--288
+[][] []
+ []
+
 LaTeX Info: Redefining \rmfamily on input line 290.
 LaTeX Info: Redefining \sffamily on input line 290.
 LaTeX Info: Redefining \ttfamily on input line 290.
-LaTeX Info: Redefining \rmfamily on input line 291.
-LaTeX Info: Redefining \sffamily on input line 291.
-LaTeX Info: Redefining \ttfamily on input line 291.
 LaTeX Info: Redefining \rmfamily on input line 292.
 LaTeX Info: Redefining \sffamily on input line 292.
 LaTeX Info: Redefining \ttfamily on input line 292.
+LaTeX Info: Redefining \rmfamily on input line 292.
+LaTeX Info: Redefining \sffamily on input line 292.
+LaTeX Info: Redefining \ttfamily on input line 292.
+LaTeX Info: Redefining \rmfamily on input line 293.
+LaTeX Info: Redefining \sffamily on input line 293.
+LaTeX Info: Redefining \ttfamily on input line 293.
+LaTeX Info: Redefining \rmfamily on input line 293.
+LaTeX Info: Redefining \sffamily on input line 293.
+LaTeX Info: Redefining \ttfamily on input line 293.
+LaTeX Info: Redefining \rmfamily on input line 294.
+LaTeX Info: Redefining \sffamily on input line 294.
+LaTeX Info: Redefining \ttfamily on input line 294.
+LaTeX Info: Redefining \rmfamily on input line 294.
+LaTeX Info: Redefining \sffamily on input line 294.
+LaTeX Info: Redefining \ttfamily on input line 294.
+LaTeX Info: Redefining \rmfamily on input line 295.
+LaTeX Info: Redefining \sffamily on input line 295.
+LaTeX Info: Redefining \ttfamily on input line 295.
+LaTeX Info: Redefining \rmfamily on input line 295.
+LaTeX Info: Redefining \sffamily on input line 295.
+LaTeX Info: Redefining \ttfamily on input line 295.
 LaTeX Info: Redefining \rmfamily on input line 296.
 LaTeX Info: Redefining \sffamily on input line 296.
 LaTeX Info: Redefining \ttfamily on input line 296.
+LaTeX Info: Redefining \rmfamily on input line 296.
+LaTeX Info: Redefining \sffamily on input line 296.
+LaTeX Info: Redefining \ttfamily on input line 296.
+
+Overfull \hbox (62.48569pt too wide) in paragraph at lines 290--298
+[][] []
+ []
+
+[30]
 LaTeX Info: Redefining \rmfamily on input line 300.
 LaTeX Info: Redefining \sffamily on input line 300.
 LaTeX Info: Redefining \ttfamily on input line 300.
-LaTeX Info: Redefining \rmfamily on input line 301.
-LaTeX Info: Redefining \sffamily on input line 301.
-LaTeX Info: Redefining \ttfamily on input line 301.
- [33]
+LaTeX Info: Redefining \rmfamily on input line 302.
+LaTeX Info: Redefining \sffamily on input line 302.
+LaTeX Info: Redefining \ttfamily on input line 302.
 LaTeX Info: Redefining \rmfamily on input line 302.
 LaTeX Info: Redefining \sffamily on input line 302.
 LaTeX Info: Redefining \ttfamily on input line 302.
 LaTeX Info: Redefining \rmfamily on input line 303.
 LaTeX Info: Redefining \sffamily on input line 303.
 LaTeX Info: Redefining \ttfamily on input line 303.
+LaTeX Info: Redefining \rmfamily on input line 303.
+LaTeX Info: Redefining \sffamily on input line 303.
+LaTeX Info: Redefining \ttfamily on input line 303.
 LaTeX Info: Redefining \rmfamily on input line 304.
 LaTeX Info: Redefining \sffamily on input line 304.
 LaTeX Info: Redefining \ttfamily on input line 304.
-LaTeX Info: Redefining \rmfamily on input line 309.
-LaTeX Info: Redefining \sffamily on input line 309.
-LaTeX Info: Redefining \ttfamily on input line 309.
+LaTeX Info: Redefining \rmfamily on input line 304.
+LaTeX Info: Redefining \sffamily on input line 304.
+LaTeX Info: Redefining \ttfamily on input line 304.
+LaTeX Info: Redefining \rmfamily on input line 305.
+LaTeX Info: Redefining \sffamily on input line 305.
+LaTeX Info: Redefining \ttfamily on input line 305.
+LaTeX Info: Redefining \rmfamily on input line 305.
+LaTeX Info: Redefining \sffamily on input line 305.
+LaTeX Info: Redefining \ttfamily on input line 305.
+LaTeX Info: Redefining \rmfamily on input line 306.
+LaTeX Info: Redefining \sffamily on input line 306.
+LaTeX Info: Redefining \ttfamily on input line 306.
+LaTeX Info: Redefining \rmfamily on input line 306.
+LaTeX Info: Redefining \sffamily on input line 306.
+LaTeX Info: Redefining \ttfamily on input line 306.
+
+Overfull \hbox (62.48569pt too wide) in paragraph at lines 300--308
+[][] []
+ []
+
 LaTeX Info: Redefining \rmfamily on input line 310.
 LaTeX Info: Redefining \sffamily on input line 310.
 LaTeX Info: Redefining \ttfamily on input line 310.
-LaTeX Info: Redefining \rmfamily on input line 311.
-LaTeX Info: Redefining \sffamily on input line 311.
-LaTeX Info: Redefining \ttfamily on input line 311.
+LaTeX Info: Redefining \rmfamily on input line 312.
+LaTeX Info: Redefining \sffamily on input line 312.
+LaTeX Info: Redefining \ttfamily on input line 312.
 LaTeX Info: Redefining \rmfamily on input line 312.
 LaTeX Info: Redefining \sffamily on input line 312.
 LaTeX Info: Redefining \ttfamily on input line 312.
 LaTeX Info: Redefining \rmfamily on input line 313.
 LaTeX Info: Redefining \sffamily on input line 313.
 LaTeX Info: Redefining \ttfamily on input line 313.
-LaTeX Info: Redefining \rmfamily on input line 317.
-LaTeX Info: Redefining \sffamily on input line 317.
-LaTeX Info: Redefining \ttfamily on input line 317.
-LaTeX Info: Redefining \rmfamily on input line 321.
-LaTeX Info: Redefining \sffamily on input line 321.
-LaTeX Info: Redefining \ttfamily on input line 321.
+LaTeX Info: Redefining \rmfamily on input line 313.
+LaTeX Info: Redefining \sffamily on input line 313.
+LaTeX Info: Redefining \ttfamily on input line 313.
+LaTeX Info: Redefining \rmfamily on input line 314.
+LaTeX Info: Redefining \sffamily on input line 314.
+LaTeX Info: Redefining \ttfamily on input line 314.
+LaTeX Info: Redefining \rmfamily on input line 314.
+LaTeX Info: Redefining \sffamily on input line 314.
+LaTeX Info: Redefining \ttfamily on input line 314.
+LaTeX Info: Redefining \rmfamily on input line 315.
+LaTeX Info: Redefining \sffamily on input line 315.
+LaTeX Info: Redefining \ttfamily on input line 315.
+LaTeX Info: Redefining \rmfamily on input line 315.
+LaTeX Info: Redefining \sffamily on input line 315.
+LaTeX Info: Redefining \ttfamily on input line 315.
+LaTeX Info: Redefining \rmfamily on input line 316.
+LaTeX Info: Redefining \sffamily on input line 316.
+LaTeX Info: Redefining \ttfamily on input line 316.
+LaTeX Info: Redefining \rmfamily on input line 316.
+LaTeX Info: Redefining \sffamily on input line 316.
+LaTeX Info: Redefining \ttfamily on input line 316.
+
+Overfull \hbox (62.48569pt too wide) in paragraph at lines 310--318
+[][] []
+ []
+
+[31]
+LaTeX Info: Redefining \rmfamily on input line 320.
+LaTeX Info: Redefining \sffamily on input line 320.
+LaTeX Info: Redefining \ttfamily on input line 320.
 LaTeX Info: Redefining \rmfamily on input line 322.
 LaTeX Info: Redefining \sffamily on input line 322.
 LaTeX Info: Redefining \ttfamily on input line 322.
- [34]
+LaTeX Info: Redefining \rmfamily on input line 322.
+LaTeX Info: Redefining \sffamily on input line 322.
+LaTeX Info: Redefining \ttfamily on input line 322.
+LaTeX Info: Redefining \rmfamily on input line 323.
+LaTeX Info: Redefining \sffamily on input line 323.
+LaTeX Info: Redefining \ttfamily on input line 323.
 LaTeX Info: Redefining \rmfamily on input line 323.
 LaTeX Info: Redefining \sffamily on input line 323.
 LaTeX Info: Redefining \ttfamily on input line 323.
 LaTeX Info: Redefining \rmfamily on input line 324.
 LaTeX Info: Redefining \sffamily on input line 324.
 LaTeX Info: Redefining \ttfamily on input line 324.
+LaTeX Info: Redefining \rmfamily on input line 324.
+LaTeX Info: Redefining \sffamily on input line 324.
+LaTeX Info: Redefining \ttfamily on input line 324.
 LaTeX Info: Redefining \rmfamily on input line 325.
 LaTeX Info: Redefining \sffamily on input line 325.
 LaTeX Info: Redefining \ttfamily on input line 325.
-LaTeX Info: Redefining \rmfamily on input line 330.
-LaTeX Info: Redefining \sffamily on input line 330.
-LaTeX Info: Redefining \ttfamily on input line 330.
-LaTeX Info: Redefining \rmfamily on input line 331.
-LaTeX Info: Redefining \sffamily on input line 331.
-LaTeX Info: Redefining \ttfamily on input line 331.
-LaTeX Info: Redefining \rmfamily on input line 332.
-LaTeX Info: Redefining \sffamily on input line 332.
-LaTeX Info: Redefining \ttfamily on input line 332.
-LaTeX Info: Redefining \rmfamily on input line 333.
-LaTeX Info: Redefining \sffamily on input line 333.
-LaTeX Info: Redefining \ttfamily on input line 333.
-LaTeX Info: Redefining \rmfamily on input line 334.
-LaTeX Info: Redefining \sffamily on input line 334.
-LaTeX Info: Redefining \ttfamily on input line 334.
-LaTeX Info: Redefining \rmfamily on input line 338.
-LaTeX Info: Redefining \sffamily on input line 338.
-LaTeX Info: Redefining \ttfamily on input line 338.
+LaTeX Info: Redefining \rmfamily on input line 325.
+LaTeX Info: Redefining \sffamily on input line 325.
+LaTeX Info: Redefining \ttfamily on input line 325.
+LaTeX Info: Redefining \rmfamily on input line 326.
+LaTeX Info: Redefining \sffamily on input line 326.
+LaTeX Info: Redefining \ttfamily on input line 326.
+LaTeX Info: Redefining \rmfamily on input line 326.
+LaTeX Info: Redefining \sffamily on input line 326.
+LaTeX Info: Redefining \ttfamily on input line 326.
+
+Overfull \hbox (62.48569pt too wide) in paragraph at lines 320--328
+[][] []
+ []
+
+LaTeX Info: Redefining \rmfamily on input line 337.
+LaTeX Info: Redefining \sffamily on input line 337.
+LaTeX Info: Redefining \ttfamily on input line 337.
+LaTeX Info: Redefining \rmfamily on input line 339.
+LaTeX Info: Redefining \sffamily on input line 339.
+LaTeX Info: Redefining \ttfamily on input line 339.
+LaTeX Info: Redefining \rmfamily on input line 339.
+LaTeX Info: Redefining \sffamily on input line 339.
+LaTeX Info: Redefining \ttfamily on input line 339.
+
+Overfull \hbox (0.62335pt too wide) in paragraph at lines 337--341
+[][] []
+ []
+
+[32]
 LaTeX Info: Redefining \rmfamily on input line 342.
 LaTeX Info: Redefining \sffamily on input line 342.
 LaTeX Info: Redefining \ttfamily on input line 342.
-LaTeX Info: Redefining \rmfamily on input line 343.
-LaTeX Info: Redefining \sffamily on input line 343.
-LaTeX Info: Redefining \ttfamily on input line 343.
- [35]
 LaTeX Info: Redefining \rmfamily on input line 344.
 LaTeX Info: Redefining \sffamily on input line 344.
 LaTeX Info: Redefining \ttfamily on input line 344.
-LaTeX Info: Redefining \rmfamily on input line 345.
-LaTeX Info: Redefining \sffamily on input line 345.
-LaTeX Info: Redefining \ttfamily on input line 345.
-LaTeX Info: Redefining \rmfamily on input line 346.
-LaTeX Info: Redefining \sffamily on input line 346.
-LaTeX Info: Redefining \ttfamily on input line 346.
-LaTeX Info: Redefining \rmfamily on input line 351.
-LaTeX Info: Redefining \sffamily on input line 351.
-LaTeX Info: Redefining \ttfamily on input line 351.
+LaTeX Info: Redefining \rmfamily on input line 344.
+LaTeX Info: Redefining \sffamily on input line 344.
+LaTeX Info: Redefining \ttfamily on input line 344.
+
+Overfull \hbox (0.62335pt too wide) in paragraph at lines 342--346
+[][] []
+ []
+
+LaTeX Info: Redefining \rmfamily on input line 347.
+LaTeX Info: Redefining \sffamily on input line 347.
+LaTeX Info: Redefining \ttfamily on input line 347.
+LaTeX Info: Redefining \rmfamily on input line 349.
+LaTeX Info: Redefining \sffamily on input line 349.
+LaTeX Info: Redefining \ttfamily on input line 349.
+LaTeX Info: Redefining \rmfamily on input line 349.
+LaTeX Info: Redefining \sffamily on input line 349.
+LaTeX Info: Redefining \ttfamily on input line 349.
+
+Overfull \hbox (0.62335pt too wide) in paragraph at lines 347--351
+[][] []
+ []
+
 LaTeX Info: Redefining \rmfamily on input line 352.
 LaTeX Info: Redefining \sffamily on input line 352.
 LaTeX Info: Redefining \ttfamily on input line 352.
-LaTeX Info: Redefining \rmfamily on input line 353.
-LaTeX Info: Redefining \sffamily on input line 353.
-LaTeX Info: Redefining \ttfamily on input line 353.
 LaTeX Info: Redefining \rmfamily on input line 354.
 LaTeX Info: Redefining \sffamily on input line 354.
 LaTeX Info: Redefining \ttfamily on input line 354.
-LaTeX Info: Redefining \rmfamily on input line 355.
-LaTeX Info: Redefining \sffamily on input line 355.
-LaTeX Info: Redefining \ttfamily on input line 355.
-LaTeX Info: Redefining \rmfamily on input line 366.
-LaTeX Info: Redefining \sffamily on input line 366.
-LaTeX Info: Redefining \ttfamily on input line 366.
+LaTeX Info: Redefining \rmfamily on input line 354.
+LaTeX Info: Redefining \sffamily on input line 354.
+LaTeX Info: Redefining \ttfamily on input line 354.
 
-[36]
-LaTeX Info: Redefining \rmfamily on input line 368.
-LaTeX Info: Redefining \sffamily on input line 368.
-LaTeX Info: Redefining \ttfamily on input line 368.
-LaTeX Info: Redefining \rmfamily on input line 370.
-LaTeX Info: Redefining \sffamily on input line 370.
-LaTeX Info: Redefining \ttfamily on input line 370.
-LaTeX Info: Redefining \rmfamily on input line 373.
-LaTeX Info: Redefining \sffamily on input line 373.
-LaTeX Info: Redefining \ttfamily on input line 373.
-LaTeX Info: Redefining \rmfamily on input line 375.
-LaTeX Info: Redefining \sffamily on input line 375.
-LaTeX Info: Redefining \ttfamily on input line 375.
-LaTeX Info: Redefining \rmfamily on input line 377.
-LaTeX Info: Redefining \sffamily on input line 377.
-LaTeX Info: Redefining \ttfamily on input line 377.
-LaTeX Info: Redefining \rmfamily on input line 380.
-LaTeX Info: Redefining \sffamily on input line 380.
-LaTeX Info: Redefining \ttfamily on input line 380.
-LaTeX Info: Redefining \rmfamily on input line 382.
-LaTeX Info: Redefining \sffamily on input line 382.
-LaTeX Info: Redefining \ttfamily on input line 382.
+Overfull \hbox (0.62335pt too wide) in paragraph at lines 352--356
+[][] []
+ []
+
+LaTeX Info: Redefining \rmfamily on input line 357.
+LaTeX Info: Redefining \sffamily on input line 357.
+LaTeX Info: Redefining \ttfamily on input line 357.
+LaTeX Info: Redefining \rmfamily on input line 359.
+LaTeX Info: Redefining \sffamily on input line 359.
+LaTeX Info: Redefining \ttfamily on input line 359.
+LaTeX Info: Redefining \rmfamily on input line 359.
+LaTeX Info: Redefining \sffamily on input line 359.
+LaTeX Info: Redefining \ttfamily on input line 359.
+
+Overfull \hbox (0.62335pt too wide) in paragraph at lines 357--361
+[][] []
+ []
+
+LaTeX Info: Redefining \rmfamily on input line 362.
+LaTeX Info: Redefining \sffamily on input line 362.
+LaTeX Info: Redefining \ttfamily on input line 362.
+LaTeX Info: Redefining \rmfamily on input line 364.
+LaTeX Info: Redefining \sffamily on input line 364.
+LaTeX Info: Redefining \ttfamily on input line 364.
+LaTeX Info: Redefining \rmfamily on input line 364.
+LaTeX Info: Redefining \sffamily on input line 364.
+LaTeX Info: Redefining \ttfamily on input line 364.
+
+Overfull \hbox (0.62335pt too wide) in paragraph at lines 362--366
+[][] []
+ []
+
+[33]
+LaTeX Info: Redefining \rmfamily on input line 367.
+LaTeX Info: Redefining \sffamily on input line 367.
+LaTeX Info: Redefining \ttfamily on input line 367.
+LaTeX Info: Redefining \rmfamily on input line 369.
+LaTeX Info: Redefining \sffamily on input line 369.
+LaTeX Info: Redefining \ttfamily on input line 369.
+LaTeX Info: Redefining \rmfamily on input line 369.
+LaTeX Info: Redefining \sffamily on input line 369.
+LaTeX Info: Redefining \ttfamily on input line 369.
+
+Overfull \hbox (0.62335pt too wide) in paragraph at lines 367--371
+[][] []
+ []
+
+LaTeX Info: Redefining \rmfamily on input line 372.
+LaTeX Info: Redefining \sffamily on input line 372.
+LaTeX Info: Redefining \ttfamily on input line 372.
+LaTeX Info: Redefining \rmfamily on input line 374.
+LaTeX Info: Redefining \sffamily on input line 374.
+LaTeX Info: Redefining \ttfamily on input line 374.
+LaTeX Info: Redefining \rmfamily on input line 374.
+LaTeX Info: Redefining \sffamily on input line 374.
+LaTeX Info: Redefining \ttfamily on input line 374.
+
+Overfull \hbox (0.62335pt too wide) in paragraph at lines 372--376
+[][] []
+ []
+
+LaTeX Info: Redefining \rmfamily on input line 379.
+LaTeX Info: Redefining \sffamily on input line 379.
+LaTeX Info: Redefining \ttfamily on input line 379.
+LaTeX Info: Redefining \rmfamily on input line 381.
+LaTeX Info: Redefining \sffamily on input line 381.
+LaTeX Info: Redefining \ttfamily on input line 381.
+LaTeX Info: Redefining \rmfamily on input line 381.
+LaTeX Info: Redefining \sffamily on input line 381.
+LaTeX Info: Redefining \ttfamily on input line 381.
+
+Overfull \hbox (0.62335pt too wide) in paragraph at lines 379--383
+[][] []
+ []
+
 LaTeX Info: Redefining \rmfamily on input line 384.
 LaTeX Info: Redefining \sffamily on input line 384.
 LaTeX Info: Redefining \ttfamily on input line 384.
-LaTeX Info: Redefining \rmfamily on input line 387.
-LaTeX Info: Redefining \sffamily on input line 387.
-LaTeX Info: Redefining \ttfamily on input line 387.
-LaTeX Info: Redefining \rmfamily on input line 389.
-LaTeX Info: Redefining \sffamily on input line 389.
-LaTeX Info: Redefining \ttfamily on input line 389.
-LaTeX Info: Redefining \rmfamily on input line 391.
-LaTeX Info: Redefining \sffamily on input line 391.
-LaTeX Info: Redefining \ttfamily on input line 391.
-LaTeX Info: Redefining \rmfamily on input line 394.
-LaTeX Info: Redefining \sffamily on input line 394.
-LaTeX Info: Redefining \ttfamily on input line 394.
- [37]
-LaTeX Info: Redefining \rmfamily on input line 396.
-LaTeX Info: Redefining \sffamily on input line 396.
-LaTeX Info: Redefining \ttfamily on input line 396.
-LaTeX Info: Redefining \rmfamily on input line 398.
-LaTeX Info: Redefining \sffamily on input line 398.
-LaTeX Info: Redefining \ttfamily on input line 398.
-LaTeX Info: Redefining \rmfamily on input line 401.
-LaTeX Info: Redefining \sffamily on input line 401.
-LaTeX Info: Redefining \ttfamily on input line 401.
-LaTeX Info: Redefining \rmfamily on input line 403.
-LaTeX Info: Redefining \sffamily on input line 403.
-LaTeX Info: Redefining \ttfamily on input line 403.
-LaTeX Info: Redefining \rmfamily on input line 405.
-LaTeX Info: Redefining \sffamily on input line 405.
-LaTeX Info: Redefining \ttfamily on input line 405.
-LaTeX Info: Redefining \rmfamily on input line 408.
-LaTeX Info: Redefining \sffamily on input line 408.
-LaTeX Info: Redefining \ttfamily on input line 408.
-LaTeX Info: Redefining \rmfamily on input line 410.
-LaTeX Info: Redefining \sffamily on input line 410.
-LaTeX Info: Redefining \ttfamily on input line 410.
-LaTeX Info: Redefining \rmfamily on input line 412.
-LaTeX Info: Redefining \sffamily on input line 412.
-LaTeX Info: Redefining \ttfamily on input line 412.
-LaTeX Info: Redefining \rmfamily on input line 415.
-LaTeX Info: Redefining \sffamily on input line 415.
-LaTeX Info: Redefining \ttfamily on input line 415.
-LaTeX Info: Redefining \rmfamily on input line 417.
-LaTeX Info: Redefining \sffamily on input line 417.
-LaTeX Info: Redefining \ttfamily on input line 417.
- [38]
-LaTeX Info: Redefining \rmfamily on input line 419.
-LaTeX Info: Redefining \sffamily on input line 419.
-LaTeX Info: Redefining \ttfamily on input line 419.
-LaTeX Info: Redefining \rmfamily on input line 424.
-LaTeX Info: Redefining \sffamily on input line 424.
-LaTeX Info: Redefining \ttfamily on input line 424.
-LaTeX Info: Redefining \rmfamily on input line 426.
-LaTeX Info: Redefining \sffamily on input line 426.
-LaTeX Info: Redefining \ttfamily on input line 426.
-LaTeX Info: Redefining \rmfamily on input line 428.
-LaTeX Info: Redefining \sffamily on input line 428.
-LaTeX Info: Redefining \ttfamily on input line 428.
-LaTeX Info: Redefining \rmfamily on input line 431.
-LaTeX Info: Redefining \sffamily on input line 431.
-LaTeX Info: Redefining \ttfamily on input line 431.
-LaTeX Info: Redefining \rmfamily on input line 433.
-LaTeX Info: Redefining \sffamily on input line 433.
-LaTeX Info: Redefining \ttfamily on input line 433.
-LaTeX Info: Redefining \rmfamily on input line 435.
-LaTeX Info: Redefining \sffamily on input line 435.
-LaTeX Info: Redefining \ttfamily on input line 435.
- [39] [40]) [41] (../prob_5/prob5.tex) [42]
+LaTeX Info: Redefining \rmfamily on input line 386.
+LaTeX Info: Redefining \sffamily on input line 386.
+LaTeX Info: Redefining \ttfamily on input line 386.
+LaTeX Info: Redefining \rmfamily on input line 386.
+LaTeX Info: Redefining \sffamily on input line 386.
+LaTeX Info: Redefining \ttfamily on input line 386.
+
+Overfull \hbox (0.62335pt too wide) in paragraph at lines 384--388
+[][] []
+ []
+
+[34]
+Underfull \hbox (badness 10000) in paragraph at lines 413--413
+[][]|\TU/lmr/bx/n/12 Semantic (Embed-[]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 413--413
+[][]|\TU/lmr/m/n/12 Indirect / descriptive[]
+ []
+
+[35]
+Overfull \hbox (115.23192pt too wide) in paragraph at lines 503--505
+[][]\TU/lmr/bx/n/12 SentenceTransformers \TU/lmr/m/n/12 — multilingual embeddin
+g model (\TU/lmtt/m/n/12 paraphrase-multilingual-mpnet-base-v2\TU/lmr/m/n/12 ) 
+[]
+ []
+
+) [36] (../prob_5/prob5.tex) [37]
 The property list \polyglossia@langsetup contains the pairs (without outer
 braces):
 >  {latex/script}  =>  {latin}
@@ -2192,12 +2310,12 @@ LaTeX Info: Redefining \sffamily on input line 18.
 LaTeX Info: Redefining \ttfamily on input line 18.
 ) ) 
 Here is how much of TeX's memory you used:
- 30666 strings out of 476689
- 636076 string characters out of 5806614
- 1863018 words of memory out of 6000000
- 50251 multiletter control sequences out of 15000+600000
- 525067 words of font info for 69 fonts, out of 8000000 for 9000
+ 30656 strings out of 476689
+ 636058 string characters out of 5806614
+ 1875018 words of memory out of 6000000
+ 50238 multiletter control sequences out of 15000+600000
+ 525083 words of font info for 71 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  84i,12n,118p,1257b,977s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Neural_Assi3.pdf (43 pages).
+Output written on Neural_Assi3.pdf (38 pages).
