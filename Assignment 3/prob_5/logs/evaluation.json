@@ -12,7 +12,8 @@
         "jwnder/jais-adaptive:7b",
         "yasserrmd/Fanar-1-9B-Instruct"
       ]
-    }
+    },
+    "end_time": "2026-05-14T23:28:05.126840"
   },
   "results": [
     {
@@ -1139,6 +1140,1179 @@
         },
         "yasserrmd/Fanar-1-9B-Instruct": {
           "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "50",
+      "text": "من قدك قابلت آريا ستارك الابتسامة شاقة وجهك شق في نهاية المقطع",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T22:46:05.961007",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "51",
+      "text": "عمر انا احبك لكن شف نفسك؟ بالاول حاط صوره وسخه وبعدين كلامك مو واضح",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T22:46:56.785587",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "52",
+      "text": "انا مش فاهم إيه الكوميدي فيك ومين اللي اختارك تبقى كوميدي",
+      "variety": "egyptian",
+      "timestamp": "2026-05-14T22:48:02.021754",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "53",
+      "text": "زقو انتو والجامعه المعفنه هاي والله محد درابكم",
+      "variety": "levantine",
+      "timestamp": "2026-05-14T22:48:55.826263",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "54",
+      "text": "ههههههه اهم شي اذا تورطت في الدندول الكبير",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T22:49:46.926602",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "55",
+      "text": "هذي مجرد أحداث شغب من فئة قليلة من الجرذان ذو العقلية المنيكة",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T22:50:43.240844",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "56",
+      "text": "احمد يعاني من مرض عضال نادر يشوش على مجاله العصبي",
+      "variety": "egyptian",
+      "timestamp": "2026-05-14T22:51:55.002367",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "57",
+      "text": "الإضاءة بالاستديو ابو كلب يا شنب",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T22:52:54.690493",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "58",
+      "text": "هاذي لبنان أقسى من قلوبهم مافيش بلد عديمة الإنسانية",
+      "variety": "levantine",
+      "timestamp": "2026-05-14T22:53:49.761626",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "59",
+      "text": "هبه مو اسرائيل جريئة لا حبيبي بس العراقيين عملاء",
+      "variety": "levantine",
+      "timestamp": "2026-05-14T22:54:52.746760",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "60",
+      "text": "يي كلهم عيال حرام ولازم نحمي الاسلام",
+      "variety": "levantine",
+      "timestamp": "2026-05-14T22:55:50.164551",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "61",
+      "text": "خلوا شريفه تنفعكم و الا العلج التركي",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T22:56:39.663986",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "62",
+      "text": "أه يا قناة وسخة ما فيهاش راجل",
+      "variety": "egyptian",
+      "timestamp": "2026-05-14T22:57:30.770385",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "63",
+      "text": "وقطر عاملة الشريفة بقناتكم الظاهرة",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T22:58:18.623639",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "64",
+      "text": "الله يلعنكم شو الهدف من الزيارة غير تجميل اليهود",
+      "variety": "levantine",
+      "timestamp": "2026-05-14T22:59:08.554669",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "65",
+      "text": "كيف علاقتنا مع الكلاب لسى ياخوك ماخوينا البشر",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T22:59:58.805303",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "66",
+      "text": "الي مقاطعينكم طبيعي التهجم بسبب حليب الحمير الي تشربونه",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T23:00:51.847522",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "67",
+      "text": "حلف البهائم وجواسيس الترك وجميع المرتزقه كلاب المال",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T23:01:40.743218",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "68",
+      "text": "إنما المؤمنون إخوة فأصلحوا بين أخويكم",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:02:28.148568",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "69",
+      "text": "لا يسخر قوم من قوم عسى أن يكونوا خيرا منهم",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:03:24.955819",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "70",
+      "text": "ولا تلمزوا أنفسكم ولا تنابزوا بالألقاب",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:04:11.795297",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "71",
+      "text": "اجتنبوا كثيرا من الظن إن بعض الظن إثم",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:05:00.929637",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "72",
+      "text": "ولا يغتب بعضكم بعضا",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:05:44.491630",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "73",
+      "text": "وجعلناكم شعوبا وقبائل لتعارفوا",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:06:28.635258",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "74",
+      "text": "من كان يؤمن بالله واليوم الآخر فليقل خيرا أو ليصمت",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:07:13.132489",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "75",
+      "text": "من كان يؤمن بالله واليوم الآخر فليكرم جاره",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:07:59.063635",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "76",
+      "text": "من كان يؤمن بالله واليوم الآخر فليكرم ضيفه",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:08:48.249517",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "77",
+      "text": "إنما الأعمال بالنيات وإنما لكل امرئ ما نوى",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:09:33.905999",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "78",
+      "text": "لا ضرر ولا ضرار",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:10:17.146363",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "79",
+      "text": "تبسمك في وجه أخيك صدقة",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:10:57.847759",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "80",
+      "text": "إن الله جميل يحب الجمال",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:11:40.550893",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "81",
+      "text": "من حسن إسلام المرء تركه ما لا يعنيه",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:12:21.422889",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "82",
+      "text": "لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:13:03.880376",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "83",
+      "text": "المسلم من سلم المسلمون من لسانه ويده",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:13:53.906891",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "84",
+      "text": "الحلم سيد الأخلاق ومفتاح كل خير",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:14:43.985187",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "85",
+      "text": "أتاني كلام الجاهل ابن كيغلغ يجوب حزونا بيننا وسهولا",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:15:26.058037",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "86",
+      "text": "وليس جميلا عرضه فيصونه وليس جميلا أن يكون جميلا",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:16:18.735711",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "87",
+      "text": "ويكذب ما أذللته بهجائه لقد كان من قبل الهجاء ذليلا",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:17:01.640736",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "88",
+      "text": "كبيرهم وغد ومولودهم تلعنه من لؤمه القابلة",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:17:47.229492",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "89",
+      "text": "أيزيد أنك لم تزل بمذلة حتى لففت أباك في الأكفان",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:18:29.254576",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "90",
+      "text": "أيها المدعي سليما سفاهة لست منها ولا قلامة ظفر",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:19:13.601382",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "91",
+      "text": "انظر إليه وإلى حمقه كيف تطايا وهو منشور",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:19:52.195046",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "92",
+      "text": "ويلك من ألقاك في دعوة قلبك منها الدهر مذعور",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:20:44.601610",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "93",
+      "text": "فاذهب فأنت طليق عرضك إنه عرض عززت به وأنت ذليل",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:21:26.716791",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "94",
+      "text": "أعاتبه في عرضه ليصونه ولا علم لي أن الأمير لقيط",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:22:12.661955",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "95",
+      "text": "لا خير في صاعد فأذكره والخير يأتيك من يدي عمر",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:23:00.441595",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "96",
+      "text": "ليس له ما خلا اسمه نسب كأنه آدم أبو البشر",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:23:57.542633",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "97",
+      "text": "فته ما شئت إذ أنت بلا أصل ولا جد",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:24:41.621181",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "98",
+      "text": "وهان عليك سخطي حين تغدو بعرض ليس تأكله الكلاب",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:25:38.014457",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "99",
+      "text": "وهل يشفي السباب من ابن لؤم دنيء ليس يؤلمه السباب",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:26:17.842789",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "100",
+      "text": "كل من رام لي هجاء وقذفا بكتاب يبديه أو بلسان",
+      "variety": "Classical",
+      "timestamp": "2026-05-14T23:27:19.239787",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
         }
       }
     }

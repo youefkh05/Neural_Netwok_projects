@@ -42,13 +42,7 @@
 \setmainlanguage{english}
 \setotherlanguage{arabic}
 
-% Use an Arabic font that also contains Latin glyphs. This prevents square boxes
-% if a caption/header/table accidentally inherits the Arabic font after RTL text.
-\IfFontExistsTF{DejaVu Sans}{%
-  \newfontfamily\arabicfont[Script=Arabic,Scale=MatchLowercase]{DejaVu Sans}%
-}{%
-  \newfontfamily\arabicfont[Script=Arabic,Scale=MatchLowercase,BoldFont={Noto Sans Arabic},ItalicFont={Noto Sans Arabic}]{Noto Sans Arabic}%
-}
+\newfontfamily\arabicfont[Script=Arabic,Scale=MatchLowercase,BoldFont={Noto Sans Arabic},ItalicFont={Noto Sans Arabic}]{Noto Sans Arabic}
 
 \usepackage{comment}	
 \usepackage{lmodern}
@@ -163,16 +157,8 @@
 \input{../prob_4/prob4.tex}
 \newpage
 
-% Reset language/font state before Problem 5. This avoids square glyphs in
-% captions and headers after Arabic text in the previous sections.
-\selectlanguage{english}
-\normalfont
 \section{Problem 5 Benchmarking Arabic NLP Tasks}
-\selectlanguage{english}
-\normalfont
 \input{../prob_5/prob5.tex}
-\selectlanguage{english}
-\normalfont
 \newpage
 
 
