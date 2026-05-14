@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" style="display:none">
+  <!-- Report Icon -->
+  <symbol id="icon-report" viewBox="0 0 64 64">
+    <rect x="14" y="12" width="36" height="44" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+    <line x1="20" y1="20" x2="44" y2="20" stroke="currentColor" stroke-width="2"/>
+    <line x1="20" y1="28" x2="44" y2="28" stroke="currentColor" stroke-width="2"/>
+    <line x1="20" y1="36" x2="44" y2="36" stroke="currentColor" stroke-width="2"/>
+    <line x1="20" y1="44" x2="32" y2="44" stroke="currentColor" stroke-width="2"/>
+  </symbol>
+
+  <!-- Quiz Icon -->
+  <symbol id="icon-quiz" viewBox="0 0 64 64">
+    <circle cx="32" cy="32" r="24" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="32" cy="26" r="3" fill="currentColor"/>
+    <path d="M 32 32 Q 28 36 28 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </symbol>
+
+  <!-- Presentation Icon -->
+  <symbol id="icon-presentation" viewBox="0 0 64 64">
+    <rect x="10" y="12" width="44" height="32" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+    <polygon points="32,48 20,56 44,56" fill="none" stroke="currentColor" stroke-width="2"/>
+    <line x1="16" y1="20" x2="48" y2="20" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="16" y1="26" x2="48" y2="26" stroke="currentColor" stroke-width="1.5"/>
+  </symbol>
+
+  <!-- Live Demo Icon -->
+  <symbol id="icon-demo" viewBox="0 0 64 64">
+    <circle cx="32" cy="28" r="12" fill="none" stroke="currentColor" stroke-width="2"/>
+    <polygon points="28,24 28,32 38,28" fill="currentColor"/>
+    <rect x="10" y="44" width="44" height="6" rx="1" fill="none" stroke="currentColor" stroke-width="2"/>
+  </symbol>
+
+  <!-- AI Sparkle -->
+  <symbol id="icon-sparkle" viewBox="0 0 64 64">
+    <circle cx="32" cy="32" r="2" fill="currentColor"/>
+    <circle cx="32" cy="18" r="2" fill="currentColor"/>
+    <circle cx="32" cy="46" r="2" fill="currentColor"/>
+    <circle cx="18" cy="32" r="2" fill="currentColor"/>
+    <circle cx="46" cy="32" r="2" fill="currentColor"/>
+    <circle cx="24" cy="24" r="1.5" fill="currentColor"/>
+    <circle cx="40" cy="40" r="1.5" fill="currentColor"/>
+  </symbol>
+
+  <!-- RAG Icon -->
+  <symbol id="icon-rag" viewBox="0 0 64 64">
+    <path d="M 24 44 L 32 20 L 40 44" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="20" cy="48" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="44" cy="48" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+  </symbol>
+</svg>

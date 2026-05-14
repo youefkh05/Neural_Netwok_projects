@@ -888,6 +888,259 @@
           "is_toxic": "no"
         }
       }
+    },
+    {
+      "id": "39",
+      "text": "وين من جد انتهى! تصدق يا عمر انو الفيديو حقك اثر فيني",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T22:36:03.039352",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "40",
+      "text": "كيف رح يصير سلام فالعالم لما في ناس بتتطلع عالجانب السلبي",
+      "variety": "levantine",
+      "timestamp": "2026-05-14T22:36:59.888563",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "41",
+      "text": "اذا أردتم تعلم اللهجة المغربية بطريقة سهلة تعالوا الى قناتي",
+      "variety": "maghrebi",
+      "timestamp": "2026-05-14T22:37:55.273076",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "42",
+      "text": "رشااا مأهضمك ومأطيب طبخاتك يعطيكي العافية يارب",
+      "variety": "levantine",
+      "timestamp": "2026-05-14T22:38:46.462436",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "43",
+      "text": "هههه العراقين ماعدهم مشكله بهذا الشي",
+      "variety": "iraqi",
+      "timestamp": "2026-05-14T22:39:43.754223",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "44",
+      "text": "بدنا تشرح لنا اسباب الازمة المالية بالسعودية والحلول",
+      "variety": "levantine",
+      "timestamp": "2026-05-14T22:40:47.546994",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "45",
+      "text": "بعد التراويح هي نفسها قبل السحور",
+      "variety": "egyptian",
+      "timestamp": "2026-05-14T22:41:43.043392",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "46",
+      "text": "قبل كنت اعرفه وكنت اذكر ايامه سعره اقل من مية دولار",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T22:42:32.595578",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "47",
+      "text": "يمكن كله بس حكي وما في منه",
+      "variety": "levantine",
+      "timestamp": "2026-05-14T22:43:30.967596",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "48",
+      "text": "وربي انت احسن واحد من اول اتمنى احد يشرح الحاصل بتركيا في فيديو",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T22:44:23.164636",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "49",
+      "text": "من اكتر الحجات الى ديقتنى ان ازاى مبقتيش بتعملى فيديوهات فى القناه",
+      "variety": "egyptian",
+      "timestamp": "2026-05-14T22:45:17.080124",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
     }
   ]
 }
