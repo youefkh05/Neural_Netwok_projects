@@ -1,0 +1,51 @@
+Problem 4: General Information Retrieval (including Q/A)
+Information Retrieval and Question Answering using Arabic language. This problem introduces classical
+keyword-based retrieval, semantic search using embeddings, and Retrieval-Augmented Generation
+(RAG). You will apply these techniques using a single Arabic book (in plain text format) as the reference
+source.
+Tasks
+(You must use a single open-source small LLM from HuggingFace — e.g., a model in the range of 1B–
+3B parameters — throughout all tasks.)
+1. Book Preparation for Search
+• Select a public domain or permitted Arabic book in plain text format.
+• Be sure that the selected book was not used last year.
+• Split the text into short paragraphs (2–4 sentences).
+• Generate embeddings using a multilingual or Arabic sentence embedding model.
+• Index the vectors using a tool such as FAISS.
+2. Retrieval System
+• Build an interface that accepts Arabic queries.
+• Implement:
+o (a) Classical search (TF-IDF or BM25)(b) Semantic search (embedding-based)
+• Display the top 5 results from both methods side by side for each query.
+3. RAG System
+o
+•
+•
+•
+Extend the interface to answer Arabic questions using the same selected small LLM.
+For each query:
+o (a) Retrieve relevant text using semantic search
+o (b) Generate an answer using RAG (LLM + retrieved content)
+o (c) Generate an answer using the LLM only (without retrieval)
+Display both answers for comparison.
+Deliverables
+1. Description of the selected book:
+o Title and source
+o Text preprocessing and chunking method
+o Embedding and indexing process
+2. Results from at least 10 Arabic queries using:
+o Classical search
+o Semantic search
+3. Answers for 10 queries using:
+o RAG
+o LLM-only
+4. Comparison and reflection:
+o Which retrieval method produced more relevant results
+o Whether retrieval improved LLM-generated answers
+o Conclusions on the value of semantic retrieval and RAG for Arabic text
+Important Note
+• The model should be downloadable from HuggingFace and runnable locally (CPU or limited
+resources).
+• Choosing a less common book topic is encouraged, as it better highlights the benefit of retrieval.
+• Create different kind of questions including direct and indirect, easy and hard ones to get good
+insights.

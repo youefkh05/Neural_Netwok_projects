@@ -35,9 +35,16 @@
 \usepackage{multirow}
 \usepackage{array}
 \usepackage{fancyhdr}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{comment}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+\setmainlanguage{english}
+\setotherlanguage{arabic}
+
+\newfontfamily\arabicfont[Script=Arabic,Scale=MatchLowercase,BoldFont={Noto Sans Arabic},ItalicFont={Noto Sans Arabic}]{Noto Sans Arabic}
+
+\usepackage{comment}	
 \usepackage{lmodern}
 \usepackage{cmap}
 \usepackage{chngcntr}

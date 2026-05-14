@@ -49,6 +49,13 @@ def clean_text(text: str) -> str:
     text = re.sub(r'[ \t]+', ' ', text)
     text = re.sub(r'\n{3,}', '\n\n', text)
     text = re.sub(r'^\s*\d+\s*', '', text, flags=re.MULTILINE)
+
+    # Arabic normalization
+    text = re.sub(r'[\u0617-\u061A\u064B-\u065F]', '', text)
+    text = re.sub(r'[أإآ]', 'ا', text)
+    text = re.sub(r'ى', 'ي', text)
+    text = re.sub(r'ة', 'ه', text)
+
     return text.strip()
 
 
@@ -197,7 +204,7 @@ def tokenize(text: str) -> list:
     """Tokenize and filter Arabic text."""
     normalized = normalize_arabic(text)
     tokens = re.findall(r'[\u0600-\u06FF]{2,}', normalized)
-    
+
     stop_words = {
         'من', 'في', 'على', 'إلى', 'عن', 'مع', 'هذا', 'هذه', 'ذلك', 'تلك',
         'التي', 'الذي', 'الذين', 'اللاتي', 'كان', 'كانت', 'هو', 'هي', 'هم',
@@ -205,8 +212,9 @@ def tokenize(text: str) -> list:
         'ثم', 'حتى', 'اذا', 'ان', 'إن', 'لو', 'لكن', 'بل', 'كل', 'بعض',
         'وقد', 'وما', 'فقد', 'وهو', 'وهي', 'وان', 'فان', 'فكان', 'ولم',
         'كما', 'مما', 'عند', 'بين', 'حين', 'بعد', 'قبل', 'غير', 'ليس',
+        'فيه', 'عليه', 'عندها', 'عندما', 'منه', 'اليه', 'اليها'
     }
-    
+
     return [t for t in tokens if t not in stop_words and len(t) >= 2]
 
 
@@ -501,16 +509,17 @@ def generate_report(loader):
 
     # The 10 Queries spanning Direct, Indirect, and Hard
     queries = [
-        "ما الذي كان يفعله الصبي بالنعال حول سيدنا في الكتاب؟",
-        "كيف كان سيدنا يمشي في طريقه إلى الكتاب؟",
-        "ماذا طلب سيدنا من الأسرة أجراً على ختم الصبي للقرآن؟",
-        "لماذا كان الصبي يكره عمه عند المائدة؟",
-        "وصف الكائنات الخرافية التي تعيش في القناة.",
-        "لماذا كان الطفل يخشى الليل والعفاريت في غرفته؟",
-        "كيف كانت علاقة الصبي بإخوته وأخواته؟",
-        "تأثير وباء الكوليرا ووفاة شقيق الكاتب طالب الطب.",
-        "موقف الصبي بعد نسيان القرآن أمام والده وصديقيه.",
-        "الفرق بين علماء الريف الرسميين وأصحاب العلم اللدني."
+    "النعال سيدنا",
+    "مشي سيدنا",
+    "ختم القرآن أجر",
+
+    "لماذا كان الصبي يكره عمه عند المائدة؟",
+    "وصف الكائنات الخرافية التي تعيش في القناة.",
+    "لماذا كان الطفل يخشى الليل والعفاريت في غرفته؟",
+    "كيف كانت علاقة الصبي بإخوته وأخواته؟",
+    "تأثير وباء الكوليرا ووفاة شقيق الكاتب طالب الطب.",
+    "موقف الصبي بعد نسيان القرآن أمام والده وصديقيه.",
+    "الفرق بين علماء الريف الرسميين وأصحاب العلم اللدني."
     ]
 
     report_path = f"{loader.output_dir}/assignment_report.md"
@@ -532,13 +541,13 @@ def generate_report(loader):
             # Classical
             c_res = classical_search(q, loader.paragraphs, loader.bm25_data, top_k=5)
             f.write("**Classical (BM25/TF-IDF) Top Results:**\n")
-            for r in c_res[:2]: # only writing top 2 to keep report concise
+            for r in c_res[:5]: # only writing top 2 to keep report concise
                 f.write(f"- [Score {r['score']}] {r['text'][:150]}...\n")
             
             # Semantic
             s_res = semantic_search(q, loader.paragraphs, loader.embed_model, loader.faiss_index, top_k=5)
             f.write("**Semantic (Embedding) Top Results:**\n")
-            for r in s_res[:2]:
+            for r in s_res[:5]:
                 f.write(f"- [Score {r['score']}] {r['text'][:150]}...\n")
             f.write("\n")
 
