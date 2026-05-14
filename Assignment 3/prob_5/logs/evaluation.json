@@ -865,6 +865,29 @@
           "is_toxic": "no"
         }
       }
+    },
+    {
+      "id": "38",
+      "text": "ههههههههههههههههههههه إياس ياسين تخيل أنا سهل أحطلك أي اشي بس إنت مستحيل تلاقي اشي بكرهه",
+      "variety": "levantine",
+      "timestamp": "2026-05-14T22:35:03.440417",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
     }
   ]
 }

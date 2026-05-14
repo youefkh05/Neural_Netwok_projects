@@ -209,7 +209,7 @@ a{color:inherit}
 .pdf-toolbar h3,.quiz-top h3,.deck-top h3{margin:0}
 .pdf-embed{width:100%;height:min(72vh, 800px);border:0;border-radius:18px;background:#08111f}
 .pdf-fallback{padding:20px;border-radius:18px;border:1px dashed rgba(255,255,255,0.2);text-align:center;color:var(--muted)}
-.ppt-video{width:100%;max-height:450px;border-radius:12px;background:#000;display:block;margin-top:10px}
+.ppt-video{width:100%;max-height:360px;aspect-ratio:16/9;border-radius:12px;background:#000;display:block;margin-top:10px;object-fit:contain}
 .section-block{margin-top:18px}
 .quiz-shell{padding:22px}
 .quiz-top,.deck-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px}
