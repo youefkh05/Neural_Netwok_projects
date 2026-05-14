@@ -612,6 +612,98 @@
           "is_toxic": "yes"
         }
       }
+    },
+    {
+      "id": "27",
+      "text": "الاسلام وضع الولاية للرجل رغم أنف قناة الفتنة والفساد",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:24:40.303699",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "28",
+      "text": "لا يلمع أحد لمنسوبي داعش الارهابي الا ارهابي مثله تبا لكم",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:25:48.651252",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "29",
+      "text": "النابحين في سله واحده لذلك تجد هذه السلع الفاسده",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:26:46.716651",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "30",
+      "text": "لا ولن ترتقي حتى ينتصر الحق ولو تصيحون ليوم الدين فلن يسمع احد لكم يا الكلاب",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:27:38.983473",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
     }
   ]
 }
