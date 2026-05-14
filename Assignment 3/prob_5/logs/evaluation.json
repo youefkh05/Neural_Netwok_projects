@@ -704,6 +704,167 @@
           "is_toxic": "yes"
         }
       }
+    },
+    {
+      "id": "31",
+      "text": "هذه القبيحة الذي اشترت لها قطر جائزة نوبل والان هي تتسكع في تركيا",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:28:31.934040",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "32",
+      "text": "قناة الخنزيره واعلام الدويله يبي يعطي دروس لمن هم يدرسونه يا ضلاليه",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:29:25.285991",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "33",
+      "text": "كلمتان فقط تكفي: تباً للعرب",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:30:22.617224",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "34",
+      "text": "صاحبة التقرير شكلها عجوز شريرة تحب القتل والدمار",
+      "variety": "MSA",
+      "timestamp": "2026-05-14T22:31:12.660412",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "yes"
+        },
+        "gemini": {
+          "is_toxic": "yes"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "yes"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "yes"
+        }
+      }
+    },
+    {
+      "id": "35",
+      "text": "بتعمل حلقة صغيرة عشان عندي امتحان بكرة ومتضيعليش اليوم الله عليك يا فخر اليوتيوب",
+      "variety": "egyptian",
+      "timestamp": "2026-05-14T22:32:14.791658",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "36",
+      "text": "على طاري السطحيه مدري ليه تذكرت فيحان",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T22:33:09.604041",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "yes"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
+    },
+    {
+      "id": "37",
+      "text": "جواب سؤالك ليش ما اخذت الصوابين حقت الفندق: لأنهم سوولك ترقية لحجزك",
+      "variety": "gulf",
+      "timestamp": "2026-05-14T22:34:08.268364",
+      "outputs": {
+        "chatgpt": {
+          "is_toxic": "no"
+        },
+        "gemini": {
+          "is_toxic": "no"
+        },
+        "iKhalid/ALLaM:7b": {
+          "is_toxic": "no"
+        },
+        "jwnder/jais-adaptive:7b": {
+          "is_toxic": "no"
+        },
+        "yasserrmd/Fanar-1-9B-Instruct": {
+          "is_toxic": "no"
+        }
+      }
     }
   ]
 }

@@ -36,7 +36,7 @@ body::before{
   opacity:0.35;
 }
 a{color:inherit}
-.container{max-width:1400px;margin:0 auto;padding:0 24px}
+.container{max-width:1900px;margin:0 auto;padding:0 24px}
 .site-header{
   position:sticky;
   top:0;
@@ -207,9 +207,9 @@ a{color:inherit}
 .report-summary li{padding-left:2px}
 .pdf-toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:14px}
 .pdf-toolbar h3,.quiz-top h3,.deck-top h3{margin:0}
-.pdf-embed{width:100%;height:min(82vh, 920px);border:0;border-radius:18px;background:#08111f}
+.pdf-embed{width:100%;height:min(72vh, 800px);border:0;border-radius:18px;background:#08111f}
 .pdf-fallback{padding:20px;border-radius:18px;border:1px dashed rgba(255,255,255,0.2);text-align:center;color:var(--muted)}
-.ppt-video{width:100%;max-height:520px;border-radius:12px;background:#000;display:block;margin-top:10px}
+.ppt-video{width:100%;max-height:450px;border-radius:12px;background:#000;display:block;margin-top:10px}
 .section-block{margin-top:18px}
 .quiz-shell{padding:22px}
 .quiz-top,.deck-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px}
